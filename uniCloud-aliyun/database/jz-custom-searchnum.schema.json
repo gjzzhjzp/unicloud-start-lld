@@ -1,0 +1,28 @@
+{
+	"bsonType": "object",
+	"required": ["title", "answer"],
+	"permission": {
+		"read": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"title": {
+			"bsonType": "string",
+			"description": "搜索内容",
+			"maxLength": 20,
+			"title": "内容"
+		},
+		"count": {
+			"bsonType": "number",
+			"description": "搜索次数",
+			"title": "次数"
+		},
+		"time": {
+			"bsonType": "string",
+			"defaultValue": true,
+			"title": "最新时间"
+		}
+	}
+}

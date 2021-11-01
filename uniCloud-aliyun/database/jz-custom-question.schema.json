@@ -1,0 +1,35 @@
+{
+	"bsonType": "object",
+	"required": ["title", "answer"],
+	"permission": {
+		"read": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"title": {
+			"bsonType": "string",
+			"description": "标题（问题）",
+			"maxLength": 20,
+			"title": "标题",
+			"trim": "both"
+		},
+		"answer": {
+			"bsonType": "string",
+			"description": "答案",
+			"title": "排序"
+		},
+		"status": {
+			"bsonType": "bool",
+			"defaultValue": true,
+			"title": "生效状态"
+		},
+		"description": {
+			"bsonType": "string",
+			"description": "维护者自用描述",
+			"title": "备注",
+			"trim": "both"
+		}
+	}
+}

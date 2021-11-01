@@ -1,0 +1,26 @@
+// 本文件中的json内容将在云函数【运行】时作为参数传给云函数。
+
+// 配置教程参考：https://uniapp.dcloud.net.cn/uniCloud/quickstart?id=runparam
+
+{
+	"action": "resource/addList",
+	"data": [{
+			"contributor": "111",
+			"author": "111",
+			"category_id": "222",
+			"title": "333",
+			"content": "444",
+			"excerpt": "555",
+			"article_status": "666",
+			"zy_gs": "777"
+		}, {
+			"contributor": "ddd",
+			"author": "ddd",
+			"category_id": "ddd",
+			"title": "ddd",
+			"content": "ddd",
+			"excerpt": "ddd",
+			"article_status": "ddd",
+			"zy_gs": "ddd"
+		}]
+}

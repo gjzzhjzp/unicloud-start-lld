@@ -1,0 +1,28 @@
+{
+	"bsonType": "object",
+	"required": ["title", "answer"],
+	"permission": {
+		"read": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"title": {
+			"bsonType": "string",
+			"description": "搜索内容",
+			"maxLength": 20,
+			"title": "内容"
+		},
+		"ip": {
+			"bsonType": "string",
+			"description": "ip地址",
+			"title": "ip地址"
+		},
+		"time": {
+			"bsonType": "string",
+			"defaultValue": true,
+			"title": "时间"
+		}
+	}
+}

@@ -1,11 +1,11 @@
 {
     "pages": [{
+            "path": "pages/index/index"
+        },{
             "path": "pages/question/question",
             "style": {
                 "navigationBarTitleText": "对暗号"
             }
-        }, {
-            "path": "pages/index/index"
         }, {
             "path": "pages/resource/list",
             "style": {
@@ -238,6 +238,11 @@
             "style": {
                 "navigationBarTitleText": "我的足迹"
             }
+        }, {
+            "path": "pages/sort/sort",
+            "style": {
+                "navigationBarTitleText": "分类"
+            }
         }
     ],
     "globalStyle": {
@@ -273,17 +278,9 @@
         "list": [{
                 "pagePath": "pages/index/index",
                 "text": "首页"
-            },
-            {
-                "pagePath": "pages/list/list",
-                "iconPath": "static/tabbar/list.png",
-                "selectedIconPath": "static/tabbar/list_active.png",
-                "text": "列表"
-            }, {
-                "pagePath": "pages/grid/grid",
-                "iconPath": "static/tabbar/grid.png",
-                "selectedIconPath": "static/tabbar/grid_active.png",
-                "text": "宫格"
+            },{
+                "pagePath": "pages/sort/sort",
+                "text": "分类"
             }
         ]
     },

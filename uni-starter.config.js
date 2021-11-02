@@ -44,8 +44,9 @@ export default {
 			"/pages/ucenter/about/about",
 			"/pages/ucenter/settings/settings",
 			"/pages/jz-opendb-resources/add",
-			"pages/resource/list",
-			"pages/detail/detail"
+			"/pages/resource/list",
+			"/pages/detail/detail",
+			"pages/sort/sort"
 		],
 		/*
 		login:配置登陆类型与优先级

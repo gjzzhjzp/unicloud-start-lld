@@ -10,13 +10,14 @@
 							selectedIconPath: "home-fill",
 							text: '首页',
 							customIcon: false,
-							pagePath:"pages/index/index"
+							pagePath:"/pages/index/index"
 						},
 						{
 							iconPath: "photo",
 							selectedIconPath: "photo-fill",
 							text: '分区',
 							customIcon: false,
+							pagePath:"/pages/sort/sort"
 						},
 						{
 							iconPath: "play-right",

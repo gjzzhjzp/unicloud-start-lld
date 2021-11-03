@@ -1,6 +1,8 @@
 <template>
-	<u-search bg-color="#000" placeholder="搜索..." @focus="searchClick" v-model="keyword" @search="searchClick" @custom="searchClick"
-		:show-action="true"></u-search>
+	<view>
+		<u-search border-color="#7275D3" placeholder="搜索..." bg-color="#fff" @focus="searchClick" v-model="keyword" @search="searchClick" @custom="searchClick"
+			:show-action="true"></u-search>
+	</view>
 </template>
 
 <script>

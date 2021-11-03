@@ -8,7 +8,7 @@
 						<view>
 							<u-image width="100%" height="140rpx" :src="item.avatar.url"></u-image>
 						</view>
-						<view>{{item.title}}</view>
+						<!-- <view>{{item.title}}</view> -->
 					</view>
 				</u-col>
 			</u-row>

@@ -20,7 +20,7 @@
 						</view>
 						<view class="item-container">
 							<view class="thumb-box" @click="toflbm(item1,index1)" v-for="(item1, index1) in item.children" :key="index1">
-								<image class="item-menu-image" :src="item1.icon" mode=""></image>
+								<image class="item-menu-image" :src="item1.icon?item1.icon.url:''" mode=""></image>
 								<view class="item-menu-name">{{item1.name}}</view>
 							</view>
 						</view>
@@ -246,11 +246,11 @@
 
 	.u-tab-item-active::before {
 		content: "";
-		position: absolute;
-		border-left: 4px solid $u-type-primary;
-		height: 32rpx;
-		left: 0;
-		top: 39rpx;
+		    position: absolute;
+		    border-left: 4px solid #7275D3;
+		    height: 30px;
+		    left: 0;
+		    top: 12px;
 	}
 
 	.u-tab-view {

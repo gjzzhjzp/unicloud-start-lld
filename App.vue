@@ -44,8 +44,14 @@
 			}*/
 			// #endif
 		},
-		onShow: function() {
-			console.log('App Show')
+		onShow:  function() {
+			console.log('App Show');
+			var question_success= uni.getStorageSync("question_success");
+			if(!question_success){
+				uni.navigateTo({
+					url:"/pages/question/question"
+				})
+			}
 		},
 		onHide: function() {
 			console.log('App Hide')

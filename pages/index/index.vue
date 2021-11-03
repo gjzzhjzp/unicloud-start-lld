@@ -3,9 +3,13 @@
 		<view>
 			<u-navbar :is-back="false">
 				<template>
-					<view style="margin: 10px;">俊哲宇宙</view>
-					<u-search bg-color="#000" placeholder="搜索..." @search="tosearch" @custom="tosearch"
-						:show-action="true"></u-search>
+					<view style="margin: 10px;">
+						<u-image width="200rpx" height="60rpx" src="/static/head/logo.png"></u-image>
+					</view>
+					<view class="sy-u-search">
+						<u-search border-color="#7275D3" bg-color="#fff" height="60" placeholder="" @search="tosearch" @custom="tosearch"
+							:show-action="true"></u-search>
+					</view>
 					<view style="margin: 10px;" @click="tousercenter">
 						<u-icon name="photo"></u-icon>
 					</view>
@@ -19,44 +23,44 @@
 			<jz-grid></jz-grid>
 		</view>
 		<view>
-			<u-section title="热门内容" :right="true"></u-section>
-			<view>
+			<u-section line-color="#7275D3" title="热门内容" :right="true" sub-title="查看更多>>" :arrow="false"></u-section>
+			<view class="jz-sy-list">
 				<jz-sy-list></jz-sy-list>
 			</view>
 		</view>
 		<view>
-			<u-section title="最新内容" :right="true"></u-section>
-			<view>
+			<u-section line-color="#7275D3" title="最新内容" :right="true" sub-title="查看更多>>" :arrow="false"></u-section>
+			<view class="jz-sy-list">
 				<jz-sy-list></jz-sy-list>
 			</view>
 		</view>
 		<view>
-			<u-section title="山河令" :right="true"></u-section>
-			<view>
+			<u-section line-color="#7275D3" title="山河令" :right="true" sub-title="查看更多>>" :arrow="false"></u-section>
+			<view class="jz-sy-list">
 				<jz-sy-list></jz-sy-list>
 			</view>
 		</view>
 		<view>
-			<u-section title="双人综艺" :right="true"></u-section>
-			<view>
+			<u-section line-color="#7275D3" title="双人综艺" :right="true" sub-title="查看更多>>" :arrow="false"></u-section>
+			<view class="jz-sy-list">
 				<jz-sy-list></jz-sy-list>
 			</view>
 		</view>
 		<view>
-			<u-section title="双人直播" :right="true"></u-section>
-			<view>
+			<u-section line-color="#7275D3" title="双人直播" :right="true" sub-title="查看更多>>" :arrow="false"></u-section>
+			<view class="jz-sy-list">
 				<jz-sy-list></jz-sy-list>
 			</view>
 		</view>
 		<view>
-			<u-section title="双人采访" :right="true"></u-section>
-			<view>
+			<u-section line-color="#7275D3" title="双人采访" :right="true" sub-title="查看更多>>" :arrow="false"></u-section>
+			<view class="jz-sy-list">
 				<jz-sy-list></jz-sy-list>
 			</view>
 		</view>
 		<view>
-			<u-section title="双人图片" :right="true"></u-section>
-			<view>
+			<u-section line-color="#7275D3" title="双人图片" :right="true" sub-title="查看更多>>" :arrow="false"></u-section>
+			<view class="jz-sy-list">
 				<jz-sy-list></jz-sy-list>
 			</view>
 		</view>
@@ -85,4 +89,7 @@
 	}
 </script>
 <style>
+	.jz-sy-list{
+		padding: 10rpx 0px;
+	}
 </style>

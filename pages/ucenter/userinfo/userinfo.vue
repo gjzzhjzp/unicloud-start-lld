@@ -13,6 +13,7 @@
 			</uni-list-item>
 			<uni-list-item class="item" @click="setNickname('')" :title="$t('userinfo.nickname')" :rightText="userInfo.nickname||$t('userinfo.notSet')" link>
 			</uni-list-item>
+			<!-- userInfo:{{userInfo}} -->
 			<!-- <uni-list-item class="item" @click="bindMobile" :title="$t('userinfo.phoneNumber')" :rightText="userInfo.mobile||$t('userinfo.notSpecified')" link>
 			</uni-list-item> -->
 		</uni-list>

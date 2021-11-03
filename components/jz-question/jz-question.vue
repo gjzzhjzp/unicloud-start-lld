@@ -72,6 +72,7 @@
 					console.log("res", JSON.stringify(res));
 					var res = res.result;
 					if (res.state == "0000") {
+						uni.setStorageSync("question_success",true);
 						uni.switchTab({
 							url: '/pages/index/index'
 						});

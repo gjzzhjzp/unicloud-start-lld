@@ -243,6 +243,21 @@
             "style": {
                 "navigationBarTitleText": "分类"
             }
+        }, {
+            "path": "pages/jilianri/jilianri",
+            "style": {
+                "navigationBarTitleText": "纪恋日"
+            }
+        }, {
+            "path": "pages/junzhe/junzhe",
+            "style": {
+                "navigationBarTitleText": "俊哲"
+            }
+        }, {
+            "path": "pages/shanzong/shanzong",
+            "style": {
+                "navigationBarTitleText": "山总"
+            }
         }
     ],
     "globalStyle": {
@@ -281,6 +296,15 @@
             },{
                 "pagePath": "pages/sort/sort",
                 "text": "分类"
+            },{
+                "pagePath": "pages/jilianri/jilianri",
+                "text": "纪恋日"
+            },{
+                "pagePath": "pages/junzhe/junzhe",
+                "text": "俊哲"
+            },{
+                "pagePath": "pages/shanzong/shanzong",
+                "text": "山总"
             }
         ]
     },

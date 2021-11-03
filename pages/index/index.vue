@@ -19,13 +19,43 @@
 			<jz-grid></jz-grid>
 		</view>
 		<view>
-			<u-section title="热门" :right="false"></u-section>
+			<u-section title="热门内容" :right="true"></u-section>
 			<view>
 				<jz-sy-list></jz-sy-list>
 			</view>
 		</view>
 		<view>
-			<u-section title="最新" :right="false"></u-section>
+			<u-section title="最新内容" :right="true"></u-section>
+			<view>
+				<jz-sy-list></jz-sy-list>
+			</view>
+		</view>
+		<view>
+			<u-section title="山河令" :right="true"></u-section>
+			<view>
+				<jz-sy-list></jz-sy-list>
+			</view>
+		</view>
+		<view>
+			<u-section title="双人综艺" :right="true"></u-section>
+			<view>
+				<jz-sy-list></jz-sy-list>
+			</view>
+		</view>
+		<view>
+			<u-section title="双人直播" :right="true"></u-section>
+			<view>
+				<jz-sy-list></jz-sy-list>
+			</view>
+		</view>
+		<view>
+			<u-section title="双人采访" :right="true"></u-section>
+			<view>
+				<jz-sy-list></jz-sy-list>
+			</view>
+		</view>
+		<view>
+			<u-section title="双人图片" :right="true"></u-section>
 			<view>
 				<jz-sy-list></jz-sy-list>
 			</view>

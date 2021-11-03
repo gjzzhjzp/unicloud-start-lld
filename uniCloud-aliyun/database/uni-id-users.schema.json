@@ -41,6 +41,18 @@
 			"description": "用户昵称",
 			"trim": "both"
 		},
+		"weiboname": {
+			"bsonType": "string",
+			"title": "微博昵称",
+			"description": "微博昵称",
+			"trim": "both"
+		},
+		"douyinname": {
+			"bsonType": "string",
+			"title": "抖音昵称",
+			"description": "抖音昵称",
+			"trim": "both"
+		},
 		"gender": {
 			"bsonType": "int",
 			"title": "性别",
@@ -151,6 +163,11 @@
 		"avatar_file": {
 			"bsonType": "file",
 			"title": "头像文件",
+			"description": "用file类型方便使用uni-file-picker组件"
+		},
+		"background_file": {
+			"bsonType": "file",
+			"title": "背景图",
 			"description": "用file类型方便使用uni-file-picker组件"
 		},
 		"department_id": {

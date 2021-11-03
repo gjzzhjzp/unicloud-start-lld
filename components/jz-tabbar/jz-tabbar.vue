@@ -8,7 +8,7 @@
 		data() {
 			return {
 				list: [{
-						iconPath: "/static/tabbar/1.png",
+						iconPath: "/static/tabbar/1.svg",
 						selectedIconPath: "/static/tabbar/1_sed.png",
 						text: '首页',
 						pagePath: "/pages/index/index"

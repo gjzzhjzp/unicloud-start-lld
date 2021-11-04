@@ -37,6 +37,7 @@
 		},
 		computed: {
 			...mapGetters({
+				userInfo: 'user/info',
 				hasLogin: 'user/hasLogin'
 			})
 			},
@@ -67,7 +68,8 @@
 			},
 			// 历史记录
 			async tohistory(){
-				// console.log("this.hasLogin",this.hasLogin);
+				console.log("this.hasLogin",this.hasLogin);
+				console.log("userInfo",this.userInfo);
 				if(this.hasLogin){
 					const db = uniCloud.database()
 					const uid = db.getCloudEnv('$cloudEnv_uid');

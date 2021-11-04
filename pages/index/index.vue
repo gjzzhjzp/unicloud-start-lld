@@ -11,7 +11,8 @@
 							:show-action="true"></u-search>
 					</view>
 					<view style="margin: 10px;" @click="tousercenter">
-						<u-icon name="photo"></u-icon>
+						<u-image width="50rpx" height="50rpx" src="/static/head/user.png"></u-image>
+						<!-- <u-icon name="photo"></u-icon> -->
 					</view>
 				</template>
 			</u-navbar>

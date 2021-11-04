@@ -1,11 +1,11 @@
 {
     "pages": [{
+            "path": "pages/index/index"
+        },{
             "path": "pages/question/question",
             "style": {
                 "navigationBarTitleText": "对暗号"
             }
-        }, {
-            "path": "pages/index/index"
         }, {
             "path": "pages/resource/list",
             "style": {
@@ -238,6 +238,26 @@
             "style": {
                 "navigationBarTitleText": "我的足迹"
             }
+        }, {
+            "path": "pages/sort/sort",
+            "style": {
+                "navigationBarTitleText": "分类"
+            }
+        }, {
+            "path": "pages/jilianri/jilianri",
+            "style": {
+                "navigationBarTitleText": "纪恋日"
+            }
+        }, {
+            "path": "pages/junzhe/junzhe",
+            "style": {
+                "navigationBarTitleText": "俊哲"
+            }
+        }, {
+            "path": "pages/shanzong/shanzong",
+            "style": {
+                "navigationBarTitleText": "山总"
+            }
         }
     ],
     "globalStyle": {
@@ -273,17 +293,18 @@
         "list": [{
                 "pagePath": "pages/index/index",
                 "text": "首页"
-            },
-            {
-                "pagePath": "pages/list/list",
-                "iconPath": "static/tabbar/list.png",
-                "selectedIconPath": "static/tabbar/list_active.png",
-                "text": "列表"
-            }, {
-                "pagePath": "pages/grid/grid",
-                "iconPath": "static/tabbar/grid.png",
-                "selectedIconPath": "static/tabbar/grid_active.png",
-                "text": "宫格"
+            },{
+                "pagePath": "pages/sort/sort",
+                "text": "分类"
+            },{
+                "pagePath": "pages/jilianri/jilianri",
+                "text": "纪恋日"
+            },{
+                "pagePath": "pages/junzhe/junzhe",
+                "text": "俊哲"
+            },{
+                "pagePath": "pages/shanzong/shanzong",
+                "text": "山总"
             }
         ]
     },

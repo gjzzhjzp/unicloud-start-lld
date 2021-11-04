@@ -2,13 +2,13 @@
 	<view class="jz-sy-list">
 		<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}"
 			collection="jz-opendb-resources" :where="where" field="author,title,avatar">
-			<u-row gutter="16">
-				<u-col span="6" class="jz-sy-item" v-for="(item,index) in data" :key="index">
+			<u-row gutter="4">
+				<u-col span="4" class="jz-sy-item" v-for="(item,index) in data" :key="index">
 					<view class="jz-sy-list-item" @click="toDetail(item)">
 						<view>
-							<u-image width="100%" height="150rpx" :src="item.avatar.url"></u-image>
+							<u-image width="100%" height="140rpx" :src="item.avatar.url"></u-image>
 						</view>
-						<view>{{item.title}}</view>
+						<!-- <view>{{item.title}}</view> -->
 					</view>
 				</u-col>
 			</u-row>
@@ -37,6 +37,6 @@
 </script>
 <style>
 	.jz-sy-list-item {
-		margin: 6px
+		margin: 6px 4px;
 	}
 </style>

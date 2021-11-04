@@ -1,47 +1,47 @@
 <template>
-	<u-tabbar v-model="current" :list="list"></u-tabbar>
+	<view>
+		<u-tabbar v-model="current" :list="list" active-color="#409eff" :icon-size="40"></u-tabbar>
+	</view>
 </template>
 <script>
 	export default {
-			data() {
-				return {
-					list: [{
-							iconPath: "home",
-							selectedIconPath: "home-fill",
-							text: '首页',
-							customIcon: false,
-							pagePath:"pages/index/index"
-						},
-						{
-							iconPath: "photo",
-							selectedIconPath: "photo-fill",
-							text: '分区',
-							customIcon: false,
-						},
-						{
-							iconPath: "play-right",
-							selectedIconPath: "play-right-fill",
-							text: '纪恋日',
-							customIcon: false,
-							pagePath:"/pages/search/search"
-						},
-						{
-							iconPath: "account",
-							selectedIconPath: "account-fill",
-							text: '俊哲',
-							customIcon: false,
-						},
-						{
-							iconPath: "account",
-							selectedIconPath: "account-fill",
-							text: '山总',
-							customIcon: false,
-						}
-					],
-					current: 0
-				}
+		data() {
+			return {
+				list: [{
+						iconPath: "/static/tabbar/1.png",
+						selectedIconPath: "/static/tabbar/1_sed.png",
+						text: '首页',
+						pagePath: "/pages/index/index"
+					},
+					{
+						iconPath: "/static/tabbar/2.png",
+						selectedIconPath: "/static/tabbar/2_sed.png",
+						text: '分区',
+						pagePath: "/pages/sort/sort"
+					},
+					{
+						iconPath: "/static/tabbar/3.png",
+						selectedIconPath: "/static/tabbar/3_sed.png",
+						text: '纪恋日',
+						pagePath: "/pages/jilianri/jilianri"
+					},
+					{
+						iconPath: "/static/tabbar/4.png",
+						selectedIconPath: "/static/tabbar/4_sed.png",
+						text: '俊哲',
+						pagePath: "/pages/junzhe/junzhe"
+					},
+					{
+						iconPath: "/static/tabbar/5.png",
+						selectedIconPath: "/static/tabbar/5_sed.png",
+						text: '山总',
+						pagePath: "/pages/shanzong/shanzong"
+					}
+				],
+				current: 0
 			}
 		}
+	}
 </script>
 
 <style>

@@ -2,6 +2,14 @@
 	<view class="center">
 		<uni-sign-in ref="signIn"></uni-sign-in>
 		<view class="userInfo" @click.capture="toUserInfo">
+			<view class="usercenter-top">
+				<view class="usercenter-top-left" @click="goback">
+					<u-icon name="arrow-left" color="#fff" :size="44"></u-icon>
+				</view>
+				<view class="usercenter-top-mine">
+					个人中心
+				</view>
+			</view>
 			<cloud-image width="150rpx" height="150rpx" v-if="userInfo.avatar_file&&userInfo.avatar_file.url"
 				:src="userInfo.avatar_file.url"></cloud-image>
 			<image v-else class="logo-img" src="@/static/uni-center/defaultAvatarUrl.png"></image>
@@ -169,6 +177,11 @@
 			}
 		},
 		methods: {
+			goback(){
+				uni.switchTab({
+					url:"/pages/index/index"
+				})
+			},
 			...mapMutations({
 				logout: 'user/logout'
 			}),
@@ -374,6 +387,19 @@
 </script>
 
 <style lang="scss" scoped>
+	.usercenter-top{
+		color: #fff;
+		    font-size: 16px;
+		    margin-bottom: 50px;
+	}
+	.usercenter-top-left{
+		    position: absolute;
+		    left: 4px;
+		
+	}
+	.usercenter-top-mine{
+		
+	}
 	.bottom-back {
 		margin-top: 10px;
 		width: 750rpx;
@@ -418,7 +444,7 @@
 	.userInfo {
 		width: 750rpx;
 		padding: 20rpx;
-		padding-top: 50px;
+		// padding-top: 50px;
 		background-image: url(../../static/uni-center/headers.png);
 		flex-direction: column;
 		align-items: center;

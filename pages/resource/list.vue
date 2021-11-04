@@ -1,7 +1,7 @@
 <template>
 	<view class="wrap">
-		<u-search bg-color="#000" placeholder="搜索..." v-model="keyword" @search="searchClick" @custom="searchClick"
-			:show-action="true"></u-search>
+		<u-navbar :is-back="true" title="列表"></u-navbar>
+		<jz-search></jz-search>
 		<!-- <uni-search-bar @click="searchClick" class="uni-search-box" v-model="keyword" ref="searchBar" radius="100"
 			cancelButton="none" disabled :placeholder="inputPlaceholder" /> -->
 		<u-waterfall v-model="flowList" ref="uWaterfall">
@@ -33,21 +33,13 @@
 		components: {
 			itemList
 		},
-		computed: {
-			inputPlaceholder(e) {
-				if (uni.getStorageSync('CURRENT_LANG') == "en") {
-					return 'Please enter the search content'
-				} else {
-					return '请输入搜索内容'
-				}
-			}
-		},
+		
 		onLoad(e) {
 			console.log("onLoad",e);
 			this.categories=e.categories||"";
 			this.keyword = getApp().globalData.searchText;
 			getApp().globalData.searchText = '';
-			if(this.keyword){
+			if(!this.keyword){
 				this.keyword=e.title||"";
 			}
 			this.addRandomData();
@@ -62,13 +54,7 @@
 			}, 1000);
 		},
 		methods: {
-			searchClick(e) { //点击搜索框
-				uni.hideKeyboard();
-				uni.navigateTo({
-					url: '/pages/list/search/search',
-					animationType: 'fade-in'
-				});
-			},
+			
 			addRandomData() {
 				uniCloud.callFunction({
 					name: 'jzfunction',

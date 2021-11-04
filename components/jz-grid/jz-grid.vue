@@ -1,8 +1,8 @@
 <template>
 	<div class="jz-grid">
-		<u-grid :col="4" :border="false">
+		<u-grid :col="5" :border="false">
 			<u-grid-item v-for="(item,index) in gridList" :key="index">
-				<!-- <u-icon :name="item.icon" :size="46"></u-icon> -->
+				<u-image width="100rpx" height="100rpx" :src="item.icon.url"></u-image>
 				<view class="grid-text">{{item.name}}</view>
 			</u-grid-item>
 		</u-grid>

@@ -46,7 +46,12 @@ export default {
 			"/pages/jz-opendb-resources/add",
 			"/pages/resource/list",
 			"/pages/detail/detail",
-			"pages/sort/sort"
+			"/pages/sort/sort",
+			"/pages/index/index",
+			"/pages/question/question",
+			"/pages/shanzong/shanzong",
+			"/pages/junzhe/junzhe",
+			"/pages/jilianri/jilianri"
 		],
 		/*
 		login:配置登陆类型与优先级

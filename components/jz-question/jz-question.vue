@@ -39,7 +39,7 @@
 							type: 'error'
 						});
 					}
-				})
+				});
 			},
 			submit() {
 				var data = this.list;
@@ -77,6 +77,7 @@
 							url: '/pages/index/index'
 						});
 					} else {
+						uni.setStorageSync("question_success",false);
 						this.$refs.uToast.show({
 							title: res.msg,
 							type: 'error'

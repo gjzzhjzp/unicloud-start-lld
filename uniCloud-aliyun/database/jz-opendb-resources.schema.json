@@ -83,6 +83,21 @@
 				"write": false
 			}
 		},
+		"is_grant": {
+			"bsonType": "int",
+			"title": "是否授权",
+			"description": "是否授权：0 未授权 1 已授权",
+			"defaultValue": 0,
+			"enum": [{
+					"value": 0,
+					"text": "未授权"
+				},
+				{
+					"value": 1,
+					"text": "已授权"
+				}
+			]
+		},
 		"is_sticky": {
 			"bsonType": "bool",
 			"title": "是否置顶",

@@ -1,11 +1,11 @@
 {
     "pages": [{
+            "path": "pages/index/index"
+        },{
             "path": "pages/question/question",
             "style": {
                 "navigationBarTitleText": "对暗号"
             }
-        }, {
-            "path": "pages/index/index"
         }, {
             "path": "pages/resource/list",
             "style": {
@@ -21,21 +21,8 @@
             "style": {
                 "navigationBarTitleText": "详情"
             }
-        }, {
-            "path": "pages/list/list",
-            "style": {
-                "navigationStyle": "custom",
-                "enablePullDownRefresh": true
-            }
         },
-        {
-            "path": "pages/grid/grid",
-            "style": {
-                //#ifndef MP
-                "navigationStyle": "custom"
-                //#endif
-            }
-        }, {
+         {
             "path": "pages/ucenter/login-page/index/index",
             "style": {
                 "navigationBarTitleText": "",
@@ -50,24 +37,6 @@
                 "navigationBarTitleText": "搜索"
             }
         }, {
-            "path": "pages/list/detail",
-            "style": {
-                "app-plus": {
-                    "titleNView": {
-                        "buttons": [{
-                            "type": "share"
-                        }],
-                        "type": "transparent"
-                    }
-                },
-                "h5": {
-                    "titleNView": {
-                        "type": "transparent"
-                    }
-                },
-                "navigationBarTitleText": "文章详情"
-            }
-        }, {
             "path": "pages/ucenter/userinfo/bind-mobile/bind-mobile",
             "style": {
                 "navigationBarTitleText": "绑定手机号码"
@@ -78,23 +47,7 @@
             "style": {
                 "navigationStyle": "custom"
             }
-        }, {
-            "path": "pages/ucenter/about/about",
-            "style": {
-                "navigationBarTitleText": "关于"
-                    // #ifdef APP-PLUS
-                    ,
-                "app-plus": {
-                    "titleNView": {
-                        "buttons": [{
-                            "type": "share"
-                        }]
-                    }
-                }
-                // #endif
-            }
-
-        },
+        }, 
         {
             "path": "uni_modules/uni-upgrade-center-app/pages/upgrade-popup",
             "style": {
@@ -190,25 +143,6 @@
                 "enablePullDownRefresh": false
             }
         }, {
-            "path": "pages/ucenter/guestbook/guestbook",
-            "style": {
-                "navigationBarTitleText": "留言板",
-                "enablePullDownRefresh": false,
-                "app-plus": {
-                    "titleNView": {
-                        "buttons": [{
-                                "text": "切换",
-                                "fontSize": "12px"
-                            },
-                            {
-                                "text": "注销",
-                                "fontSize": "12px"
-                            }
-                        ]
-                    }
-                }
-            }
-        }, {
             "path": "pages/jz-opendb-resources/add",
             "style": {
                 "navigationBarTitleText": "新增"
@@ -237,6 +171,26 @@
             "path": "pages/history/history",
             "style": {
                 "navigationBarTitleText": "我的足迹"
+            }
+        }, {
+            "path": "pages/sort/sort",
+            "style": {
+                "navigationBarTitleText": "分类"
+            }
+        }, {
+            "path": "pages/jilianri/jilianri",
+            "style": {
+                "navigationBarTitleText": "纪恋日"
+            }
+        }, {
+            "path": "pages/junzhe/junzhe",
+            "style": {
+                "navigationBarTitleText": "俊哲"
+            }
+        }, {
+            "path": "pages/shanzong/shanzong",
+            "style": {
+                "navigationBarTitleText": "山总"
             }
         }
     ],
@@ -273,17 +227,18 @@
         "list": [{
                 "pagePath": "pages/index/index",
                 "text": "首页"
-            },
-            {
-                "pagePath": "pages/list/list",
-                "iconPath": "static/tabbar/list.png",
-                "selectedIconPath": "static/tabbar/list_active.png",
-                "text": "列表"
-            }, {
-                "pagePath": "pages/grid/grid",
-                "iconPath": "static/tabbar/grid.png",
-                "selectedIconPath": "static/tabbar/grid_active.png",
-                "text": "宫格"
+            },{
+                "pagePath": "pages/sort/sort",
+                "text": "分类"
+            },{
+                "pagePath": "pages/jilianri/jilianri",
+                "text": "纪恋日"
+            },{
+                "pagePath": "pages/junzhe/junzhe",
+                "text": "俊哲"
+            },{
+                "pagePath": "pages/shanzong/shanzong",
+                "text": "山总"
             }
         ]
     },

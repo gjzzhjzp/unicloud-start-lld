@@ -41,6 +41,9 @@
 				<uni-easyinput placeholder="请输入简介" type="textarea" v-model="formData.excerpt" trim="both">
 				</uni-easyinput>
 			</uni-forms-item>
+			<uni-forms-item name="is_grant" label="是否授权">
+			  <uni-data-checkbox v-model="formData.is_grant" :localdata="formOptions.is_grant_localdata"></uni-data-checkbox>
+			</uni-forms-item>
 			<!-- <uni-forms-item name="content" label="内容">
         <uni-easyinput placeholder="请输入内容" v-model="formData.content" trim="right"></uni-easyinput>
       </uni-forms-item> -->
@@ -79,6 +82,7 @@
 				"title": "",
 				"article_status": 0,
 				"comment_status": 0,
+				"is_grant":0,
 				"avatar": null,
 				"resources": [],
 				"zy_gs": "",
@@ -90,6 +94,16 @@
 				cascaderData: [],
 				formData,
 				formOptions: {
+					"is_grant_localdata": [
+					  {
+					    "value": 0,
+					    "text": "未授权"
+					  },
+					  {
+					    "value": 1,
+					    "text": "已授权"
+					  }
+					],
 					"article_status_localdata": [{
 							"value": 0,
 							"text": "锁定"

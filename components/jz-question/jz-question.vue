@@ -39,7 +39,7 @@
 							type: 'error'
 						});
 					}
-				})
+				});
 			},
 			submit() {
 				var data = this.list;
@@ -72,10 +72,12 @@
 					console.log("res", JSON.stringify(res));
 					var res = res.result;
 					if (res.state == "0000") {
+						uni.setStorageSync("question_success",true);
 						uni.switchTab({
 							url: '/pages/index/index'
 						});
 					} else {
+						uni.setStorageSync("question_success",false);
 						this.$refs.uToast.show({
 							title: res.msg,
 							type: 'error'

@@ -15,6 +15,9 @@
 	</view>
 </template>
 <script>
+	import {
+		mapGetters
+	} from 'vuex';
 	import detailImage from "./detail-image.vue"
 	import detailMp4 from "./detail-mp4.vue"
 	import detailMp3 from "./detail-mp3.vue"
@@ -32,6 +35,12 @@
 			}
 			
 		},
+		computed: {
+			...mapGetters({
+				userInfo: 'user/info',
+				hasLogin: 'user/hasLogin'
+			})
+			},
 		mounted(){
 			this.getResource(this.id);
 		},
@@ -59,30 +68,34 @@
 			},
 			// 历史记录
 			async tohistory(){
-				const db = uniCloud.database()
-				const uid = db.getCloudEnv('$cloudEnv_uid');
-				const collection = db.collection('opendb-news-history');
-				var rows=await collection.get({
-					article_id: this.detaildata._id,
-					user_id: db.getCloudEnv('$cloudEnv_uid')
-				});
-				if(rows.result&&rows.result.data.length>0){
-					
-					await collection.where({_id:rows.result.data[0]._id}).update({
-						update_date:db.getCloudEnv('$cloudEnv_now')
-					});
-				}else{
-					await collection.add({
+				console.log("this.hasLogin",this.hasLogin);
+				console.log("userInfo",this.userInfo);
+				if(this.hasLogin){
+					const db = uniCloud.database()
+					const uid = db.getCloudEnv('$cloudEnv_uid');
+					console.log("uid",uid);
+					const collection = db.collection('opendb-news-history');
+					var rows=await collection.get({
 						article_id: this.detaildata._id,
-						article_title: this.detaildata.title,
-						user_id: db.getCloudEnv('$cloudEnv_uid'),
-						create_date: db.getCloudEnv('$cloudEnv_now')
+						user_id: db.getCloudEnv('$cloudEnv_uid')
 					});
+					if(rows.result&&rows.result.data.length>0){
+						await collection.where({_id:rows.result.data[0]._id}).update({
+							update_date:db.getCloudEnv('$cloudEnv_now')
+						});
+					}else{
+						await collection.add({
+							article_id: this.detaildata._id,
+							article_title: this.detaildata.title,
+							user_id: db.getCloudEnv('$cloudEnv_uid'),
+							create_date: db.getCloudEnv('$cloudEnv_now')
+						});
+					}
 				}
 			}
-		}
+		},
+		
 	}
 </script>
-
 <style>
 </style>

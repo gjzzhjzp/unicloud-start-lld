@@ -305,5 +305,6 @@
 	.item-menu-image {
 		width: 120rpx;
 		height: 120rpx;
+		border-radius: 50%;
 	}
 </style>

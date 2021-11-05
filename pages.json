@@ -21,21 +21,8 @@
             "style": {
                 "navigationBarTitleText": "详情"
             }
-        }, {
-            "path": "pages/list/list",
-            "style": {
-                "navigationStyle": "custom",
-                "enablePullDownRefresh": true
-            }
         },
-        {
-            "path": "pages/grid/grid",
-            "style": {
-                //#ifndef MP
-                "navigationStyle": "custom"
-                //#endif
-            }
-        }, {
+         {
             "path": "pages/ucenter/login-page/index/index",
             "style": {
                 "navigationBarTitleText": "",
@@ -50,24 +37,6 @@
                 "navigationBarTitleText": "搜索"
             }
         }, {
-            "path": "pages/list/detail",
-            "style": {
-                "app-plus": {
-                    "titleNView": {
-                        "buttons": [{
-                            "type": "share"
-                        }],
-                        "type": "transparent"
-                    }
-                },
-                "h5": {
-                    "titleNView": {
-                        "type": "transparent"
-                    }
-                },
-                "navigationBarTitleText": "文章详情"
-            }
-        }, {
             "path": "pages/ucenter/userinfo/bind-mobile/bind-mobile",
             "style": {
                 "navigationBarTitleText": "绑定手机号码"
@@ -78,23 +47,7 @@
             "style": {
                 "navigationStyle": "custom"
             }
-        }, {
-            "path": "pages/ucenter/about/about",
-            "style": {
-                "navigationBarTitleText": "关于"
-                    // #ifdef APP-PLUS
-                    ,
-                "app-plus": {
-                    "titleNView": {
-                        "buttons": [{
-                            "type": "share"
-                        }]
-                    }
-                }
-                // #endif
-            }
-
-        },
+        }, 
         {
             "path": "uni_modules/uni-upgrade-center-app/pages/upgrade-popup",
             "style": {
@@ -188,25 +141,6 @@
             "style": {
                 "navigationBarTitleText": "意见反馈",
                 "enablePullDownRefresh": false
-            }
-        }, {
-            "path": "pages/ucenter/guestbook/guestbook",
-            "style": {
-                "navigationBarTitleText": "留言板",
-                "enablePullDownRefresh": false,
-                "app-plus": {
-                    "titleNView": {
-                        "buttons": [{
-                                "text": "切换",
-                                "fontSize": "12px"
-                            },
-                            {
-                                "text": "注销",
-                                "fontSize": "12px"
-                            }
-                        ]
-                    }
-                }
             }
         }, {
             "path": "pages/jz-opendb-resources/add",

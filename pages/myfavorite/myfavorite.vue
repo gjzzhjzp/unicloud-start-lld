@@ -9,8 +9,11 @@
 				<item-list :list="rightList"></item-list>
 			</template>
 		</u-waterfall>
-		<u-loadmore bg-color="rgb(240, 240, 240)" :status="loadStatus" @loadmore="addRandomData"></u-loadmore>
+		<u-loadmore v-show="flowList.length!=0" bg-color="rgb(240, 240, 240)" :status="loadStatus" @loadmore="addRandomData"></u-loadmore>
 		<u-back-top :scroll-top="scrollTop" top="1000" mode="square" icon="arrow-up" tips="顶部"></u-back-top>
+		<view style="margin-top: 20px;" v-show="flowList.length==0">
+			<u-empty  text="无收藏" mode="favor"></u-empty>
+		</view>
 	</view>
 </template>
 <script>
@@ -51,7 +54,9 @@
 				var rows=resultdata.result.data;
 				rows.forEach((item)=>{
 					var obj=item.article_id[0];
-					this.flowList.push(obj);
+					if(obj){
+						this.flowList.push(obj);
+					}
 				});
 			}
 		}

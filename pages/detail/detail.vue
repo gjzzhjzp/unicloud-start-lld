@@ -12,6 +12,10 @@
 				<detail-mp3 :data="detaildata"></detail-mp3>
 			</template>
 		</view>
+		<view class="jz-container-wl" v-show="detaildata.aliyun_dz">
+			外链地址：
+			<u-link :href="detaildata.aliyun_dz">{{detaildata.aliyun_dz}}</u-link>
+		</view>
 	</view>
 </template>
 <script>
@@ -98,4 +102,7 @@
 	}
 </script>
 <style>
+	.jz-container-wl{
+		/* text-indent: 2em; */
+	}
 </style>

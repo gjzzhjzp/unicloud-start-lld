@@ -13,40 +13,42 @@
 				</uni-easyinput>
 				<yunmiao-cascader ref="cascader" value-name="flbm" :cascaderData="cascaderData"
 					@confirem="cascaderConfirem"></yunmiao-cascader>
-				<!-- <uni-data-picker self-field="_id" parent-field="parent_id" v-model="formData.categories" collection="opendb-news-categories"></uni-data-picker> -->
 			</uni-forms-item>
 			<uni-forms-item name="labels" label="标签">
 				<uni-easyinput placeholder="多个标签以逗号隔开" v-model="formData.labels" trim="both"></uni-easyinput>
 			</uni-forms-item>
-			<!--   <uni-forms-item name="article_status" label="文章状态">
-        <uni-data-checkbox v-model="formData.article_status" :localdata="formOptions.article_status_localdata"></uni-data-checkbox>
-      </uni-forms-item>
-      <uni-forms-item name="comment_status" label="开放评论">
-        <uni-data-checkbox v-model="formData.comment_status" :localdata="formOptions.comment_status_localdata"></uni-data-checkbox>
-      </uni-forms-item> -->
 			<uni-forms-item name="avatar" label="封面大图" required>
 				<uni-file-picker ref="filepicker1" v-model="formData.avatar" fileMediatype="image" mode="grid"
 					:auto-upload="false" :limit="1" @select="selectFile" @success="successFile" />
-				<!-- <uni-file-picker file-mediatype="image" return-type="object" v-model="formData.avatar"></uni-file-picker> -->
 			</uni-forms-item>
-			<uni-forms-item name="resources" label="附件资源" required>
+			<!-- <uni-forms-item name="is_outerchain" label="是否外链">
+				<uni-data-checkbox v-model="formData.is_outerchain" :localdata="formOptions.is_outerchain_localdata">
+				</uni-data-checkbox>
+			</uni-forms-item> -->
+			<uni-forms-item name="resources" label="附件资源">
 				<uni-file-picker ref="filepicker2" v-model="formData.resources" fileMediatype="all" mode="grid"
 					:auto-upload="false" @select="selectFile2" @success="successFile2" />
-				<!-- <uni-file-picker file-mediatype="all" return-type="array" v-model="formData.resources"></uni-file-picker> -->
 			</uni-forms-item>
-			<!-- <uni-forms-item name="zy_gs" label="资源格式">
-        <uni-easyinput placeholder="资源格式，如img图集,text文章，MP3音乐，mp4视频" v-model="formData.zy_gs"></uni-easyinput>
-      </uni-forms-item> -->
-			<uni-forms-item name="excerpt" label="简介">
-				<uni-easyinput placeholder="请输入简介" type="textarea" v-model="formData.excerpt" trim="both">
+			<uni-forms-item name="aliyun_dz" label="外链">
+				<uni-easyinput placeholder="请输入外链地址"  v-model="formData.aliyun_dz" trim="both">
+				</uni-easyinput>
+			</uni-forms-item>
+			<uni-forms-item name="excerpt" label="内容">
+				<uni-easyinput placeholder="请输入内容" type="textarea" v-model="formData.excerpt" trim="both">
 				</uni-easyinput>
 			</uni-forms-item>
 			<uni-forms-item name="is_grant" label="是否授权">
-			  <uni-data-checkbox v-model="formData.is_grant" :localdata="formOptions.is_grant_localdata"></uni-data-checkbox>
+				<uni-data-checkbox v-model="formData.is_grant" :localdata="formOptions.is_grant_localdata">
+				</uni-data-checkbox>
 			</uni-forms-item>
-			<!-- <uni-forms-item name="content" label="内容">
-        <uni-easyinput placeholder="请输入内容" v-model="formData.content" trim="right"></uni-easyinput>
-      </uni-forms-item> -->
+			<uni-forms-item name="is_login" label="是否登录">
+				<uni-data-checkbox v-model="formData.is_login" :localdata="formOptions.is_login_localdata">
+				</uni-data-checkbox>
+			</uni-forms-item>
+			<uni-forms-item name="is_encryption" label="是否加密">
+				<uni-data-checkbox v-model="formData.is_encryption" :localdata="formOptions.is_encryption_localdata">
+				</uni-data-checkbox>
+			</uni-forms-item>
 			<view class="uni-button-group">
 				<button type="primary" class="uni-button" @click="submitBefore">提交</button>
 			</view>
@@ -55,6 +57,7 @@
 </template>
 
 <script>
+	import zycommon from "./zycommon.js"
 	import {
 		validator
 	} from '../../js_sdk/validator/jz-opendb-resources.js';
@@ -71,22 +74,25 @@
 		}
 		return result
 	}
-
 	export default {
+		mixins:[zycommon],
 		data() {
 			let formData = {
 				"categories": "",
-				"categorieszw":"",
+				"categorieszw": "",
 				"labels": "",
 				"author": "",
 				"title": "",
 				"article_status": 0,
-				"comment_status": 0,
-				"is_grant":0,
+				"is_grant": 0,
+				"is_login": 0,
+				"is_encryption": 0,
+				// "is_outerchain": 0,
 				"avatar": null,
 				"resources": [],
 				"zy_gs": "",
 				"excerpt": "",
+				"aliyun_dz":"",
 				"content": ""
 			}
 			return {
@@ -94,16 +100,42 @@
 				cascaderData: [],
 				formData,
 				formOptions: {
-					"is_grant_localdata": [
-					  {
-					    "value": 0,
-					    "text": "未授权"
-					  },
-					  {
-					    "value": 1,
-					    "text": "已授权"
-					  }
+					"is_grant_localdata": [{
+							"value": 0,
+							"text": "未授权"
+						},
+						{
+							"value": 1,
+							"text": "已授权"
+						}
 					],
+					"is_login_localdata": [{
+							"value": 0,
+							"text": "不登录"
+						},
+						{
+							"value": 1,
+							"text": "登录"
+						}
+					],
+					"is_encryption_localdata": [{
+							"value": 0,
+							"text": "不加密"
+						},
+						{
+							"value": 1,
+							"text": "加密"
+						}
+					],
+					// "is_outerchain_localdata": [{
+					// 		"value": 0,
+					// 		"text": "不外链"
+					// 	},
+					// 	{
+					// 		"value": 1,
+					// 		"text": "外链"
+					// 	}
+					// ],
 					"article_status_localdata": [{
 							"value": 0,
 							"text": "锁定"
@@ -126,111 +158,13 @@
 				rules: {
 					...getValidator(Object.keys(formData))
 				},
-				filesuccess1: 0,
-				filesuccess2: 0
 			}
 		},
-		onReady() {
-			this.$refs.form.setRules(this.rules);
-			this.getcategories();
-		},
 		methods: {
-			selectFile(parames) {
-				console.log("parames", parames);
-				this.$set(this.formData, "avatar", parames.tempFiles[0])
-			},
-			successFile(parames) {
-				console.log("parames1111111", parames);
-				this.$set(this.formData, "avatar", parames.tempFiles[0]);
-				this.filesuccess1 = 1;
-				if (this.filesuccess2 == 1) {
-					this.submit();
-				}
-			},
-			selectFile2(parames) {
-				console.log("qqqqqqq", parames);
-				this.$set(this.formData, "resources", parames.tempFiles);
-				var zy_gs = "";
-				if (parames.tempFiles.length > 0) {
-					zy_gs = parames.tempFiles[0].extname;
-				}
-				this.$set(this.formData, "zy_gs", zy_gs);
-			},
-			successFile2(parames) {
-				console.log("parames1222", parames);
-				this.$set(this.formData, "resources", parames.tempFiles);
-				this.filesuccess2 = 1;
-				if (this.filesuccess1 == 1) {
-					this.submit();
-				}
-			},
-			// 获取分类
-			async getcategories() {
-				var categories = await db.collection("opendb-news-categories").get({
-					getTree: {
-						startWith: "flbm=='100000'" ////分类顶级编码
-					}
-				});
-				console.log("categories", categories);
-				if (categories.result && categories.result.data.length > 0) {
-					this.cascaderData = categories.result.data;
-				}
-			},
-			cascaderConfirem(e) {
-				var select_names = e.select_names;
-				var select_ids = e.select_ids;
-				this.$set(this.formData, "categories", select_ids.join(","));
-				this.$set(this.formData, "categorieszw", select_names.join(","));
-			},
-			opencategories() {
-				this.$refs.cascader.show();
-			},
-			submitBefore() {
-				if (!this.formData.title) {
-					uni.showToast({
-						icon: 'none',
-						title: '请输入标题'
-					});
-					return;
-				}
-				if (!this.formData.author) {
-					uni.showToast({
-						icon: 'none',
-						title: '请输入作者'
-					})
-					return;
-				}
-				if (!this.formData.categories) {
-					uni.showToast({
-						icon: 'none',
-						title: '请选择分类'
-					})
-					return;
-				}
-				if (!this.formData.avatar) {
-					uni.showToast({
-						icon: 'none',
-						title: '请上传封面'
-					})
-					return;
-				}
-				if (!this.formData.resources || this.formData.resources.length == 0) {
-					uni.showToast({
-						icon: 'none',
-						title: '请上传资源'
-					})
-					return;
-				}
-				this.$refs.filepicker1.upload();
-				this.$refs.filepicker2.upload();
-			},
 			/**
 			 * 验证表单并提交
 			 */
 			submit() {
-				uni.showLoading({
-					mask: true
-				})
 				this.$refs.form.validate().then((res) => {
 					return this.submitForm(res)
 				}).catch(() => {}).finally(() => {
@@ -245,9 +179,8 @@
 				// 使用 clientDB 提交数据
 				Object.assign(value, {
 					zy_gs: this.formData.zy_gs,
-					categories:this.formData.categories
+					categories: this.formData.categories
 				})
-				console.log("submitForm", value);
 				// return;
 				return db.collection(dbCollectionName).add(value).then((res) => {
 					uni.showToast({

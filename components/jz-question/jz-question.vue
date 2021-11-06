@@ -29,10 +29,12 @@
 						action: 'checkquestion/getquestion'
 					},
 				}).then((res) => {
-					console.log("res", JSON.stringify(res));
 					var res = res.result;
 					if (res.state == "0000") {
 						this.list = res.data;
+						this.list.push({
+							title:"龚俊的老婆是谁？"
+						})
 					} else {
 						this.$refs.uToast.show({
 							title: res.msg,
@@ -45,7 +47,7 @@
 				var data = this.list;
 				var flag = true;
 				var dataid = [];
-				data.forEach((item) => {
+				data.forEach((item,index) => {
 						if (!item.answer) {
 							this.$refs.uToast.show({
 								title: "宝，请输入完整答案哦~",
@@ -53,14 +55,24 @@
 							});
 							flag = false;
 						} else {
-							dataid.push({
-								_id: item._id,
-								answer: item.answer
-							});
+							if(index!=3){
+								dataid.push({
+									_id: item._id,
+									answer: item.answer
+								});
+							}
 						}
 				});
 				if (!flag) {
 					return;
+				}else{
+					if(data[3].answer!="张哲瀚"){
+						this.$refs.uToast.show({
+							title: "答案错误",
+							type: 'error'
+						});
+						return;
+					}
 				}
 				uniCloud.callFunction({
 					name: 'jzfunction',
@@ -69,7 +81,6 @@
 						data: dataid
 					},
 				}).then((res) => {
-					console.log("res", JSON.stringify(res));
 					var res = res.result;
 					if (res.state == "0000") {
 						uni.setStorageSync("question_success",true);

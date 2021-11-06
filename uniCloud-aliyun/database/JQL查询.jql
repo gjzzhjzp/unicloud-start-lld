@@ -47,4 +47,9 @@ db.collection("opendb-news-categories").where({
     "icon": {
         "url": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-3a72b088-8226-498e-a9cc-a695d0ed4ce7/78aa12f5-2bde-4e56-91bf-2bed0e0bc92f.png"
     }
-})
+});
+
+db.collection("jz-custom-yqm").where({_id:"61864c5112f36000013b62c4"})
+			  .update({
+			   status:false
+			  });

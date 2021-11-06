@@ -14,7 +14,7 @@
 			<uni-forms-item label="确认密码" name="pwd2" v-model="formData.pwd2" required>
 				<uni-easyinput :inputBorder="false" class="easyinput" :placeholder="$t('register.passwordAgain')" type="password" v-model="formData.pwd2" trim="both" />
 			</uni-forms-item>
-			<uni-agreements @setAgree="agree = $event"></uni-agreements>
+			<!-- <uni-agreements @setAgree="agree = $event"></uni-agreements> -->
 			<button class="send-btn" type="primary" @click="submit">{{$t('register.registerAndLogin')}}</button>
 		</uni-forms>
 	</view>
@@ -34,7 +34,7 @@ import mixin from '../common/login-page.mixin.js';
 					'pwd2':''
 				},
 				rules,
-				agree:false
+				agree:true
 			}
 		},
 		onReady() {

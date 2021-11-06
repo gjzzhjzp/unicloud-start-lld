@@ -98,6 +98,36 @@
 				}
 			]
 		},
+		"is_encryption": {
+			"bsonType": "int",
+			"title": "是否加密",
+			"description": "是否加密：0 不加密 1 加密",
+			"defaultValue": 0,
+			"enum": [{
+					"value": 0,
+					"text": "不加密"
+				},
+				{
+					"value": 1,
+					"text": "加密"
+				}
+			]
+		},
+		"is_login": {
+			"bsonType": "int",
+			"title": "是否登录",
+			"description": "是否登录：0 不登录 1 登录",
+			"defaultValue": 0,
+			"enum": [{
+					"value": 0,
+					"text": "不登录"
+				},
+				{
+					"value": 1,
+					"text": "登录"
+				}
+			]
+		},
 		"is_sticky": {
 			"bsonType": "bool",
 			"title": "是否置顶",
@@ -110,28 +140,6 @@
 			"bsonType": "bool",
 			"title": "阅读加精",
 			"description": "阅读加精",
-			"permission": {
-				"write": false
-			}
-		},
-		"comment_status": {
-			"bsonType": "int",
-			"title": "开放评论",
-			"description": "评论状态：0 关闭  1 开放",
-			"defaultValue": 0,
-			"enum": [{
-					"value": 0,
-					"text": "关闭"
-				},
-				{
-					"value": 1,
-					"text": "开放"
-				}
-			]
-		},
-		"comment_count": {
-			"bsonType": "int",
-			"description": "评论数量",
 			"permission": {
 				"write": false
 			}
@@ -178,6 +186,13 @@
 			"bsonType": "string",
 			"title": "资源格式",
 			"description": "资源格式，如img图集,text文章，MP3音乐，mp4视频"
+		},
+		"aliyun_dz": {
+			"bsonType": "string",
+			"title": "外链",
+			"description": "请输入外链地址",
+			"label": "外链",
+			"trim": "both"
 		},
 		"excerpt": {
 			"bsonType": "string",

@@ -8,7 +8,7 @@
 			<image class="captcha-img" @click="createCaptcha" :src="captchaBase64" mode="widthFix"></image>
 			<input type="text" class="input-box captcha" :inputBorder="false" v-model="captcha" :placeholder="$t('pwdLogin.verifyCodePlaceholder')"/>
 		</view>
-		<uni-agreements @setAgree="agree = $event"></uni-agreements>
+		<!-- <uni-agreements @setAgree="agree = $event"></uni-agreements> -->
 		<button class="send-btn" :disabled="!canLogin" :type="canLogin?'primary':'default'"
 			@click="pwdLogin">{{$t('pwdLogin.login')}}</button>
 		<!-- 忘记密码 -->
@@ -28,7 +28,7 @@
 			return {
 				"password": "",
 				"username": "",
-				"agree": false,
+				"agree": true,
 				"captchaBase64":"",
 				"captcha":""
 			}

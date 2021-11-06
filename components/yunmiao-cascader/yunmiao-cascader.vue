@@ -74,7 +74,7 @@
 			},
 			//初始选中值
 			selectValue: {
-				type: Array,
+				type: [Array,String],
 				default: () => {
 					return [];
 				}
@@ -106,32 +106,54 @@
 		methods: {
 			// 初始化选中
 			defaultSelect() {
-				let selectData = this.selectData;
-				for (let i = 0; i < this.selectValue.length; i++) {
-					for (let y = 0; y < selectData.length; y++) {
-						if (selectData[y][this.valueName] == this.selectValue[i]) {
-							selectData[y].active = true;
-							break;
-						} else {
-							for (let x = 0; x < selectData[y].children.length; x++) {
-								if (selectData[y].children[x][this.valueName] == this.selectValue[i]) {
-									selectData[y].children[x].active = true;
-									selectData[y].child_active = true;
-									break;
-								} else {
-									for (let z = 0; z < selectData[y].children[x].children.length; z++) {
-										if (selectData[y].children[x].children[x][this.valueName] == this.selectValue[i]) {
-											selectData[y].children[x].children[x].active = true;
-											selectData[y].child_active = true;
-											selectData[y].children[x].child_active = true;
-											break;
-										}
-									}
-								}
-							}
-						}
-					}
+				// debugger;
+				var that=this;
+				var selectValue=this.selectValue;
+				if(typeof selectValue=="string"){
+					selectValue=selectValue.split(",");
 				}
+				let selectData = this.selectData;
+				if(selectData&&selectData.length>0){
+					setactive(selectData[0].children);
+				}
+				function setactive(ary){
+					ary.forEach((item,index)=>{
+						if(selectValue.indexOf(item[that.valueName])!=-1){
+							// debugger;
+							that.$set(item,"active",true);
+						}else{
+							that.$set(item,"active",false);
+						}
+						if(item.children&&item.children.length>0){
+							setactive(item.children);
+						}
+					});
+				}
+				// for (let i = 0; i < selectValue.length; i++) {
+				// 	for (let y = 0; y < selectData.length; y++) {
+				// 		if (selectData[y][this.valueName] == selectValue[i]) {
+				// 			selectData[y].active = true;
+				// 			break;
+				// 		} else {
+				// 			for (let x = 0; x < selectData[y].children.length; x++) {
+				// 				if (selectData[y].children[x][this.valueName] == selectValue[i]) {
+				// 					selectData[y].children[x].active = true;
+				// 					selectData[y].child_active = true;
+				// 					break;
+				// 				} else {
+				// 					for (let z = 0; z < selectData[y].children[x].children.length; z++) {
+				// 						if (selectData[y].children[x].children[x][this.valueName] == selectValue[i]) {
+				// 							selectData[y].children[x].children[x].active = true;
+				// 							selectData[y].child_active = true;
+				// 							selectData[y].children[x].child_active = true;
+				// 							break;
+				// 						}
+				// 					}
+				// 				}
+				// 			}
+				// 		}
+				// 	}
+				// }
 				return;
 			},
 			show() {

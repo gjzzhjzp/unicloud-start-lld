@@ -8,9 +8,8 @@
 			<view v-else-if="data">
 				<u-swipe-action :show="item.show" :index="index" v-for="(item, index) in list" :key="item._id"
 					@click="click" @open="open" :options="options">
-					<view class="item u-border-bottom">
+					<view class="item u-border-bottom" @click="todetail(item)">
 						<image mode="aspectFill" :src="item.images" />
-						<!-- 此层wrap在此为必写的，否则可能会出现标题定位错误 -->
 						<view class="title-wrap">
 							<text class="title u-line-2">{{ item.title }}</text>
 						</view>
@@ -33,7 +32,7 @@
 					contentnomore: ''
 				},
 				options: [{
-						text: '编辑/查看',
+						text: '编辑',
 						style: {
 							backgroundColor: '#007aff'
 						}
@@ -45,7 +44,7 @@
 						}
 					}
 				],
-				list:[]
+				list: []
 			}
 		},
 		onPullDownRefresh() {
@@ -58,34 +57,49 @@
 		onReachBottom() {
 			this.$refs.udb.loadMore()
 		},
+		onShow() {
+			this.reload();
+		},
 		methods: {
-			loadSuccess(data){
-				console.log("loadSuccess",data);
-				data.forEach((item)=>{
-					this.$set(item,"images",item.avatar.url);
-					this.$set(item,"show",false);
+			reload() {
+				if (this.$refs.udb) {
+					this.$refs.udb.loadData({
+						clear: true
+					}, () => {})
+				}
+			},
+			todetail(item) {
+				uni.navigateTo({
+					url: "/pages/detail/detail?id=" + item._id
 				});
-				this.list=data;
+			},
+			loadSuccess(data) {
+				console.log("loadSuccess", data);
+				data.forEach((item) => {
+					this.$set(item, "images", item.avatar.url);
+					this.$set(item, "show", false);
+				});
+				this.list = data;
 				return data;
 			},
 			click(index, index1) {
-				var id=this.list[index]._id;
+				var id = this.list[index]._id;
 				if (index1 == 1) {
 					this.handleDelete(id);
 				} else {
 					this.handleItemClick(id);
-					this.$set(this.list[index],"show",false);
+					this.$set(this.list[index], "show", false);
 				}
 			},
 			handleDelete(id) {
-			  this.$refs.udb.remove(id, {
-			    success: (res) => {
-			      // 删除数据成功后跳转到list页面
-			      uni.navigateTo({
-			        url: './list'
-			      })
-			    }
-			  })
+				this.$refs.udb.remove(id, {
+					success: (res) => {
+						// 删除数据成功后跳转到list页面
+						uni.navigateTo({
+			 			url: './list'
+						})
+					}
+				})
 			},
 			// 如果打开一个的时候，不需要关闭其他，则无需实现本方法
 			open(index) {
@@ -121,22 +135,22 @@
 
 <style>
 	.item {
-			display: flex;
-			padding: 20rpx;
-		}
-		
-		image {
-			width: 120rpx;
-			flex: 0 0 120rpx;
-			height: 120rpx;
-			margin-right: 20rpx;
-			border-radius: 12rpx;
-		}
-		
-		.title {
-			text-align: left;
-			font-size: 28rpx;
-			color: $u-content-color;
-			margin-top: 20rpx;
-		}
+		display: flex;
+		padding: 20rpx;
+	}
+
+	image {
+		width: 120rpx;
+		flex: 0 0 120rpx;
+		height: 120rpx;
+		margin-right: 20rpx;
+		border-radius: 12rpx;
+	}
+
+	.title {
+		text-align: left;
+		font-size: 28rpx;
+		color: $u-content-color;
+		margin-top: 20rpx;
+	}
 </style>

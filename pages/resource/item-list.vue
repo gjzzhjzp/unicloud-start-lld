@@ -1,6 +1,6 @@
 <template>
 	<view class="er-item-list">
-		<view class="er-item-list-warter" v-for="(item, index) in list" :key="index" @click="godetail(item)">
+		<view class="er-item-list-warter" v-for="(item, index) in list" :key="index" @click="toDetail(item)">
 			<u-lazy-load threshold="300" border-radius="10" :image="item.avatar.url" :index="index"></u-lazy-load>
 			<view class="er-item-list-title">
 				{{item.title}}
@@ -9,15 +9,23 @@
 				{{item.author}}
 			</view>
 		</view>
+		<u-modal v-model="showmodel" title="输入邀请码" :show-cancel-button="true" @confirm="confirm">
+			<view class="slot-content" style="padding: 10px;">
+				<u-input v-model="yqm" type="text" :border="true" placeholder="请输入邀请码"  />
+			</view>
+		</u-modal>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 <script>
+	import yqm from "../../components/jz-sy-list/yqm.js"
 	export default {
 		data() {
 			return {
 
 			}
 		},
+		mixins:[yqm],
 		props: {
 			list: {
 				type: Array,
@@ -30,11 +38,6 @@
 			console.log("list", this.list);
 		},
 		methods:{
-			godetail(item){
-				uni.navigateTo({
-					url:"/pages/detail/detail?id="+item._id
-				});
-			}
 		}
 	}
 </script>

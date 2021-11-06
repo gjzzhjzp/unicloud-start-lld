@@ -1,0 +1,34 @@
+{
+	"bsonType": "object",
+	"required": [],
+	"permission": {
+		"read": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"value": {
+			"bsonType": "string",
+			"description": "邀请码",
+			"title": "邀请码",
+			"trim": "both"
+		},
+		"status": {
+			"bsonType": "bool",
+			"defaultValue": true,
+			"title": "生效状态"
+		},
+		"date": {
+			"bsonType": "timestamp",
+			"title": "创建时间",
+			"description": "创建时间",
+			"defaultValue": {
+				"$env": "now"
+			},
+			"permission": {
+				"write": false
+			}
+		}
+	}
+}

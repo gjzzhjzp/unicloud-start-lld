@@ -1,9 +1,8 @@
 <template>
 	<view class="u-wrap">
-		<u-navbar :is-back="false" title="分区"></u-navbar>
-		<view class="u-search-box">
-			<jz-search></jz-search>
-		</view>
+		<jz-navbar>
+			<view class="jz-navbar-title">分类</view>
+		</jz-navbar>
 		<view class="u-menu-wrap">
 			<scroll-view scroll-y scroll-with-animation class="u-tab-view menu-scroll-view" :scroll-top="scrollTop"
 			 :scroll-into-view="itemId">
@@ -202,6 +201,7 @@
 		flex: 1;
 		display: flex;
 		overflow: hidden;
+		margin-top: 10rpx;
 	}
 
 	.u-search-inner {
@@ -286,6 +286,7 @@
 		font-weight: normal;
 		font-size: 24rpx;
 		color: $u-main-color;
+		margin-top: 6px;
 	}
 
 	.item-container {
@@ -300,11 +301,12 @@
 		justify-content: center;
 		flex-direction: column;
 		margin-top: 20rpx;
+		padding: 10rpx;
 	}
 
 	.item-menu-image {
-		width: 120rpx;
-		height: 120rpx;
-		border-radius: 50%;
+		width: 100%;
+		height: 80rpx;
+		border-radius: 6px;
 	}
 </style>

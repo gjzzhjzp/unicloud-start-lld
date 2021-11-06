@@ -16,10 +16,8 @@
 		},
 		"open_url": {
 			"bsonType": "string",
-			"description": "点击跳转目标地址。如果是web地址则使用内置web-view打开；如果是本地页面则跳转本地页面；如果是schema地址则打开本地的app",
-			"title": "点击目标地址",
-			"format": "url",
-			"pattern": "^(http:\/\/|https:\/\/|\/|.\/|@\/)\\S",
+			"description": "点击跳转目标地址",
+			"title": "跳转地址",
 			"trim": "both"
 		},
 		"title": {
@@ -34,10 +32,24 @@
 			"description": "数字越小，排序越前",
 			"title": "排序"
 		},
-		"category_id": {
-			"bsonType": "string",
-			"description": "多个栏目的banner都存在一个表里时可用这个字段区分",
-			"title": "分类id"
+		"type": {
+			"bsonType": "int",
+			"title": "类型",
+			"description": "类型：0 首页轮播 1 俊哲轮播 2 山总轮播",
+			"defaultValue": 0,
+			"enum": [{
+					"value": 0,
+					"text": "首页"
+				},
+				{
+					"value": 1,
+					"text": "俊哲"
+				},
+				{
+					"value": 2,
+					"text": "山总"
+				}
+			]
 		},
 		"status": {
 			"bsonType": "bool",

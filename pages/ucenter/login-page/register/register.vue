@@ -1,7 +1,16 @@
 <template>
-	<view class="uni-container er-register">
-		<text class="title">用户注册</text>
-		<uni-forms ref="form" :value="formData" :rules="rules" validate-trigger="submit" err-show-type="undertext" label-width="120px" label-position="right">
+	<view class=" er-register">
+		<view class="login-back">
+			<view class="usercenter-top">
+				<view class="usercenter-top-left" @click="goback">
+					<u-icon name="close" color="#fff" :size="40"></u-icon>
+				</view>
+				<view class="usercenter-top-mine">
+					用户注册
+				</view>
+			</view>
+			<view class="login-back-con">
+		<uni-forms ref="form" :value="formData" :rules="rules" validate-trigger="submit" err-show-type="undertext" label-width="140px" label-position="right">
 			<uni-forms-item label="用户名" name="username" required>
 				<uni-easyinput :inputBorder="false" class="easyinput" :placeholder="$t('register.usernamePlaceholder')" v-model="formData.username" trim="both" />
 			</uni-forms-item>
@@ -15,11 +24,12 @@
 				<uni-easyinput :inputBorder="false" class="easyinput" :placeholder="$t('register.passwordAgain')" type="password" v-model="formData.pwd2" trim="both" />
 			</uni-forms-item>
 			<!-- <uni-agreements @setAgree="agree = $event"></uni-agreements> -->
-			<button class="send-btn" type="primary" @click="submit">{{$t('register.registerAndLogin')}}</button>
+			<u-button class="send-btn" type="primary" @click="submit">{{$t('register.registerAndLogin')}}</u-button>
 		</uni-forms>
+		</view>
+		</view>
 	</view>
 </template>
-
 <script>
 import rules from './validator.js';
 import mixin from '../common/login-page.mixin.js';
@@ -46,6 +56,9 @@ import mixin from '../common/login-page.mixin.js';
 			})
 		},
 		methods: {
+			goback(){
+				uni.navigateBack();
+			},
 			/**
 			 * 触发表单提交
 			 */
@@ -105,7 +118,43 @@ import mixin from '../common/login-page.mixin.js';
 	.send-btn{
 		margin-top: 5px;
 	}
-	.uni-container ::v-deep .uni-forms-item__label{
+	.er-register ::v-deep .uni-forms-item__label{
 		width: 70px !important;
+	}
+	
+	.usercenter-top {
+		color: #fff;
+		font-size: 16px;
+		height: 44px;
+		line-height: 44px;
+	}
+	
+	.usercenter-top-left {
+		position: absolute;
+		left: 4px;
+		top: 12px;
+	
+	}
+	
+	.usercenter-top-mine {
+		text-align: center;
+	}
+	
+	.login-back {
+		height: calc(100vh - 44px);
+		background-image: url(/static/center/login.png);
+		background-size: contain;
+		background-repeat: no-repeat;
+	}
+	.login-back-con {
+		    width: 80%;
+		    margin: 250px auto 0px auto;
+	}
+	.login-back-con .u-btn{
+		    border-radius: 50px;
+	}
+	.login-back-con .input-box{
+		    height: 40px;
+		    line-height: 40px;
 	}
 </style>

@@ -72,6 +72,7 @@
 			},
 			reset() {
 				let data =[];
+				console.log("this.data.resources",this.data.resources);
 				this.data.resources.forEach((item)=>{
 					data.push({
 						src: item.url,
@@ -85,23 +86,25 @@
 			},
 			add() {
 				let data = [
-					{
-						src: 'https://96.f.1ting.com/local_to_cube_202004121813/96kmp3/jn/12.jlhg/8.zhg/2.mp3',
-						title: '天边',
-						singer: '作者222',
-						coverImgUrl: 'https://img.1ting.com/images/special/377/s300_4631dc844ab6429b6bc6fe4ccdc6ed6f.jpg'
-					}
+					// {
+					// 	src: 'https://96.f.1ting.com/local_to_cube_202004121813/96kmp3/jn/12.jlhg/8.zhg/2.mp3',
+					// 	title: '天边',
+					// 	singer: '作者222',
+					// 	coverImgUrl: 'https://img.1ting.com/images/special/377/s300_4631dc844ab6429b6bc6fe4ccdc6ed6f.jpg'
+					// }
 				];
 				this.$zaudio.updateAudio(data);
 			},
 			//异步加载音频并渲染
 			asyncSetAudio() {
-				let data = [{
-						src: 'https://96.f.1ting.com/local_to_cube_202004121813/96kmp3/zzzzzmp3/2014iSep/15F/15xwsk/21.mp3',
-						title: '蓝莲花',
-						singer: '许巍',
-						coverImgUrl: 'https://img.1ting.com/images/special/358/s100_6d9c9a3f9f67fa76b041561ff0042ae4.jpg'
-					}];
+				let data = [
+					// {
+					// 	src: 'https://96.f.1ting.com/local_to_cube_202004121813/96kmp3/zzzzzmp3/2014iSep/15F/15xwsk/21.mp3',
+					// 	title: '蓝莲花',
+					// 	singer: '许巍',
+					// 	coverImgUrl: 'https://img.1ting.com/images/special/358/s100_6d9c9a3f9f67fa76b041561ff0042ae4.jpg'
+					// },
+					];
 					
 					uni.showLoading()
 					setTimeout(()=>{

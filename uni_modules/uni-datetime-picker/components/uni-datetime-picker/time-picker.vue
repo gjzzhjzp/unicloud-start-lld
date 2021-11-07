@@ -804,7 +804,7 @@
 
 	.uni-datetime-picker-btn-text {
 		font-size: 14px;
-		color: #007AFF;
+		color: #7275D3;
 	}
 
 	.uni-datetime-picker-btn-group {

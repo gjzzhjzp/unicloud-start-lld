@@ -6,16 +6,20 @@
 				<!-- 	#ifdef APP-PLUS
 				<uni-icons class="search-icons" :color="iconColor" size="22" type="mic-filled" @click="speech" />
 			 #endif -->
-				<uni-search-bar ref="searchBar" style="flex:1;" radius="100" v-model="searchText" :focus="focus"
+			 <u-navbar :is-back="true" back-icon-name="arrow-leftward" :back-icon-size="40">
+			 	<u-search border-color="#7275D3" bg-color="#fff" v-model="searchText" height="60" :placeholder="hotWorld" @search="confirm" @custom="confirm"
+			 		:show-action="true"></u-search>
+			 </u-navbar>
+				<!-- <uni-search-bar ref="searchBar" style="flex:1;" radius="100" v-model="searchText" :focus="focus"
 					:placeholder="hotWorld" :cancelText="keyBoardPopup ? '取消' : '搜索'" clearButton="auto" cancelButton="always" @clear="clear" @confirm="confirm"
-					@cancel="cancel" />
+					@cancel="cancel" /> -->
 			</view>
 		</view>
 		<view class="search-body">
 			<!-- 搜索历史 -->
 			<view class="word-container" v-if="localSearchList.length">
 				<view class="word-container_header">
-					<text class="word-container_header-text">搜索历史</text>
+					<text class="word-container_header-text">历史搜索</text>
 					<uni-icons v-if="!localSearchListDel" @click="localSearchListDel = true" class="search-icons"
 						style="padding-right: 0;" :color="iconColor" size="18" type="trash"></uni-icons>
 					<view v-else class="flex-center flex-row" style="font-weight: 500;justify-content: space-between;">
@@ -27,7 +31,6 @@
 							@click="localSearchListDel = false">完成</text>
 					</view>
 				</view>
-
 				<view class="word-container_body">
 					<view class="flex-center flex-row word-container_body-text" v-for="(word,index) in localSearchList"
 						:key="index" @click="LocalSearchlistItemClick(word,index)">
@@ -149,7 +152,7 @@
 				iconColor: '#999999',
 				associativeList: [],
 				keyBoardPopup: false,
-				hotWorld: '俊哲', //	搜索热词，如果没有输入即回车，则搜索热词，但是不会加入搜索记录
+				hotWorld: '', //	搜索热词，如果没有输入即回车，则搜索热词，但是不会加入搜索记录
 				focus: true, //	是否自动聚焦
 				speechEngine: 'iFly' //	语音识别引擎 iFly 讯飞 baidu 百度
 			}
@@ -510,5 +513,9 @@
 				}
 			}
 		}
+	}
+	.word-container_body-text,.word-display{
+		background-color:#E4E4F4 ;
+		color: #7275D3;
 	}
 </style>

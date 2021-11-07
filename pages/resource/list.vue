@@ -1,7 +1,7 @@
 <template>
 	<view class="wrap">
 		<u-navbar :is-back="true" title="列表"></u-navbar>
-		<jz-search></jz-search>
+		<!-- <jz-search></jz-search> -->
 		<!-- <uni-search-bar @click="searchClick" class="uni-search-box" v-model="keyword" ref="searchBar" radius="100"
 			cancelButton="none" disabled :placeholder="inputPlaceholder" /> -->
 		<u-waterfall v-model="flowList" ref="uWaterfall">

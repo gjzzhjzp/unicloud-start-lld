@@ -1,6 +1,6 @@
 <template>
 	<view class="jz-container">
-		<jz-navbar>
+		<jz-navbar :issy="false">
 			<view class="jz-navbar-title">俊哲</view>
 		</jz-navbar>
 		<view>

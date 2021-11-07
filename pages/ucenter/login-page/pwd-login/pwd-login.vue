@@ -1,22 +1,35 @@
 <template>
-	<view class="content pwd-login">
-		<!-- 顶部文字 -->
-		<text class="title">用户登录</text>
-		<input class="input-box" :inputBorder="false" v-model="username" :placeholder="$t('pwdLogin.placeholder')"/>
-		<input type="password" class="input-box" :inputBorder="false" v-model="password" :placeholder="$t('pwdLogin.passwordPlaceholder')"/>
-		<view class="captcha-box" v-if="captchaBase64">
-			<image class="captcha-img" @click="createCaptcha" :src="captchaBase64" mode="widthFix"></image>
-			<input type="text" class="input-box captcha" :inputBorder="false" v-model="captcha" :placeholder="$t('pwdLogin.verifyCodePlaceholder')"/>
+	<view class=" pwd-login">
+		<!-- <u-navbar :is-back="true" title="用户登录"></u-navbar> -->
+		<view class="login-back">
+			<view class="usercenter-top">
+				<view class="usercenter-top-left" @click="goback">
+					<u-icon name="close" color="#fff" :size="40"></u-icon>
+				</view>
+				<view class="usercenter-top-mine">
+					用户登录
+				</view>
+			</view>
+			<view class="login-back-con">
+				<input class="input-box" :inputBorder="false" v-model="username"
+					:placeholder="$t('pwdLogin.placeholder')" />
+				<input type="password" class="input-box" :inputBorder="false" v-model="password"
+					:placeholder="$t('pwdLogin.passwordPlaceholder')" />
+				<view class="captcha-box" v-if="captchaBase64">
+					<image class="captcha-img" @click="createCaptcha" :src="captchaBase64" mode="widthFix"></image>
+					<input type="text" class="input-box captcha" :inputBorder="false" v-model="captcha"
+						:placeholder="$t('pwdLogin.verifyCodePlaceholder')" />
+				</view>
+				<!-- <uni-agreements @setAgree="agree = $event"></uni-agreements> -->
+				<view class="auth-box">
+					<!-- <text class="link" @click="toRetrievePwd">{{$t('pwdLogin.forgetPassword')}}</text> -->
+					<text class="link" @click="toRegister">{{$t('pwdLogin.register')}}</text>
+				</view>
+				<u-button class="send-btn" :disabled="!canLogin" type="primary"
+					@click="pwdLogin">{{$t('pwdLogin.login')}}</u-button>
+			</view>
+			<!-- <uni-quick-login :agree="agree" ref="uniQuickLogin"></uni-quick-login> -->
 		</view>
-		<!-- <uni-agreements @setAgree="agree = $event"></uni-agreements> -->
-		<button class="send-btn" :disabled="!canLogin" :type="canLogin?'primary':'default'"
-			@click="pwdLogin">{{$t('pwdLogin.login')}}</button>
-		<!-- 忘记密码 -->
-		<view class="auth-box">
-			<!-- <text class="link" @click="toRetrievePwd">{{$t('pwdLogin.forgetPassword')}}</text> -->
-			<text class="link" @click="toRegister">{{$t('pwdLogin.register')}}</text>
-		</view>
-		<!-- <uni-quick-login :agree="agree" ref="uniQuickLogin"></uni-quick-login> -->
 	</view>
 </template>
 
@@ -29,8 +42,8 @@
 				"password": "",
 				"username": "",
 				"agree": true,
-				"captchaBase64":"",
-				"captcha":""
+				"captchaBase64": "",
+				"captcha": ""
 			}
 		},
 		computed: {
@@ -45,6 +58,9 @@
 			},
 		},
 		methods: {
+			goback(){
+				uni.navigateBack();
+			},
 			// 页面跳转，找回密码
 			toRetrievePwd() {
 				uni.navigateTo({
@@ -64,16 +80,18 @@
 				}
 				// 下边是可以登录
 				uniCloud.callFunction({
-					name:'uni-id-cf',
-					data:{
-						action:'login',
-						params:{
+					name: 'uni-id-cf',
+					data: {
+						action: 'login',
+						params: {
 							"username": this.username,
 							"password": this.password,
-							"captcha":this.captcha
+							"captcha": this.captcha
 						},
 					},
-					success: ({result}) => {
+					success: ({
+						result
+					}) => {
 						console.log(result);
 						if (result.code === 0) {
 							this.loginSuccess(result)
@@ -84,7 +102,7 @@
 									icon: 'none'
 								});
 								this.createCaptcha()
-							}else{
+							} else {
 								uni.showModal({
 									title: this.$t('common').error,
 									content: result.msg,
@@ -96,19 +114,21 @@
 					}
 				})
 			},
-			createCaptcha(){
+			createCaptcha() {
 				uniCloud.callFunction({
-					name:'uni-id-cf',
-					data:{
-						action:'createCaptcha',
-						params:{
+					name: 'uni-id-cf',
+					data: {
+						action: 'createCaptcha',
+						params: {
 							scene: "login"
 						},
 					},
-					success: ({result}) => {
+					success: ({
+						result
+					}) => {
 						if (result.code === 0) {
 							this.captchaBase64 = result.captchaBase64
-						}else{
+						} else {
 							uni.showModal({
 								content: result.msg,
 								showCancel: false
@@ -130,16 +150,42 @@
 
 <style>
 	@import url("../common/login-page.css");
-	.pwd-login{
+
+	.usercenter-top {
+		color: #fff;
+		font-size: 16px;
+		height: 44px;
+		line-height: 44px;
+	}
+
+	.usercenter-top-left {
+		position: absolute;
+		left: 4px;
+		top: 12px;
+
+	}
+
+	.usercenter-top-mine {
+		text-align: center;
+	}
+
+	.login-back {
+		height: calc(100vh - 44px);
+		background-image: url(/static/center/login.png);
+		background-size: contain;
+		background-repeat: no-repeat;
+	}
+
+	/* .pwd-login{
 		padding-top: 10em;
 	}
 	.pwd-login .title{
 		font-size: 24px;
 		margin-bottom: 20px;
-	}
+	} */
 	.auth-box {
 		flex-direction: row;
-		    justify-content: right;
+		justify-content: right;
 		margin-top: 20px;
 	}
 
@@ -155,16 +201,31 @@
 		margin-top: 80px;
 		width: 600rpx;
 	}
-	.captcha-box{
+
+	.captcha-box {
 		flex-direction: row;
 		align-items: center;
 		justify-content: flex-end;
 	}
-	.captcha-img{
-		margin:15px 15px 0 0;
+
+	.captcha-img {
+		margin: 15px 15px 0 0;
 		width: 250rpx;
 	}
-	.captcha{
+
+	.captcha {
 		width: 350rpx;
+	}
+
+	.login-back-con {
+		    width: 80%;
+		    margin: 250px auto 0px auto;
+	}
+	.login-back-con .u-btn{
+		    border-radius: 50px;
+	}
+	.login-back-con .input-box{
+		    height: 40px;
+		    line-height: 40px;
 	}
 </style>

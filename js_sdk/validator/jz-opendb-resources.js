@@ -2,22 +2,6 @@
 
 
 const validator = {
-  "categories": {
-    "rules": [
-      {
-        "format": "string"
-      }
-    ],
-    "label": "分类"
-  },
-  "labels": {
-    "rules": [
-      {
-        "format": "string"
-      }
-    ],
-    "label": "标签"
-  },
   "author": {
     "rules": [
       {
@@ -40,50 +24,35 @@ const validator = {
     ],
     "label": "标题"
   },
-  "article_status": {
+  "categories": {
     "rules": [
       {
-        "format": "int"
-      },
-      {
-        "range": [
-          {
-            "value": 0,
-            "text": "锁定"
-          },
-          {
-            "value": 1,
-            "text": "启用"
-          }
-        ]
+        "format": "string"
       }
     ],
-    "defaultValue": 0,
-    "label": "文章状态"
+    "label": "分类"
   },
-  "comment_status": {
+  "categorieszw": {
     "rules": [
       {
-        "format": "int"
-      },
-      {
-        "range": [
-          {
-            "value": 0,
-            "text": "关闭"
-          },
-          {
-            "value": 1,
-            "text": "开放"
-          }
-        ]
+        "format": "string"
       }
     ],
-    "defaultValue": 0,
-    "label": "开放评论"
+    "label": "分类中文"
+  },
+  "labels": {
+    "rules": [
+      {
+        "format": "string"
+      }
+    ],
+    "label": "标签"
   },
   "avatar": {
     "rules": [
+      {
+        "required": true
+      },
       {
         "format": "file"
       }
@@ -109,32 +78,74 @@ const validator = {
     ],
     "label": "资源格式"
   },
+  "aliyun_dz": {
+    "rules": [
+      {
+        "format": "string"
+      }
+    ],
+    "label": "外链"
+  },
   "excerpt": {
     "rules": [
       {
         "format": "string"
       }
     ],
-    "label": "摘要"
+    "label": "内容"
   },
-  "content": {
+  "is_grant": {
     "rules": [
       {
-        "format": "string"
+        "format": "int"
+      },
+      {
+        "range": [
+          {
+            "value": 0,
+            "text": "未授权"
+          },
+          {
+            "value": 1,
+            "text": "已授权"
+          }
+        ]
       }
     ],
-    "label": "内容"
+    "defaultValue": 0,
+    "label": "是否授权"
+  },
+  "is_encryption": {
+    "rules": [
+      {
+        "format": "int"
+      },
+      {
+        "range": [
+          {
+            "value": 0,
+            "text": "不加密"
+          },
+          {
+            "value": 1,
+            "text": "加密"
+          }
+        ]
+      }
+    ],
+    "defaultValue": 0,
+    "label": "是否加密"
   }
 }
 
 const enumConverter = {
-  "article_status_valuetotext": {
-    "0": "锁定",
-    "1": "启用"
+  "is_grant_valuetotext": {
+    "0": "未授权",
+    "1": "已授权"
   },
-  "comment_status_valuetotext": {
-    "0": "关闭",
-    "1": "开放"
+  "is_encryption_valuetotext": {
+    "0": "不加密",
+    "1": "加密"
   }
 }
 

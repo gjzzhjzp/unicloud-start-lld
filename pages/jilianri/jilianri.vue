@@ -1,6 +1,8 @@
 <template>
 	<view>
-		<u-navbar  title="纪恋日"></u-navbar>
+		<jz-navbar :issy="false">
+			<view class="jz-navbar-title">纪念日</view>
+		</jz-navbar>
 		<jz-tabbar></jz-tabbar>
 	</view>
 </template>

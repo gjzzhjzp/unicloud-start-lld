@@ -26,7 +26,8 @@
 			<!-- {{data.excerpt}} -->
 		</view>
 		<view class="detail-image-item" v-for="(item,index) in data.resources" :key="index">
-			<u-lazy-load @click="previewOpen(item)" threshold="300" border-radius="10" :image="item.url" :index="index"></u-lazy-load>
+			<image :src="item.url" lazy-load @click="previewOpen(item)" :index="index" mode="widthFix"></image>
+			<!-- <u-lazy-load @click="previewOpen(item)" threshold="300" border-radius="10" :image="item.url" :index="index"></u-lazy-load> -->
 		</view>
 		<kxj-previewImage ref="previewImage" :imgs="imgs"></kxj-previewImage>
 	</view>
@@ -125,5 +126,9 @@
 
 	.detail-image-item {
 		margin: 20rpx 0;
+	}
+	.detail-image-item image{
+		width: 100%;
+		border-radius: 10px;
 	}
 </style>

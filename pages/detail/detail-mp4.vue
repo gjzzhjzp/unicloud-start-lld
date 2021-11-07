@@ -21,7 +21,7 @@
 		<view class="detail-mp4-jj">
 			简介：{{data.excerpt}}
 		</view>
-		<view class="detail-mp4-list" v-if="list.length>1">
+		<view class="detail-mp4-list" v-if="list.length>0">
 			<u-row gutter="20">
 				<u-col span="3" v-for="(item,index) in list">
 					<u-button @click="clickBf(item)" size="medium" :type="item.selected?'primary':''">{{index+1}}
@@ -56,10 +56,11 @@
 					selected: index == 0 ? true : false
 				});
 			});
-			this.src = this.data.resources[0];
+			this.src = this.data.resources[0].url;
 		},
 		methods: {
 			clickBf(item) {
+				console.log("item",item);
 				this.src = item.src;
 				this.list.forEach((item1,index)=>{
 					this.$set(item1,"selected",false);

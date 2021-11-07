@@ -115,7 +115,7 @@ const { about } = config
     }
 
     .hl {
-        color: #007AFF;
+        color: #7275D3;
     }
 
     .service {

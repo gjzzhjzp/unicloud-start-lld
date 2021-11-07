@@ -1,20 +1,16 @@
 <template>
 	<view class="jz-sy-list">
 		<template v-show="!isEmpty">
-			<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}"
-				collection="jz-opendb-resources" :where="where" field="author,title,avatar,is_encryption"
-				@load="loadSuccess">
 				<u-row gutter="4">
-					<u-col span="4" class="jz-sy-item" v-for="(item,index) in data" :key="index">
+					<u-col span="4" class="jz-sy-item" v-for="(item,index) in list" :key="index">
 						<view class="jz-sy-list-item" @click="toDetail(item)">
 							<view>
 								<u-image width="100%" height="140rpx" :src="item.avatar.url"></u-image>
 							</view>
-							<!-- <view>{{item.title}}</view> -->
+							<view class="jz-sy-list-text">{{item.title}}</view>
 						</view>
 					</u-col>
 				</u-row>
-			</unicloud-db>
 		</template>
 		<template v-if="isEmpty">
 			<u-empty text="数据为空" mode="list"></u-empty>
@@ -32,30 +28,62 @@
 	export default {
 		data() {
 			return {
+				list:[],
 				where: "",
 				isEmpty: true
 			}
 		},
+		props:{
+			type:{
+				type:String,
+				default(){
+					return ""
+				}
+			}
+		},
 		mixins:[yqm],
 		created() {
-			this.where = 'article_status==1';
+			// this.where = 'article_status==1';
+			this.getList();
 		},
 		methods: {
-			
-			// 数据加载完成
-			loadSuccess(data) {
-				console.log("loadSuccess", data);
-				if (data && data.length > 0) {
-					this.isEmpty = false;
-				} else {
-					this.isEmpty = false;
-				}
+			getList() {
+				uniCloud.callFunction({
+					name: 'jzfunction',
+					data: {
+						action: 'resource/getList',
+						data:{
+							type:this.type
+						}
+					},
+				}).then((res) => {
+					var res = res.result;
+					console.log("res",res)
+					if (res.state == "0000") {
+						this.list = res.rows;
+						if(this.list.length>0){
+							this.isEmpty = false;
+						}else{
+							this.isEmpty = true;
+						}
+					} else {
+						this.$refs.uToast.show({
+							title: res.msg,
+							type: 'error'
+						});
+					}
+				});
 			},
 		}
 	}
 </script>
-<style>
+<style lang="scss">
 	.jz-sy-list-item {
 		margin: 6px 4px;
+	}
+	.jz-sy-list-text{
+		color:$u-type-primary;
+		margin-top: 10rpx;
+		margin-left: 10rpx;
 	}
 </style>

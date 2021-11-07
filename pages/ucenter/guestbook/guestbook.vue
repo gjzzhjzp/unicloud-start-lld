@@ -217,7 +217,7 @@
 	}
 
 	.submit-box .btn.active {
-		background-color: #007aff;
+		background-color: #7275D3;
 		color: #FFFFFF;
 	}
 </style>

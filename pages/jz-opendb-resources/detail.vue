@@ -1,19 +1,11 @@
 <template>
   <view class="container">
-    <unicloud-db ref="udb" v-slot:default="{data, loading, error, options}" :options="options" collection="jz-opendb-resources" field="categories,labels,author,title,article_status,comment_status,avatar,resources,zy_gs,excerpt,content" :where="queryWhere" :getone="true" :manual="true">
+    <unicloud-db ref="udb" v-slot:default="{data, loading, error, options}" :options="options" collection="jz-opendb-resources" field="author,title,categories,categorieszw,labels,avatar,resources,zy_gs,aliyun_dz,excerpt,is_grant,is_encryption" :where="queryWhere" :getone="true" :manual="true">
       <view v-if="error">{{error.message}}</view>
       <view v-else-if="loading">
         <uni-load-more :contentText="loadMore" status="loading"></uni-load-more>
       </view>
       <view v-else-if="data">
-        <view>
-          <text>分类</text>
-          <text>{{data.categories}}</text>
-        </view>
-        <view>
-          <text>标签</text>
-          <text>{{data.labels}}</text>
-        </view>
         <view>
           <text>作者</text>
           <text>{{data.author}}</text>
@@ -23,12 +15,16 @@
           <text>{{data.title}}</text>
         </view>
         <view>
-          <text>文章状态</text>
-          <text>{{options.article_status_valuetotext[data.article_status]}}</text>
+          <text>分类</text>
+          <text>{{data.categories}}</text>
         </view>
         <view>
-          <text>开放评论</text>
-          <text>{{options.comment_status_valuetotext[data.comment_status]}}</text>
+          <text>分类中文</text>
+          <text>{{data.categorieszw}}</text>
+        </view>
+        <view>
+          <text>标签</text>
+          <text>{{data.labels}}</text>
         </view>
         <view>
           <text>封面大图</text>
@@ -48,12 +44,20 @@
           <text>{{data.zy_gs}}</text>
         </view>
         <view>
-          <text>摘要</text>
-          <text>{{data.excerpt}}</text>
+          <text>外链</text>
+          <text>{{data.aliyun_dz}}</text>
         </view>
         <view>
           <text>内容</text>
-          <text>{{data.content}}</text>
+          <text>{{data.excerpt}}</text>
+        </view>
+        <view>
+          <text>是否授权</text>
+          <text>{{options.is_grant_valuetotext[data.is_grant]}}</text>
+        </view>
+        <view>
+          <text>是否加密</text>
+          <text>{{options.is_encryption_valuetotext[data.is_encryption]}}</text>
         </view>
       </view>
     </unicloud-db>

@@ -1,6 +1,6 @@
 <template>
 	<view class="u-wrap">
-		<jz-navbar>
+		<jz-navbar :issy="false">
 			<view class="jz-navbar-title">分类</view>
 		</jz-navbar>
 		<view class="u-menu-wrap">
@@ -247,10 +247,10 @@
 	.u-tab-item-active::before {
 		content: "";
 		    position: absolute;
-		    border-left: 4px solid #7275D3;
-		    height: 30px;
+		    border-left: 2px solid #7275D3;
+		    height: 50px;
 		    left: 0;
-		    top: 12px;
+		    top: 2px;
 	}
 
 	.u-tab-view {
@@ -306,7 +306,7 @@
 
 	.item-menu-image {
 		width: 100%;
-		height: 80rpx;
+		height: 100rpx;
 		border-radius: 6px;
 	}
 </style>

@@ -1,7 +1,13 @@
 <template>
 	<view>
-		<u-search border-color="#7275D3" placeholder="搜索..." bg-color="#fff" @focus="searchClick" v-model="keyword" @search="searchClick" @custom="searchClick"
+		<!-- <u-navbar :is-back="true" back-icon-name="arrow-leftward" :back-icon-size="40">
+			<u-search border-color="#7275D3" bg-color="#fff" v-model="keyword" height="60" placeholder="搜索..." @search="searchClick" @custom="searchClick"
+				:show-action="true"></u-search>
+		</u-navbar> -->
+		<u-search border-color="#7275D3" bg-color="#fff" v-model="keyword" height="60" placeholder="搜索..." @search="searchClick" @custom="searchClick"
 			:show-action="true"></u-search>
+		<!-- <u-search border-color="#7275D3" placeholder="搜索..." bg-color="#fff" @focus="searchClick" v-model="keyword" @search="searchClick" @custom="searchClick"
+			:show-action="true"></u-search> -->
 	</view>
 </template>
 

@@ -35,5 +35,8 @@
 	}
 </script>
 
-<style>
+<style lang="scss">
+	.grid-text{
+		color:$u-type-primary;
+	}
 </style>

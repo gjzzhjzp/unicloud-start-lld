@@ -1,14 +1,14 @@
 <template>
 	<view class="jz-container">
-		<u-navbar :is-back="true" title="资源详情"></u-navbar>
+		<u-navbar :is-back="true" :title="title"></u-navbar>
 		<view>
-			<template v-if="detaildata.zy_gs=='jpg'||detaildata.zy_gs=='png'">
+			<template v-if="zy_gs=='jpg'||zy_gs=='png'||zy_gs=='gif'">
 				<detail-image :data="detaildata"></detail-image>
 			</template>
-			<template v-else-if="detaildata.zy_gs=='mp4'">
+			<template v-else-if="zy_gs=='mp4'">
 				<detail-mp4 :data="detaildata"></detail-mp4>
 			</template>
-			<template v-else-if="detaildata.zy_gs=='mp3'">
+			<template v-else-if="zy_gs=='mp3'">
 				<detail-mp3 :data="detaildata"></detail-mp3>
 			</template>
 		</view>
@@ -28,8 +28,10 @@
 	export default{
 		data(){
 			return {
+				title:"资源详情",
 				detaildata:{},
-				id:""
+				id:"",
+				zy_gs:"image"///当前资源格式
 			}
 		},
 		components:{detailImage,detailMp4,detailMp3},
@@ -64,6 +66,10 @@
 					if (res.state == "0000") {
 						this.detaildata=res.rows[0];
 						console.log("this.detaildata",this.detaildata);
+						this.title=this.detaildata.title;
+						if(this.detaildata.resources&&this.detaildata.resources.length>0){
+							this.zy_gs=this.detaildata.resources[0].extname;
+						}
 						this.tohistory();
 					} else {
 						console.log("res",res.msg);

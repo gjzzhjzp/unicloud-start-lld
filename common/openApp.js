@@ -22,7 +22,7 @@ export default function() {
 			${openLogo}
 			<div style="padding-left: 0.3rem;font-size: 12px;">${CONFIG_OPEN.appname || ''}</div>
 		</div>
-		<div class="openBtn" style="padding: 5px;font-size:12px;border-radius: 2px;border: 1px solid #007AFF;color: #007AFF;">下载app</div>
+		<div class="openBtn" style="padding: 5px;font-size:12px;border-radius: 2px;border: 1px solid #7275D3;color: #7275D3;">下载app</div>
 	`;
 	document.body.insertBefore(openApp, document.body.firstChild);
 	document.body.style = 'height:calc(100% - 45px); margin-top:45px;';

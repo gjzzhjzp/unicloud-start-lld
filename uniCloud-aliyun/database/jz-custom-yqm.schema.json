@@ -2,11 +2,51 @@
 	"bsonType": "object",
 	"required": [],
 	"permission": {
-		"read": true
+		"read": true,
+		"create": "auth.uid != null",
+		"update": true,
+		"delete": true
 	},
 	"properties": {
 		"_id": {
 			"description": "ID，系统自动生成"
+		},
+		"user_id": {
+			"bsonType": "string",
+			"description": "申请邀请码用户id",
+			"forceDefaultValue": {
+				"$env": "uid"
+			},
+			"foreignKey": "uni-id-users._id"
+		},
+		"user_name_type": {
+			"bsonType": "int",
+			"title": "账号平台",
+			"description": "账号平台：0 微博 1 抖音",
+			"defaultValue": 0,
+			"enum": [{
+					"value": 0,
+					"text": "微博"
+				},
+				{
+					"value": 1,
+					"text": "抖音"
+				}
+			]
+		},
+		"user_name": {
+			"bsonType": "string",
+			"title": "账号昵称",
+			"description": "账号昵称",
+			"trim": "both"
+		},
+		"manager_id": {
+			"bsonType": "string",
+			"description": "创建邀请码用户id",
+			"forceDefaultValue": {
+				"$env": "uid"
+			},
+			"foreignKey": "uni-id-users._id"
 		},
 		"value": {
 			"bsonType": "string",
@@ -16,18 +56,15 @@
 		},
 		"status": {
 			"bsonType": "bool",
-			"defaultValue": true,
+			"defaultValue": false,
 			"title": "生效状态"
 		},
 		"date": {
 			"bsonType": "timestamp",
 			"title": "创建时间",
 			"description": "创建时间",
-			"defaultValue": {
+			"forceDefaultValue": {
 				"$env": "now"
-			},
-			"permission": {
-				"write": false
 			}
 		}
 	}

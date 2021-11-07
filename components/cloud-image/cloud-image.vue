@@ -1,6 +1,6 @@
 <template>
 	<view @click="onClick" :style="{width,height}">
-		<image v-if="cSrc" :style="{width,height}" :src="cSrc" :mode="mode"></image>
+		<image class="center-image" v-if="cSrc" :style="{width,height}" :src="cSrc" :mode="mode"></image>
 	</view>
 </template>
 
@@ -68,3 +68,8 @@
 		}
 	}
 </script>
+<style>
+	.center-image{
+		border-radius: 50%;
+	}
+</style>

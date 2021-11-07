@@ -10,15 +10,15 @@
 		},
 		"title": {
 			"bsonType": "string",
-			"description": "标题（问题）",
+			"description": "问题",
 			"maxLength": 20,
-			"title": "标题",
+			"title": "问题",
 			"trim": "both"
 		},
 		"answer": {
 			"bsonType": "string",
 			"description": "答案",
-			"title": "排序"
+			"title": "答案"
 		},
 		"status": {
 			"bsonType": "bool",

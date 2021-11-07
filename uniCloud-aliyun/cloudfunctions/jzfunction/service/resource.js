@@ -71,12 +71,19 @@ module.exports = class resourceService extends Service {
 			var context = this.ctx;
 			var data = this.ctx.data;
 			console.log("getList_data",data);
+			var type=data.type||"zx";
 			const collection = db.collection('jz-opendb-resources');
-			var resultdata = await collection.where({
+			var where_obj={
 				"article_status":1,
 				 "title": new RegExp(data.title, 'gi'),
 				 "categories":new RegExp(data.categories, 'g'),
-			}).get();
+			}
+			var resultdata ={};
+			if(type=="zx"){
+				resultdata = await collection.where(where_obj).orderBy("last_modify_date","desc").get();
+			}else if(type=="rm"){
+				resultdata = await collection.where(where_obj).orderBy("view_count","desc").get();
+			}
 			return {
 				"state": "0000",
 				"rows": resultdata.data,

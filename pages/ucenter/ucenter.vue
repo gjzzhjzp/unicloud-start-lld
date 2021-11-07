@@ -12,22 +12,21 @@
 			</view>
 			<cloud-image width="150rpx" height="150rpx" v-if="userInfo.avatar_file&&userInfo.avatar_file.url"
 				:src="userInfo.avatar_file.url"></cloud-image>
-			<image v-else class="logo-img" src="@/static/uni-center/defaultAvatarUrl.png"></image>
+			<image v-else class="logo-img" src="@/static/center/nologin.png"></image>
 			<view class="logo-title">
 				<text class="uer-name" v-if="hasLogin">{{userInfo.nickname||userInfo.username||userInfo.mobile}}</text>
 				<text class="uer-name" v-else>{{$t('mine.notLogged')}}</text>
 			</view>
 		</view>
-		<uni-grid class="grid" :column="3" :showBorder="false" :square="true">
+		<!-- <uni-grid class="grid" :column="3" :showBorder="false" :square="true">
 			<uni-grid-item class="item" v-for="(item,index) in gridList" @click.native="tapGrid(index)" :key="index">
-				<uni-icons class="icon" color="#007AFF" :type="item.icon" size="26"></uni-icons>
+				<uni-icons class="icon" color="#7275D3" :type="item.icon" size="26"></uni-icons>
 				<text class="text">{{item.text}}</text>
 			</uni-grid-item>
-		</uni-grid>
+		</uni-grid> -->
 		<uni-list class="center-list" v-for="(sublist , index) in ucenterList" :key="index">
 			<uni-list-item v-for="(item,i) in sublist" :title="item.title" link :rightText="item.rightText" :key="i"
-				:clickable="true" :to="item.to" @click="ucenterListClick(item)" :show-extra-icon="true"
-				:extraIcon="{type:item.icon,color:'#999'}">
+				:clickable="true" :to="item.to" @click="ucenterListClick(item)" :thumb="item.thumb">
 				<template v-slot:footer>
 					<view v-if="item.showBadge" class="item-footer">
 						<text class="item-footer-text">{{item.rightText}}</text>
@@ -85,37 +84,36 @@
 				],
 				ucenterList: [
 					[
-						// {
-						// 	"title": this.$t('mine.signIn'),
-						// 	"event": 'signIn',
-						// 	"icon": "compose"
-						// },
 						{
 							"title": this.$t('mine.userinfo'),
 							"to": '/pages/ucenter/userinfo/userinfo',
-							"icon": "flag"
+							"thumb": "/static/center/user.png"
 						},
-						// {
-						// 	"title":this.$t('mine.readArticles'),
-						// 	"to": '/pages/ucenter/read-news-log/read-news-log',
-						// 	"icon": "flag"
-						// },
+						{
+							"title": "浏览足迹",
+							"to": '/pages/history/history',
+							"thumb": "/static/center/llzj.png"
+						},
 						{
 							"title": "我的投稿",
 							"to": '/pages/jz-opendb-resources/list',
-							"icon": "chat"
+							"thumb": "/static/center/tg.png"
+						},
+						{
+							"title": "我的收藏",
+							"to": '/pages/myfavorite/myfavorite',
+							"thumb": "/static/center/sc.png"
+						},
+						{
+							"title": "我的邀请码",
+							"to": '/pages/jz-custom-yqm/list',
+							"thumb": "/static/center/sc.png"
 						},
 						{
 							"title": this.$t('mine.feedback'),
 							"to": '/uni_modules/uni-feedback/pages/opendb-feedback/opendb-feedback',
-							"icon": "help"
+							"thumb": "/static/center/question.png"
 						}
-						// {
-						// 	"title": this.$t('mine.myScore'),
-						// 	"to": '',
-						// 	"event": 'getScore',
-						// 	"icon": "paperplane"
-						// }
 					],
 					[
 						// {
@@ -445,7 +443,7 @@
 		width: 750rpx;
 		padding: 20rpx;
 		// padding-top: 50px;
-		background-image: url(../../static/uni-center/headers.png);
+		background-image: url(../../static/center/backcenter.jpg);
 		flex-direction: column;
 		align-items: center;
 	}
@@ -466,7 +464,7 @@
 	.uer-name {
 		height: 100rpx;
 		line-height: 100rpx;
-		font-size: 38rpx;
+		font-size: 32rpx;
 		color: #FFFFFF;
 	}
 
@@ -477,7 +475,7 @@
 
 	.center-list-cell {
 		width: 750rpx;
-		background-color: #007AFF;
+		background-color: #7275D3;
 		height: 40rpx;
 	}
 

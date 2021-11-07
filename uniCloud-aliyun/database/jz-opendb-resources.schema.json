@@ -2,7 +2,8 @@
 	"bsonType": "object",
 	"required": [
 		"author",
-		"title"
+		"title",
+		"avatar"
 	],
 	"permission": {
 		"read": "doc.state || auth.uid == doc.user_id || 'AUDITOR' in auth.role",
@@ -13,6 +14,18 @@
 	"properties": {
 		"_id": {
 			"description": "存储文档 ID（用户 ID），系统自动生成"
+		},
+		"title": {
+			"bsonType": "string",
+			"title": "标题",
+			"description": "请输入标题",
+			"trim": "both"
+		},
+		"author": {
+			"bsonType": "string",
+			"description": "请输入作者",
+			"title": "作者",
+			"trim": "both"
 		},
 		"user_id": {
 			"forceDefaultValue": {
@@ -39,18 +52,6 @@
 			"bsonType": "string",
 			"description": "多个标签以逗号隔开",
 			"title": "标签",
-			"trim": "both"
-		},
-		"author": {
-			"bsonType": "string",
-			"description": "请输入作者",
-			"title": "作者",
-			"trim": "both"
-		},
-		"title": {
-			"bsonType": "string",
-			"title": "标题",
-			"description": "请输入标题",
 			"trim": "both"
 		},
 		"article_status": {
@@ -83,67 +84,7 @@
 				"write": false
 			}
 		},
-		"is_grant": {
-			"bsonType": "int",
-			"title": "是否授权",
-			"description": "是否授权：0 未授权 1 已授权",
-			"defaultValue": 0,
-			"enum": [{
-					"value": 0,
-					"text": "未授权"
-				},
-				{
-					"value": 1,
-					"text": "已授权"
-				}
-			]
-		},
-		"is_encryption": {
-			"bsonType": "int",
-			"title": "是否加密",
-			"description": "是否加密：0 不加密 1 加密",
-			"defaultValue": 0,
-			"enum": [{
-					"value": 0,
-					"text": "不加密"
-				},
-				{
-					"value": 1,
-					"text": "加密"
-				}
-			]
-		},
-		"is_login": {
-			"bsonType": "int",
-			"title": "是否登录",
-			"description": "是否登录：0 不登录 1 登录",
-			"defaultValue": 0,
-			"enum": [{
-					"value": 0,
-					"text": "不登录"
-				},
-				{
-					"value": 1,
-					"text": "登录"
-				}
-			]
-		},
-		"is_sticky": {
-			"bsonType": "bool",
-			"title": "是否置顶",
-			"description": "是否置顶",
-			"permission": {
-				"write": false
-			}
-		},
-		"is_essence": {
-			"bsonType": "bool",
-			"title": "阅读加精",
-			"description": "阅读加精",
-			"permission": {
-				"write": false
-			}
-		},
+		
 		"avatar": {
 			"bsonType": "file",
 			"fileMediaType": "image",
@@ -182,11 +123,6 @@
 				"write": false
 			}
 		},
-		"zy_gs": {
-			"bsonType": "string",
-			"title": "资源格式",
-			"description": "资源格式，如img图集,text文章，MP3音乐，mp4视频"
-		},
 		"aliyun_dz": {
 			"bsonType": "string",
 			"title": "外链",
@@ -196,16 +132,40 @@
 		},
 		"excerpt": {
 			"bsonType": "string",
-			"title": "摘要",
-			"description": "请输入摘要",
-			"label": "摘要",
-			"trim": "both"
-		},
-		"content": {
-			"bsonType": "string",
 			"title": "内容",
 			"description": "请输入内容",
-			"trim": "right"
+			"label": "内容",
+			"trim": "both"
+		},
+		"is_grant": {
+			"bsonType": "int",
+			"title": "是否授权",
+			"description": "是否授权：0 未授权 1 已授权",
+			"defaultValue": 0,
+			"enum": [{
+					"value": 0,
+					"text": "未授权"
+				},
+				{
+					"value": 1,
+					"text": "已授权"
+				}
+			]
+		},
+		"is_encryption": {
+			"bsonType": "int",
+			"title": "是否加密",
+			"description": "是否加密：0 不加密 1 加密",
+			"defaultValue": 0,
+			"enum": [{
+					"value": 0,
+					"text": "不加密"
+				},
+				{
+					"value": 1,
+					"text": "加密"
+				}
+			]
 		}
 	}
 }

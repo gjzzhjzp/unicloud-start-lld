@@ -15,7 +15,7 @@
 			
 			this.globalData.$i18n = this.$i18n
 			this.globalData.$t = str => this.$t(str)
-
+			this.getConfig();
 			initApp();
 			
 			// #ifdef H5
@@ -55,6 +55,33 @@
 		},
 		onHide: function() {
 			console.log('App Hide')
+		},
+		methods:{
+			// 获取配置项
+			getConfig(){
+				uniCloud.callFunction({
+					name: 'jzfunction',
+					data: {
+						action: 'config/getConfig'
+					},
+				}).then((res) => {
+					var res = res.result;
+					var config={};
+					if (res.state == "0000") {
+						if(res.data.data&&res.data.data.length>0){
+							res.data.data.forEach((item)=>{
+								config[item.config_bm]=item.config_val;
+							});
+						}
+						this.globalData.config=config;
+					} else {
+						this.$refs.uToast.show({
+							title: res.msg,
+							type: 'error'
+						});
+					}
+				});
+			}
 		}
 	}
 </script>

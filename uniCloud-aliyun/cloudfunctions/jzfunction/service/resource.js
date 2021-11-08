@@ -73,6 +73,7 @@ module.exports = class resourceService extends Service {
 			console.log("getList_data", data);
 			var type = data.type || "zx";
 			var label = data.label; ///标签
+			var rows=data.rows||10;
 			const collection = db.collection('jz-opendb-resources');
 			var where_obj = {
 				"article_status": 1,
@@ -91,9 +92,9 @@ module.exports = class resourceService extends Service {
 			}
 			var resultdata = {};
 			if (type == "zx") {
-				resultdata = await collection.where(where).orderBy("last_modify_date", "desc").get();
+				resultdata = await collection.where(where).orderBy("last_modify_date", "desc").limit(rows).get();
 			} else if (type == "rm") {
-				resultdata = await collection.where(where).orderBy("view_count", "desc").get();
+				resultdata = await collection.where(where).orderBy("view_count", "desc").limit(rows).get();
 			}
 			return {
 				"state": "0000",

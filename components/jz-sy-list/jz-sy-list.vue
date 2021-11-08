@@ -1,26 +1,31 @@
 <template>
-	<view class="jz-sy-list">
-		<template v-show="!isEmpty">
-				<u-row gutter="4">
-					<u-col span="4" class="jz-sy-item" v-for="(item,index) in list" :key="index">
-						<view class="jz-sy-list-item" @click="toDetail(item)">
-							<view>
-								<u-image width="100%" height="140rpx" :src="item.avatar.url"></u-image>
+	<view>
+		<view class="jz-sy-list-section">
+			<u-section line-color="#7275D3" :title="title" :right="true" sub-title="查看更多>>" :arrow="false" @click="tomore"></u-section>
+		</view>
+		<view class="jz-sy-list">
+			<template v-show="!isEmpty">
+					<u-row gutter="4">
+						<u-col span="4" class="jz-sy-item" v-for="(item,index) in list" :key="index">
+							<view class="jz-sy-list-item" @click="toDetail(item)">
+								<view>
+									<u-image width="100%" height="140rpx" :src="item.avatar.url"></u-image>
+								</view>
+								<view class="jz-sy-list-text">{{item.title}}</view>
 							</view>
-							<view class="jz-sy-list-text">{{item.title}}</view>
-						</view>
-					</u-col>
-				</u-row>
-		</template>
-		<template v-if="isEmpty">
-			<u-empty text="数据为空" mode="list"></u-empty>
-		</template>
-		<u-modal v-model="showmodel" title="输入邀请码" :show-cancel-button="true" @confirm="confirm">
-			<view class="slot-content" style="padding: 10px;">
-				<u-input v-model="yqm" type="text" :border="true" placeholder="请输入邀请码"  />
-			</view>
-		</u-modal>
-		<u-toast ref="uToast" />
+						</u-col>
+					</u-row>
+			</template>
+			<template v-if="isEmpty">
+				<u-empty text="数据为空" mode="list"></u-empty>
+			</template>
+			<u-modal v-model="showmodel" title="输入邀请码" :show-cancel-button="true" @confirm="confirm">
+				<view class="slot-content" style="padding: 10px;">
+					<u-input v-model="yqm" type="text" :border="true" placeholder="请输入邀请码"  />
+				</view>
+			</u-modal>
+			<u-toast ref="uToast" />
+		</view>
 	</view>
 </template>
 <script>
@@ -47,6 +52,12 @@
 				default(){
 					return ""
 				}
+			},
+			title:{
+				type:String,
+				default(){
+					return ""
+				}
 			}
 		},
 		mixins:[yqm],
@@ -55,6 +66,11 @@
 			this.getList();
 		},
 		methods: {
+			tomore(){
+				uni.navigateTo({
+					url:'/pages/resource/list?title='+this.title
+				});
+			},
 			getList() {
 				uniCloud.callFunction({
 					name: 'jzfunction',
@@ -62,7 +78,9 @@
 						action: 'resource/getList',
 						data:{
 							type:this.type,
-							label:this.label
+							label:this.label,
+							page:1,
+							rows:6
 						}
 					},
 				}).then((res) => {
@@ -94,5 +112,8 @@
 		color:$u-type-primary;
 		margin-top: 10rpx;
 		margin-left: 10rpx;
+	}
+	.jz-sy-list-section{
+		margin: 10rpx 0px;
 	}
 </style>

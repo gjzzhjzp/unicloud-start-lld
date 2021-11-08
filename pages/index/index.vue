@@ -12,18 +12,8 @@
 		<view>
 			<jz-grid></jz-grid>
 		</view>
-		<view>
-			<u-section line-color="#7275D3" title="热门内容" :right="true" sub-title="查看更多>>" :arrow="false"></u-section>
-			<view class="jz-sy-list">
-				<jz-sy-list type="rm"></jz-sy-list>
-			</view>
-		</view>
-		<view>
-			<u-section line-color="#7275D3" title="最新内容" :right="true" sub-title="查看更多>>" :arrow="false"></u-section>
-			<view class="jz-sy-list">
-				<jz-sy-list type="zx"></jz-sy-list>
-			</view>
-		</view>
+		<jz-sy-list type="rm" title="热门内容"></jz-sy-list>
+		<jz-sy-list type="zx" title="最新内容"></jz-sy-list>
 		<jz-tabbar></jz-tabbar>
 	</view>
 </template>

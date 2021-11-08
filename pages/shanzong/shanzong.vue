@@ -11,29 +11,11 @@
 				<jz-banner :type="2"></jz-banner>
 			</view>
 			<view class="jz-sy-section">
-				<u-section line-color="#7275D3" title="夺笋视频" :right="true" sub-title="查看更多>>" :arrow="false"></u-section>
-				<view class="jz-sy-list">
-					<jz-sy-list label="夺笋视频"></jz-sy-list>
-				</view>
 			</view>
-			<view >
-				<u-section line-color="#7275D3" title="二创图片" :right="true" sub-title="查看更多>>" :arrow="false"></u-section>
-				<view class="jz-sy-list">
-					<jz-sy-list label="二创图片"></jz-sy-list>
-				</view>
-			</view>
-			<view >
-				<u-section line-color="#7275D3" title="表情包" :right="true" sub-title="查看更多>>" :arrow="false"></u-section>
-				<view class="jz-sy-list">
-					<jz-sy-list label="表情包"></jz-sy-list>
-				</view>
-			</view>
-			<view>
-				<u-section line-color="#7275D3" title="同人文" :right="true" sub-title="查看更多>>" :arrow="false"></u-section>
-				<view class="jz-sy-list">
-					<jz-sy-list label="同人文"></jz-sy-list>
-				</view>
-			</view>
+			<jz-sy-list title="夺笋视频" label="夺笋视频"></jz-sy-list>
+			<jz-sy-list title="二创图片" label="二创图片"></jz-sy-list>
+			<jz-sy-list title="表情包" label="表情包"></jz-sy-list>
+			<jz-sy-list title="同人文" label="同人文"></jz-sy-list>
 		</view>
 		<jz-tabbar></jz-tabbar>
 	</view>

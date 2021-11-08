@@ -192,19 +192,21 @@
 				this.searchText = '';
 				this.loadList();
 			},
-			search(value) {
-				if (!value && !this.hotWorld) {
+			search() {
+				// debugger;
+				if (!this.searchText && !this.hotWorld) {
 					return;
 				}
-				if (value) {
-					if (this.searchText !== value) {
-						this.searchText = value
-					}
+				// if (value) {
+				// 	if (this.searchText !== value) {
+				// 		this.searchText = value
+				// 	}
 
-					this.localSearchListManage(value);
+				// 	this.localSearchListManage(value);
 
-					this.searchLogDbAdd(value)
-				} else if (this.hotWorld) {
+				// 	this.searchLogDbAdd(value)
+				// } else 
+				if (this.hotWorld) {
 					this.searchText = this.hotWorld
 				}
 
@@ -314,7 +316,7 @@
 			loadList(text = '') {
 				getApp().globalData.searchText = text;
 				uni.navigateTo({
-					url:'/pages/resource/list'
+					url:'/pages/resource/list?title='+text
 				})
 			},
 			backPage() {

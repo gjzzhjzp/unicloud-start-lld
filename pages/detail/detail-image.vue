@@ -15,7 +15,8 @@
 		</view>
 		<view class="detail-image-sx">
 			<view>
-				<u-button size="mini" @click="toFavorite">收藏</u-button>
+				<u-button v-show="!islike" size="mini" @click="toFavorite">收藏</u-button>
+				<u-button v-show="islike" size="mini" disabled>已收藏</u-button>
 			</view>
 			<view>
 				浏览数：{{data.view_count||0}}
@@ -33,12 +34,14 @@
 	</view>
 </template>
 <script>
+	import detail from "./detail.js"
 	export default {
 		data() {
 			return {
 				imgs: []
 			}
 		},
+		mixins:[detail],
 		props: {
 			data: {
 				type: Object,
@@ -75,38 +78,6 @@
 			},
 			previewOpen(item){
 				this.$refs.previewImage.open(item.url); 
-			},
-			async toFavorite() {
-				const db = uniCloud.database()
-				const uid = db.getCloudEnv('$cloudEnv_uid');
-				const collection = db.collection('opendb-news-favorite');
-				var resultdata = await collection.add({
-					article_id: this.data._id,
-					article_title: this.data.title,
-					user_id: db.getCloudEnv('$cloudEnv_uid'),
-					create_date: db.getCloudEnv('$cloudEnv_now')
-				});
-				this.add_like();
-			},
-			add_like() {
-				uniCloud.callFunction({
-					name: 'jzfunction',
-					data: {
-						action: 'resource/add_like',
-						data: {
-							_id: this.data._id,
-							like_count: this.data.like_count || 0
-						}
-					},
-				}).then((res) => {
-					var res = res.result;
-					if (res.state == "0000") {
-						console.log("res", res);
-						this.$set(this.data, "like_count", ++this.data.like_count);
-					} else {
-						console.log("res", res.msg);
-					}
-				});
 			},
 		}
 	}

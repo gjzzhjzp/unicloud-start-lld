@@ -39,8 +39,8 @@
 		<view class="page" v-if="imgs.length > 0">
 			<text class="text">{{ index + 1 }} / {{ imgs.length }}</text>
 		</view>
-		<view class="save" v-if="saveBtn" @click.stop.prevent="save"><text class="text">保存</text></view>
-		<view class="rotate" v-if="rotateBtn" @click.stop.prevent="rotate"><text class="text">旋转</text></view>
+		<!-- <view class="save" v-if="saveBtn" @click.stop.prevent="save"><text class="text">保存</text></view> -->
+		<!-- <view class="rotate" v-if="rotateBtn" @click.stop.prevent="rotate"><text class="text">旋转</text></view> -->
 		<view class="desc" v-if="descs.length > 0 && descs.length == imgs.length && descs[index].length > 0">{{ descs[index] }}</view>
 	</view>
 </template>

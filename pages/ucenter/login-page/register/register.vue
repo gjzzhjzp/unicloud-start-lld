@@ -143,8 +143,9 @@ import mixin from '../common/login-page.mixin.js';
 	.login-back {
 		height: calc(100vh - 44px);
 		background-image: url(/static/center/login.png);
-		background-size: contain;
+		background-size: cover;
 		background-repeat: no-repeat;
+		background-position: center;
 	}
 	.login-back-con {
 		    width: 80%;

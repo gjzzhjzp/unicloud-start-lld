@@ -70,19 +70,30 @@ module.exports = class resourceService extends Service {
 			var db = this.db;
 			var context = this.ctx;
 			var data = this.ctx.data;
-			console.log("getList_data",data);
-			var type=data.type||"zx";
+			console.log("getList_data", data);
+			var type = data.type || "zx";
+			var label = data.label; ///标签
 			const collection = db.collection('jz-opendb-resources');
-			var where_obj={
-				"article_status":1,
-				 "title": new RegExp(data.title, 'gi'),
-				 "categories":new RegExp(data.categories, 'g'),
+			var where_obj = {
+				"article_status": 1,
+				"title": new RegExp(data.title, 'gi'),
+				"categories": new RegExp(data.categories, 'gi')
 			}
-			var resultdata ={};
-			if(type=="zx"){
-				resultdata = await collection.where(where_obj).orderBy("last_modify_date","desc").get();
-			}else if(type=="rm"){
-				resultdata = await collection.where(where_obj).orderBy("view_count","desc").get();
+			var where = {}; ///查询条件
+			if (data.label) {
+				where = db.command.or([Object.assign({
+					"categorieszw": new RegExp(data.label, 'gi')
+				}, where_obj), Object.assign({
+					"labels": new RegExp(data.label, 'gi')
+				}, where_obj)])
+			} else {
+				where = where_obj;
+			}
+			var resultdata = {};
+			if (type == "zx") {
+				resultdata = await collection.where(where).orderBy("last_modify_date", "desc").get();
+			} else if (type == "rm") {
+				resultdata = await collection.where(where).orderBy("view_count", "desc").get();
 			}
 			return {
 				"state": "0000",
@@ -107,16 +118,16 @@ module.exports = class resourceService extends Service {
 			const collection = db.collection('jz-opendb-resources').aggregate().match({
 				_id: data._id
 			});
-			var resultdata=await collection.lookup({
+			var resultdata = await collection.lookup({
 					from: 'uni-id-users',
 					localField: 'user_id',
 					foreignField: '_id',
 					as: 'userinfo',
 				})
 				.end()
-				console.log("resultdata", resultdata);
-				
-			 if (!resultdata.data[0].view_count) {
+			console.log("resultdata", resultdata);
+
+			if (!resultdata.data[0].view_count) {
 				resultdata.data[0].view_count = 0;
 			}
 			// // 浏览数+1

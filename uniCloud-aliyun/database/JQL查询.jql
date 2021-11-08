@@ -34,22 +34,33 @@ db.collection("jz-custom-search").where({
 	ip: "127.0.0.1"
 }).field('title').distinct().get();
 // 全部删除
-db.collection("opendb-news-categories").where({
+db.collection("opendb-news-favorite").where({
 	_id: db.command.neq(null)
 }).remove()
 
 db.collection("opendb-news-categories").where({
-	_id:"617e92bbb00bc30001ff68df"
+	_id: "617e92bbb00bc30001ff68df"
 }).update({
-    "flbm": "100101",
-    "parent_flbm": "100100",
-    "name": "双采",
-    "icon": {
-        "url": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-3a72b088-8226-498e-a9cc-a695d0ed4ce7/78aa12f5-2bde-4e56-91bf-2bed0e0bc92f.png"
-    }
+	"flbm": "100101",
+	"parent_flbm": "100100",
+	"name": "双采",
+	"icon": {
+		"url": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-3a72b088-8226-498e-a9cc-a695d0ed4ce7/78aa12f5-2bde-4e56-91bf-2bed0e0bc92f.png"
+	}
 });
 
-db.collection("jz-custom-yqm").where({_id:"61864c5112f36000013b62c4"})
-			  .update({
-			   status:false
-			  });
+db.collection("jz-custom-yqm").where({
+		_id: "61864c5112f36000013b62c4"
+	})
+	.update({
+		status: false
+	});
+	db.collection("jz-opendb-resources").get();
+db.collection("jz-opendb-resources").where(db.command.or([{
+		"article_status": 1,
+		"categorieszw": new RegExp("商务,活动", 'gi')
+	}, {
+		"article_status": 1,
+		"labels": new RegExp("商务,活动", 'gi')
+	}]))
+	.get();

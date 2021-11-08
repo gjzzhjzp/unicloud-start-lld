@@ -34,7 +34,15 @@
 			}
 		},
 		props:{
+			// 类型，热门还是最新
 			type:{
+				type:String,
+				default(){
+					return ""
+				}
+			},
+			// 标签
+			label:{
 				type:String,
 				default(){
 					return ""
@@ -53,7 +61,8 @@
 					data: {
 						action: 'resource/getList',
 						data:{
-							type:this.type
+							type:this.type,
+							label:this.label
 						}
 					},
 				}).then((res) => {

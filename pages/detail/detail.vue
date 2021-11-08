@@ -83,12 +83,11 @@
 				if(this.hasLogin){
 					const db = uniCloud.database()
 					const uid = db.getCloudEnv('$cloudEnv_uid');
-					console.log("uid",uid);
 					const collection = db.collection('opendb-news-history');
-					var rows=await collection.get({
+					var rows=await collection.where({
 						article_id: this.detaildata._id,
 						user_id: db.getCloudEnv('$cloudEnv_uid')
-					});
+					}).get();
 					if(rows.result&&rows.result.data.length>0){
 						await collection.where({_id:rows.result.data[0]._id}).update({
 							update_date:db.getCloudEnv('$cloudEnv_now')

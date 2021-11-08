@@ -12,31 +12,31 @@
 		<view>
 			<u-section line-color="#7275D3" title="山河令" :right="true" sub-title="查看更多>>" :arrow="false"></u-section>
 			<view class="jz-sy-list">
-				<jz-sy-list></jz-sy-list>
+				<jz-sy-list label="山河令"></jz-sy-list>
 			</view>
 		</view>
 		<view>
 			<u-section line-color="#7275D3" title="双人综艺" :right="true" sub-title="查看更多>>" :arrow="false"></u-section>
 			<view class="jz-sy-list">
-				<jz-sy-list></jz-sy-list>
+				<jz-sy-list label="双人综艺"></jz-sy-list>
 			</view>
 		</view>
 		<view>
 			<u-section line-color="#7275D3" title="双人直播" :right="true" sub-title="查看更多>>" :arrow="false"></u-section>
 			<view class="jz-sy-list">
-				<jz-sy-list></jz-sy-list>
+				<jz-sy-list label="双人直播"></jz-sy-list>
 			</view>
 		</view>
 		<view>
 			<u-section line-color="#7275D3" title="双人采访" :right="true" sub-title="查看更多>>" :arrow="false"></u-section>
 			<view class="jz-sy-list">
-				<jz-sy-list></jz-sy-list>
+				<jz-sy-list label="双人采访"></jz-sy-list>
 			</view>
 		</view>
 		<view>
 			<u-section line-color="#7275D3" title="双人图片" :right="true" sub-title="查看更多>>" :arrow="false"></u-section>
 			<view class="jz-sy-list">
-				<jz-sy-list></jz-sy-list>
+				<jz-sy-list label="双人图片"></jz-sy-list>
 			</view>
 		</view>
 		<jz-tabbar></jz-tabbar>

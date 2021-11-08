@@ -12,7 +12,7 @@
 			</view>
 			<view class="login-back-con">
 				<input class="input-box" :inputBorder="false" v-model="username"
-					:placeholder="$t('pwdLogin.placeholder')" />
+					placeholder="请输入用户名" />
 				<input type="password" class="input-box" :inputBorder="false" v-model="password"
 					:placeholder="$t('pwdLogin.passwordPlaceholder')" />
 				<view class="captcha-box" v-if="captchaBase64">
@@ -172,8 +172,9 @@
 	.login-back {
 		height: calc(100vh - 44px);
 		background-image: url(/static/center/login.png);
-		background-size: contain;
+		background-size: cover;
 		background-repeat: no-repeat;
+		background-position: center;
 	}
 
 	/* .pwd-login{
@@ -184,9 +185,10 @@
 		margin-bottom: 20px;
 	} */
 	.auth-box {
-		flex-direction: row;
-		justify-content: right;
+		/* flex-direction: row;
+		justify-content: right; */
 		margin-top: 20px;
+		text-align: right;
 	}
 
 	.auth-box .link {

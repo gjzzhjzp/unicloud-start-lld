@@ -107,7 +107,7 @@
 						{
 							"title": "我的邀请码",
 							"to": '/pages/jz-custom-yqm/list',
-							"thumb": "/static/center/sc.png"
+							"thumb": "/static/center/yqm.png"
 						},
 						{
 							"title": this.$t('mine.feedback'),

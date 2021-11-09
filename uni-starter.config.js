@@ -51,7 +51,8 @@ export default {
 			"/pages/question/question",
 			"/pages/shanzong/shanzong",
 			"/pages/junzhe/junzhe",
-			"/pages/jilianri/jilianri"
+			"/pages/jilianri/jilianri",
+			"/pages/jilianri/detail"
 		],
 		/*
 		login:配置登陆类型与优先级

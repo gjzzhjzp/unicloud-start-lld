@@ -183,6 +183,11 @@
 				"navigationBarTitleText": "纪恋日"
 			}
 		}, {
+			"path": "pages/jilianri/detail",
+			"style": {
+				"navigationBarTitleText": "纪恋日详情"
+			}
+		}, {
 			"path": "pages/junzhe/junzhe",
 			"style": {
 				"navigationBarTitleText": "俊哲"

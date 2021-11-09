@@ -1,0 +1,33 @@
+{
+	"bsonType": "object",
+	"required": [],
+	"permission": {
+		"read": "doc.user_id == auth.uid",
+		"create": "auth.uid != null",
+		"update": "doc.user_id == auth.uid",
+		"delete": "doc.user_id == auth.uid"
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"rili_date": {
+			"bsonType": "date",
+			"description": "日期",
+			"title": "日期",
+			"trim": "both"
+		},
+		"rili_title": {
+			"bsonType": "string",
+			"description": "标题",
+			"title": "标题",
+			"trim": "both"
+		},
+		"rili_events": {
+			"bsonType": "array",
+			"description": "事件",
+			"title": "事件",
+			"trim": "both"
+		}
+	}
+}

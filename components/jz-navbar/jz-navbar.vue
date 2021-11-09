@@ -2,7 +2,7 @@
 	<view class="jz-navbar">
 		<u-navbar :is-back="isBack">
 			<template>
-				<view style="margin: 10px;">
+				<view v-show="showlogo" style="margin: 10px;">
 					<u-image width="200rpx" height="60rpx" src="/static/head/logo.png"></u-image>
 				</view>
 				<view class="sy-u-search">
@@ -28,6 +28,12 @@
 			}
 		},
 		props:{
+			showlogo:{
+				type:Boolean,
+				default(){
+					return true
+				}
+			},
 			isBack:{
 				type:Boolean,
 				default(){

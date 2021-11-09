@@ -2,20 +2,27 @@
 	"bsonType": "object",
 	"required": [],
 	"permission": {
-		"read": "doc.user_id == auth.uid",
-		"create": "auth.uid != null",
-		"update": "doc.user_id == auth.uid",
-		"delete": "doc.user_id == auth.uid"
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete":true
 	},
 	"properties": {
 		"_id": {
 			"description": "ID，系统自动生成"
 		},
 		"rili_date": {
-			"bsonType": "date",
+			"bsonType": "string",
 			"description": "日期",
 			"title": "日期",
-			"trim": "both"
+			"trim": "both",
+			"component":{
+				"name":"uni-datetime-picker",
+				"props":{
+					"type":"date",
+					"return-type":"string"
+				}
+			}
 		},
 		"rili_title": {
 			"bsonType": "string",
@@ -23,11 +30,26 @@
 			"title": "标题",
 			"trim": "both"
 		},
-		"rili_events": {
+		"rili_images": {
 			"bsonType": "array",
-			"description": "事件",
-			"title": "事件",
+			"fileMediaType": "image",
+			"arrayType": "file",
+			"multiple": "true",
+			"title": "图片",
+			"description": "图片",
+			"label": "图片",
 			"trim": "both"
+		},
+		"rili_content": {
+			"bsonType": "string",
+			"description": "内容",
+			"title": "内容",
+			"trim": "both",
+			"component":{
+				"props":{
+					"type":"textarea"
+				}
+			}
 		}
 	}
 }

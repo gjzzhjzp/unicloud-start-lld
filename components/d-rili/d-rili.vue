@@ -12,13 +12,9 @@
 				<!-- 日历 -->
 				<view class="signWrapperCalendar" v-if="true">
 					<view class="signWrapperCalendarBox">
-						<!-- slideDataListIndex：{{slideDataListIndex}} -->
 						<swiper @change="_onClickSlideApi" duration="200" :current="slideDataListIndex" circular
-							style="height:720rpx">
+							style="height:620rpx">
 							<swiper-item class="swiper-item" v-for="(calendar,indexa) in 3" :key="indexa">
-								<!-- <view class="signWrapperCalendarBoxTop" >
-								{{year}}年{{month<10?'0'+month:month}}月
-							</view> -->
 								<view class="signWrapperCalendarBoxCenter">
 									<view class="signWrapperCalendarBoxCenterBox">
 										<view class="signWrapperCalendarBoxCenterBoxTop">
@@ -29,13 +25,14 @@
 											</div>
 										</view>
 										<view class="signWrapperCalendarBoxCenterBoxFooter">
-											<view :class="['each-day',dayTime==day?'havething':'',clickSelected==dayTime?'clickSelected':'']"
+											<!-- dayList:{{dayList}} -->
+											<view :class="['each-day',dayTime==day?'havething':'',jianlainri_day.indexOf(dayTime)!=-1?'havemonth':'',clickSelected==dayTime?'clickSelected':'']"
 												v-for="(dayTime,idx) in dayList" :key="idx" @click="clickDay(dayTime)">
 												<view :class="dayTime!=day+2 ?'eachDayBox':'eachDayBoxCheck'"
 													v-if="day">
-													<view :class="['eachDayBoxBox']"
-														:style="dayTime==day?'background: red;color: #fff;':''">
-														{{dayTime?dayTime:''}}
+													<view :class="['eachDayBoxBox',dayTime.class?dayTime.class:'']"
+														:style="dayTime==day?'background: red;color: #fff !important; ':''">
+														{{dayTime.value||dayTime||''}}
 													</view>
 												</view>
 											</view>
@@ -51,10 +48,10 @@
 				</view>
 			</view>
 		</view>
-		<view class="rili-bottom">
+		<view class="rili-bottom" v-if="jianlainri.length>0">
 			<view class="one">
 				<view class="one-1">
-					{{year}}年{{month<10?'0'+month:month}}月{{day}}日
+					{{jianlainri[0].rili_date}}
 				</view>
 				<view class="one-2">
 					<!-- 农历七月十四 -->
@@ -64,13 +61,13 @@
 				</view>
 			</view>
 			<view class="two">
-				ins发图卸载微博，配字清净
+				{{jianlainri[0].rili_title}}
+				<!-- ins发图卸载微博，配字清净 -->
 			</view>
 		</view>
 	</view>
 </template>
 <script>
-	import nl from "./nl.js"
 	export default {
 		data() {
 			return {
@@ -113,27 +110,82 @@
 					"11":"November",
 					"12":"December"
 				},
-				clickSelected:""///点击选中
+				clickSelected:"",///点击选中
+				jianlainri:[],
+				jianlainri_day:[]
 			};
 		},
 		created() {
-			this._onLoad()
+			this._onLoad();
+			this.getjilianri();
+			this.getjilianri_month();
 		},
 		methods: {
+			getjilianri(rq){
+				const db = uniCloud.database();
+				var day=this.clickSelected||this.day;
+				if(day<10){
+					day="0"+day;
+				}
+				rq=rq||this.month+"-"+day;
+				console.log("rq",rq);
+				db.collection('opendb-news-rili').where({
+					"rili_date": new RegExp(rq, 'gi'),
+				}).get().then((res) => {
+						this.jianlainri=res.result.data;
+						
+					}).catch((err) => {
+						uni.showModal({
+							content: err.message || '请求服务失败',
+							showCancel: false
+						})
+					});
+			},
+			getjilianri_month(){
+				const db = uniCloud.database();
+				var rq="-"+this.month+"-";
+				this.jianlainri_day.splice(0,this.jianlainri_day.length);
+				db.collection('opendb-news-rili').where({
+					"rili_date": new RegExp(rq, 'gi'),
+				}).get().then((res) => {
+						res.result.data.forEach((item)=>{
+							if(item.rili_date){
+								this.jianlainri_day.push(parseInt(item.rili_date.split("-")[2]));
+							}
+						});
+						console.log("jianlainri_day",this.jianlainri_day);
+					}).catch((err) => {
+						uni.showModal({
+							content: err.message || '请求服务失败',
+							showCancel: false
+						})
+					});
+			},
 			// 点击当前日期
 			clickDay(item){
 				console.log("clickDay",item);
+				if(item.class)return;
 				this.clickSelected=item;
+				var day=item;
+				if (day < 10) {
+					day = '0' + day
+				}
+				this.getjilianri(this.month+"-"+day);
 			},
 			todetail(){
+				var rq="";
+				var day=this.clickSelected;
+				if (day < 10) {
+					day = '0' + day
+				}
+				rq=this.month+"-"+day;
 				uni.navigateTo({
-					url:"/pages/jilianri/detail"
+					url:"/pages/jilianri/detail?rq="+rq
 				});
 			},
 			async _onLoad() {
 				//	获取当前时间 	赋值年，月
 				await this.initTime()
-
 				//	更新日历
 				await this._runMonth()
 			},
@@ -150,17 +202,12 @@
 			},
 
 			async _runMonth() {
-				console.log('==============================================================')
 
 				//	获取当前月的每一天的数据	1~31
 				await this.initApi()
 
 				//	根据当前选择的年月，更新start_time   end_time
 				await this._timeApi()
-
-				console.log(this.start_time)
-				console.log(this.end_time)
-				//	更新记录
 				// await this.onClickSignLog()
 
 				let dataWeek = await this.getweek(this._getNowApi());
@@ -169,11 +216,9 @@
 				this.slideDataList[0] = []
 				this.slideDataList[1] = dataWeek
 				this.slideDataList[2] = []
-
-				console.log("this.slideDataList",this.slideDataList)
-
-
-				console.log('==============================================================')
+this.getjilianri();
+			this.getjilianri_month();
+				
 			},
 
 			_getTimeNowApi() {
@@ -210,7 +255,6 @@
 				this.slideDataListIndex = current
 
 				if (oldIndex - current == -1 || oldIndex - current == 2) {
-					console.log('向右滑动前一个月')
 					if (this.month == 12) {
 						this.year = this.year + 1
 						this.month = 1
@@ -219,7 +263,6 @@
 					}
 
 				} else {
-					console.log('向左滑动后退一个月')
 					if (this.month == 1) {
 						this.year = this.year - 1
 						this.month = 12
@@ -232,15 +275,11 @@
 			},
 
 			_getNowApi() {
-				console.log('当前日期：' + this.year + '-' + this.month + '-' + this.day)
-
 				let data = {
 					Day: 1,
 					Month: this.month,
 					Year: this.year
 				}
-
-				console.log(data)
 				return data
 			},
 			//	获取当前月的每一天的数据
@@ -250,19 +289,30 @@
 
 			//创建每个月日历数据，传入月份1号前面用null填充
 			createDayList(month, year) {
+				// debugger;
 				const count = this.getDayNum(month, year),
 					_week = new Date(year + '/' + month + '/1').getDay();
 				let list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
 					27, 28
 				]
-
+				var precount=this.getDayNum(month, year);//获取上一个月的天数
 				for (let i = 29; i <= count; i++) {
 					list.push(i)
 				}
 				for (let i = 0; i < _week; i++) {
-					list.unshift(null)
+					list.unshift({
+						value:precount-i,
+						class:"more"
+					});
 				}
-
+				if(list.length<42){
+					for(var o=0;o<42-list.length-1;o++){
+						list.push({
+							value:o+1,
+							class:"more"
+						});
+					}
+				}
 				return list;
 			},
 			//计算传入月份有多少天
@@ -417,7 +467,7 @@
 		    margin-top: 20px;
 		.one{
 			display: flex;
-			    margin: 20px;
+			    margin: 10px 30px;
 			    color: #7F88D3;
 			    font-size: 20px;
 				    justify-content: space-between;
@@ -459,7 +509,7 @@
 		.signWrapperCalendar {
 
 			// margin-top: 30rpx;
-			.havething ::after {
+			.havemonth ::after {
 				content: "";
 				height: 4px;
 				width: 4px;
@@ -470,23 +520,20 @@
 				background: red;
 				border-radius: 50%;
 			}
+			.havemonth ::after{
+				color:#9FDCF5;
+				background: #9FDCF5;
+			}
 			.clickSelected ::after{
-				content: "";
-				height: 4px;
-				width: 4px;
-				color: red;
-				position: absolute;
-				display: block;
-				top: 122%;
-				background: red;
-				border-radius: 50%;
+				background: red !important;
 			}
 			.clickSelected .eachDayBoxBox{
 				color: red !important;
 			}
-
+			.eachDayBoxBox.more{
+				color: #e5e5e5 !important;
+			}
 			width: 100%;
-
 			// border: 3rpx solid #9bf;
 			.signWrapperCalendarBox {
 				width: 100%;
@@ -555,7 +602,7 @@
 								// justify-content: flex-start;
 								text-align: center;
 								vertical-align: middle;
-								width: 14.28%;
+								width: 11.28%;
 								font-size: 25rpx;
 								height: 50rpx;
 								margin: 10px;

@@ -274,6 +274,7 @@
 		flex: 1;
 		flex-grow: 0;
 		padding: 14rpx 14rpx 14rpx 24rpx;
+		z-index: 999;
 	}
 
 	.u-back-text {

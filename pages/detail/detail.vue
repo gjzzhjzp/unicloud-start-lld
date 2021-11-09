@@ -28,7 +28,7 @@
 	export default{
 		data(){
 			return {
-				title:"资源详情",
+				title:"",
 				detaildata:{},
 				id:"",
 				zy_gs:"image"///当前资源格式

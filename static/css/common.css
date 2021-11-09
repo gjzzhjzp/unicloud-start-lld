@@ -56,3 +56,12 @@
 	    left: -6px !important;
 	    color: #7275D3 !important;
 }
+.u-collapse-body{
+	overflow: auto !important;
+	/* height:auto !important */
+}
+.u-collapse-title{
+	    padding: 0px 16px;
+	    font-size: 20px;
+		color: #7E80B5;
+}

@@ -13,7 +13,7 @@
 				<view class="signWrapperCalendar" v-if="true">
 					<view class="signWrapperCalendarBox">
 						<swiper @change="_onClickSlideApi" duration="200" :current="slideDataListIndex" circular
-							style="height:620rpx">
+							style="height:250px">
 							<swiper-item class="swiper-item" v-for="(calendar,indexa) in 3" :key="indexa">
 								<view class="signWrapperCalendarBoxCenter">
 									<view class="signWrapperCalendarBoxCenterBox">
@@ -305,8 +305,9 @@ this.getjilianri();
 						class:"more"
 					});
 				}
-				if(list.length<42){
-					for(var o=0;o<42-list.length-1;o++){
+				if(list.length<35){
+					var length=list.length;
+					for(var o=0;o<35-length;o++){
 						list.push({
 							value:o+1,
 							class:"more"
@@ -516,7 +517,7 @@ this.getjilianri();
 				color: red;
 				position: absolute;
 				display: block;
-				top: 122%;
+				top: 100%;
 				background: red;
 				border-radius: 50%;
 			}
@@ -602,10 +603,9 @@ this.getjilianri();
 								// justify-content: flex-start;
 								text-align: center;
 								vertical-align: middle;
-								width: 11.28%;
+								width: 14.2%;
 								font-size: 25rpx;
-								height: 50rpx;
-								margin: 10px;
+								height: 40px;
 								padding-top: 4rpx;
 
 								.eachDayBox {

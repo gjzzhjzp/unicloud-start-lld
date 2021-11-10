@@ -3,6 +3,7 @@
 		<u-navbar :is-back="true" title="我的投稿"></u-navbar>
 		<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}"
 			collection="jz-opendb-resources" @load="loadSuccess"
+			where="user_id == $cloudEnv_uid"
 			field="categories,labels,author,title,article_status,comment_status,avatar,resources,zy_gs,excerpt,content">
 			<view v-if="error">{{error.message}}</view>
 			<view v-else-if="data">

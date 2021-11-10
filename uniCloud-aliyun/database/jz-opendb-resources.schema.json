@@ -6,10 +6,10 @@
 		"avatar"
 	],
 	"permission": {
-		"read": "doc.state || auth.uid == doc.user_id || 'AUDITOR' in auth.role",
+		"read": "doc.state || auth.uid == doc.user_id || 'AUDITOR' in auth.role||'Master' in auth.role",
 		"create": "auth.uid != null",
-		"update": "'AUDITOR' in auth.role||auth.uid == doc.user_id",
-		"delete": "auth.uid == doc.user_id"
+		"update": "'AUDITOR' in auth.role||auth.uid == doc.user_id||'Master' in auth.role",
+		"delete": "auth.uid == doc.user_id||'AUDITOR' in auth.role||'Master' in auth.role"
 	},
 	"properties": {
 		"_id": {
@@ -107,11 +107,11 @@
 					"text": "视频"
 				},
 				{
-					"value": 1,
+					"value": 2,
 					"text": "音乐"
 				},
 				{
-					"value": 1,
+					"value": 3,
 					"text": "文章"
 				}
 			]

@@ -47,18 +47,19 @@
 				this.flowList.splice(0,this.flowList.length);
 				const db = uniCloud.database()
 				const uid = db.getCloudEnv('$cloudEnv_uid');
-				const collection = db.collection('opendb-news-favorite,jz-opendb-resources');
+				const collection = db.collection('opendb-news-favorite,jz-opendb-resources,uni-id-users');
 				var resultdata = await collection.where({
 					user_id: uid
 				}).field('article_title,article_id{title,avatar,author}').get();
 				var rows=resultdata.result.data;
+				console.log("rows111",rows);
 				rows.forEach((item)=>{
 					var obj=item.article_id[0];
 					if(obj){
 						this.flowList.push(obj);
 					}
 				});
-			}
+			}///,user_id{nickname,avatar}
 		}
 	}
 </script>

@@ -15,8 +15,12 @@
 				<text style="margin-left: 20px;">投稿人：{{tgr}}</text>
 			</view>
 			<view>
-				<u-icon :size="40" v-show="!islike" name="heart"  @click="toFavorite"></u-icon>
-				<u-icon :size="40" v-show="islike" name="heart-fill" color="red"></u-icon>
+				<view v-show="!islike" @click="toFavorite">
+					<u-icon :size="30"  name="heart"  ></u-icon> 收藏
+				</view>
+				<view v-show="islike">
+					<u-icon :size="30"  name="heart-fill" color="red"></u-icon> 已收藏
+				</view>
 			</view>
 		</view>
 		<view class="detail-image-sl" style="text-align: right;color: #909399;">
@@ -24,10 +28,10 @@
 				<u-button v-show="!islike" size="mini" @click="toFavorite">收藏</u-button>
 				<u-button v-show="islike" size="mini" disabled>已收藏</u-button>
 			</view> -->
-			<view>
+			<!-- <view>
 				<u-icon name="heart"></u-icon><text style="margin-left: 2px;">收藏量：{{data.like_count||0}}</text>
 				<u-icon name="eye" style="margin-left: 20px;"></u-icon><text style="margin-left: 2px;">浏览量：{{data.view_count||0}}</text>
-			</view>
+			</view> -->
 		</view>
 		<!--<view class="detail-image-jj">
 			 {{data.excerpt}} 

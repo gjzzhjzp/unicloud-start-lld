@@ -93,6 +93,29 @@
 			"label": "封面大图",
 			"trim": "both"
 		},
+		"zy_gs":{
+			"bsonType": "int",
+			"title": "资源类型",
+			"description": "资源类型：0 图片 1 视频 2 音乐 1 文章",
+			"defaultValue": 0,
+			"enum": [{
+					"value": 0,
+					"text": "图片"
+				},
+				{
+					"value": 1,
+					"text": "视频"
+				},
+				{
+					"value": 1,
+					"text": "音乐"
+				},
+				{
+					"value": 1,
+					"text": "文章"
+				}
+			]
+		},
 		"resources": {
 			"bsonType": "array",
 			"fileMediaType": "all",

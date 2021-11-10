@@ -26,12 +26,12 @@
 										</view>
 										<view class="signWrapperCalendarBoxCenterBoxFooter">
 											<!-- dayList:{{dayList}} -->
-											<view :class="['each-day',dayTime==day?'havething':'',jianlainri_day.indexOf(dayTime)!=-1?'havemonth':'',clickSelected==dayTime?'clickSelected':'']"
+											<view
+												:class="['each-day',jianlainri_day.indexOf(dayTime)!=-1?'havemonth':'',clickSelected==dayTime?'clickSelected':'']"
 												v-for="(dayTime,idx) in dayList" :key="idx" @click="clickDay(dayTime)">
-												<view :class="dayTime!=day+2 ?'eachDayBox':'eachDayBoxCheck'"
-													v-if="day">
+												<view class="eachDayBox" v-if="day">
 													<view :class="['eachDayBoxBox',dayTime.class?dayTime.class:'']"
-														:style="dayTime==day?'background: red;color: #fff !important; ':''">
+														:style="dayTime==day&&curmonth==month?'color:red':''">
 														{{dayTime.value||dayTime||''}}
 													</view>
 												</view>
@@ -43,8 +43,6 @@
 						</swiper>
 						<!--  -->
 					</view>
-
-
 				</view>
 			</view>
 		</view>
@@ -78,109 +76,101 @@
 				slideDataListIndex: 1,
 				year: 2020,
 				month: 10,
+				curmonth:10,////当前月份，不随着滚动日历而改变
 				day: 10,
 				dayList: [],
 				start_time: '', //	月初的时间戳
 				end_time: '', //	月末的时间戳
-				monthZw:{
-					"1":"一",
-					"2":"二",
-					"3":"三",
-					"4":"四",
-					"5":"五",
-					"6":"六",
-					"7":"七",
-					"8":"八",
-					"9":"九",
-					"10":"十",
-					"11":"十一",
-					"12":"十二"
+				monthZw: {
+					"1": "一",
+					"2": "二",
+					"3": "三",
+					"4": "四",
+					"5": "五",
+					"6": "六",
+					"7": "七",
+					"8": "八",
+					"9": "九",
+					"10": "十",
+					"11": "十一",
+					"12": "十二"
 				},
-				monthYw:{
-					"1":"January",
-					"2":"February",
-					"3":"March",
-					"4":"April",
-					"5":"May",
-					"6":"June",
-					"7":"July",
-					"8":"August",
-					"9":"September",
-					"10":"October",
-					"11":"November",
-					"12":"December"
+				monthYw: {
+					"1": "January",
+					"2": "February",
+					"3": "March",
+					"4": "April",
+					"5": "May",
+					"6": "June",
+					"7": "July",
+					"8": "August",
+					"9": "September",
+					"10": "October",
+					"11": "November",
+					"12": "December"
 				},
-				clickSelected:"",///点击选中
-				jianlainri:[],
-				jianlainri_day:[]
+				clickSelected: "", ///点击选中
+				jianlainri: [],
+				jianlainri_day: [],
+				jianlainri_day_detail:[]
 			};
 		},
 		created() {
 			this._onLoad();
-			this.getjilianri();
 			this.getjilianri_month();
 		},
 		methods: {
-			getjilianri(rq){
-				const db = uniCloud.database();
-				var day=this.clickSelected||this.day;
-				if(day<10){
-					day="0"+day;
-				}
-				rq=rq||this.month+"-"+day;
-				console.log("rq",rq);
-				db.collection('opendb-news-rili').where({
-					"rili_date": new RegExp(rq, 'gi'),
-				}).get().then((res) => {
-						this.jianlainri=res.result.data;
-						
-					}).catch((err) => {
-						uni.showModal({
-							content: err.message || '请求服务失败',
-							showCancel: false
-						})
+			getjilianri() {
+				var day = this.clickSelected || this.day;
+				this.jianlainri=[];
+					this.jianlainri_day.forEach((item,index)=>{
+						if(item==day){
+							this.jianlainri = [this.jianlainri_day_detail[index]];
+						}
 					});
 			},
-			getjilianri_month(){
+			getjilianri_month() {
 				const db = uniCloud.database();
-				var rq="-"+this.month+"-";
-				this.jianlainri_day.splice(0,this.jianlainri_day.length);
+				var rq = "-" + this.month + "-";
 				db.collection('opendb-news-rili').where({
 					"rili_date": new RegExp(rq, 'gi'),
-				}).get().then((res) => {
-						res.result.data.forEach((item)=>{
-							if(item.rili_date){
-								this.jianlainri_day.push(parseInt(item.rili_date.split("-")[2]));
+				}).field("rili_date,rili_title").get().then((res) => {
+					this.jianlainri_day.splice(0, this.jianlainri_day.length);
+					this.jianlainri_day_detail.splice(0, this.jianlainri_day_detail.length);
+					res.result.data.forEach((item) => {
+						if (item.rili_date) {
+							var _day=parseInt(item.rili_date.split("-")[2]);
+							if(this.jianlainri_day.indexOf(_day)==-1){
+								this.jianlainri_day.push(_day);
+								this.jianlainri_day_detail.push(item);
 							}
-						});
-						console.log("jianlainri_day",this.jianlainri_day);
-					}).catch((err) => {
-						uni.showModal({
-							content: err.message || '请求服务失败',
-							showCancel: false
-						})
+						}
 					});
+					console.log("jianlainri_day", this.jianlainri_day);
+					this.getjilianri();
+				}).catch((err) => {
+					uni.showModal({
+						content: err.message || '请求服务失败',
+						showCancel: false
+					});
+				});
 			},
 			// 点击当前日期
-			clickDay(item){
-				console.log("clickDay",item);
-				if(item.class)return;
-				this.clickSelected=item;
-				var day=item;
-				if (day < 10) {
-					day = '0' + day
-				}
-				this.getjilianri(this.month+"-"+day);
+			clickDay(item) {
+				console.log("clickDay", item);
+				if (item.class) return;
+				this.clickSelected = item;
+				this.getjilianri();
 			},
-			todetail(){
-				var rq="";
-				var day=this.clickSelected;
+			todetail() {
+				var rq = "";
+				var day = this.clickSelected;
 				if (day < 10) {
 					day = '0' + day
 				}
-				rq=this.month+"-"+day;
+				rq = this.month + "-" + day;
 				uni.navigateTo({
-					url:"/pages/jilianri/detail?rq="+rq
+					url: "/pages/jilianri/detail?rq=" + rq
 				});
 			},
 			async _onLoad() {
@@ -195,6 +185,7 @@
 
 				this.year = nowTimeData.year
 				this.month = nowTimeData.month
+				this.curmonth=nowTimeData.month
 				this.day = nowTimeData.day
 
 				// 今日时间为：2020-9-16
@@ -216,9 +207,8 @@
 				this.slideDataList[0] = []
 				this.slideDataList[1] = dataWeek
 				this.slideDataList[2] = []
-this.getjilianri();
-			this.getjilianri_month();
-				
+				this.getjilianri_month();
+
 			},
 
 			_getTimeNowApi() {
@@ -295,22 +285,22 @@ this.getjilianri();
 				let list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
 					27, 28
 				]
-				var precount=this.getDayNum(month, year);//获取上一个月的天数
+				var precount = this.getDayNum(month, year); //获取上一个月的天数
 				for (let i = 29; i <= count; i++) {
 					list.push(i)
 				}
 				for (let i = 0; i < _week; i++) {
 					list.unshift({
-						value:precount-i,
-						class:"more"
+						value: precount - i,
+						class: "more"
 					});
 				}
-				if(list.length<35){
-					var length=list.length;
-					for(var o=0;o<35-length;o++){
+				if (list.length < 35) {
+					var length = list.length;
+					for (var o = 0; o < 35 - length; o++) {
 						list.push({
-							value:o+1,
-							class:"more"
+							value: o + 1,
+							class: "more"
 						});
 					}
 				}
@@ -323,7 +313,7 @@ this.getjilianri();
 				if ((year % 4 === 0) && (year % 100 !== 0) || (year % 400 === 0)) {
 					dayNum[1] = 29;
 				}
-			 return dayNum[month - 1]
+				return dayNum[month - 1]
 			},
 			//	传时间获取月初月末时间
 			_timeApi() {
@@ -463,35 +453,39 @@ this.getjilianri();
 </script>
 
 <style lang="scss">
-	.rili-bottom{
-		    border-top: 1px solid #8C92AC;
-		    margin-top: 20px;
-		.one{
+	.rili-bottom {
+		border-top: 1px solid #8C92AC;
+		margin-top: 20px;
+
+		.one {
 			display: flex;
-			    margin: 10px 30px;
-			    color: #7F88D3;
-			    font-size: 20px;
-				    justify-content: space-between;
+			margin: 10px 30px;
+			color: #7F88D3;
+			font-size: 20px;
+			justify-content: space-between;
 		}
-		.two{
+
+		.two {
 			margin: 20px;
-			    color: #36c6e8;
-			    font-size: 18px;
-				position: relative;
+			color: #36c6e8;
+			font-size: 18px;
+			position: relative;
 		}
-		.two::before{
-			    content: "";
-			    height: 25px;
-			    width: 4px;
-			    color: #D84058;
-			    position: absolute;
-			    display: block;
-			    top: 0%;
-			    left: -10px;
-			    background: #D84058;
-				    border-radius: 4px;
+
+		.two::before {
+			content: "";
+			height: 25px;
+			width: 4px;
+			color: #D84058;
+			position: absolute;
+			display: block;
+			top: 0%;
+			left: -10px;
+			background: #D84058;
+			border-radius: 4px;
 		}
 	}
+
 	.riliWrapper {
 		width: 100%;
 		// height: 499rpx;
@@ -521,20 +515,27 @@ this.getjilianri();
 				background: red;
 				border-radius: 50%;
 			}
-			.havemonth ::after{
-				color:#9FDCF5;
+
+			.havemonth ::after {
+				color: #9FDCF5;
 				background: #9FDCF5;
 			}
-			.clickSelected ::after{
+
+			.clickSelected ::after {
 				background: red !important;
 			}
-			.clickSelected .eachDayBoxBox{
-				color: red !important;
+
+			.clickSelected .eachDayBoxBox {
+				color: #fff !important;
+				background: red;
 			}
-			.eachDayBoxBox.more{
+
+			.eachDayBoxBox.more {
 				color: #e5e5e5 !important;
 			}
+
 			width: 100%;
+
 			// border: 3rpx solid #9bf;
 			.signWrapperCalendarBox {
 				width: 100%;
@@ -663,6 +664,7 @@ this.getjilianri();
 
 		}
 	}
+
 	.wrapper {
 		width: 100%;
 		height: 400rpx;
@@ -674,7 +676,7 @@ this.getjilianri();
 		justify-content: center;
 		overflow: hidden;
 	}
-	
+
 	.wrapper-headcontent {
 		background-color: #7883D2;
 		width: 80%;
@@ -685,13 +687,13 @@ this.getjilianri();
 		padding-top: 10px;
 		overflow: hidden;
 	}
-	
+
 	.wrapper-headcontent .one {
 		font-size: 34px;
 		font-weight: bold;
 		margin-top: 10px;
 	}
-	
+
 	.wrapper-headcontent .two {
 		margin-top: 20px;
 	}

@@ -2,11 +2,14 @@
 	<view class="er-item-list">
 		<view class="er-item-list-warter" v-for="(item, index) in list" :key="index" @click="toDetail(item)">
 			<u-lazy-load threshold="300" border-radius="10" :image="item.avatar.url" :index="index"></u-lazy-load>
-			<view class="er-item-list-title">
-				{{item.title}}
-			</view>
-			<view class="er-item-list-author">
-				{{item.author}}
+			<view style="padding: 8px;">
+				<view class="er-item-list-title">
+					{{item.title}}
+				</view>
+				<view class="er-item-list-author">
+					<view class="er-item-list-img"><u-avatar :size="50" :src="item.userinfo[0].avatar_file.url"></u-avatar>{{item.author}}</view>
+					<view><u-icon name="heart"></u-icon>{{item.like_count||0}}</view>
+				</view>
 			</view>
 		</view>
 		<u-modal v-model="showmodel" title="输入邀请码" :show-cancel-button="true" @confirm="confirm">
@@ -45,9 +48,9 @@
 <style lang="scss" scoped>
 	.er-item-list-warter {
 		border-radius: 8px;
-		margin: 5px;
+		margin: 10px;
 		background-color: #ffffff;
-		padding: 8px;
+		// padding: 8px;
 		position: relative;
 	}
 
@@ -101,5 +104,12 @@
 		font-size: 22rpx;
 		color: $u-tips-color;
 		margin-top: 5px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	.er-item-list-img{
+		display: flex;
+		align-items: center;
 	}
 </style>

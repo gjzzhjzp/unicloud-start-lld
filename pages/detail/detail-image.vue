@@ -1,36 +1,43 @@
 <template>
 	<view class="detail-image">
 		<view class="detail-image-title">
-			{{data.title}}
-		</view>
-		<view class="detail-image-sx">
-			<view>
-				<text>作者：{{data.author}}</text>
-				<text style="margin-left: 10px;">投稿人：{{tgr}}</text>
+			<view class="title">
+				{{data.title}}
 			</view>
-			<view>
+			<view style="text-align: right;color: #909399;">
 				<uni-dateformat class="last_modify_date" :date="data.last_modify_date" format="yyyy-MM-dd"
 					:threshold="[60000, 2592000000]" />
 			</view>
 		</view>
 		<view class="detail-image-sx">
 			<view>
-				<u-button v-show="!islike" size="mini" @click="toFavorite">收藏</u-button>
-				<u-button v-show="islike" size="mini" disabled>已收藏</u-button>
+				<text>来源：{{data.author}}</text>
+				<text style="margin-left: 20px;">投稿人：{{tgr}}</text>
 			</view>
 			<view>
-				浏览数：{{data.view_count||0}}
-				收藏数：{{data.like_count||0}}
+				<u-icon :size="40" v-show="!islike" name="heart"  @click="toFavorite"></u-icon>
+				<u-icon :size="40" v-show="islike" name="heart-fill" color="red"></u-icon>
 			</view>
 		</view>
-		<view class="detail-image-jj">
-			<!-- {{data.excerpt}} -->
+		<view class="detail-image-sl" style="text-align: right;color: #909399;">
+			<!-- <view>
+				<u-button v-show="!islike" size="mini" @click="toFavorite">收藏</u-button>
+				<u-button v-show="islike" size="mini" disabled>已收藏</u-button>
+			</view> -->
+			<view>
+				<u-icon name="heart"></u-icon><text style="margin-left: 2px;">收藏量：{{data.like_count||0}}</text>
+				<u-icon name="eye" style="margin-left: 20px;"></u-icon><text style="margin-left: 2px;">浏览量：{{data.view_count||0}}</text>
+			</view>
 		</view>
+		<!--<view class="detail-image-jj">
+			 {{data.excerpt}} 
+		</view>-->
 		<view class="detail-image-item" v-for="(item,index) in data.resources" :key="index">
-			<image :src="item.url" lazy-load @click="previewOpen(item)" :index="index" mode="widthFix"></image>
+			<image :src="item.url"  @click="previewOpen(item)" :index="index" mode="widthFix"></image>
 			<!-- <u-lazy-load @click="previewOpen(item)" threshold="300" border-radius="10" :image="item.url" :index="index"></u-lazy-load> -->
 		</view>
 		<kxj-previewImage ref="previewImage" :imgs="imgs"></kxj-previewImage>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 <script>
@@ -84,6 +91,11 @@
 </script>
 <style>
 	.detail-image-title {
+		margin-top: 10px;
+		display: flex;
+		justify-content: space-between;
+	}
+	.detail-image-title .title{
 		font-size: 36rpx;
 	}
 

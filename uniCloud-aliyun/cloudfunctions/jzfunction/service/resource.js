@@ -64,7 +64,7 @@ module.exports = class resourceService extends Service {
 			};
 		}
 	}
-	// 获取列表
+	// 获取资源列表
 	async getList() {
 		try {
 			var db = this.db;
@@ -90,12 +90,21 @@ module.exports = class resourceService extends Service {
 			} else {
 				where = where_obj;
 			}
-			var resultdata = {};
-			if (type == "zx") {
-				resultdata = await collection.where(where).orderBy("last_modify_date", "desc").limit(rows).get();
+			var collection_query=null;
+			if (type == "zx") {///.match(where)
+				collection_query =  collection.aggregate().match(where).sort({"last_modify_date": -1}).limit(rows);
 			} else if (type == "rm") {
-				resultdata = await collection.where(where).orderBy("view_count", "desc").limit(rows).get();
+				collection_query =  collection.aggregate().match(where).sort({"view_count": -1}).limit(rows);
 			}
+			console.log("collection_query",collection_query);
+			var resultdata=await collection_query.lookup({
+					from: 'uni-id-users',
+					localField: 'user_id',
+					foreignField: '_id',
+					as: 'userinfo',
+				})
+				.end();
+			console.log("resultdata",resultdata);
 			return {
 				"state": "0000",
 				"rows": resultdata.data,
@@ -103,6 +112,7 @@ module.exports = class resourceService extends Service {
 				"msg": "查询成功"
 			};
 		} catch (e) {
+			console.log("e",e);
 			return {
 				"state": "9999",
 				"rows": [],
@@ -127,7 +137,6 @@ module.exports = class resourceService extends Service {
 				})
 				.end()
 			console.log("resultdata", resultdata);
-
 			if (!resultdata.data[0].view_count) {
 				resultdata.data[0].view_count = 0;
 			}

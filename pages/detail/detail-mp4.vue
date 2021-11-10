@@ -1,44 +1,52 @@
 <template>
-	<view class="detail-mp4">
-		<view class="uni-padding-wrap uni-common-mt">
-			<view style="width: 100%;">
-				<video id="myVideo" :src="src" @error="videoErrorCallback" controls></video>
+	<view class="detail-image">
+		<view class="detail-image-title">
+			<view class="title">
+				{{data.title}}
 			</view>
-		</view>
-		<view class="detail-mp4-title">
-			{{data.title}}
-		</view>
-		<view class="detail-mp4-sx">
-			<view>
-				<text>作者：{{data.author}}</text>
-				<text style="margin-left: 10px;">投稿人：{{data.userinfo[0].nickname}}</text>
-			</view>
-			<view>
+			<view style="text-align: right;color: #909399;">
 				<uni-dateformat class="last_modify_date" :date="data.last_modify_date" format="yyyy-MM-dd"
 					:threshold="[60000, 2592000000]" />
 			</view>
 		</view>
-		<view class="detail-mp4-jj">
-			简介：{{data.excerpt}}
+		<view class="detail-image-sx">
+			<view>
+				<text>来源：{{data.author}}</text>
+				<text style="margin-left: 20px;">投稿人：{{tgr}}</text>
+			</view>
+			<view>
+				<u-icon :size="40" v-show="!islike" name="heart"  @click="toFavorite"></u-icon>
+				<u-icon :size="40" v-show="islike" name="heart-fill" color="red"></u-icon>
+			</view>
 		</view>
-		<view class="detail-mp4-list" v-if="list.length>0">
-			<u-row gutter="20">
-				<u-col span="3" v-for="(item,index) in list">
-					<u-button @click="clickBf(item)" size="medium" :type="item.selected?'primary':''">{{index+1}}
-					</u-button>
-				</u-col>
-			</u-row>
+		<view class="detail-image-sl" style="text-align: right;color: #909399;">
+			<!-- <view>
+				<u-button v-show="!islike" size="mini" @click="toFavorite">收藏</u-button>
+				<u-button v-show="islike" size="mini" disabled>已收藏</u-button>
+			</view> -->
+			<view>
+				<u-icon name="heart"></u-icon><text style="margin-left: 2px;">收藏量：{{data.like_count||0}}</text>
+				<u-icon name="eye" style="margin-left: 20px;"></u-icon><text style="margin-left: 2px;">浏览量：{{data.view_count||0}}</text>
+			</view>
 		</view>
+		<!--<view class="detail-image-jj">
+			 {{data.excerpt}} 
+		</view>-->
+		<view class="detail-image-item" v-for="(item,index) in data.resources" :key="index">
+			<video id="myVideo" :src="item.url" controls></video>
+		</view>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 <script>
+	import detail from "./detail.js"
 	export default {
 		data() {
 			return {
-				src: '',
-				list: [] ///集数
+				imgs: []
 			}
 		},
+		mixins:[detail],
 		props: {
 			data: {
 				type: Object,
@@ -47,53 +55,61 @@
 				}
 			}
 		},
+		computed:{
+			tgr(){
+				if(this.data.userinfo&&this.data.userinfo.length>0){
+					return this.data.userinfo[0].nickname
+				}
+				return ""
+			}
+		},
+		
 		mounted() {
-			this.videoContext = uni.createVideoContext('myVideo')
-			console.log("data", this.data);
-			this.data.resources.forEach((item, index) => {
-				this.list.push({
-					src: item,
-					selected: index == 0 ? true : false
-				});
-			});
-			this.src = this.data.resources[0].url;
+			this.initImage();
+		},
+		watch:{
+			"data.resources"(){
+				this.initImage();
+			}
 		},
 		methods: {
-			clickBf(item) {
-				console.log("item",item);
-				this.src = item.src;
-				this.list.forEach((item1,index)=>{
-					this.$set(item1,"selected",false);
-				})
-				this.$set(item,"selected",true);
-			}
+			initImage(){
+				this.imgs.splice(0,this.imgs.length);
+				if(this.data&&this.data.resources){
+					this.data.resources.forEach((item)=>{
+						this.imgs.push(item.url);
+					})
+				}
+			},
+			previewOpen(item){
+				this.$refs.previewImage.open(item.url); 
+			},
 		}
 	}
 </script>
-
 <style>
-	.detail-mp4-title {
+	.detail-image-title {
+		margin-top: 10px;
+		display: flex;
+		justify-content: space-between;
+	}
+	.detail-image-title .title{
 		font-size: 36rpx;
 	}
 
-	.detail-mp4-sx,
-	.detail-mp4-jj {
+	.detail-image-sx,
+	.detail-image-jj {
 		display: flex;
 		justify-content: space-between;
 		margin: 10px 6px;
 		color: #909399;
 	}
 
-	.detail-mp4-item {
+	.detail-image-item {
 		margin: 20rpx 0;
 	}
-
-	#myVideo {
+	.detail-image-item video{
 		width: 100%;
-	}
-
-	.detail-mp4-list-button {
-		display: inline-block;
-		margin: 6px 10px;
+		border-radius: 10px;
 	}
 </style>

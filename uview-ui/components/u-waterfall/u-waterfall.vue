@@ -48,10 +48,14 @@ export default {
 	},
 	watch: {
 		copyFlowList(nVal, oVal) {
+			console.log("nVal",nVal);
+			console.log("oVal",oVal);
 			// 取差值，即这一次数组变化新增的部分
 			let startIndex = Array.isArray(oVal) && oVal.length > 0 ? oVal.length : 0;
 			// 拼接上原有数据
+			console.log("startIndex",startIndex);
 			this.tempList = this.tempList.concat(this.cloneData(nVal.slice(startIndex)));
+			console.log("this.tempList",this.tempList);
 			this.splitData();
 		}
 	},

@@ -13,14 +13,16 @@ export default {
 	methods: {
 		// 检测当前用户是否已经收藏
 		async checkisLike() {
-			var res = await collection.where({
-				article_id: this.data._id,
-				user_id: db.getCloudEnv('$cloudEnv_uid')
-			}).get();
-			if (res.result && res.result.data.length > 0) {
-				this.islike = true;
-			} else {
-				this.islike = false;
+			if (this.hasLogin) {
+				var res = await collection.where({
+					article_id: this.data._id,
+					user_id: db.getCloudEnv('$cloudEnv_uid')
+				}).get();
+				if (res.result && res.result.data.length > 0) {
+					this.islike = true;
+				} else {
+					this.islike = false;
+				}
 			}
 			// console.log("likes",likes);
 		},

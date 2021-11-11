@@ -194,9 +194,9 @@
 			},
 			search() {
 				// debugger;
-				if (!this.searchText && !this.hotWorld) {
-					return;
-				}
+				// if (!this.searchText && !this.hotWorld) {
+				// 	return;
+				// }
 				// if (value) {
 				// 	if (this.searchText !== value) {
 				// 		this.searchText = value

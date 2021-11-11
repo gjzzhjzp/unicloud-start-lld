@@ -1,9 +1,26 @@
 <template>
 	<view class="wrap">
-		<u-navbar :is-back="true" :title="title"></u-navbar>
-		<!-- <jz-search></jz-search> -->
-		<!-- <uni-search-bar @click="searchClick" class="uni-search-box" v-model="keyword" ref="searchBar" radius="100"
-			cancelButton="none" disabled :placeholder="inputPlaceholder" /> -->
+		<!-- <u-navbar :is-back="true" :title="title"></u-navbar> -->
+		<view class="search-container">
+			<!-- 搜索框 -->
+			<view class="search-container-bar">
+				<u-navbar :is-back="true" back-icon-name="arrow-leftward" :back-icon-size="40">
+					<u-search border-color="#7275D3" bg-color="#fff" v-model="keyword" height="60" placeholder="请输入..."
+						@search="confirm" @custom="confirm" :show-action="true"></u-search>
+				</u-navbar>
+			</view>
+		</view>
+		<view>
+			<u-tabs active-color="#7275D3" bar-width="0" :list="tabslist" :is-scroll="false" :current="currenttab"
+				@change="changeTabs"></u-tabs>
+		</view>
+		<view class="search-row">
+			<text :class="['search-row-col',item.selected?'selected':'']" v-for="item in searchrows"
+				@click="searchType(item)">{{item.name}}
+				<u-icon size="20" name="arrow-down-fill"></u-icon>
+			</text>
+
+		</view>
 		<u-waterfall v-model="flowList" ref="uWaterfall">
 			<template v-slot:left="{leftList}">
 				<item-list :list="leftList"></item-list>
@@ -12,7 +29,7 @@
 				<item-list :list="rightList"></item-list>
 			</template>
 		</u-waterfall>
-		<template v-if="flowList.length==0">
+		<template v-if="isEmpty">
 			<view style="margin-top: 100rpx;">
 				<u-empty text="数据为空" mode="list"></u-empty>
 			</view>
@@ -29,25 +46,59 @@
 		data() {
 			return {
 				// where:"",
-				keyword:"",
+				keyword: "",
 				scrollTop: 0,
 				loadStatus: 'loadmore',
 				flowList: [],
 				list: [],
-				categories:"",///分类编码
-				title:"列表"///列表
+				categories: "", ///分类编码
+				title: "列表", ///列表
+				tabslist: [{
+					name: '图片',
+					type: "0"
+				}, {
+					name: '视频',
+					type: "1"
+				}, {
+					name: '音乐',
+					type: "2"
+				}, {
+					name: '文章',
+					type: "3"
+				}],
+				currenttab: 0,
+				searchrows: [{
+						name: "最新内容",
+						type: "zx",
+						selected: true
+					},
+					{
+						name: "热门内容",
+						type: "rm",
+						selected: false
+					},
+					{
+						name: "收藏量高",
+						type: "sc",
+						selected: false
+					}
+				],
+				type:"zx",
+				reset:false,///重置
+				isEmpty:false
 			}
 		},
 		components: {
 			itemList
 		},
 		onLoad(e) {
-			console.log("onLoad",e);
-			this.categories=e.categories||"";
+			// debugger;
+			console.log("onLoad", e);
+			this.categories = e.categories || "";
 			this.keyword = getApp().globalData.searchText;
 			getApp().globalData.searchText = '';
-			if(!this.keyword){
-				this.keyword=e.title||"";
+			if (!this.keyword) {
+				this.keyword = e.title || "";
 			}
 			this.addRandomData();
 		},
@@ -57,30 +108,62 @@
 		onReachBottom() {
 			this.loadStatus = 'loading';
 			setTimeout(() => {
+				this.reset=false;
 				this.addRandomData();
 			}, 1000);
 		},
 		methods: {
+			searchType(item) {
+				this.searchrows.forEach((item1) => {
+					this.$set(item1, "selected", false);
+				});
+				this.$set(item, "selected", true);
+				console.log("searchTypeItem", item);
+				this.reset=true;
+				this.flowList.splice(0,this.flowList.length);
+				this.type=item.type;
+				this.addRandomData();
+			},
+			changeTabs(index) {
+				console.log("index", index);
+			},
+			confirm() {
+				this.reset=true;
+				this.flowList.splice(0,this.flowList.length);
+				this.addRandomData();
+			},
 			addRandomData() {
 				uniCloud.callFunction({
 					name: 'jzfunction',
 					data: {
 						action: 'resource/getList',
-						data:{
+						data: {
 							// title:this.keyword,
-							label:this.keyword,
-							categories:this.categories||''
+							label: this.keyword,
+							categories: this.categories || '',
+							type: this.type || "zx"
 						}
 					},
 				}).then((res) => {
+					console.log("getList", res.result);
 					var res = res.result;
 					if (res.state == "0000") {
 						this.list = res.rows;
-						this.flowList = JSON.parse(JSON.stringify(this.list));
+						if(this.reset){
+							this.$refs.uWaterfall.clear();
+						}
+						this.list.forEach((item1,index)=>{
+							let item = JSON.parse(JSON.stringify(item1));
+							this.flowList.push(item);
+						});
 						this.loadStatus = 'loadmore';
+						console.log("this.flowList", this.flowList);
+						if(this.flowList.length==0){
+							this.isEmpty=true;
+						}
 					} else {
-						console.log("res.msg",res.msg);
-					}	
+						console.log("res.msg", res.msg);
+					}
 				});
 			}
 		}
@@ -91,5 +174,19 @@
 	/* page不能写带scope的style标签中，否则无效 */
 	page {
 		background-color: rgb(240, 240, 240);
+	}
+
+	.search-row {
+		padding: 5px 10px;
+		background: #fff;
+	}
+
+	.search-row-col {
+		margin: 0px 10px;
+		color: #BABBCD;
+	}
+
+	.search-row-col.selected {
+		color: #767BCD;
 	}
 </style>

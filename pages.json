@@ -158,11 +158,6 @@
 				"navigationBarTitleText": "列表"
 			}
 		}, {
-			"path": "pages/jz-opendb-resources/detail",
-			"style": {
-				"navigationBarTitleText": "详情"
-			}
-		}, {
 			"path": "pages/myfavorite/myfavorite",
 			"style": {
 				"navigationBarTitleText": "我的收藏"
@@ -232,11 +227,7 @@
 		"enablePullDownRefresh": false
 	},
 	"condition": {
-		"list": [{
-				"path": "pages/list/detail"
-			}, {
-				"path": "pages/list/list"
-			},
+		"list": [
 			{
 				"path": "pages/ucenter/login-page/index/index"
 			}, {

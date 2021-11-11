@@ -18,6 +18,7 @@ export default {
 					article_id: this.data._id,
 					user_id: db.getCloudEnv('$cloudEnv_uid')
 				}).get();
+				console.log("res2222222222",res);
 				if (res.result && res.result.data.length > 0) {
 					this.islike = true;
 				} else {
@@ -27,15 +28,20 @@ export default {
 			// console.log("likes",likes);
 		},
 		async toFavorite() {
-			var resultdata = await collection.add({
-				article_id: this.data._id,
-				article_title: this.data.title,
-				user_id: db.getCloudEnv('$cloudEnv_uid'),
-				create_date: db.getCloudEnv('$cloudEnv_now')
+			return new Promise(async (reslove)=>{
+				var resultdata = await collection.add({
+					article_id: this.data._id,
+					article_title: this.data.title,
+					user_id: db.getCloudEnv('$cloudEnv_uid'),
+					create_date: db.getCloudEnv('$cloudEnv_now')
+				});
+				this.add_like().then(()=>{
+					reslove()
+				});
 			});
-			this.add_like();
 		},
 		add_like() {
+			return new Promise((reslove)=>{
 			if (!this.data.like_count) {
 				this.data.like_count = 0;
 			}
@@ -60,6 +66,8 @@ export default {
 				} else {
 					console.log("res", res.msg);
 				}
+				reslove();
+			});
 			});
 		},
 	}

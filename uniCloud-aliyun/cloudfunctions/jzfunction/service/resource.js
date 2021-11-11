@@ -70,17 +70,20 @@ module.exports = class resourceService extends Service {
 			var db = this.db;
 			var context = this.ctx;
 			var data = this.ctx.data;
-			console.log("getList_data", data);
+			// console.log("getList_data", data);
 			var type = data.type || "zx";
 			var label = data.label; ///标签
 			var rows=data.rows||10;
+			var zy_gs=data.zy_gs||0;
 			const collection = db.collection('jz-opendb-resources');
 			var where_obj = {
 				"article_status": 1,
 				"title": new RegExp(data.title, 'gi'),
-				"categories": new RegExp(data.categories, 'gi')
+				"categories": new RegExp(data.categories, 'gi'),
+				"zy_gs":parseInt(zy_gs)
 			}
 			var where = {}; ///查询条件
+			// console.log("where_obj",where_obj,data);
 			if (data.label) {
 				where = db.command.or([Object.assign({
 					"categorieszw": new RegExp(data.label, 'gi')
@@ -95,8 +98,10 @@ module.exports = class resourceService extends Service {
 				collection_query =  collection.aggregate().match(where).sort({"last_modify_date": -1}).limit(rows);
 			} else if (type == "rm") {
 				collection_query =  collection.aggregate().match(where).sort({"view_count": -1}).limit(rows);
+			}else if (type == "sc") {
+				collection_query =  collection.aggregate().match(where).sort({"like_count": -1}).limit(rows);
 			}
-			console.log("collection_query",collection_query);
+			// console.log("collection_query",collection_query);
 			var resultdata=await collection_query.lookup({
 					from: 'uni-id-users',
 					localField: 'user_id',

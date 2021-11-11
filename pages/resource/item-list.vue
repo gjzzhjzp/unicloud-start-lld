@@ -7,7 +7,7 @@
 					{{item.title}}
 				</view>
 				<view class="er-item-list-author" v-if="item.userinfo">
-					<view class="er-item-list-img"><u-avatar :size="50" :src="item.userinfo?item.userinfo[0].avatar_file.url:''"></u-avatar>
+					<view class="er-item-list-img"><u-avatar :size="50" :src="(item.userinfo&&item.userinfo[0].avatar_file)?item.userinfo[0].avatar_file.url:''"></u-avatar>
 					{{item.userinfo?item.userinfo[0].nickname:''}}</view>
 					<view><u-icon name="heart"></u-icon>{{item.like_count||0}}</view>
 				</view>

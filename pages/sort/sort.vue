@@ -19,7 +19,7 @@
 						</view>
 						<view class="item-container">
 							<view class="thumb-box" @click="toflbm(item1,index1)" v-for="(item1, index1) in item.children" :key="index1">
-								<image class="item-menu-image" :src="item1.icon?item1.icon.url:''" mode=""></image>
+								<image class="item-menu-image" :src="item1.icon?item1.icon.url:''" mode="aspectFill"></image>
 								<view class="item-menu-name">{{item1.name}}</view>
 							</view>
 						</view>
@@ -306,7 +306,8 @@
 
 	.item-menu-image {
 		width: 100%;
-		height: 100rpx;
+		height: 100rpx !important;
 		border-radius: 6px;
+		overflow: hidden;
 	}
 </style>

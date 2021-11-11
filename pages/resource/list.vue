@@ -21,14 +21,19 @@
 			</text>
 
 		</view>
-		<u-waterfall v-model="flowList" ref="uWaterfall">
-			<template v-slot:left="{leftList}">
-				<item-list :list="leftList"></item-list>
-			</template>
-			<template v-slot:right="{rightList}">
-				<item-list :list="rightList"></item-list>
-			</template>
-		</u-waterfall>
+		<view v-if="currenttab!=2">
+			<u-waterfall v-model="flowList" ref="uWaterfall">
+				<template v-slot:left="{leftList}">
+					<item-list :list="leftList"></item-list>
+				</template>
+				<template v-slot:right="{rightList}">
+					<item-list :list="rightList"></item-list>
+				</template>
+			</u-waterfall>
+		</view>
+		<view v-else>
+			<music-list :list="flowList"></music-list>
+		</view>
 		<template v-if="isEmpty">
 			<view style="margin-top: 100rpx;">
 				<u-empty text="数据为空" mode="list"></u-empty>
@@ -42,6 +47,7 @@
 </template>
 <script>
 	import itemList from "./item-list.vue"
+	import musicList from "./musicList.vue"
 	export default {
 		data() {
 			return {
@@ -85,11 +91,13 @@
 				],
 				type:"zx",
 				reset:false,///重置
-				isEmpty:false
+				isEmpty:false,
+				zy_gs:"0"////资源格式
 			}
 		},
 		components: {
-			itemList
+			itemList,
+			musicList
 		},
 		onLoad(e) {
 			// debugger;
@@ -126,6 +134,11 @@
 			},
 			changeTabs(index) {
 				console.log("index", index);
+				this.currenttab = index;
+				this.zy_gs=index;
+				this.reset=true;
+				this.flowList.splice(0,this.flowList.length);
+				this.addRandomData();
 			},
 			confirm() {
 				this.reset=true;
@@ -141,7 +154,8 @@
 							// title:this.keyword,
 							label: this.keyword,
 							categories: this.categories || '',
-							type: this.type || "zx"
+							type: this.type || "zx",
+							zy_gs:this.zy_gs
 						}
 					},
 				}).then((res) => {
@@ -149,7 +163,7 @@
 					var res = res.result;
 					if (res.state == "0000") {
 						this.list = res.rows;
-						if(this.reset){
+						if(this.reset&&this.$refs.uWaterfall){
 							this.$refs.uWaterfall.clear();
 						}
 						this.list.forEach((item1,index)=>{
@@ -177,7 +191,7 @@
 	}
 
 	.search-row {
-		padding: 5px 10px;
+		padding: 8px 10px;
 		background: #fff;
 	}
 

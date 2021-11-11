@@ -23,24 +23,16 @@
 				</view>
 			</view>
 		</view>
-		<view class="detail-image-sl" style="text-align: right;color: #909399;">
-			<!-- <view>
-				<u-button v-show="!islike" size="mini" @click="toFavorite">收藏</u-button>
-				<u-button v-show="islike" size="mini" disabled>已收藏</u-button>
-			</view> -->
-			<!-- <view>
-				<u-icon name="heart"></u-icon><text style="margin-left: 2px;">收藏量：{{data.like_count||0}}</text>
-				<u-icon name="eye" style="margin-left: 20px;"></u-icon><text style="margin-left: 2px;">浏览量：{{data.view_count||0}}</text>
-			</view> -->
+		<view class="detail-image-item">
+			<image :src="data.avatar.url"  mode="widthFix"></image></view>
+		<view class="detail-open">
+				<view>
+					外链地址：
+				</view>
+				<view>
+					<u-link :href="data.aliyun_dz">点击跳转</u-link>
+				</view>
 		</view>
-		<!--<view class="detail-image-jj">
-			 {{data.excerpt}} 
-		</view>-->
-		<view class="detail-image-item" v-for="(item,index) in data.resources" :key="index">
-			<image :src="item.url"  @click="previewOpen(item)" :index="index" mode="widthFix"></image>
-			<!-- <u-lazy-load @click="previewOpen(item)" threshold="300" border-radius="10" :image="item.url" :index="index"></u-lazy-load> -->
-		</view>
-		<kxj-previewImage ref="previewImage" :imgs="imgs"></kxj-previewImage>
 		<u-toast ref="uToast" />
 	</view>
 </template>
@@ -68,28 +60,6 @@
 				}
 				return ""
 			}
-		},
-		
-		mounted() {
-			this.initImage();
-		},
-		watch:{
-			"data.resources"(){
-				this.initImage();
-			}
-		},
-		methods: {
-			initImage(){
-				this.imgs.splice(0,this.imgs.length);
-				if(this.data&&this.data.resources){
-					this.data.resources.forEach((item)=>{
-						this.imgs.push(item.url);
-					})
-				}
-			},
-			previewOpen(item){
-				this.$refs.previewImage.open(item.url); 
-			},
 		}
 	}
 </script>
@@ -110,7 +80,12 @@
 		margin: 10px 6px;
 		color: #909399;
 	}
-
+	.detail-open{
+		display: flex;
+		text-align: center;
+		/* padding-left: 20px; */
+	}
+	
 	.detail-image-item {
 		margin: 20rpx 0;
 	}

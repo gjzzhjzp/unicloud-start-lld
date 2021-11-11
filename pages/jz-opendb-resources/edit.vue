@@ -20,8 +20,20 @@
       <uni-forms-item name="avatar" label="封面大图" required>
         <uni-file-picker file-mediatype="image" return-type="object" v-model="formData.avatar"></uni-file-picker>
       </uni-forms-item>
+      <uni-forms-item name="zy_gs" label="资源类型">
+      	<!-- <easy-select ref="easySelect" size="medium" :value="formData.zy_gs"  :options="formOptions.zy_gs_localdata"></easy-select> -->
+      	<uni-data-checkbox v-model="formData.zy_gs" :localdata="formOptions.zy_gs_localdata">
+      	</uni-data-checkbox>
+      </uni-forms-item>
       <uni-forms-item name="resources" label="附件资源">
-        <uni-file-picker file-mediatype="all" return-type="array" v-model="formData.resources"></uni-file-picker>
+      	<template v-if="formData.zy_gs==0">
+      		<uni-file-picker file-mediatype="image" return-type="array" v-model="formData.resources">
+      		</uni-file-picker>
+      	</template>
+      	<template v-else>
+      		<uni-file-picker file-mediatype="all" :limit="1" return-type="array" v-model="formData.resources">
+      		</uni-file-picker>
+      	</template>
       </uni-forms-item>
       <uni-forms-item name="aliyun_dz" label="外链">
         <uni-easyinput placeholder="请输入外链地址" v-model="formData.aliyun_dz" trim="both"></uni-easyinput>
@@ -72,7 +84,8 @@ import zycommon from "./zycommon.js"
         "aliyun_dz": "",
         "excerpt": "",
         "is_grant": 0,
-        "is_encryption": 0
+        "is_encryption": 0,
+		"zy_gs":0
       }
       return {
         formData,
@@ -87,6 +100,19 @@ import zycommon from "./zycommon.js"
               "text": "已授权"
             }
           ],
+		  "zy_gs_localdata":[{
+		  	"value": 0,
+		  	"text": "图片"
+		  },{
+		  	"value": 1,
+		  	"text": "视频"
+		  },{
+		  	"value": 2,
+		  	"text": "音乐"
+		  },{
+		  	"value": 3,
+		  	"text": "文章"
+		  }],
           "is_encryption_localdata": [
             {
               "value": 0,

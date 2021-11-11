@@ -2,20 +2,28 @@
 	<view class="jz-container">
 		<u-navbar :is-back="true" :title="title"></u-navbar>
 		<view>
-			<template v-if="zy_gs=='jpg'||zy_gs=='png'||zy_gs=='gif'">
-				<detail-image :data="detaildata"></detail-image>
+			<template v-if="!detaildata.aliyun_dz">
+				<template v-if="zy_gs=='0'">
+					<detail-image :data="detaildata"></detail-image>
+				</template>
+				<template v-else-if="zy_gs=='1'">
+					<detail-mp4 :data="detaildata"></detail-mp4>
+				</template>
+				<template v-else-if="zy_gs=='2'">
+					<detail-mp3 :data="detaildata"></detail-mp3>
+				</template>
+				<template v-else-if="zy_gs=='3'">
+					<detail-open :data="detaildata"></detail-open>
+				</template>
 			</template>
-			<template v-else-if="zy_gs=='mp4'">
-				<detail-mp4 :data="detaildata"></detail-mp4>
-			</template>
-			<template v-else-if="zy_gs=='mp3'">
-				<detail-mp3 :data="detaildata"></detail-mp3>
+			<template v-else>
+				<detail-open :data="detaildata"></detail-open>
 			</template>
 		</view>
-		<view class="jz-container-wl" v-show="detaildata.aliyun_dz">
+		<!-- <view class="jz-container-wl" v-show="detaildata.aliyun_dz">
 			外链地址：
 			<u-link :href="detaildata.aliyun_dz">{{detaildata.aliyun_dz}}</u-link>
-		</view>
+		</view> -->
 	</view>
 </template>
 <script>
@@ -25,16 +33,17 @@
 	import detailImage from "./detail-image.vue"
 	import detailMp4 from "./detail-mp4.vue"
 	import detailMp3 from "./detail-mp3.vue"
+	import detailOpen from "./detail-open.vue"
 	export default{
 		data(){
 			return {
 				title:"",
 				detaildata:{},
 				id:"",
-				zy_gs:"image"///当前资源格式
+				zy_gs:"0"///当前资源格式
 			}
 		},
-		components:{detailImage,detailMp4,detailMp3},
+		components:{detailImage,detailMp4,detailMp3,detailOpen},
 		onLoad(option) {
 			if(option&&option.id){
 				this.id=option.id;
@@ -67,9 +76,7 @@
 						this.detaildata=res.rows[0];
 						console.log("this.detaildata",this.detaildata);
 						this.title=this.detaildata.title;
-						if(this.detaildata.resources&&this.detaildata.resources.length>0){
-							this.zy_gs=this.detaildata.resources[0].extname;
-						}
+						this.zy_gs=this.detaildata.zy_gs;
 						this.tohistory();
 					} else {
 						console.log("res",res.msg);

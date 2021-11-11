@@ -73,7 +73,7 @@ const validator = {
   "zy_gs": {
     "rules": [
       {
-        "format": "string"
+        "format": "int"
       }
     ],
     "label": "资源格式"

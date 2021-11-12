@@ -906,14 +906,14 @@
 	}
 
 	.popup-x-footer text:hover {
-		color: #7275D3;
+		color: #007aff;
 		cursor: pointer;
 		opacity: 0.8;
 	}
 
 	.popup-x-footer .confirm {
 		margin-left: 20px;
-		color: #7275D3;
+		color: #007aff;
 	}
 
 	.uni-date-changed {

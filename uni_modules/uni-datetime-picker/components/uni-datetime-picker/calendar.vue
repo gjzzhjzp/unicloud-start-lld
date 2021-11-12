@@ -695,7 +695,7 @@
 		text-align: center;
 		width: 100px;
 		font-size: $uni-font-size-base;
-		color: #7275D3;
+		color: #007aff;
 		/* #ifndef APP-NVUE */
 		letter-spacing: 3px;
 		/* #endif */

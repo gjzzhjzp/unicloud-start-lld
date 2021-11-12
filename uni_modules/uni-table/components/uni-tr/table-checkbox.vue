@@ -77,7 +77,7 @@
 </script>
 
 <style lang="scss">
-	$checked-color: #7275D3;
+	$checked-color: #007aff;
 	$border-color: #DCDFE6;
 	$disable:0.4;
 

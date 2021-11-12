@@ -3,9 +3,7 @@
 		<jz-navbar :issy="false">
 			<view class="jz-navbar-title">山总</view>
 		</jz-navbar>
-		<view class="jz-notice">
-			<u-notice-bar mode="vertical" :list="list"></u-notice-bar>
-		</view>
+		<jz-notice :type="1"></jz-notice>
 		<view class="jz-container">
 			<view>
 				<jz-banner :type="2"></jz-banner>
@@ -23,12 +21,7 @@
 <script>
 	export default {
 		data() {
-			return {
-				list: [
-					'山河不足重，重在遇知己',
-					'你身上有光，我抓来看看'
-				]
-			}
+			return {}
 		}
 	}
 </script>
@@ -38,8 +31,5 @@
 	}
 	.jz-sy-section{
 		margin-top: 20rpx;
-	}
-	.jz-notice{
-		padding: 10rpx;
 	}
 </style>

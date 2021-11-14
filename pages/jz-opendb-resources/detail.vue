@@ -7,7 +7,7 @@
       </view>
       <view v-else-if="data">
         <view>
-          <text>作者</text>
+          <text>来源</text>
           <text>{{data.author}}</text>
         </view>
         <view>

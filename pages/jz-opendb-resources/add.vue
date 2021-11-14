@@ -5,8 +5,8 @@
 			<uni-forms-item name="title" label="标题" required>
 				<uni-easyinput placeholder="请输入标题" v-model="formData.title" trim="both"></uni-easyinput>
 			</uni-forms-item>
-			<uni-forms-item name="author" label="作者" required>
-				<uni-easyinput placeholder="请输入作者" v-model="formData.author" trim="both"></uni-easyinput>
+			<uni-forms-item name="author" label="来源" required>
+				<uni-easyinput placeholder="请输入来源" v-model="formData.author" trim="both"></uni-easyinput>
 			</uni-forms-item>
 			<uni-forms-item name="categorieszw" label="分类">
 				<uni-easyinput placeholder="请选择分类" v-model="formData.categorieszw" trim="both" @focus="opencategories">
@@ -36,7 +36,7 @@
 					</uni-file-picker>
 				</template>
 				<template v-else-if="formData.zy_gs==2">
-					<uni-file-picker file-mediatype="video" file-extname="mp3" :limit="1" return-type="array" v-model="formData.resources">
+					<uni-file-picker file-mediatype="all" file-extname="mp3" :limit="1" return-type="array" v-model="formData.resources">
 					</uni-file-picker>
 				</template>
 				<template v-else>

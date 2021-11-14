@@ -1,6 +1,6 @@
 <template>
 	<view class="uni-container">
-		<u-navbar :is-back="false" title="意见反馈"></u-navbar>
+		<u-navbar :is-back="true" title="意见反馈"></u-navbar>
 		<view style="margin-top: 20px;">
 			<uni-forms ref="form" :value="formData" validate-trigger="submit" err-show-type="toast">
 				<uni-forms-item name="content" label="意见建议" required>
@@ -18,7 +18,7 @@
 					<uni-easyinput v-model="formData.mobile" trim="both"></uni-easyinput>
 				</uni-forms-item>
 				<view class="uni-button-group">
-					<button type="primary" class="uni-button" @click="submit">提交</button>
+					<u-button type="primary" class="uni-button" @click="submit">提交</u-button>
 				</view>
 			</uni-forms>
 		</view>

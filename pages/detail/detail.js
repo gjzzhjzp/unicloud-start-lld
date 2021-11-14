@@ -32,6 +32,7 @@ export default {
 				var resultdata = await collection.add({
 					article_id: this.data._id,
 					article_title: this.data.title,
+					zy_gs:this.data.zy_gs,
 					user_id: db.getCloudEnv('$cloudEnv_uid'),
 					create_date: db.getCloudEnv('$cloudEnv_now')
 				});

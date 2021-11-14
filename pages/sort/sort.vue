@@ -59,8 +59,9 @@
 		methods: {
 			// 按分类编码筛选
 			toflbm(item){
+				// debugger;
 				uni.navigateTo({
-					url:"/pages/resource/list?categories="+item.flbm
+					url:"/pages/resource/list?title="+item.name
 				})
 			},
 			async getList(){

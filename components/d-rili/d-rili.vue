@@ -13,7 +13,7 @@
 				<view class="signWrapperCalendar" v-if="true">
 					<view class="signWrapperCalendarBox">
 						<swiper @change="_onClickSlideApi" duration="200" :current="slideDataListIndex" circular
-							style="height:250px">
+							style="height:265px">
 							<swiper-item class="swiper-item" v-for="(calendar,indexa) in 3" :key="indexa">
 								<view class="signWrapperCalendarBoxCenter">
 									<view class="signWrapperCalendarBoxCenterBox">

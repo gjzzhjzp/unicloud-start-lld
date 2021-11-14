@@ -192,7 +192,7 @@
 				this.searchText = '';
 				this.loadList();
 			},
-			search() {
+			search(word) {
 				// debugger;
 				// if (!this.searchText && !this.hotWorld) {
 				// 	return;
@@ -206,7 +206,10 @@
 
 				// 	this.searchLogDbAdd(value)
 				// } else 
-				if (this.hotWorld) {
+				if(word){
+					this.searchText =word;
+				}
+				if (!this.searchText&&this.hotWorld) {
 					this.searchText = this.hotWorld
 				}
 

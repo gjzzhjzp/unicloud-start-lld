@@ -50,7 +50,7 @@ module.exports = class resourceService extends Service {
 				});
 			}
 			var res = await collection.add(data);
-			console.log("res", res);
+			// console.log("res", res);
 			return {
 				"state": "0000",
 				"data": "",
@@ -70,31 +70,48 @@ module.exports = class resourceService extends Service {
 			var db = this.db;
 			var context = this.ctx;
 			var data = this.ctx.data;
-			// console.log("getList_data", data);
 			var type = data.type || "zx";
 			var label = data.label; ///标签
 			var rows=data.rows||10;
-			var zy_gs=data.zy_gs||0;
+			var page=data.page||1;
+			var zy_gs="";
 			const collection = db.collection('jz-opendb-resources');
 			var where_obj = {
 				"article_status": 1,
-				"title": new RegExp(data.title, 'gi'),
-				"categories": new RegExp(data.categories, 'gi'),
-				"zy_gs":parseInt(zy_gs)
+				"categories": new RegExp(data.categories, 'gi')
+			}
+			
+			if(typeof data.zy_gs!="object"){
+				zy_gs=parseInt(data.zy_gs)||0;
+				Object.assign(where_obj,{zy_gs:zy_gs});
 			}
 			var where = {}; ///查询条件
-			// console.log("where_obj",where_obj,data);
 			if (data.label) {
 				where = db.command.or([Object.assign({
 					"categorieszw": new RegExp(data.label, 'gi')
 				}, where_obj), Object.assign({
 					"labels": new RegExp(data.label, 'gi')
-				}, where_obj)])
+				}, where_obj), Object.assign({
+					"title": new RegExp(data.label, 'gi')
+				}, where_obj), Object.assign({
+					"author": new RegExp(data.label, 'gi')
+				}, where_obj)]);
 			} else {
-				where = where_obj;
+				if(typeof data.zy_gs=="object"){
+					where = db.command.or([Object.assign({
+						"zy_gs": 0
+					}, where_obj), Object.assign({
+						"zy_gs": 1
+					}, where_obj), Object.assign({
+						"zy_gs": 3
+					}, where_obj)]);
+				}else{
+					where = where_obj;
+				}
 			}
+			console.log("where",where);
 			var collection_query=null;
-			if (type == "zx") {///.match(where)
+			if (type == "zx") {
 				collection_query =  collection.aggregate().match(where).sort({"last_modify_date": -1}).limit(rows);
 			} else if (type == "rm") {
 				collection_query =  collection.aggregate().match(where).sort({"view_count": -1}).limit(rows);
@@ -107,7 +124,7 @@ module.exports = class resourceService extends Service {
 					localField: 'user_id',
 					foreignField: '_id',
 					as: 'userinfo',
-				})
+				}).skip((page-1)*rows)
 				.end();
 			console.log("resultdata",resultdata);
 			return {

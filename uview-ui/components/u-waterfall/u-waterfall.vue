@@ -71,6 +71,7 @@ export default {
 	},
 	methods: {
 		async splitData() {
+			// debugger;
 			if (!this.tempList.length) return;
 			let leftRect = await this.$uGetRect('#u-left-column');
 			let rightRect = await this.$uGetRect('#u-right-column');

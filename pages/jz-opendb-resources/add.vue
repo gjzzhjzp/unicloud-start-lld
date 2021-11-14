@@ -28,7 +28,15 @@
 			</uni-forms-item>
 			<uni-forms-item name="resources" label="附件资源">
 				<template v-if="formData.zy_gs==0">
-					<uni-file-picker file-mediatype="image" return-type="array" v-model="formData.resources">
+					<uni-file-picker file-mediatype="image" :limit="18" return-type="array" v-model="formData.resources">
+					</uni-file-picker>
+				</template>
+				<template v-else-if="formData.zy_gs==1">
+					<uni-file-picker file-mediatype="video" file-extname="mp4" :limit="1" return-type="array" v-model="formData.resources">
+					</uni-file-picker>
+				</template>
+				<template v-else-if="formData.zy_gs==2">
+					<uni-file-picker file-mediatype="video" file-extname="mp3" :limit="1" return-type="array" v-model="formData.resources">
 					</uni-file-picker>
 				</template>
 				<template v-else>
@@ -52,7 +60,7 @@
 				</uni-data-checkbox>
 			</uni-forms-item>
 			<view class="uni-button-group">
-				<button type="primary" class="uni-button" @click="submit">提交</button>
+				<u-button type="primary" class="uni-button" @click="submit">提交</u-button>
 			</view>
 		</uni-forms>
 	</view>

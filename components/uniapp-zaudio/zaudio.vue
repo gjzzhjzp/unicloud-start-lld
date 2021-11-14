@@ -10,7 +10,6 @@
 				@change="change"
 				:disabled="!renderIsPlay"
 			></slider>
-
 			<view class="top">
 				<view class="audio-control-wrapper">
 					<image :src="renderData('coverImgUrl')" mode="aspectFill" class="cover" :class="{ on: !renderData('paused') }"></image>

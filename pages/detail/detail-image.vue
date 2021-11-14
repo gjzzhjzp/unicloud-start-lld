@@ -4,7 +4,7 @@
 			<view class="title">
 				{{data.title}}
 			</view>
-			<view style="text-align: right;color: #909399;">
+			<view style="text-align: right;color: #909399;width: 120px;">
 				<uni-dateformat class="last_modify_date" :date="data.last_modify_date" format="yyyy-MM-dd"
 					:threshold="[60000, 2592000000]" />
 			</view>

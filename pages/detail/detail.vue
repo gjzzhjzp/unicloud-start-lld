@@ -20,10 +20,6 @@
 				<detail-open :data="detaildata"></detail-open>
 			</template>
 		</view>
-		<!-- <view class="jz-container-wl" v-show="detaildata.aliyun_dz">
-			外链地址：
-			<u-link :href="detaildata.aliyun_dz">{{detaildata.aliyun_dz}}</u-link>
-		</view> -->
 	</view>
 </template>
 <script>
@@ -85,8 +81,6 @@
 			},
 			// 历史记录
 			async tohistory(){
-				console.log("this.hasLogin",this.hasLogin);
-				console.log("userInfo",this.userInfo);
 				if(this.hasLogin){
 					const db = uniCloud.database()
 					const uid = db.getCloudEnv('$cloudEnv_uid');
@@ -100,11 +94,13 @@
 							update_date:db.getCloudEnv('$cloudEnv_now')
 						});
 					}else{
+						// debugger;
 						await collection.add({
 							article_id: this.detaildata._id,
 							article_title: this.detaildata.title,
 							user_id: db.getCloudEnv('$cloudEnv_uid'),
-							create_date: db.getCloudEnv('$cloudEnv_now')
+							create_date: db.getCloudEnv('$cloudEnv_now'),
+							zy_gs:this.detaildata.zy_gs
 						});
 					}
 				}

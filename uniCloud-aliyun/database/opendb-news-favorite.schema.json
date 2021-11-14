@@ -20,6 +20,11 @@
 			"bsonType": "string",
 			"description": "文章标题"
 		},
+		"zy_gs":{
+			"bsonType": "int",
+			"title": "资源类型",
+			"description": "资源类型：0 图片 1 视频 2 音乐 1 文章"
+		},
 		"user_id": {
 			"bsonType": "string",
 			"description": "收藏者id，参考uni-id-users表",

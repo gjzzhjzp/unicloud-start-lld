@@ -70,6 +70,10 @@
 		font-size: 30rpx;
 		margin-top: 5px;
 		color: $u-main-color;
+		    white-space: nowrap;
+		    overflow: hidden;
+		    text-overflow: ellipsis;
+		
 	}
 
 	.er-item-list-tag {
@@ -113,4 +117,9 @@
 		display: flex;
 		align-items: center;
 	}
+.er-item-list .er-item-list-warter{
+    box-shadow: 0px 0px 6px #d5d5d6;
+    border-radius: 10px;
+    margin: 10px;
+}
 </style>

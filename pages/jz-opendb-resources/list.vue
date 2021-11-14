@@ -10,6 +10,8 @@
 				<u-swipe-action :show="item.show" :index="index" v-for="(item, index) in list" :key="item._id"
 					@click="click" @open="open" :options="options">
 					<view class="item u-border-bottom" @click="todetail(item)">
+						<u-icon size="40" color="#18b566" v-if="item.article_status==1" name="checkmark"></u-icon>
+						<u-icon size="40" color="#fa3534" v-else name="close"></u-icon>
 						<image mode="aspectFill" :src="item.images" />
 						<view class="title-wrap">
 							<text class="title u-line-2">{{ item.title }}</text>
@@ -153,5 +155,8 @@
 		font-size: 28rpx;
 		color: $u-content-color;
 		margin-top: 20rpx;
+	}
+	.u-icon{
+		margin: 0 6px;
 	}
 </style>

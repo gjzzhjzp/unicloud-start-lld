@@ -6,6 +6,11 @@
 			"style": {
 				"navigationBarTitleText": "对暗号"
 			}
+		},  {
+			"path": "pages/404/404",
+			"style": {
+				"navigationBarTitleText": "404"
+			}
 		}, {
 			"path": "pages/resource/list",
 			"style": {

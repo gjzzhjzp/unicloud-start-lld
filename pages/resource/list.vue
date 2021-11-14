@@ -34,13 +34,13 @@
 		<view v-else>
 			<music-list :list="flowList"></music-list>
 		</view>
-		<template v-if="isEmpty">
+		<template v-if="isEmpty&&currenttab!=2">
 			<view style="margin-top: 100rpx;">
 				<u-empty text="数据为空" mode="list"></u-empty>
 			</view>
 		</template>
 		<template v-else>
-			<u-loadmore bg-color="rgb(240, 240, 240)" :status="loadStatus" @loadmore="addRandomData"></u-loadmore>
+			<u-loadmore :status="loadStatus" @loadmore="loadmoreList"></u-loadmore>
 		</template>
 		<u-back-top :scroll-top="scrollTop" top="1000" mode="square" icon="arrow-up" tips="顶部"></u-back-top>
 	</view>
@@ -89,10 +89,14 @@
 						selected: false
 					}
 				],
-				type:"zx",
-				reset:false,///重置
-				isEmpty:false,
-				zy_gs:"0"////资源格式
+				type: "zx",
+				reset: false, ///重置
+				isEmpty: false,
+				zy_gs: "0", ////资源格式
+				param: {
+					page: 1,
+					rows: 10
+				}
 			}
 		},
 		components: {
@@ -103,6 +107,16 @@
 			// debugger;
 			console.log("onLoad", e);
 			this.categories = e.categories || "";
+			this.type = e.type || "zx";
+			if (e.type) {
+				this.searchrows.forEach((item) => {
+					if (item.type == this.type) {
+						this.$set(item, "selected", true);
+					} else {
+						this.$set(item, "selected", false);
+					}
+				})
+			}
 			this.keyword = getApp().globalData.searchText;
 			getApp().globalData.searchText = '';
 			if (!this.keyword) {
@@ -114,36 +128,44 @@
 			this.scrollTop = e.scrollTop;
 		},
 		onReachBottom() {
-			this.loadStatus = 'loading';
-			setTimeout(() => {
-				this.reset=false;
-				this.addRandomData();
-			}, 1000);
+			if (this.loadStatus == 'loadmore') {
+				this.loadStatus = 'loading';
+				setTimeout(() => {
+					this.reset = false;
+					this.addRandomData();
+				}, 1000);
+			}
 		},
 		methods: {
+			resetlist() {
+				this.param.page = 1;
+				this.reset = true;
+				this.flowList.splice(0, this.flowList.length);
+				if (this.reset && this.$refs.uWaterfall) {
+					this.$refs.uWaterfall.clear();
+				}
+				this.addRandomData();
+				
+			},
+			loadmoreList() {
+				this.reset = false;
+				this.addRandomData();
+			},
 			searchType(item) {
 				this.searchrows.forEach((item1) => {
 					this.$set(item1, "selected", false);
 				});
 				this.$set(item, "selected", true);
-				console.log("searchTypeItem", item);
-				this.reset=true;
-				this.flowList.splice(0,this.flowList.length);
-				this.type=item.type;
-				this.addRandomData();
+				this.type = item.type;
+				this.resetlist();
 			},
 			changeTabs(index) {
-				console.log("index", index);
 				this.currenttab = index;
-				this.zy_gs=index;
-				this.reset=true;
-				this.flowList.splice(0,this.flowList.length);
-				this.addRandomData();
+				this.zy_gs = index;
+				this.resetlist();
 			},
 			confirm() {
-				this.reset=true;
-				this.flowList.splice(0,this.flowList.length);
-				this.addRandomData();
+				this.resetlist();
 			},
 			addRandomData() {
 				uniCloud.callFunction({
@@ -151,11 +173,12 @@
 					data: {
 						action: 'resource/getList',
 						data: {
-							// title:this.keyword,
 							label: this.keyword,
 							categories: this.categories || '',
 							type: this.type || "zx",
-							zy_gs:this.zy_gs
+							zy_gs: this.zy_gs,
+							page: this.param.page,
+							rows: this.param.rows
 						}
 					},
 				}).then((res) => {
@@ -163,17 +186,21 @@
 					var res = res.result;
 					if (res.state == "0000") {
 						this.list = res.rows;
-						if(this.reset&&this.$refs.uWaterfall){
-							this.$refs.uWaterfall.clear();
-						}
-						this.list.forEach((item1,index)=>{
+						this.list.forEach((item1, index) => {
 							let item = JSON.parse(JSON.stringify(item1));
 							this.flowList.push(item);
 						});
-						this.loadStatus = 'loadmore';
+						if (this.flowList.length < this.param.rows) {
+							this.loadStatus = 'nomore';
+						} else {
+							this.loadStatus = 'loadmore';
+							this.param.page++;
+						}
 						console.log("this.flowList", this.flowList);
-						if(this.flowList.length==0){
-							this.isEmpty=true;
+						if (this.flowList.length == 0) {
+							this.isEmpty = true;
+						} else {
+							this.isEmpty = false;
 						}
 					} else {
 						console.log("res.msg", res.msg);

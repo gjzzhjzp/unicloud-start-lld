@@ -2,7 +2,7 @@
 	<view class="jz-container">
 		<view>
 			<jz-navbar>
-				<u-search border-color="#7275D3" bg-color="#fff" height="60" placeholder="" @search="tosearch" @custom="tosearch"
+				<u-search border-color="#7275D3" bg-color="#fff" height="60" placeholder="" @focus="tosearch" @search="tosearch" @custom="tosearch"
 					:show-action="true"></u-search>
 			</jz-navbar>
 		</view>

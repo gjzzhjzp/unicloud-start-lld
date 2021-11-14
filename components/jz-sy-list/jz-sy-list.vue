@@ -1,27 +1,29 @@
 <template>
 	<view>
 		<view class="jz-sy-list-section">
-			<u-section line-color="#7275D3" :title="title" :right="true" sub-title="查看更多>>" :arrow="false" @click="tomore"></u-section>
+			<u-section line-color="#7275D3" :title="title" :right="true" sub-title="查看更多>>" :arrow="false"
+				@click="tomore"></u-section>
 		</view>
 		<view class="jz-sy-list">
 			<template v-show="!isEmpty">
-					<u-row gutter="4">
-						<u-col span="4" class="jz-sy-item" v-for="(item,index) in list" :key="index">
-							<view class="jz-sy-list-item" @click="toDetail(item)">
-								<view>
-									<u-image width="100%" height="140rpx" :src="item.avatar.url"></u-image>
-								</view>
-								<view class="jz-sy-list-text">{{item.title}}</view>
+				<u-row gutter="4">
+					<u-col span="4" class="jz-sy-item" v-for="(item,index) in list" :key="index">
+						<view class="jz-sy-list-item" @click="toDetail(item)">
+							<view>
+								<u-image width="100%" height="140rpx" border-radius="10" :src="item.avatar.url">
+								</u-image>
 							</view>
-						</u-col>
-					</u-row>
+							<view class="jz-sy-list-text">{{item.title}}</view>
+						</view>
+					</u-col>
+				</u-row>
 			</template>
 			<template v-if="isEmpty">
 				<u-empty text="数据为空" mode="list"></u-empty>
 			</template>
 			<u-modal v-model="showmodel" title="输入邀请码" :show-cancel-button="true" @confirm="confirm">
 				<view class="slot-content" style="padding: 10px;">
-					<u-input v-model="yqm" type="text" :border="true" placeholder="请输入邀请码"  />
+					<u-input v-model="yqm" type="text" :border="true" placeholder="请输入邀请码" />
 				</view>
 			</u-modal>
 			<u-toast ref="uToast" />
@@ -33,64 +35,71 @@
 	export default {
 		data() {
 			return {
-				list:[],
+				list: [],
 				where: "",
 				isEmpty: true
 			}
 		},
-		props:{
+		props: {
 			// 类型，热门还是最新
-			type:{
-				type:String,
-				default(){
+			type: {
+				type: String,
+				default () {
 					return ""
 				}
 			},
 			// 标签
-			label:{
-				type:String,
-				default(){
+			label: {
+				type: String,
+				default () {
 					return ""
 				}
 			},
-			title:{
-				type:String,
-				default(){
+			title: {
+				type: String,
+				default () {
 					return ""
 				}
 			}
 		},
-		mixins:[yqm],
+		mixins: [yqm],
 		created() {
 			// this.where = 'article_status==1';
 			this.getList();
 		},
 		methods: {
-			tomore(){
-				uni.navigateTo({
-					url:'/pages/resource/list?title='+this.title
-				});
+			tomore() {
+				if (this.type) {
+					uni.navigateTo({
+						url: '/pages/resource/list?type=' + this.type
+					});
+				} else {
+					uni.navigateTo({
+						url: '/pages/resource/list?title=' + this.title
+					});
+				}
 			},
 			getList() {
 				uniCloud.callFunction({
 					name: 'jzfunction',
 					data: {
 						action: 'resource/getList',
-						data:{
-							type:this.type,
-							label:this.label,
-							page:1,
-							rows:6
+						data: {
+							type: this.type,
+							label: this.label,
+							zy_gs: [0, 1, 3],
+							page: 1,
+							rows: 6
 						}
 					},
 				}).then((res) => {
 					var res = res.result;
-					console.log("res",res)
+					console.log("res", res)
 					if (res.state == "0000") {
 						this.list = res.rows;
-						if(this.list.length>0){
+						if (this.list.length > 0) {
 							this.isEmpty = false;
-						}else{
+						} else {
 							this.isEmpty = true;
 						}
 					} else {
@@ -108,12 +117,17 @@
 	.jz-sy-list-item {
 		margin: 6px 4px;
 	}
-	.jz-sy-list-text{
-		color:$u-type-primary;
+
+	.jz-sy-list-text {
+		color: $u-type-primary;
 		margin-top: 10rpx;
 		margin-left: 10rpx;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
 	}
-	.jz-sy-list-section{
+
+	.jz-sy-list-section {
 		margin: 10rpx 0px;
 	}
 </style>

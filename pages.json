@@ -251,14 +251,7 @@
 	},
 	"condition": {
 		"list": [
-			{
-				"path": "pages/ucenter/login-page/index/index"
-			}, {
-				"path": "pages/ucenter/userinfo/userinfo"
-			},
-			{
-				"path": "pages/ucenter/settings/settings"
-			}
+			
 		],
 		"current": 1
 	},

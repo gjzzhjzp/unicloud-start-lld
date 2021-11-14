@@ -221,7 +221,7 @@
 
 	.login-back-con {
 		    width: 80%;
-		    margin: 700rpx auto 0px auto;
+		    margin: 280px auto 0px auto;
 	}
 	.login-back-con .u-btn{
 		    border-radius: 50px;

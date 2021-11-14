@@ -12,7 +12,7 @@
 					</u-image>
 					<u-image v-show="item2.selected" width="60rpx" height="60rpx" src="/static/music/like_sed.png">
 					</u-image>
-				</view>
+				</view>     
 				<!-- <view class="music-list-right-icon" @click="to_operate(item2,'download',index2)">
 					<u-image v-show="!item2.download" width="60rpx" height="60rpx" src="/static/music/download.png"></u-image>
 					<u-image v-show="item2.download" width="60rpx" height="60rpx" src="/static/music/download_sed.png"></u-image>
@@ -36,6 +36,7 @@
 	import {
 		mapGetters
 	} from 'vuex';
+	const db = uniCloud.database()
 	export default {
 		name: "musicList",
 		// mixins: [detail],
@@ -147,7 +148,7 @@
 			async tohistory(data) {
 				// debugger;
 				if (this.hasLogin) {
-					const db = uniCloud.database()
+					
 					const uid = db.getCloudEnv('$cloudEnv_uid');
 					const collection = db.collection('opendb-news-history');
 					var rows = await collection.where({
@@ -170,13 +171,21 @@
 						});
 					}
 				} else {
-					uni.navigateTo({
-						url: "/pages/ucenter/login-page/index/index"
-					})
+					// uni.navigateTo({
+					// 	url: "/pages/ucenter/login-page/index/index"
+					// })
 				}
 			},
 			async toFavorite(data) {
 				if (this.hasLogin) {
+					if(data.selected){
+						this.$refs.uToast.show({
+							title: '已收藏',
+							type: 'warning'
+						});
+						return;
+					}
+					const collection = db.collection('opendb-news-favorite');
 					return new Promise(async (reslove) => {
 						var resultdata = await collection.add({
 							article_id: data._id,
@@ -186,6 +195,7 @@
 							create_date: db.getCloudEnv('$cloudEnv_now')
 						});
 						this.add_like(data).then(() => {
+							this.allLove.push(data._id);
 							reslove(data);
 						});
 					});
@@ -243,9 +253,9 @@
 						// this.allLove=rows;
 						console.log("rows111", this.allLove);
 					} else {
-						uni.navigateTo({
-							url: "/pages/ucenter/login-page/index/index"
-						})
+						// uni.navigateTo({
+						// 	url: "/pages/ucenter/login-page/index/index"
+						// })
 					}
 					reslove();
 				});

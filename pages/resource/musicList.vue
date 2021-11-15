@@ -121,9 +121,15 @@
 
 				this.data = data;
 				if (type == "like") {
-					this.toFavorite(data).then((resdata) => {
-						this.initList();
-					});
+					if(!data.selected){
+						this.toFavorite(data).then((resdata) => {
+							this.initList();
+						});
+					}else{
+						this.cancelFavorite(data).then((resdata) => {
+							this.initList();
+						});
+					}
 				} else if (type == "play") {
 					// debugger;
 					this.now = index;
@@ -232,6 +238,51 @@
 						}
 						reslove();
 					});
+				});
+			},
+			async cancelFavorite(data){
+				const collection = db.collection('opendb-news-favorite');
+				return new Promise(async (reslove)=>{
+					var resultdata = await collection.where({
+						article_id: data._id,
+						user_id: db.getCloudEnv('$cloudEnv_uid')
+					}).remove();
+					this.cancel_like(data).then(()=>{
+						// debugger;
+						this.allLove.forEach((item,index)=>{
+							if(item==data._id){
+								this.allLove.splice(index,1);
+							}
+						});
+						// this.allLove.push(data._id);
+						reslove();
+					});
+				});
+			},
+			cancel_like(data){
+				return new Promise((reslove)=>{
+				uniCloud.callFunction({
+					name: 'jzfunction',
+					data: {
+						action: 'resource/cancel_like',
+						data: {
+							_id: data._id,
+							like_count: data.like_count || 0
+						}
+					},
+				}).then((res) => {
+					var res = res.result;
+					if (res.state == "0000") {
+						this.$refs.uToast.show({
+							title: '已取消',
+							type: 'success'
+						});
+						this.$set(this.data, "like_count", --this.data.like_count);
+					} else {
+						console.log("res", res.msg);
+					}
+					reslove();
+				});
 				});
 			},
 			getAllLove() {

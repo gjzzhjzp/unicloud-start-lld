@@ -10,15 +10,15 @@
 			</view>
 		</view>
 		<view class="detail-image-sx">
-			<view>
-				<text>来源：{{data.author}}</text>
-				<text style="margin-left: 20px;">投稿人：{{tgr}}</text>
+			<view class="detail-image-ly">
+				<view class="detail-image-ly1">来源：{{data.author}}</view>
+				<view class="detail-image-ly2">投稿人：{{tgr}}</view>
 			</view>
-			<view>
+			<view class="detail-image-sc">
 				<view v-show="!islike" @click="toFavorite">
 					<u-icon :size="30"  name="heart"  ></u-icon> 收藏
 				</view>
-				<view v-show="islike">
+				<view v-show="islike" @click="cancelFavorite">
 					<u-icon :size="30"  name="heart-fill" color="red"></u-icon> 已收藏
 				</view>
 			</view>
@@ -92,6 +92,25 @@
 	}
 </script>
 <style>
+	.detail-image-ly{
+		display: flex;
+		width: calc(100% - 65px);
+	}
+	.detail-image-ly1{
+		    white-space: nowrap;
+		    overflow: hidden;
+		    text-overflow: ellipsis;
+	}
+	.detail-image-ly2{
+		    white-space: nowrap;
+		    overflow: hidden;
+		    text-overflow: ellipsis;
+		    margin-left: 10px;
+			width: 120px;
+	}
+	.detail-image-sc{
+		width: 65px;
+	}
 	.detail-image-title {
 		margin-top: 10px;
 		display: flex;

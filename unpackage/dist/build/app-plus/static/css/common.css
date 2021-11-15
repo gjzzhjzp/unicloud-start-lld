@@ -1,0 +1,104 @@
+.jz-container {
+	padding: 0px 10px;
+}
+
+.jz-navbar .u-search .u-action.u-action-active {
+	position: absolute;
+	right: 18px;
+	border: 1px solid;
+	border-radius: 20px;
+	color: #fff;
+	background: #7275D3;
+	padding: 2px 6px;
+	width: 50px !important;
+	line-height: 20px;
+}
+.search-container .u-search .u-action.u-action-active{
+	    border: 1px solid;
+	    border-radius: 20px;
+	    color: #fff;
+	    background: #7275D3;
+	    padding: 5px 10px;
+	    width: 60px;
+	    line-height: 20px;
+}
+.sy-u-search {
+	flex: 1;
+}
+
+.sy-u-search .u-search .u-action.u-action-active {
+	right: 47px !important;
+
+}
+
+.jz-navbar-title {
+	text-align: center;
+	color: #93D0F6;
+	font-size: 16px;
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	width: 100%;
+	left: 0px;
+	right: 0px;
+	line-height: 44px;
+	font-weight: bold;
+}
+
+.menu-scroll-view {
+	border-right: 1px solid #7275d3;
+}
+
+.u-navbar .uicon-search{
+	font-size: 20px !important;
+	    font-weight: normal;
+	    top: 0px;
+	    left: -6px !important;
+	    color: #7275D3 !important;
+}
+.u-collapse-body{
+	overflow: auto !important;
+	/* height:auto !important */
+}
+.u-collapse-title{
+	    padding: 0px 16px;
+	    font-size: 20px;
+		color: #7E80B5;
+}
+.imt-audio .uni-slider-handle,.imt-audio .uni-slider-thumb{
+	left: 0px;
+}
+.uni-slider-thumb{
+	border-radius:4px !important;
+	width: 2px !important;
+	    height: 12px !important;
+		margin-left:0px !important;
+		margin-top: -6px !important;
+		background-color: #D79EE5 !important;
+}
+.uni-slider-track{
+	background-color: #D79EE5 !important;
+}
+.uni-slider-wrapper{
+	    min-height: 4px !important;
+		height: 4px;
+		margin-top: -1px;
+}
+.uni-slider-handle-wrapper{
+	background-color: #2D509A !important;
+}
+.uni-body{
+	background-color: #fff !important;
+}
+body.pages-resource-list uni-page-body {
+    background-color: #fff !important;
+}
+.uni-error-message-text{
+	    margin-left: 70px;
+}
+.uni-data-checklist .checklist-group .checklist-box{
+	margin-right: 15px !important;
+}
+.u-waterfall .u-column{
+	width: 50%;
+}

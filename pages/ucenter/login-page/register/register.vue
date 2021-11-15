@@ -2,12 +2,14 @@
 	<view class=" er-register">
 		<view class="login-back">
 			<view class="usercenter-top">
-				<view class="usercenter-top-left" @click="goback">
+				<u-navbar :is-back="true" title="用户注册" :border-bottom="false" title-color="#fff" back-icon-color="#fff" :background="{'background':'none'}">
+				</u-navbar>
+				<!-- <view class="usercenter-top-left" @click="goback">
 					<u-icon name="close" color="#fff" :size="40"></u-icon>
 				</view>
 				<view class="usercenter-top-mine">
 					用户注册
-				</view>
+				</view> -->
 			</view>
 			<view class="login-back-con">
 		<uni-forms ref="form" :value="formData" :rules="rules" validate-trigger="submit" err-show-type="undertext" label-width="140px" label-position="right">
@@ -149,7 +151,7 @@ import mixin from '../common/login-page.mixin.js';
 	}
 	.login-back-con {
 		    width: 80%;
-		    margin: 280px auto 0px auto;
+		    margin: 290px auto 0px auto;
 	}
 	.login-back-con .u-btn{
 		    border-radius: 50px;

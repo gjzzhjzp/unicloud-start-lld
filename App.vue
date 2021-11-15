@@ -88,5 +88,7 @@
 <style lang="scss">
 	@import './static/css/common.css';
 	@import 'uview-ui/index.scss';
-	/*每个页面公共css */
+	 // #ifdef APP-VUE 
+	@import "uview-ui/index.scss";
+	 // #endif 
 </style>

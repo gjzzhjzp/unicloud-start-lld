@@ -87,21 +87,10 @@
             },
             "sdkConfigs" : {
                 "oauth" : {
-                    "apple" : {},
-                    "weixin" : {
-                        "appid" : "",
-                        "appsecret" : "",
-                        "UniversalLinks" : ""
-                    },
-                    "univerify" : {}
+                    "apple" : {}
                 },
                 "ad" : {},
-                "share" : {
-                    "weixin" : {
-                        "appid" : "",
-                        "UniversalLinks" : ""
-                    }
-                },
+                "share" : {},
                 "geolocation" : {
                     "baidu" : {
                         "__platform__" : [ "ios", "android" ],

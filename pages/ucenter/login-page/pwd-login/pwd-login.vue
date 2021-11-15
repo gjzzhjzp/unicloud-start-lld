@@ -3,12 +3,14 @@
 		<!-- <u-navbar :is-back="true" title="用户登录"></u-navbar> -->
 		<view class="login-back">
 			<view class="usercenter-top">
-				<view class="usercenter-top-left" @click="goback">
+				<u-navbar :is-back="true" title="用户登录" :border-bottom="false" title-color="#fff" back-icon-color="#fff" :background="{'background':'none'}">
+				</u-navbar>
+				<!-- <view class="usercenter-top-left" @click="goback">
 					<u-icon name="close" color="#fff" :size="40"></u-icon>
 				</view>
 				<view class="usercenter-top-mine">
 					用户登录
-				</view>
+				</view> -->
 			</view>
 			<view class="login-back-con">
 				<input class="input-box" :inputBorder="false" v-model="username"
@@ -221,7 +223,7 @@
 
 	.login-back-con {
 		    width: 80%;
-		    margin: 280px auto 0px auto;
+		    margin: 290px auto 0px auto;
 	}
 	.login-back-con .u-btn{
 		    border-radius: 50px;

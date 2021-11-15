@@ -1,15 +1,19 @@
 <template>
 	<view class="center">
-		<uni-sign-in ref="signIn"></uni-sign-in>
+		<!-- <uni-sign-in ref="signIn"></uni-sign-in> -->
 		<view class="userInfo" @click.capture="toUserInfo">
 			<view class="usercenter-top">
+				<u-navbar :is-back="true" title="个人中心" :border-bottom="false" title-color="#fff" back-icon-color="#fff" :background="{'background':'none'}">
+				</u-navbar>
+			</view>
+			<!-- <view class="usercenter-top">
 				<view class="usercenter-top-left" @click="goback">
 					<u-icon name="arrow-left" color="#fff" :size="44"></u-icon>
 				</view>
 				<view class="usercenter-top-mine">
 					个人中心
 				</view>
-			</view>
+			</view> -->
 			<cloud-image width="150rpx" height="150rpx" v-if="userInfo.avatar_file&&userInfo.avatar_file.url"
 				:src="userInfo.avatar_file.url"></cloud-image>
 			<image v-else class="logo-img" src="@/static/center/nologin.png"></image>
@@ -65,8 +69,7 @@
 		},
 		data() {
 			return {
-				gridList: [
-					{
+				gridList: [{
 						"text": "收藏",
 						"icon": "chat",
 						"to": '/pages/myfavorite/myfavorite',
@@ -83,8 +86,7 @@
 					}
 				],
 				ucenterList: [
-					[
-						{
+					[{
 							"title": this.$t('mine.userinfo'),
 							"to": '/pages/ucenter/userinfo/userinfo',
 							"thumb": "/static/center/user.png"
@@ -147,16 +149,7 @@
 			}
 		},
 		onLoad() {
-			// console.log(313,this.userInfo,this.hasLogin);
-			//#ifdef APP-PLUS
-			this.ucenterList[this.ucenterList.length - 2].unshift({
-				title: this.$t('mine.checkUpdate'), // this.this.$t('mine.checkUpdate')"检查更新"
-				rightText: this.appVersion.version + '-' + this.appVersion.versionCode,
-				event: 'checkVersion',
-				icon: 'loop',
-				showBadge: this.appVersion.hasNew
-			})
-			//#endif
+			
 		},
 		computed: {
 			...mapGetters({
@@ -175,9 +168,9 @@
 			}
 		},
 		methods: {
-			goback(){
+			goback() {
 				uni.switchTab({
-					url:"/pages/index/index"
+					url: "/pages/index/index"
 				})
 			},
 			...mapMutations({
@@ -242,8 +235,8 @@
 				})
 			},
 			tapGrid(index) {
-				var item=this.gridList[index];
-				if(item.to){
+				var item = this.gridList[index];
+				if (item.to) {
 					uni.navigateTo({
 						url: item.to
 					})
@@ -385,19 +378,20 @@
 </script>
 
 <style lang="scss" scoped>
-	.usercenter-top{
+	.usercenter-top {
 		color: #fff;
-		    font-size: 16px;
-		    margin-bottom: 50px;
+		font-size: 16px;
+		margin-bottom: 50px;
 	}
-	.usercenter-top-left{
-		    position: absolute;
-		    left: 4px;
-		
+
+	.usercenter-top-left {
+		position: absolute;
+		left: 4px;
+
 	}
-	.usercenter-top-mine{
-		
-	}
+
+	.usercenter-top-mine {}
+
 	.bottom-back {
 		margin-top: 10px;
 		width: 750rpx;
@@ -441,11 +435,10 @@
 
 	.userInfo {
 		width: 750rpx;
-		padding: 20rpx;
-		// padding-top: 50px;
-		background-image: url(../../static/center/backcenter.jpg);
+		background-image: url(/static/center/backcenter.jpg);
 		flex-direction: column;
 		align-items: center;
+		background-size: cover;
 	}
 
 	.logo-img {

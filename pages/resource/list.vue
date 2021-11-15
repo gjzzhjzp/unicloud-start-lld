@@ -220,8 +220,11 @@
 	.search-row {
 		padding: 8px 10px;
 		background: #fff;
+		display: flex;
 	}
-
+	.search-row .u-icon{
+		display: inline-block;
+	}
 	.search-row-col {
 		margin: 0px 10px;
 		color: #BABBCD;

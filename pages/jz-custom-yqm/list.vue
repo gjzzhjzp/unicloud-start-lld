@@ -14,15 +14,15 @@
 					<u-tr v-for="(item, index) in data" class="u-tr">
 						<template v-if="item.value">
 							<u-td class="u-td u-td-flex" width="70%">
-								<view>
+								<view class="u-td1">
 									{{item.value}}
 								</view>
-								<view>
+								<view class="u-td2">
 									<u-button type="primary" size="mini" @click="copyvalue(item.value,$event)">复制
 									</u-button>
 								</view>
 							</u-td>
-							<u-td class="u-td">{{item.status?'可使用':'失效'}}</u-td>
+							<u-td class="u-td"><view class="u-td3">{{item.status?'可使用':'失效'}}</view></u-td>
 						</template>
 					</u-tr>
 				</u-table>
@@ -97,12 +97,30 @@
 </script>
 
 <style>
-	.u-td-flex {
-		flex-direction: row;
-		justify-content: space-between;
+	.u-td-flex{
+		position: relative;
+		/* flex-direction: row;
+		justify-c ontent: space-between;*/
 	}
-
+	
 	.u-td {
-		height: 36px;
+		/* height: 36px; */
+	}
+	.u-td3{
+		height: 30px;
+	}
+	.u-td1 {
+		height: 30px;
+		    display: inline-block;
+			text-align: left;
+	}
+	.u-td2{
+		height: 30px;
+		    display: inline-block;
+			    position: absolute;
+			    right: 4px;
+	}
+	.u-td2 .u-btn{
+		display: inline-block;
 	}
 </style>

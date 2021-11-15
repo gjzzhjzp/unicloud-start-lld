@@ -128,7 +128,7 @@ text {
 		font-size: $i + rpx;
 	}
 }
-
+/* #ifndef APP-VUE */
 // 定义内外边距，历遍1-80
 @for $i from 0 through 80 {
 	// 只要双数和能被5除尽的数
@@ -168,6 +168,7 @@ text {
 		}
 	}
 }
+/* #endif */
 
 // 重置nvue的默认关于flex的样式
 .u-reset-nvue {

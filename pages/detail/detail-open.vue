@@ -91,7 +91,6 @@
 	.detail-image-title .title{
 		font-size: 36rpx;
 	}
-
 	.detail-image-sx,
 	.detail-image-jj {
 		display: flex;

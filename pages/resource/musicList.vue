@@ -12,11 +12,11 @@
 					</u-image>
 					<u-image v-show="item2.selected" width="60rpx" height="60rpx" src="/static/music/like_sed.png">
 					</u-image>
-				</view>     
-				<!-- <view class="music-list-right-icon" @click="to_operate(item2,'download',index2)">
+				</view>
+				<view class="music-list-right-icon" @click="to_operate(item2,'download',index2)">
 					<u-image v-show="!item2.download" width="60rpx" height="60rpx" src="/static/music/download.png"></u-image>
 					<u-image v-show="item2.download" width="60rpx" height="60rpx" src="/static/music/download_sed.png"></u-image>
-				</view> -->
+				</view>
 				<view class="music-list-right-icon" @click="to_operate(item2,'play',index2)">
 					<u-image v-show="!item2.play" width="60rpx" height="60rpx" src="/static/music/play.png"></u-image>
 					<u-image v-show="item2.play" width="60rpx" height="60rpx" src="/static/music/play_sed.png">
@@ -118,12 +118,18 @@
 				});
 			},
 			to_operate(data, type, index) {
-
+				// debugger;
 				this.data = data;
 				if (type == "like") {
-					this.toFavorite(data).then((resdata) => {
-						this.initList();
-					});
+					if (!data.selected) {
+						this.toFavorite(data).then((resdata) => {
+							this.initList();
+						});
+					} else {
+						this.cancelFavorite(data).then((resdata) => {
+							this.initList();
+						});
+					}
 				} else if (type == "play") {
 					// debugger;
 					this.now = index;
@@ -132,23 +138,30 @@
 							this.$set(item, "play", false);
 						}
 					});
-					if (!data["play"]) {
-						this.$refs.imtaudio.play();
-					} else {
-						this.$refs.imtaudio.pause();
-					}
+					// setTimeout(()=>{
+						if (!data["play"]) {
+							this.$refs.imtaudio.play(this.now);
+						} else {
+							this.$refs.imtaudio.pause(this.now);
+						}
+					// },1000)
 				} else if (type == "download") {
-					console.log("data", data);
-					if(data.resources&&data.resources.length>0){
-						window.open(data.resources[0].url);
-					}
+					this.$refs.uToast.show({
+						title: '暂不开放',
+						type: 'warning'
+					});
+					return;
+					// console.log("data", data);
+					// if (data.resources && data.resources.length > 0) {
+					// 	window.open(data.resources[0].url);
+					// }
 				}
 			},
 			// 历史记录
 			async tohistory(data) {
 				// debugger;
 				if (this.hasLogin) {
-					
+
 					const uid = db.getCloudEnv('$cloudEnv_uid');
 					const collection = db.collection('opendb-news-history');
 					var rows = await collection.where({
@@ -178,7 +191,7 @@
 			},
 			async toFavorite(data) {
 				if (this.hasLogin) {
-					if(data.selected){
+					if (data.selected) {
 						this.$refs.uToast.show({
 							title: '已收藏',
 							type: 'warning'
@@ -227,6 +240,51 @@
 								type: 'success'
 							});
 							this.$set(data, "like_count", ++data.like_count);
+						} else {
+							console.log("res", res.msg);
+						}
+						reslove();
+					});
+				});
+			},
+			async cancelFavorite(data) {
+				const collection = db.collection('opendb-news-favorite');
+				return new Promise(async (reslove) => {
+					var resultdata = await collection.where({
+						article_id: data._id,
+						user_id: db.getCloudEnv('$cloudEnv_uid')
+					}).remove();
+					this.cancel_like(data).then(() => {
+						// debugger;
+						this.allLove.forEach((item, index) => {
+							if (item == data._id) {
+								this.allLove.splice(index, 1);
+							}
+						});
+						// this.allLove.push(data._id);
+						reslove();
+					});
+				});
+			},
+			cancel_like(data) {
+				return new Promise((reslove) => {
+					uniCloud.callFunction({
+						name: 'jzfunction',
+						data: {
+							action: 'resource/cancel_like',
+							data: {
+								_id: data._id,
+								like_count: data.like_count || 0
+							}
+						},
+					}).then((res) => {
+						var res = res.result;
+						if (res.state == "0000") {
+							this.$refs.uToast.show({
+								title: '已取消',
+								type: 'success'
+							});
+							this.$set(this.data, "like_count", --this.data.like_count);
 						} else {
 							console.log("res", res.msg);
 						}

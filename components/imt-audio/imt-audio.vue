@@ -130,7 +130,8 @@
 				// 		Math.floor(num % 60)).length) + Math.floor(num % 60)
 			},
 			//点击播放按钮
-			play() {
+			play(now) {
+				// debugger;
 				//#ifdef H5||MP-WEIXIN
 				this.loading = true
 				//#endif
@@ -138,13 +139,13 @@
 				this.paused = false
 				//#endif
 				this.audio.play()
-				this.$emit("play",this.now);
+				this.$emit("play",typeof now!="undefined"?now:this.now);
 			},
-			pause() {
+			pause(now) {
 				// debugger;
-				this.audio.pause()
+				this.audio.pause();
 				this.paused = true;
-				this.$emit("pause",this.now);
+				this.$emit("pause",typeof now!="undefined"?now:this.now);
 			},
 			//点击暂停按钮
 			// #ifdef APP-PLUS

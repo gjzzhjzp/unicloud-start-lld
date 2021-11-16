@@ -1,27 +1,48 @@
 <template>
 	<view>
-			<u-navbar :is-back="true" title="个人资料"></u-navbar>
+		<u-navbar :is-back="true" title="个人资料"></u-navbar>
 		<uni-list>
 			<uni-list-item class="item">
 				<template v-slot:body>
 					<view class="item">
 						<text>{{$t('userinfo.ProfilePhoto')}}</text>
-						<cloud-image @click="uploadAvatarImg" v-if="avatar_file" :src="avatar_file.url" width="50px" height="50px"></cloud-image>
-						<uni-icons @click="uploadAvatarImg" v-else class="chooseAvatar" type="plusempty" size="30" color="#dddddd"></uni-icons>
+						<cloud-image @click="uploadAvatarImg" v-if="avatar_file" :src="avatar_file.url" width="50px"
+							height="50px"></cloud-image>
+						<uni-icons @click="uploadAvatarImg" v-else class="chooseAvatar" type="plusempty" size="30"
+							color="#dddddd"></uni-icons>
 					</view>
 				</template>
 			</uni-list-item>
-			<uni-list-item class="item" @click="setNickname('')" :title="$t('userinfo.nickname')" :rightText="userInfo.nickname||$t('userinfo.notSet')" link>
+			<uni-list-item class="item" @click="setNickname('')" :title="$t('userinfo.nickname')"
+				:rightText="userInfo.nickname||$t('userinfo.notSet')" link>
 			</uni-list-item>
-			<!-- userInfo:{{userInfo}} -->
-			<!-- <uni-list-item class="item" @click="bindMobile" :title="$t('userinfo.phoneNumber')" :rightText="userInfo.mobile||$t('userinfo.notSpecified')" link>
-			</uni-list-item> -->
+			<uni-list-item class="item" @click="openpassmodel()" title="修改密码" rightText="点击修改密码" link>
+			</uni-list-item>
 		</uni-list>
 		<uni-popup ref="dialog" type="dialog">
-			<uni-popup-dialog mode="input" :value="userInfo.nickname" @confirm="setNickname" :title="$t('userinfo.setNickname')"
-				:placeholder="$t('userinfo.setNicknamePlaceholder')">
+			<uni-popup-dialog mode="input" :value="userInfo.nickname" @confirm="setNickname"
+				:title="$t('userinfo.setNickname')" :placeholder="$t('userinfo.setNicknamePlaceholder')">
 			</uni-popup-dialog>
 		</uni-popup>
+		<!-- <uni-popup ref="passdialog" type="dialog"> -->
+		<u-modal v-model="showpassmodal" title="修改密码" :show-cancel-button="true" @confirm="setPassword">
+			<view style="padding-top: 8px;">
+				<u-alert-tips :show-icon="true" type="warning" title="修改密码后需重新登录" ></u-alert-tips>
+			</view>
+			<view class="u-modal-form" style="padding: 10px;">
+				<u-form :model="passForm" ref="uForm" label-width="200">
+					<u-form-item required label="旧密码">
+						<u-input v-model="passForm.oldPassword" type="password" />
+					</u-form-item>
+					<u-form-item required label="新密码">
+						<u-input v-model="passForm.password" type="password" />
+					</u-form-item>
+					<u-form-item required label="确认新密码">
+						<u-input v-model="passForm.rpassword" type="password" />
+					</u-form-item>
+				</u-form>
+			</view>
+		</u-modal>
 		<uni-bindMobileByMpWeixin ref="uni-bindMobileByMpWeixin"></uni-bindMobileByMpWeixin>
 	</view>
 </template>
@@ -42,7 +63,13 @@
 					otherLoginButton: {
 						"title": "其他号码绑定",
 					}
-				}
+				},
+				passForm: {
+					oldPassword:"",
+					password: "",
+					rpassword: ""
+				},
+				showpassmodal: false
 			}
 		},
 		onLoad() {
@@ -64,6 +91,9 @@
 			}
 		},
 		methods: {
+			openpassmodel(){
+				this.showpassmodal=true;
+			},
 			...mapMutations({
 				setUserInfo: 'user/login'
 			}),
@@ -79,13 +109,13 @@
 					}
 				})
 				// #endif
-				
+
 				// #ifdef MP-WEIXIN
 				this.$refs['uni-bindMobileByMpWeixin'].open()
 				// #endif
-				
+
 				// #ifdef H5
-					//...去用验证码绑定
+				//...去用验证码绑定
 				this.bindMobileBySmsCode()
 				// #endif
 			},
@@ -144,7 +174,7 @@
 						console.log(e);
 						if (e.result.updated) {
 							uni.showToast({
-								title:this.$t('common.updateSucceeded'),
+								title: this.$t('common.updateSucceeded'),
 								icon: 'none'
 							});
 							this.setUserInfo({
@@ -161,6 +191,69 @@
 				} else {
 					this.$refs.dialog.open()
 				}
+			},
+			setPassword(pass) {
+				if(!this.passForm.oldPassword){
+					uni.showToast({
+						title: "请输入旧密码",
+						icon: 'none'
+					});
+					this.showpassmodal=true;
+					return;
+				}
+				if(!this.passForm.password){
+					uni.showToast({
+						title: "请输入新密码",
+						icon: 'none'
+					});
+					this.showpassmodal=true;
+					return;
+				}
+				if(!this.passForm.rpassword){
+					uni.showToast({
+						title: "请确认新密码",
+						icon: 'none'
+					});
+					this.showpassmodal=true;
+					return;
+				}
+				if(this.passForm.password!=this.passForm.rpassword){
+					uni.showToast({
+						title: "两次输入密码不一致",
+						icon: 'none'
+					});
+					this.showpassmodal=true;
+					return;
+				}
+				uniCloud.callFunction({
+					name:'uni-id-cf',
+					data:{
+						action:'updatePwd',
+						params:{
+							oldPassword:this.passForm.oldPassword,
+							newPassword:this.passForm.password
+						},
+					},
+					success: ({result}) => {
+						// console.log("33333333333",result);
+						if(result.code === 0){
+							uni.showToast({
+								title: "修改成功，请重新登录",
+								icon: 'none'
+							});
+							setTimeout(()=>{
+								uni.navigateTo({
+									url:"/pages/ucenter/login-page/index/index"
+								});
+							},2000);
+						}else{
+							uni.showModal({
+								content: result.msg,
+								showCancel: false
+							});
+						}
+					}
+				});
 			},
 			setAvatarFile(avatar_file) {
 				uni.showLoading({
@@ -188,7 +281,7 @@
 					});
 				}).catch((err) => {
 					uni.showModal({
-						content: err.message ||this.$t('userinfo.requestFail'),
+						content: err.message || this.$t('userinfo.requestFail'),
 						showCancel: false
 					})
 				}).finally(() => {
@@ -236,7 +329,7 @@
 						let cloudPath = this.userInfo._id + '' + Date.now()
 						avatar_file.name = cloudPath
 						uni.showLoading({
-							title:this.$t('userinfo.uploading'),
+							title: this.$t('userinfo.uploading'),
 							mask: true
 						});
 						let {
@@ -267,6 +360,7 @@
 		box-sizing: border-box;
 		flex-direction: column;
 	}
+
 	/* #endif */
 	.item {
 		width: 750rpx;

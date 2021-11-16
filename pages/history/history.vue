@@ -67,10 +67,12 @@
 			this.scrollTop = e.scrollTop;
 		},
 		onReachBottom() {
-			this.loadStatus = 'loading';
-			setTimeout(() => {
-				this.addRandomData();
-			}, 1000)
+			if(this.loadStatus != 'nomore'){
+				this.loadStatus = 'loading';
+				setTimeout(() => {
+					this.addRandomData();
+				}, 1000)
+			}
 		},
 		methods: {
 			changeTabs(index) {
@@ -82,6 +84,7 @@
 				this.addRandomData();
 			},
 			async addRandomData() {
+				// debugger;
 				if (this.$refs.uWaterfall) {
 					this.$refs.uWaterfall.clear();
 				}
@@ -92,7 +95,7 @@
 				var resultdata = await collection.where({
 					user_id: uid,
 					zy_gs: this.zy_gs
-				}).field('article_title,article_id{title,avatar,author,resources}').skip(skip).get();
+				}).field('article_title,update_date,article_id{title,avatar,author,resources}').orderBy('update_date','desc').skip(skip).get();
 				console.log("足迹", resultdata);
 				var rows = resultdata.result.data;
 				if(rows.length<this.param.rows){

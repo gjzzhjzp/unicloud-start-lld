@@ -20,4 +20,7 @@ module.exports = class resourceController extends Controller {
 	async add_like(){
 		return await this.service.resource.add_like()
 	}
+	async cancel_like(){
+		return await this.service.resource.cancel_like()
+	}
 }

@@ -269,7 +269,7 @@ export default {
 @import '../../iconfont.css';
 
 .u-icon {
-	display: inline-flex;
+	// display: inline-flex;
 	align-items: center;
 
 	&--left {

@@ -32,6 +32,32 @@ module.exports = class resourceService extends Service {
 			};
 		}
 	}
+	async cancel_like() {
+		try {
+			var db = this.db;
+			var context = this.ctx;
+			var data = this.ctx.data;
+			const collection_resource = db.collection('jz-opendb-resources');
+			var like_count = data.like_count || 0;
+			like_count -= 1;
+			await collection_resource.where({
+				_id: data._id
+			}).update({
+				like_count: like_count
+			});
+			return {
+				"state": "0000",
+				"data": "",
+				"msg": "更新成功"
+			};
+		} catch (e) {
+			return {
+				"state": "9999",
+				"rows": [],
+				"msg": "更新失败"
+			};
+		}
+	}
 	async addList() {
 		//event为客户端上传的参数
 		try {

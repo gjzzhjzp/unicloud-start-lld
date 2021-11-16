@@ -28,15 +28,14 @@
 				var item=this.bannerList[index];
 				console.log("item",item)
 				var open_url=item.open_url;
-				// uni.navigateTo({
-				// 	url:open_url
-				// });
-				if(open_url.substring(0,4)=="http"){
-					window.open(open_url);
-				}else{
-					uni.navigateTo({
-						url:open_url
-					});
+				if(open_url){
+					if(open_url.substring(0,4)=="http"){
+						window.open(open_url);
+					}else{
+						uni.navigateTo({
+							url:open_url
+						});
+					}
 				}
 			},
 			getList() {

@@ -10,7 +10,7 @@
 			</view>
 			<view class="jz-sy-section">
 			</view>
-			<jz-sy-list title="夺笋视频" label="夺笋视频"></jz-sy-list>
+			<jz-sy-list title="夺笋" label="夺笋"></jz-sy-list>
 			<jz-sy-list title="二创图片" label="二创图片"></jz-sy-list>
 			<jz-sy-list title="表情包" label="表情包"></jz-sy-list>
 			<jz-sy-list title="同人文" label="同人文"></jz-sy-list>

@@ -67,10 +67,12 @@
 			this.scrollTop = e.scrollTop;
 		},
 		onReachBottom() {
-			this.loadStatus = 'loading';
-			setTimeout(() => {
-				this.addRandomData();
-			}, 1000)
+			if(this.loadStatus != 'nomore'){
+				this.loadStatus = 'loading';
+				setTimeout(() => {
+					this.addRandomData();
+				}, 1000)
+			}
 		},
 		methods: {
 			changeTabs(index) {
@@ -92,7 +94,7 @@
 				var resultdata = await collection.where({
 					user_id: uid,
 					zy_gs: this.zy_gs
-				}).field('article_title,article_id{title,avatar,author,resources}').skip(skip).get();
+				}).field('article_title,article_id,create_date{title,avatar,author,resources}').orderBy('create_date','desc').skip(skip).get();
 				var rows = resultdata.result.data;
 				if (rows.length < this.param.rows) {
 					this.loadStatus = 'nomore';

@@ -1,19 +1,30 @@
 const db = uniCloud.database();
 const uid = db.getCloudEnv('$cloudEnv_uid');
 const collection = db.collection('opendb-news-favorite');
+import {
+		mapGetters
+	} from 'vuex';
 export default {
 	data() {
 		return {
 			islike: false
 		}
 	},
-	created() {
+	computed: {
+		...mapGetters({
+			userInfo: 'user/info',
+			hasLogin: 'user/hasLogin'
+		})
+		},
+	mounted() {
 		this.checkisLike();
 	},
 	methods: {
 		// 检测当前用户是否已经收藏
 		async checkisLike() {
+			// debugger;
 			if (this.hasLogin) {
+				console.log("this.data",this.data,this.data._id);
 				var res = await collection.where({
 					article_id: this.data._id,
 					user_id: db.getCloudEnv('$cloudEnv_uid')
@@ -39,6 +50,44 @@ export default {
 				this.add_like().then(()=>{
 					reslove()
 				});
+			});
+		},
+		async cancelFavorite(){
+			return new Promise(async (reslove)=>{
+				var resultdata = await collection.where({
+					article_id: this.data._id,
+					user_id: db.getCloudEnv('$cloudEnv_uid')
+				}).remove();
+				this.cancel_like().then(()=>{
+					reslove()
+				});
+			});
+		},
+		cancel_like(){
+			return new Promise((reslove)=>{
+			uniCloud.callFunction({
+				name: 'jzfunction',
+				data: {
+					action: 'resource/cancel_like',
+					data: {
+						_id: this.data._id,
+						like_count: this.data.like_count || 0
+					}
+				},
+			}).then((res) => {
+				var res = res.result;
+				if (res.state == "0000") {
+					this.$refs.uToast.show({
+						title: '已取消',
+						type: 'success'
+					});
+					this.islike = false;
+					this.$set(this.data, "like_count", --this.data.like_count);
+				} else {
+					console.log("res", res.msg);
+				}
+				reslove();
+			});
 			});
 		},
 		add_like() {

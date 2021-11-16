@@ -1,50 +1,34 @@
 <template>
 	<view class="detail-image">
-		<view class="detail-image-title">
-			<view class="title">
-				{{data.title}}
-			</view>
-			<view style="text-align: right;color: #909399;width: 120px;">
-				<uni-dateformat class="last_modify_date" :date="data.last_modify_date" format="yyyy-MM-dd"
-					:threshold="[60000, 2592000000]" />
-			</view>
+		<detailhead :data="data"></detailhead>
+		<view class="detail-image-item" @click="previewOpen(data)">
+			<image :src="data.avatar.url" mode="widthFix"></image>
 		</view>
-		<view class="detail-image-sx">
-			<view>
-				<text>来源：{{data.author}}</text>
-				<text style="margin-left: 20px;">投稿人：{{tgr}}</text>
-			</view>
-			<view>
-				<view v-show="!islike" @click="toFavorite">
-					<u-icon :size="30"  name="heart"  ></u-icon> 收藏
-				</view>
-				<view v-show="islike">
-					<u-icon :size="30"  name="heart-fill" color="red"></u-icon> 已收藏
-				</view>
-			</view>
-		</view>
-		<view class="detail-image-item">
-			<image :src="data.avatar.url"  mode="widthFix"></image></view>
 		<view class="detail-open">
-				<view>
-					外链地址：
-				</view>
-				<view>
-					<u-link :href="data.aliyun_dz">点击跳转</u-link>
-				</view>
+			<view>
+				外链地址：
+			</view>
+			<view>
+				<u-link :href="data.aliyun_dz">点击跳转</u-link>
+			</view>
 		</view>
+		<kxj-previewImage ref="previewImage" :imgs="imgs"></kxj-previewImage>
 		<u-toast ref="uToast" />
 	</view>
 </template>
 <script>
 	import detail from "./detail.js"
+	import detailhead from "./detailhead.vue"
 	export default {
 		data() {
 			return {
 				imgs: []
 			}
 		},
-		mixins:[detail],
+		components: {
+			detailhead
+		},
+		mixins: [detail],
 		props: {
 			data: {
 				type: Object,
@@ -53,43 +37,34 @@
 				}
 			}
 		},
-		computed:{
-			tgr(){
-				if(this.data.userinfo&&this.data.userinfo.length>0){
-					return this.data.userinfo[0].nickname
+		mounted() {
+			this.initImage();
+		},
+		methods: {
+			initImage() {
+				this.imgs.splice(0, this.imgs.length);
+				if (this.data && this.data.avatar.url) {
+					this.imgs.push(this.data.avatar.url);
 				}
-				return ""
-			}
+			},
+			previewOpen(){
+				this.$refs.previewImage.open(this.data.avatar.url); 
+			},
 		}
 	}
 </script>
 <style>
-	.detail-image-title {
-		margin-top: 10px;
-		display: flex;
-		justify-content: space-between;
-	}
-	.detail-image-title .title{
-		font-size: 36rpx;
-	}
-
-	.detail-image-sx,
-	.detail-image-jj {
-		display: flex;
-		justify-content: space-between;
-		margin: 10px 6px;
-		color: #909399;
-	}
-	.detail-open{
+	.detail-open {
 		display: flex;
 		text-align: center;
 		/* padding-left: 20px; */
 	}
-	
+
 	.detail-image-item {
 		margin: 20rpx 0;
 	}
-	.detail-image-item image{
+
+	.detail-image-item image {
 		width: 100%;
 		border-radius: 10px;
 	}

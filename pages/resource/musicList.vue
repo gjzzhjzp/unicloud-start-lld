@@ -14,7 +14,8 @@
 					</u-image>
 				</view>
 				<view class="music-list-right-icon" @click="to_operate(item2,'download',index2)">
-					<u-image v-show="!item2.download" width="60rpx" height="60rpx" src="/static/music/download.png"></u-image>
+					<!-- item2:{{item2.resources[0]}} -->
+					<a :download='item2.title' :href="item2.resources[0].url"><u-image v-show="!item2.download" width="60rpx" height="60rpx" src="/static/music/download.png"></u-image></a>
 					<u-image v-show="item2.download" width="60rpx" height="60rpx" src="/static/music/download_sed.png"></u-image>
 				</view>
 				<view class="music-list-right-icon" @click="to_operate(item2,'play',index2)">
@@ -146,11 +147,11 @@
 						}
 					// },1000)
 				} else if (type == "download") {
-					this.$refs.uToast.show({
-						title: '暂不开放',
-						type: 'warning'
-					});
-					return;
+					// this.$refs.uToast.show({
+					// 	title: '暂不开放',
+					// 	type: 'warning'
+					// });
+					// return;
 					// console.log("data", data);
 					// if (data.resources && data.resources.length > 0) {
 					// 	window.open(data.resources[0].url);

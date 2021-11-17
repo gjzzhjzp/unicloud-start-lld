@@ -1,5 +1,5 @@
 <template>
-	<view class="detailhead">
+	<view :class="['detailhead','detailhead'+data.zy_gs]">
 		<view class="detail-image-title">
 			<view class="title">
 				{{data.title}}
@@ -20,6 +20,11 @@
 				</view>
 				<view class="detail-image-sc1" v-show="islike" @click="cancelFavorite">
 					<u-icon :size="30"  name="heart-fill" color="red"></u-icon> 已收藏
+				</view>
+				<view class="detail-image-sc1" v-if="data.zy_gs=='1'">
+					<a class="download-head" :download="data.title" :href="data.resources[0].url">
+						<u-icon :size="30"  name="download"></u-icon> 下载
+					</a>
 				</view>
 			</view>
 		</view>
@@ -96,5 +101,14 @@
 		justify-content: space-between;
 		margin: 10px 6px;
 		color: #909399;
+	}
+	.detailhead1 .detail-image-ly{
+		width: calc(100% - 110px);
+	}
+	.detail-image-sc,.detail-image-sc a{
+		display: flex;
+		text-decoration: none;
+		    color: inherit;
+		    margin-left: 8px;
 	}
 </style>

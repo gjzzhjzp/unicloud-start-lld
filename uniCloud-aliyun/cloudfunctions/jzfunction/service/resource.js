@@ -98,18 +98,23 @@ module.exports = class resourceService extends Service {
 			var data = this.ctx.data;
 			var type = data.type || "zx";
 			var label = data.label; ///标签
-			var rows=data.rows||10;
-			var page=data.page||1;
-			var zy_gs="";
+			var rows = data.rows || 10;
+			var page = data.page || 1;
+			var zy_gs = "";
 			const collection = db.collection('jz-opendb-resources');
 			var where_obj = {
 				"article_status": 1,
 				"categories": new RegExp(data.categories, 'gi')
 			}
-			
-			if(typeof data.zy_gs!="object"){
-				zy_gs=parseInt(data.zy_gs)||0;
-				Object.assign(where_obj,{zy_gs:zy_gs});
+			if (typeof data.zy_gs != "object") {
+				zy_gs = parseInt(data.zy_gs) || 0;
+				Object.assign(where_obj, {
+					zy_gs: zy_gs
+				});
+			} else {
+				Object.assign(where_obj, {
+					zy_gs: db.command.neq(2)
+				});
 			}
 			var where = {}; ///查询条件
 			if (data.label) {
@@ -123,36 +128,32 @@ module.exports = class resourceService extends Service {
 					"author": new RegExp(data.label, 'gi')
 				}, where_obj)]);
 			} else {
-				if(typeof data.zy_gs=="object"){
-					where = db.command.or([Object.assign({
-						"zy_gs": 0
-					}, where_obj), Object.assign({
-						"zy_gs": 1
-					}, where_obj), Object.assign({
-						"zy_gs": 3
-					}, where_obj)]);
-				}else{
-					where = where_obj;
-				}
+				where = where_obj;
 			}
-			console.log("where",where);
-			var collection_query=null;
+			console.log("where", where);
+			var collection_query = null;
 			if (type == "zx") {
-				collection_query =  collection.aggregate().match(where).sort({"last_modify_date": -1}).limit(rows);
+				collection_query = collection.aggregate().match(where).sort({
+					"last_modify_date": -1
+				}).limit(rows);
 			} else if (type == "rm") {
-				collection_query =  collection.aggregate().match(where).sort({"view_count": -1}).limit(rows);
-			}else if (type == "sc") {
-				collection_query =  collection.aggregate().match(where).sort({"like_count": -1}).limit(rows);
+				collection_query = collection.aggregate().match(where).sort({
+					"view_count": -1
+				}).limit(rows);
+			} else if (type == "sc") {
+				collection_query = collection.aggregate().match(where).sort({
+					"like_count": -1
+				}).limit(rows);
 			}
 			// console.log("collection_query",collection_query);
-			var resultdata=await collection_query.lookup({
+			var resultdata = await collection_query.lookup({
 					from: 'uni-id-users',
 					localField: 'user_id',
 					foreignField: '_id',
 					as: 'userinfo',
-				}).skip((page-1)*rows)
+				}).skip((page - 1) * rows)
 				.end();
-			console.log("resultdata",resultdata);
+			console.log("resultdata", resultdata);
 			return {
 				"state": "0000",
 				"rows": resultdata.data,
@@ -160,7 +161,7 @@ module.exports = class resourceService extends Service {
 				"msg": "查询成功"
 			};
 		} catch (e) {
-			console.log("e",e);
+			console.log("e", e);
 			return {
 				"state": "9999",
 				"rows": [],

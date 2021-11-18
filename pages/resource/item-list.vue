@@ -15,6 +15,9 @@
 		</view>
 		<u-modal v-model="showmodel" title="输入邀请码" :show-cancel-button="true" @confirm="confirm">
 			<view class="slot-content" style="padding: 10px;">
+				<view style="margin-bottom: 8px;">
+					<u-alert-tips type="warning" description="个人中心>>我的邀请码中可申请邀请码"></u-alert-tips>
+				</view>
 				<u-input v-model="yqm" type="text" :border="true" placeholder="请输入邀请码"  />
 			</view>
 		</u-modal>

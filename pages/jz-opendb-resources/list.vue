@@ -1,6 +1,9 @@
 <template>
 	<view class="container">
 		<u-navbar :is-back="true" title="我的投稿"></u-navbar>
+		<view style="margin: 4px 0px;">
+			<u-alert-tips type="warning" description="向左滑动可编辑/删除投稿资源"></u-alert-tips>
+		</view>
 		<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}"
 			collection="jz-opendb-resources" @load="loadSuccess"
 			where="user_id == $cloudEnv_uid"

@@ -105,7 +105,10 @@
 	.detailhead1 .detail-image-ly{
 		width: calc(100% - 110px);
 	}
-	.detail-image-sc,.detail-image-sc a{
+	.detail-image-sc{
+		display: flex;
+	}
+	.detail-image-sc a{
 		display: flex;
 		text-decoration: none;
 		    color: inherit;

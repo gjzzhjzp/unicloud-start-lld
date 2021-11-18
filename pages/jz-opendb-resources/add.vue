@@ -1,6 +1,10 @@
 <template>
-	<view class="uni-container">
+	<view class="">
 		<u-navbar :is-back="true" title="我要投稿"></u-navbar>
+		<view style="margin: 4px 0px;">
+			<u-alert-tips type="warning" :close-able="true" description="上传图片附件资源时多张上传请使用APP或QQ浏览器,
+			其他手机浏览器暂不支持多张上传"></u-alert-tips>
+		</view>
 		<uni-forms ref="form" :value="formData" validate-trigger="submit" err-show-type="toast">
 			<uni-forms-item name="title" label="标题" required>
 				<uni-easyinput placeholder="请输入标题" v-model="formData.title" trim="both"></uni-easyinput>

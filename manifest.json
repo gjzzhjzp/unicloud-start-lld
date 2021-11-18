@@ -30,8 +30,8 @@
         "privacy" : {
             "prompt" : "template",
             "template" : {
-                "title" : "服务协议和隐私政策",
-                "message" : "　　请你务必审慎阅读、充分理解“服务协议”和“隐私政策”各条款，包括但不限于：为了更好的向你提供服务，我们需要收集你的设备标识、操作日志等信息用于分析、优化应用性能。<br/>　　你可阅读<a href=\"https://ask.dcloud.net.cn/protocol.html\">《服务协议》</a>和<a href=\"https://ask.dcloud.net.cn/protocol.html\">《隐私政策》</a>了解详细信息。如果你同意，请点击下面按钮开始接受我们的服务。",
+                "title" : "服务须知",
+                "message" : "　　宝儿们，欢迎来到俊哲宇宙。此APP仅收集俊哲相关资源，方便宝儿们查阅浏览。不会收集记录任何个人信息，所需授权为APP最基础的授权。好啦，接下来宝儿们愉快的玩耍吧~~",
                 "buttonAccept" : "同意",
                 "buttonRefuse" : "暂不同意"
             }
@@ -50,7 +50,9 @@
         },
         "modules" : {
             "VideoPlayer" : {},
-            "OAuth" : {}
+            "OAuth" : {},
+            "LivePusher" : {},
+            "Push" : {}
         },
         "distribute" : {
             "android" : {
@@ -66,6 +68,7 @@
                     "<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>",
                     "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
                     "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
+                    "<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>",
                     "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
                     "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
                     "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"

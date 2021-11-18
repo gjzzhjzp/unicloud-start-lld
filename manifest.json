@@ -127,11 +127,11 @@
             },
             "splashscreen" : {
                 "iosStyle" : "common",
-                "androidStyle" : "common",
+                "androidStyle" : "default",
                 "android" : {
-                    "hdpi" : "C:/Users/87261/Pictures/俊哲/mmexport1622220073833.png",
-                    "xhdpi" : "C:/Users/87261/Pictures/俊哲/mmexport1622220073833.png",
-                    "xxhdpi" : "C:/Users/87261/Pictures/俊哲/mmexport1622220073833.png"
+                    "hdpi" : "C:/Users/87261/Documents/WeChat Files/wxid_6832878342212/FileStorage/File/2021-11/3_9.9/res/drawable-hdpi/3_9.9.png",
+                    "xhdpi" : "C:/Users/87261/Documents/WeChat Files/wxid_6832878342212/FileStorage/File/2021-11/3_9.9/res/drawable-xhdpi/3_9.9.png",
+                    "xxhdpi" : "C:/Users/87261/Documents/WeChat Files/wxid_6832878342212/FileStorage/File/2021-11/3_9.9/res/drawable-xxhdpi/3_9.9.png"
                 }
             }
         },

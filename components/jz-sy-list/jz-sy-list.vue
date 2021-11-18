@@ -63,7 +63,7 @@
 			}
 		},
 		mixins: [yqm],
-		created() {
+		mounted() {
 			// this.where = 'article_status==1';
 			this.getList();
 		},
@@ -80,17 +80,19 @@
 				}
 			},
 			getList() {
-				uniCloud.callFunction({
-					name: 'jzfunction',
-					data: {
-						action: 'resource/getList',
-						data: {
+				var param= {
 							type: this.type,
 							label: this.label,
 							zy_gs: [0, 1, 3],
 							page: 1,
 							rows: 6
 						}
+				console.log("param",param);
+				uniCloud.callFunction({
+					name: 'jzfunction',
+					data: {
+						action: 'resource/getList',
+						data:param
 					},
 				}).then((res) => {
 					var res = res.result;

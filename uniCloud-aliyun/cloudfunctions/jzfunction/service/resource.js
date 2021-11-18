@@ -101,10 +101,23 @@ module.exports = class resourceService extends Service {
 			var rows = data.rows || 10;
 			var page = data.page || 1;
 			var zy_gs = "";
+			console.log("data11111111111111111",data);	
 			const collection = db.collection('jz-opendb-resources');
+			const collectionconfig = db.collection('jz-custom-config');
+			var config_800001=await collectionconfig.where({
+				config_bm:"800001"
+			}).get();
+			var config_800001_value=config_800001.data[0].config_val;
+			
+			console.log("config_800001",config_800001);
 			var where_obj = {
 				"article_status": 1,
 				"categories": new RegExp(data.categories, 'gi')
+			}
+			if(config_800001_value=='0'){///=1读取未授权资源，=0只读取授权资源
+			Object.assign(where_obj, {
+				is_grant: 1
+			});
 			}
 			if (typeof data.zy_gs != "object") {
 				zy_gs = parseInt(data.zy_gs) || 0;
@@ -130,7 +143,7 @@ module.exports = class resourceService extends Service {
 			} else {
 				where = where_obj;
 			}
-			console.log("where", where);
+			// console.log("where", where);
 			var collection_query = null;
 			if (type == "zx") {
 				collection_query = collection.aggregate().match(where).sort({

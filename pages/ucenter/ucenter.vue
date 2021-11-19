@@ -1,19 +1,11 @@
 <template>
 	<view class="center">
-		<!-- <uni-sign-in ref="signIn"></uni-sign-in> -->
 		<view class="userInfo" @click.capture="toUserInfo">
 			<view class="usercenter-top">
-				<u-navbar :is-back="true" title="个人中心" :border-bottom="false" title-color="#fff" back-icon-color="#fff" :background="{'background':'none'}">
+				<u-navbar :is-back="true" title="个人中心" :border-bottom="false" title-color="#fff" back-icon-color="#fff"
+					:background="{'background':'none'}">
 				</u-navbar>
 			</view>
-			<!-- <view class="usercenter-top">
-				<view class="usercenter-top-left" @click="goback">
-					<u-icon name="arrow-left" color="#fff" :size="44"></u-icon>
-				</view>
-				<view class="usercenter-top-mine">
-					个人中心
-				</view>
-			</view> -->
 			<cloud-image width="150rpx" height="150rpx" v-if="userInfo.avatar_file&&userInfo.avatar_file.url"
 				:src="userInfo.avatar_file.url"></cloud-image>
 			<image v-else class="logo-img" src="@/static/center/nologin.png"></image>
@@ -22,12 +14,6 @@
 				<text class="uer-name" v-else>{{$t('mine.notLogged')}}</text>
 			</view>
 		</view>
-		<!-- <uni-grid class="grid" :column="3" :showBorder="false" :square="true">
-			<uni-grid-item class="item" v-for="(item,index) in gridList" @click.native="tapGrid(index)" :key="index">
-				<uni-icons class="icon" color="#7275D3" :type="item.icon" size="26"></uni-icons>
-				<text class="text">{{item.text}}</text>
-			</uni-grid-item>
-		</uni-grid> -->
 		<uni-list class="center-list" v-for="(sublist , index) in ucenterList" :key="index">
 			<uni-list-item v-for="(item,i) in sublist" :title="item.title" link :rightText="item.rightText" :key="i"
 				:clickable="true" :to="item.to" @click="ucenterListClick(item)" :thumb="item.thumb">
@@ -116,25 +102,7 @@
 							"to": '/uni_modules/uni-feedback/pages/opendb-feedback/opendb-feedback',
 							"thumb": "/static/center/question.png"
 						}
-					],
-					[
-						// {
-						// 	"title": this.$t('mine.guestBook'),
-						// 	"to": '/pages/ucenter/guestbook/guestbook',
-						// 	"icon": "chat"
-						// },
-
-						// , {
-						// 	"title": this.$t('mine.settings'),
-						// 	"to": '/pages/ucenter/settings/settings',
-						// 	"icon": "gear"
-						// },
-					],
-					// [{
-					// 	"title": this.$t('mine.about'),
-					// 	"to": '/pages/ucenter/about/about',
-					// 	"icon": "info"
-					// }]
+					]
 				],
 				listStyles: {
 					"height": "150rpx", // 边框高度
@@ -149,7 +117,16 @@
 			}
 		},
 		onLoad() {
-			
+			// console.log(313,this.userInfo,this.hasLogin);
+			//#ifdef APP-PLUS
+			this.ucenterList[0].unshift({
+				title: this.$t('mine.checkUpdate'), // this.this.$t('mine.checkUpdate')"检查更新"
+				rightText: this.appVersion.version + '-' + this.appVersion.versionCode,
+				event: 'checkVersion',
+				icon: 'loop',
+				showBadge: this.appVersion.hasNew
+			})
+			//#endif
 		},
 		computed: {
 			...mapGetters({
@@ -233,145 +210,6 @@
 				uni.navigateTo({
 					url: '/pages/ucenter/userinfo/userinfo'
 				})
-			},
-			tapGrid(index) {
-				var item = this.gridList[index];
-				if (item.to) {
-					uni.navigateTo({
-						url: item.to
-					})
-				}
-				// uni.showToast({
-				// 	// title: '你点击了，第' + (index + 1) + '个',
-				// 	title: this.$t('mine.clicked') + " " + (index + 1),
-				// 	icon: 'none'
-				// });
-			},
-			/**
-			 * 去应用市场评分
-			 */
-			gotoMarket() {
-				// #ifdef APP-PLUS
-				if (uni.getSystemInfoSync().platform == "ios") {
-					// 这里填写appstore应用id
-					let appstoreid = this.appConfig.marketId.ios; // 'id1417078253';
-					plus.runtime.openURL("itms-apps://" + 'itunes.apple.com/cn/app/wechat/' + appstoreid + '?mt=8');
-				}
-				if (uni.getSystemInfoSync().platform == "android") {
-					var Uri = plus.android.importClass("android.net.Uri");
-					var uri = Uri.parse("market://details?id=" + this.appConfig.marketId.android);
-					var Intent = plus.android.importClass('android.content.Intent');
-					var intent = new Intent(Intent.ACTION_VIEW, uri);
-					var main = plus.android.runtimeMainActivity();
-					main.startActivity(intent);
-				}
-				// #endif
-			},
-			/**
-			 * 获取积分信息
-			 */
-			getScore() {
-				if (!this.userInfo) return uni.showToast({
-					title: this.$t('mine.checkScore'),
-					icon: 'none'
-				});
-				uni.showLoading({
-					mask: true
-				})
-				db.collection("uni-id-scores")
-					.where('"user_id" == $env.uid')
-					.field('score,balance')
-					.orderBy("create_date", "desc")
-					.limit(1)
-					.get()
-					.then((res) => {
-						console.log(res);
-						const data = res.result.data[0];
-						let msg = '';
-						msg = data ? (this.$t('mine.currentScore') + data.balance) : this.$t('mine.noScore');
-						uni.showToast({
-							title: msg,
-							icon: 'none'
-						});
-					}).finally(() => {
-						uni.hideLoading()
-					})
-			},
-			async share() {
-				let {
-					result
-				} = await uniCloud.callFunction({
-					name: 'uni-id-cf',
-					data: {
-						action: 'getUserInviteCode'
-					}
-				})
-				console.log(result);
-				let myInviteCode = result.myInviteCode || result.userInfo.my_invite_code
-				console.log(myInviteCode);
-				let {
-					appName,
-					logo,
-					company,
-					slogan
-				} = this.appConfig.about
-				// #ifdef APP-PLUS
-				uniShare.show({
-					content: { //公共的分享类型（type）、链接（herf）、标题（title）、summary（描述）、imageUrl（缩略图）
-						type: 0,
-						href: this.appConfig.h5.url +
-							`/#/pages/ucenter/invite/invite?code=uniInvitationCode:${myInviteCode}`,
-						title: appName,
-						summary: slogan,
-						imageUrl: logo +
-							'?x-oss-process=image/resize,m_fill,h_100,w_100' //压缩图片解决，在ios端分享图过大导致的图片失效问题
-					},
-					menus: [{
-							"img": "/static/app-plus/sharemenu/wechatfriend.png",
-							"text": this.$t('common').wechatFriends,
-							"share": {
-								"provider": "weixin",
-								"scene": "WXSceneSession"
-							}
-						},
-						{
-							"img": "/static/app-plus/sharemenu/wechatmoments.png",
-							"text": this.$t('common').wechatBbs,
-							"share": {
-								"provider": "weixin",
-								"scene": "WXSenceTimeline"
-							}
-						},
-						{
-							"img": "/static/app-plus/sharemenu/weibo.png",
-							"text": this.$t('common').weibo,
-							"share": {
-								"provider": "sinaweibo"
-							}
-						},
-						{
-							"img": "/static/app-plus/sharemenu/qq.png",
-							"text": "QQ",
-							"share": {
-								"provider": "qq"
-							}
-						},
-						{
-							"img": "/static/app-plus/sharemenu/copyurl.png",
-							"text": this.$t('common').copy,
-							"share": "copyurl"
-						},
-						{
-							"img": "/static/app-plus/sharemenu/more.png",
-							"text": this.$t('common').more,
-							"share": "shareSystem"
-						}
-					],
-					cancelText: this.$t('common').cancelShare,
-				}, e => { //callback
-					console.log(e);
-				})
-				// #endif
 			}
 		}
 	}

@@ -60,10 +60,12 @@
 				uniCopy({
 					content: val,
 					success: (res) => {
+						// #ifdef H5
 						this.$refs.uToast.show({
 							title: '复制成功',
 							type: 'success'
 						})
+						// #endif
 					},
 					error: (e) => {
 						this.$refs.uToast.show({

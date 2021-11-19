@@ -6,7 +6,7 @@
 			"style": {
 				"navigationBarTitleText": "对暗号"
 			}
-		},  {
+		}, {
 			"path": "pages/404/404",
 			"style": {
 				"navigationBarTitleText": "404"
@@ -41,11 +41,6 @@
 			"style": {
 				"navigationBarTitleText": "搜索"
 			}
-		}, {
-			"path": "pages/ucenter/userinfo/bind-mobile/bind-mobile",
-			"style": {
-				"navigationBarTitleText": "绑定手机号码"
-			}
 		},
 		{
 			"path": "pages/ucenter/ucenter",
@@ -69,20 +64,6 @@
 				}
 			}
 		}, {
-			"path": "pages/uni-agree/uni-agree",
-			"style": {
-				"navigationStyle": "custom",
-				"app-plus": {
-					"popGesture": "none"
-				}
-			}
-		}, {
-			"path": "pages/ucenter/settings/settings",
-			"style": {
-				"navigationBarTitleText": "设置"
-			}
-
-		}, {
 			"path": "pages/ucenter/userinfo/userinfo",
 			"style": {
 				"navigationBarTitleText": "个人资料"
@@ -98,24 +79,6 @@
 				"navigationBarTitleText": ""
 			}
 		}, {
-			"path": "pages/ucenter/login-page/pwd-retrieve/pwd-retrieve",
-			"style": {
-				"navigationBarTitleText": "重置密码"
-			}
-		}, {
-			"path": "pages/ucenter/login-page/phone-code/phone-code",
-			"style": {
-				"navigationBarTitleText": ""
-			}
-
-		}, {
-			"path": "pages/common/webview/webview",
-			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
 			"path": "pages/ucenter/login-page/register/register",
 			"style": {
 				"navigationBarTitleText": "注册",
@@ -123,25 +86,6 @@
 			}
 		},
 		{
-			"path": "pages/ucenter/read-news-log/read-news-log",
-			"style": {
-				"navigationBarTitleText": "阅读记录",
-				"enablePullDownRefresh": true
-			}
-		}, {
-			"path": "pages/ucenter/invite/invite",
-			"style": {
-				"navigationStyle": "custom",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
-			"path": "pages/ucenter/settings/deactivate/deactivate",
-			"style": {
-				"navigationBarTitleText": "注销提醒",
-				"enablePullDownRefresh": false
-			}
-		}, {
 			"path": "uni_modules/uni-feedback/pages/opendb-feedback/opendb-feedback",
 			"style": {
 				"navigationBarTitleText": "意见反馈",
@@ -197,50 +141,43 @@
 			"style": {
 				"navigationBarTitleText": "山总"
 			}
+		}, {
+			"path": "pages/jz-custom-yqm/add",
+			"style": {
+				"navigationBarTitleText": "新增"
+			}
+		}, {
+			"path": "pages/jz-custom-yqm/edit",
+			"style": {
+				"navigationBarTitleText": "编辑"
+			}
+		}, {
+			"path": "pages/jz-custom-yqm/list",
+			"style": {
+				"navigationBarTitleText": "列表"
+			}
+		}, {
+			"path": "pages/jz-custom-yqm/detail",
+			"style": {
+				"navigationBarTitleText": "详情"
+			}
+		}, {
+			"path": "pages/jz-custom-language/add",
+			"style": {
+				"navigationBarTitleText": "新增"
+			}
+		}, {
+			"path": "pages/jz-custom-language/edit",
+			"style": {
+				"navigationBarTitleText": "编辑"
+			}
+		}, {
+			"path": "pages/jz-custom-language/list",
+			"style": {
+				"navigationBarTitleText": "列表"
+			}
 		}
-	,{
-    "path": "pages/jz-custom-yqm/add",
-    "style": {
-        "navigationBarTitleText": "新增"
-    }
-}
-,{
-    "path": "pages/jz-custom-yqm/edit",
-    "style": {
-        "navigationBarTitleText": "编辑"
-    }
-}
-,{
-    "path": "pages/jz-custom-yqm/list",
-    "style": {
-        "navigationBarTitleText": "列表"
-    }
-}
-,{
-    "path": "pages/jz-custom-yqm/detail",
-    "style": {
-        "navigationBarTitleText": "详情"
-    }
-}
-,{
-    "path": "pages/jz-custom-language/add",
-    "style": {
-        "navigationBarTitleText": "新增"
-    }
-}
-,{
-    "path": "pages/jz-custom-language/edit",
-    "style": {
-        "navigationBarTitleText": "编辑"
-    }
-}
-,{
-    "path": "pages/jz-custom-language/list",
-    "style": {
-        "navigationBarTitleText": "列表"
-    }
-}
-],
+	],
 	"globalStyle": {
 		"navigationStyle": "custom",
 		"navigationBarTextStyle": "black",
@@ -251,7 +188,7 @@
 	},
 	"condition": {
 		"list": [
-			
+
 		],
 		"current": 1
 	},

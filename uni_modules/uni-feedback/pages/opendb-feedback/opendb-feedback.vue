@@ -1,7 +1,10 @@
 <template>
-	<view class="uni-container">
+	<view>
 		<u-navbar :is-back="true" title="意见反馈"></u-navbar>
-		<view style="margin-top: 20px;">
+		<view style="margin: 4px 0px;">
+		<u-alert-tips type="warning" description="如果宝儿在使用过程中有什么问题,都可以在这里告诉我们哦"></u-alert-tips>
+		</view>
+		<view class="jz-container">
 			<uni-forms ref="form" :value="formData" validate-trigger="submit" err-show-type="toast">
 				<uni-forms-item name="content" label="意见建议" required>
 					<textarea @input="binddata('content', $event.detail.value)" class="uni-textarea-border"
@@ -11,12 +14,12 @@
 					<uni-file-picker file-mediatype="image" :limit="6" return-type="array" v-model="formData.imgs">
 					</uni-file-picker>
 				</uni-forms-item>
-				<uni-forms-item name="contact" label="联系人">
-					<uni-easyinput v-model="formData.contact" trim="both"></uni-easyinput>
+				<uni-forms-item name="contact" label="联系方式">
+					<uni-easyinput v-model="formData.contact" trim="both" placeholder="请输入微博/抖音昵称"></uni-easyinput>
 				</uni-forms-item>
-				<uni-forms-item name="mobile" label="联系电话">
+				<!-- <uni-forms-item name="mobile" label="联系电话">
 					<uni-easyinput v-model="formData.mobile" trim="both"></uni-easyinput>
-				</uni-forms-item>
+				</uni-forms-item> -->
 				<view class="uni-button-group">
 					<u-button type="primary" class="uni-button" @click="submit">提交</u-button>
 				</view>

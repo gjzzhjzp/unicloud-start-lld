@@ -6,7 +6,7 @@ import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update
 import callCheckVersion from '@/uni_modules/uni-upgrade-center-app/utils/call-check-version';
 import interceptorChooseImage from '@/uni_modules/json-interceptor-chooseImage/js_sdk/main.js';
 // #endif
-const db = uniCloud.database()
+const db = uniCloud.database();
 export default async function() {
 	let loginConfig = uniStarterConfig.router.login
 	//清除有配置但设备环境不支持的登陆项
@@ -24,14 +24,14 @@ export default async function() {
 				} else {
 					return true
 				}
-			})
+			});
 			if (loginConfig.includes('univerify')) { //一键登录 功能预登录
 				uni.preLogin({
 					provider: 'univerify',
 					complete: e => {
 						console.log(e);
 					}
-				})
+				});
 			}
 			callBack()
 		}, err => {
@@ -449,7 +449,7 @@ function initAppVersion() {
 					allowDefault: true
 				}).appVersion.hasNew = true;
 			}
-		})
+		});
 	});
 	// 检查更新
 	// #endif

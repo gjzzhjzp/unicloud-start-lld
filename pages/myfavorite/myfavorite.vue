@@ -106,6 +106,7 @@
 				rows.forEach((item) => {
 					var obj = item.article_id[0];
 					if (obj) {
+						delete obj.is_encryption;
 						this.flowList.push(obj);
 					}
 				});

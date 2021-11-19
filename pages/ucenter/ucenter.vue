@@ -102,6 +102,14 @@
 							"to": '/uni_modules/uni-feedback/pages/opendb-feedback/opendb-feedback',
 							"thumb": "/static/center/question.png"
 						}
+						//#ifdef APP-PLUS
+						,
+						{
+							"title": "检测版本更新",
+							"to": '/pages/appbb/appbb',
+							"thumb": "/static/center/appbb.png"
+						},
+						//#endif
 					]
 				],
 				listStyles: {

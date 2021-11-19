@@ -82,7 +82,13 @@
 			loadSuccess(data) {
 				console.log("loadSuccess", data);
 				data.forEach((item) => {
-					this.$set(item, "images", item.avatar.url);
+					var url="";
+					if(Array.isArray(item.avatar)){
+						url=item.avatar[0].url;
+					}else{
+						url=item.avatar.url;
+					}
+					this.$set(item, "images", url);
 					this.$set(item, "show", false);
 				});
 				this.list = data;

@@ -1,7 +1,7 @@
 <template>
 	<view class="er-item-list">
 		<view class="er-item-list-warter" v-for="(item, index) in list" :key="index" @click="toDetail(item)">
-			<u-lazy-load threshold="300" border-radius="10" :image="item.avatar.url" :index="index"></u-lazy-load>
+			<u-lazy-load threshold="300" border-radius="10" :image="imageUrl(item)" :index="index"></u-lazy-load>
 			<view style="padding: 8px;">
 				<view class="er-item-list-title">
 					{{item.title}}
@@ -45,6 +45,15 @@
 			console.log("list", this.list);
 		},
 		methods:{
+			imageUrl(item){
+				var url="";
+				if(Array.isArray(item.avatar)){
+					url=item.avatar[0].url;
+				}else{
+					url=item.avatar.url;
+				}
+				return url;
+			}
 		}
 	}
 </script>

@@ -10,7 +10,7 @@
 					<u-col span="4" class="jz-sy-item" v-for="(item,index) in list" :key="index">
 						<view class="jz-sy-list-item" @click="toDetail(item)">
 							<view>
-								<u-image width="100%" height="140rpx" border-radius="10" :src="item.avatar.url">
+								<u-image width="100%" height="140rpx" border-radius="10" :src="imageUrl(item)">
 								</u-image>
 							</view>
 							<view class="jz-sy-list-text">{{item.title}}</view>
@@ -71,6 +71,13 @@
 			this.getList();
 		},
 		methods: {
+			imageUrl(item){
+				if(Array.isArray(item.avatar)){
+					return item.avatar[0].url;
+				}else{
+					return item.avatar.url;
+				}
+			},
 			tomore() {
 				if (this.type) {
 					uni.navigateTo({

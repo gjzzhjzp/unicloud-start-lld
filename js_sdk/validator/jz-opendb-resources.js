@@ -51,10 +51,10 @@ const validator = {
   "avatar": {
     "rules": [
       {
-        "required": true
+        "format": "array"
       },
       {
-        "format": "file"
+        "arrayType": "file"
       }
     ],
     "label": "封面大图"

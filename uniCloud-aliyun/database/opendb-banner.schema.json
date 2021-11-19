@@ -12,8 +12,14 @@
 			"description": "ID，系统自动生成"
 		},
 		"bannerfile": {
-			"bsonType": "file",
-			"fileMediaType": "image",
+			"bsonType": "array",
+						"fileMediaType": "image",
+						"arrayType": "file",
+						"component":{
+							"props":{
+								"limit":1
+							}
+						},
 			"title": "图片文件",
 			"description": "图片文件信息，包括文件名、url等"
 		},

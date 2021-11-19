@@ -18,7 +18,7 @@
         <uni-easyinput placeholder="多个标签以逗号隔开" v-model="formData.labels" trim="both"></uni-easyinput>
       </uni-forms-item>
       <uni-forms-item name="avatar" label="封面大图" required>
-        <uni-file-picker file-mediatype="image" return-type="object" v-model="formData.avatar"></uni-file-picker>
+        <uni-file-picker file-mediatype="image" return-type="array" :limit="1" v-model="formData.avatar"></uni-file-picker>
       </uni-forms-item>
       <uni-forms-item name="zy_gs" label="资源类型">
       	<!-- <easy-select ref="easySelect" size="medium" :value="formData.zy_gs"  :options="formOptions.zy_gs_localdata"></easy-select> -->

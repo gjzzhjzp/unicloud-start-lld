@@ -192,9 +192,9 @@ export default {
 		//下载并保存文件
 		downloadImg(src) {
 			//下载图片文件
-			uni.showLoading({
-				title: '大图提取中'
-			});
+			// uni.showLoading({
+			// 	title: '大图提取中'
+			// });
 			uni.downloadFile({
 				url: src,
 				success: function(res) {

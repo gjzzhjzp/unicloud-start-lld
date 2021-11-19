@@ -86,8 +86,14 @@
 		},
 		
 		"avatar": {
-			"bsonType": "file",
-			"fileMediaType": "image",
+			"bsonType": "array",
+						"fileMediaType": "image",
+						"arrayType": "file",
+						"component":{
+							"props":{
+								"limit":1
+							}
+						},
 			"title": "封面大图",
 			"description": "缩略图地址",
 			"label": "封面大图",

@@ -36,12 +36,18 @@
 			"trim": "both"
 		},
 		"icon": {
-			"bsonType": "file",
+			"bsonType": "array",
 			"fileMediaType": "image",
+			"arrayType": "file",
 			"description": "类别图标地址",
 			"label": "图标地址",
 			"title": "图标地址",
-			"trim": "both"
+			"trim": "both",
+			"component": {
+				"props": {
+					"limit": 1
+				}
+			}
 		},
 		"path": {
 			"bsonType": "string",

@@ -1,5 +1,5 @@
 <template>
-	<view @click="onClick" :style="{width,height}">
+	<view :class="customClass" @click="onClick" :style="{width,height}">
 		<image class="center-image" v-if="cSrc" :style="{width,height}" :src="cSrc" :mode="mode"></image>
 	</view>
 </template>
@@ -9,6 +9,12 @@
 		name: "cloud-image",
 		emits:['click','switchChange'],
 		props: {
+			customClass:{
+				type:String,
+				default(){
+					return ""
+				}
+			},
 			mode: {
 				type:String,
 				default () {
@@ -37,8 +43,8 @@
 		watch: {
 			src:{
 				handler(src) {
-					// console.log(src);
-					// console.log(src.substring(0, 8));
+					console.log(src);
+					console.log(src.substring(0, 8));
 					if (src.substring(0, 8) == "cloud://") {
 						uniCloud.getTempFileURL({
 							fileList: [src]
@@ -71,5 +77,8 @@
 <style>
 	.center-image{
 		border-radius: 50%;
+	}
+	.uploadZy .center-image{
+		border-radius: 0%;
 	}
 </style>

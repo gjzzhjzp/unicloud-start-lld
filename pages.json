@@ -11,6 +11,11 @@
 			"style": {
 				"navigationBarTitleText": "404"
 			}
+		},  {
+			"path": "pages/appbb/appbb",
+			"style": {
+				"navigationBarTitleText": "APP版本升级"
+			}
 		}, {
 			"path": "pages/resource/list",
 			"style": {

@@ -1,0 +1,65 @@
+{
+	"bsonType": "object",
+	"required": ["app_bbmc", "app_bbh","app_bbtp","app_bbdz","app_bbsm"],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update":true,
+		"delete":true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"app_bbmc": {
+			"bsonType": "string",
+			"description": "版本名称",
+			"title": "版本名称",
+			"label": "版本名称"
+		},
+		"app_bbh": {
+			"bsonType": "int",
+			"description": "版本号",
+			"title": "版本号",
+			"label": "版本号"
+		},
+		"app_bbtp": {
+			"bsonType": "array",
+			"fileMediaType": "image",
+			"arrayType": "file",
+			"title": "二维码图片",
+			"description": "二维码图片",
+			"label": "二维码图片",
+			"trim": "both",
+			"component":{
+				"props":{
+					"limit":1
+				}
+			}
+		},
+		"app_bbdz": {
+			"bsonType": "string",
+			"description": "apk地址",
+			"title": "apk地址",
+			"label": "apk地址"
+		},
+		"app_bbsm": {
+			"bsonType": "string",
+			"description": "版本升级说明",
+			"title": "版本升级说明",
+			"label": "版本升级说明",
+			"component":{
+				"props":{
+					"type":"textarea"
+				}
+			}
+		},
+		"update_date": {
+			"bsonType": "timestamp",
+			"description": "更新\/修改时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		}
+	}
+}

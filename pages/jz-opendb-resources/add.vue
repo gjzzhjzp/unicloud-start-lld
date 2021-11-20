@@ -1,13 +1,13 @@
 <template>
-	<view class="">
+	<view class="jz-resources-add">
 		<u-navbar :is-back="true" title="我要投稿"></u-navbar>
 		<view style="margin: 4px 0px;">
 			<!-- #ifdef H5 -->
 			<u-alert-tips type="warning" description="上传图片附件资源时多张上传请使用APP或QQ浏览器,
-				其他手机浏览器暂不支持多张上传,上传封面大图请使用横向图片"></u-alert-tips>
+				其他手机浏览器暂不支持多张同时上传,视频不能上传超过100M的视频,超过100M的视频走外链"></u-alert-tips>
 			<!-- #endif -->
 			<!-- #ifdef APP-PLUS -->
-			<u-alert-tips type="warning" description="上传封面大图时请使用横向图片"></u-alert-tips>
+			<u-alert-tips type="warning" description="视频不能上传超过100M的视频,超过100M的走外链"></u-alert-tips>
 			<!-- #endif -->
 		</view>
 		<view class="jz-container">
@@ -32,7 +32,7 @@
 					<cloud-image @click="uploadAvatarImg" custom-class="uploadZy" v-if="formData.avatar" :src="formData.avatar[0].url" width="300rpx"
 						height="200rpx"></cloud-image>
 					<uni-icons @click="uploadAvatarImg" v-else class="chooseAvatar" type="plusempty" size="80"
-						color="#dddddd"></uni-icons>
+						color="#F1F1F1"></uni-icons>
 					<!-- <uni-file-picker file-mediatype="image" return-type="array" :limit="1" v-model="formData.avatar">
 						</uni-file-picker> -->
 				</uni-forms-item>
@@ -52,6 +52,7 @@
 							v-model="formData.resources">
 						</uni-file-picker>
 					</template>
+					<!-- #ifdef H5 -->
 					<template v-else-if="formData.zy_gs==2">
 						<uni-file-picker file-mediatype="all" file-extname="mp3" :limit="1" return-type="array"
 							v-model="formData.resources">
@@ -62,9 +63,10 @@
 							v-model="formData.resources">
 						</uni-file-picker>
 					</template>
+					<!-- #endif -->
 				</uni-forms-item>
 				<uni-forms-item name="aliyun_dz" label="外链">
-					<uni-easyinput placeholder="请输入外链地址" v-model="formData.aliyun_dz" trim="both"></uni-easyinput>
+					<uni-easyinput placeholder="http://" v-model="formData.aliyun_dz" trim="both"></uni-easyinput>
 				</uni-forms-item>
 				<uni-forms-item name="excerpt" label="内容">
 					<uni-easyinput placeholder="请输入内容" type="textarea" v-model="formData.excerpt" trim="both">
@@ -139,6 +141,7 @@
 							"text": "已授权"
 						}
 					],
+					 // #ifdef H5
 					"zy_gs_localdata": [{
 						"value": 0,
 						"text": "图片"
@@ -152,6 +155,16 @@
 						"value": 3,
 						"text": "文章"
 					}],
+					 // #endif 
+					 // #ifdef APP-PLUS
+					 "zy_gs_localdata": [{
+					 	"value": 0,
+					 	"text": "图片"
+					 }, {
+					 	"value": 1,
+					 	"text": "视频"
+					 }],
+					  // #endif 
 					"is_encryption_localdata": [{
 							"value": 0,
 							"text": "不加密"
@@ -276,5 +289,8 @@
 
 	.checklist-box {
 		margin-right: 15px;
+	}
+	.chooseAvatar{
+		    border: 1px solid #F1F1F1;
 	}
 </style>

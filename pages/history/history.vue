@@ -63,6 +63,12 @@
 		onLoad() {
 			this.addRandomData();
 		},
+		// 下拉刷新
+		onPullDownRefresh(){
+			this.param.page=1;
+			this.addRandomData();
+			uni.stopPullDownRefresh();
+		},
 		onPageScroll(e) {
 			this.scrollTop = e.scrollTop;
 		},

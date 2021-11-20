@@ -2,8 +2,8 @@
     "name" : "俊哲宇宙",
     "appid" : "__UNI__0583E60",
     "description" : "俊哲宇宙",
-    "versionName" : "1.0.0",
-    "versionCode" : "100",
+    "versionName" : "1.0.2",
+    "versionCode" : 102,
     "transformPx" : false,
     "app-plus" : {
         "locales" : {
@@ -30,10 +30,10 @@
         "privacy" : {
             "prompt" : "template",
             "template" : {
-               "title" : "服务须知",
-               "message" : "<div style='line-height:26px;'>　　宝儿们，欢迎来到俊哲宇宙。此APP仅收集俊哲相关资源，方便宝儿们查阅浏览。不会收集记录任何个人信息，所需授权为APP最基础的授权。好啦，接下来宝儿们愉快的玩耍吧~~</div>",
-               "buttonAccept" : "同意",
-               "buttonRefuse" : "暂不同意"
+                "title" : "服务须知",
+                "message" : "<div style='line-height:26px;'>　　宝儿们，欢迎来到俊哲宇宙。此APP仅收集俊哲相关资源，方便宝儿们查阅浏览。不会收集记录任何个人信息，所需授权为APP最基础的授权。好啦，接下来宝儿们愉快的玩耍吧~~</div>",
+                "buttonAccept" : "同意",
+                "buttonRefuse" : "暂不同意"
             }
         },
         "compatible" : {

@@ -11,10 +11,10 @@
 			<view>
 				<jz-grid></jz-grid>
 			</view>
-			<jz-sy-list type="rm" title="热门内容"></jz-sy-list>
-			<jz-sy-list type="zx" title="最新内容"></jz-sy-list>
-			<jz-sy-list title="山河令" label="山河令"></jz-sy-list>
-			<jz-sy-list title="夺笋" label="夺笋"></jz-sy-list>
+			<jz-sy-list ref="sylist1" type="rm" title="热门内容"></jz-sy-list>
+			<jz-sy-list ref="sylist2" type="zx" title="最新内容"></jz-sy-list>
+			<jz-sy-list ref="sylist3" title="山河令" label="山河令"></jz-sy-list>
+			<jz-sy-list ref="sylist4" title="夺笋" label="夺笋"></jz-sy-list>
 			<jz-tabbar></jz-tabbar>
 		</view>
 	</view>
@@ -26,13 +26,20 @@
 
 			}
 		},
+		// 下拉刷新
+		onPullDownRefresh(){
+			this.$refs.sylist1.getList();
+			this.$refs.sylist2.getList();
+			this.$refs.sylist3.getList();
+			this.$refs.sylist4.getList();
+			uni.stopPullDownRefresh()
+		},
 		methods: {
 			tosearch() {
 				uni.navigateTo({
 					url: "/pages/list/search/search"
 				})
 			},
-
 		}
 	}
 </script>

@@ -4,7 +4,6 @@ module.exports = (options) => {
   // uniID.init(options);
   // 返回中间件函数
   return async function auth(ctx, next) {
-    console.log("11111111111",ctx);
     await next(); // 执行后续中间件
   };
 };

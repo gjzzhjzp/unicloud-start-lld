@@ -182,7 +182,7 @@ export default {
 	},
 	register:{
 		navigationBarTitle:"注册",
-		usernamePlaceholder: "请输入用户名",
+		usernamePlaceholder: "请输入登录名",
 		nicknamePlaceholder: "请输入用户昵称",
 		registerAndLogin: "注册并登录",
 		passwordDigitsPlaceholder: "请输入6-20位密码",

@@ -1,6 +1,9 @@
 {
 	"pages": [{
-			"path": "pages/index/index"
+			"path": "pages/index/index",
+			"style":{
+				"enablePullDownRefresh":true
+			}
 		}, {
 			"path": "pages/question/question",
 			"style": {
@@ -11,15 +14,17 @@
 			"style": {
 				"navigationBarTitleText": "404"
 			}
-		},  {
+		}, {
 			"path": "pages/appbb/appbb",
 			"style": {
-				"navigationBarTitleText": "APP版本升级"
+				"navigationBarTitleText": "APP版本升级",
+				"enablePullDownRefresh":true
 			}
 		}, {
 			"path": "pages/resource/list",
 			"style": {
-				"navigationBarTitleText": "列表"
+				"navigationBarTitleText": "列表",
+				"enablePullDownRefresh":true
 			}
 		}, {
 			"path": "pages/addResource/addResource",
@@ -51,22 +56,6 @@
 			"path": "pages/ucenter/ucenter",
 			"style": {
 				"navigationStyle": "custom"
-			}
-		},
-		{
-			"path": "uni_modules/uni-upgrade-center-app/pages/upgrade-popup",
-			"style": {
-				"disableScroll": true,
-				"app-plus": {
-					"backgroundColorTop": "transparent",
-					"background": "transparent",
-					"titleNView": false,
-					"scrollIndicator": false,
-					"popGesture": "none",
-					"animationType": "fade-in",
-					"animationDuration": 200
-
-				}
 			}
 		}, {
 			"path": "pages/ucenter/userinfo/userinfo",
@@ -109,17 +98,20 @@
 		}, {
 			"path": "pages/jz-opendb-resources/list",
 			"style": {
-				"navigationBarTitleText": "列表"
+				"navigationBarTitleText": "列表",
+				"enablePullDownRefresh":true
 			}
 		}, {
 			"path": "pages/myfavorite/myfavorite",
 			"style": {
-				"navigationBarTitleText": "我的收藏"
+				"navigationBarTitleText": "我的收藏",
+				"enablePullDownRefresh":true
 			}
 		}, {
 			"path": "pages/history/history",
 			"style": {
-				"navigationBarTitleText": "我的足迹"
+				"navigationBarTitleText": "我的足迹",
+				"enablePullDownRefresh":true
 			}
 		}, {
 			"path": "pages/sort/sort",
@@ -139,12 +131,14 @@
 		}, {
 			"path": "pages/junzhe/junzhe",
 			"style": {
-				"navigationBarTitleText": "俊哲"
+				"navigationBarTitleText": "俊哲",
+				"enablePullDownRefresh":true
 			}
 		}, {
 			"path": "pages/shanzong/shanzong",
 			"style": {
-				"navigationBarTitleText": "山总"
+				"navigationBarTitleText": "山总",
+				"enablePullDownRefresh":true
 			}
 		}, {
 			"path": "pages/jz-custom-yqm/add",
@@ -159,7 +153,8 @@
 		}, {
 			"path": "pages/jz-custom-yqm/list",
 			"style": {
-				"navigationBarTitleText": "列表"
+				"navigationBarTitleText": "列表",
+				"enablePullDownRefresh":true
 			}
 		}, {
 			"path": "pages/jz-custom-yqm/detail",
@@ -180,6 +175,30 @@
 			"path": "pages/jz-custom-language/list",
 			"style": {
 				"navigationBarTitleText": "列表"
+			}
+		},
+		{
+			"path": "uview-ui/components/u-full-screen/u-full-screen",
+			"style": {
+				"navigationStyle": "custom", // 取消本页面的导航栏
+				"app-plus": {
+					"animationType": "fade-in", // 设置fade-in淡入动画，为最合理的动画类型
+					"background": "transparent", // 背景透明
+					"backgroundColor": "rgba(0,0,0,0)", // 背景透明
+					"popGesture": "none" // 关闭IOS屏幕左边滑动关闭当前页面的功能
+				}
+			}
+		},
+		{
+			"path": "pages/addResource/addResource",
+			"style": {
+				"navigationStyle": "custom", // 取消本页面的导航栏
+				"app-plus": {
+					"animationType": "fade-in", // 设置fade-in淡入动画，为最合理的动画类型
+					"background": "transparent", // 背景透明
+					"backgroundColor": "rgba(0,0,0,0)", // 背景透明
+					"popGesture": "none" // 关闭IOS屏幕左边滑动关闭当前页面的功能
+				}
 			}
 		}
 	],

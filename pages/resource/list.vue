@@ -103,6 +103,11 @@
 			itemList,
 			musicList
 		},
+		// 下拉刷新
+		onPullDownRefresh(){
+			this.resetlist();
+			uni.stopPullDownRefresh()
+		},
 		onLoad(e) {
 			// debugger;
 			console.log("onLoad", e);

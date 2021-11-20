@@ -14,7 +14,7 @@
 			</view>
 			<view class="login-back-con">
 				<input class="input-box" :inputBorder="false" v-model="username"
-					placeholder="请输入用户名" />
+					placeholder="请输入登录名" />
 				<input type="password" class="input-box" :inputBorder="false" v-model="password"
 					:placeholder="$t('pwdLogin.passwordPlaceholder')" />
 				<view class="captcha-box" v-if="captchaBase64">

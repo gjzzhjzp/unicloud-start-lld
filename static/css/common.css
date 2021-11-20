@@ -102,3 +102,9 @@ body.pages-resource-list uni-page-body {
 .u-waterfall .u-column{
 	width: 50%;
 }
+.jz-resources-add .chooseAvatar {
+	border: 1px solid rgb(241, 241, 241);
+}
+.jz-resources-add .icon-add {
+	height: 6px;
+}

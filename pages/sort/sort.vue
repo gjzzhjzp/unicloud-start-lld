@@ -19,7 +19,7 @@
 						</view>
 						<view class="item-container">
 							<view class="thumb-box" @click="toflbm(item1,index1)" v-for="(item1, index1) in item.children" :key="index1">
-								<image class="item-menu-image" :src="item1.icon?item1.icon.url:''" mode="aspectFill"></image>
+								<image class="item-menu-image" :src="imageUrl(item1)" mode="aspectFill"></image>
 								<view class="item-menu-name">{{item1.name}}</view>
 							</view>
 						</view>
@@ -57,6 +57,13 @@
 			this.getList();
 		},
 		methods: {
+			imageUrl(item1){
+				if(Array.isArray(item1.icon)){
+					return item1.icon[0].url;
+				}else{
+					return item1.icon?item1.icon.url:''
+				}
+			},
 			// 按分类编码筛选
 			toflbm(item){
 				// debugger;

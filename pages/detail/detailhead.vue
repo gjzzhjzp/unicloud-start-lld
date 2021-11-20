@@ -22,9 +22,11 @@
 					<u-icon :size="30"  name="heart-fill" color="red"></u-icon> 已收藏
 				</view>
 				<view class="detail-image-sc1" v-if="data.zy_gs=='1'">
-					<a class="download-head" :download="data.title" :href="data.resources[0].url">
-						<u-icon :size="30"  name="download"></u-icon> 下载
-					</a>
+					<template v-if="data.resources.length>0">
+						<a class="download-head" :download="data.title" :href="data.resources[0].url">
+							<u-icon :size="30"  name="download"></u-icon> 下载
+						</a>
+					</template>
 				</view>
 			</view>
 		</view>
@@ -79,13 +81,14 @@
 		    white-space: nowrap;
 		    overflow: hidden;
 		    text-overflow: ellipsis;
+			max-width: 120px;
 	}
 	.detail-image-ly2{
 		    white-space: nowrap;
 		    overflow: hidden;
 		    text-overflow: ellipsis;
 		    margin-left: 10px;
-			width: 120px;
+			max-width: 150px;
 	}
 	.detail-image-title {
 		margin-top: 10px;

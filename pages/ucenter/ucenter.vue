@@ -125,16 +125,7 @@
 			}
 		},
 		onLoad() {
-			// console.log(313,this.userInfo,this.hasLogin);
-			//#ifdef APP-PLUS
-			this.ucenterList[0].unshift({
-				title: this.$t('mine.checkUpdate'), // this.this.$t('mine.checkUpdate')"检查更新"
-				rightText: this.appVersion.version + '-' + this.appVersion.versionCode,
-				event: 'checkVersion',
-				icon: 'loop',
-				showBadge: this.appVersion.hasNew
-			})
-			//#endif
+			
 		},
 		computed: {
 			...mapGetters({

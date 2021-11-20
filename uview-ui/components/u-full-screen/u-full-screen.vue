@@ -1,5 +1,5 @@
 <template>
-	<u-modal v-model="show" :show-cancel-button="true" confirm-text="升级" title="发现新版本" @cancel="cancel" @confirm="confirm">
+	<u-modal v-model="show" :show-cancel-button="false" confirm-text="退出" title="提示" @cancel="cancel" @confirm="confirm">
 		<view class="u-update-content">
 			<rich-text :nodes="content"></rich-text>
 		</view>
@@ -12,10 +12,8 @@
 			return {
 				show: false,
 				content: `
-					1. 修复badge组件的size参数无效问题<br>
-					2. 新增Modal模态框组件<br>
-					3. 新增压窗屏组件，可以在APP上以弹窗的形式遮盖导航栏和底部tabbar<br>
-					4. 修复键盘组件在微信小程序上遮罩无效的问题
+					为加强管理，限制了每日访问人数<br>
+					今日访问人数已达上线
 				`,
 			}
 		},
@@ -30,7 +28,9 @@
 				this.closeModal();
 			},
 			closeModal() {
-				uni.navigateBack();
+				// #ifdef APP-PLUS  
+				plus.runtime.quit();  
+				// #endif
 			}
 		}
 	}

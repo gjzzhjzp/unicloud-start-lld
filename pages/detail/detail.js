@@ -29,7 +29,7 @@ export default {
 					article_id: this.data._id,
 					user_id: db.getCloudEnv('$cloudEnv_uid')
 				}).get();
-				console.log("res2222222222",res);
+				// console.log("res2222222222",res);
 				if (res.result && res.result.data.length > 0) {
 					this.islike = true;
 				} else {

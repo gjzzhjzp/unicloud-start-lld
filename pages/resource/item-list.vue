@@ -7,9 +7,15 @@
 					{{item.title}}
 				</view>
 				<view class="er-item-list-author" v-if="item.userinfo">
-					<view class="er-item-list-img"><u-avatar :size="50" :src="(item.userinfo&&item.userinfo[0].avatar_file)?item.userinfo[0].avatar_file.url:''"></u-avatar>
-					{{item.userinfo?item.userinfo[0].nickname:''}}</view>
-					<view><u-icon name="heart"></u-icon>{{item.like_count||0}}</view>
+					<view class="er-item-list-img">
+						<u-avatar :size="50"
+							:src="(item.userinfo&&item.userinfo[0].avatar_file)?item.userinfo[0].avatar_file.url:''">
+						</u-avatar>
+						{{item.userinfo?item.userinfo[0].nickname:''}}
+					</view>
+					<view class="er-item-list-right">
+						<u-icon name="heart"></u-icon>{{item.like_count||0}}
+					</view>
 				</view>
 			</view>
 		</view>
@@ -18,7 +24,7 @@
 				<view style="margin-bottom: 8px;">
 					<u-alert-tips type="warning" description="个人中心>>我的邀请码中可申请邀请码"></u-alert-tips>
 				</view>
-				<u-input v-model="yqm" type="text" :border="true" placeholder="请输入邀请码"  />
+				<u-input v-model="yqm" type="text" :border="true" placeholder="请输入邀请码" />
 			</view>
 		</u-modal>
 		<u-toast ref="uToast" />
@@ -32,7 +38,7 @@
 
 			}
 		},
-		mixins:[yqm],
+		mixins: [yqm],
 		props: {
 			list: {
 				type: Array,
@@ -44,13 +50,13 @@
 		mounted() {
 			console.log("list", this.list);
 		},
-		methods:{
-			imageUrl(item){
-				var url="";
-				if(Array.isArray(item.avatar)){
-					url=item.avatar[0].url;
-				}else{
-					url=item.avatar.url;
+		methods: {
+			imageUrl(item) {
+				var url = "";
+				if (Array.isArray(item.avatar)) {
+					url = item.avatar[0].url;
+				} else {
+					url = item.avatar.url;
 				}
 				return url;
 			}
@@ -82,10 +88,10 @@
 		font-size: 30rpx;
 		margin-top: 5px;
 		color: $u-main-color;
-		    white-space: nowrap;
-		    overflow: hidden;
-		    text-overflow: ellipsis;
-		
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+
 	}
 
 	.er-item-list-tag {
@@ -125,13 +131,21 @@
 		align-items: center;
 		justify-content: space-between;
 	}
-	.er-item-list-img{
+
+	.er-item-list-img {
 		display: flex;
 		align-items: center;
 	}
-.er-item-list .er-item-list-warter{
-    box-shadow: 0px 0px 6px #d5d5d6;
-    border-radius: 10px;
-    margin: 10px;
-}
+
+	.er-item-list .er-item-list-warter {
+		box-shadow: 0px 0px 6px #d5d5d6;
+		border-radius: 10px;
+		margin: 10px;
+	}
+
+	.er-item-list-right {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 </style>

@@ -1,10 +1,7 @@
 const {
 	Service
 } = require('uni-cloud-router')
-const {
-  setRz,
-  setFks
-} = require('jz-common')
+
 module.exports = class checkquestionService extends Service {
 	async check() {
 		//event为客户端上传的参数
@@ -29,25 +26,13 @@ module.exports = class checkquestionService extends Service {
 				flag = false
 			}
 		});
-		//返回数据给客户端
-		var fksRes=await setFks(context,flag);
-		if(fksRes&&fksRes.state=="9999"){
-			console.log("fksRes",fksRes);
-			return {
-				"state": "9999",
-				"data": false,
-				"msg": fksRes.msg
-			};
-		}
 		if (flag) {
-			setRz(context,"检查问题答案--验证成功");
 			return {
 				"state": "0000",
 				"data": flag,
 				"msg": "验证成功"
 			};
 		} else {
-			setRz(context,"检查问题答案--验证失败");
 			return {
 				"state": "9999",
 				"data": flag,
@@ -65,7 +50,7 @@ module.exports = class checkquestionService extends Service {
 			ip:context.CLIENTIP,
 			time:new Date().format("yyyy-MM-dd")
 		}).get();
-		if(data.affectedDocs>0){
+		if(data.data>0){
 			var _data=data.data[0];
 			if(_data&&_data.isvisit=="1"){
 				return {

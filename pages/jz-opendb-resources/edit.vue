@@ -18,7 +18,11 @@
         <uni-easyinput placeholder="多个标签以逗号隔开" v-model="formData.labels" trim="both"></uni-easyinput>
       </uni-forms-item>
       <uni-forms-item name="avatar" label="封面大图" required>
-        <uni-file-picker file-mediatype="image" return-type="array" :limit="1" v-model="formData.avatar"></uni-file-picker>
+		  <cloud-image @click="uploadAvatarImg" custom-class="uploadZy" v-if="formData.avatar" :src="formData.avatar[0].url" width="300rpx"
+		  	height="200rpx"></cloud-image>
+		  <uni-icons @click="uploadAvatarImg" v-else class="chooseAvatar" type="plusempty" size="80"
+		  	color="#F1F1F1"></uni-icons>
+        <!-- <uni-file-picker file-mediatype="image" return-type="array" :limit="1" v-model="formData.avatar"></uni-file-picker> -->
       </uni-forms-item>
       <uni-forms-item name="zy_gs" label="资源类型">
       	<!-- <easy-select ref="easySelect" size="medium" :value="formData.zy_gs"  :options="formOptions.zy_gs_localdata"></easy-select> -->
@@ -60,6 +64,7 @@
   const db = uniCloud.database();
   const dbCollectionName = 'jz-opendb-resources';
 import zycommon from "./zycommon.js"
+import image from "@/pages/ucenter/userinfo/image.js"
   function getValidator(fields) {
     let result = {}
     for (let key in validator) {
@@ -71,7 +76,7 @@ import zycommon from "./zycommon.js"
   }
 
   export default {
-	  mixins: [zycommon],
+	 mixins: [zycommon,image],
     data() {
       let formData = {
         "author": "",
@@ -88,6 +93,10 @@ import zycommon from "./zycommon.js"
 		"zy_gs":0
       }
       return {
+		  avimage:{
+		  	width:600,
+		  	height:400
+		  },
         formData,
         formOptions: {
           "is_grant_localdata": [
@@ -140,13 +149,19 @@ import zycommon from "./zycommon.js"
       this.$refs.form.setRules(this.rules)
     },
     methods: {
+		setAvatarFile(avatar_file){
+			console.log("avatar_file",avatar_file);
+			// formData.avatar[0].url;
+			this.$set(this.formData,"avatar",[avatar_file])
+		},
       /**
        * 验证表单并提交
        */
       submit() {
         uni.showLoading({
           mask: true
-        })
+        });
+		console.log("value1111111111", this.formData);
         this.$refs.form.validate().then((res) => {
           return this.submitForm(res)
         }).catch(() => {
@@ -161,7 +176,8 @@ import zycommon from "./zycommon.js"
       submitForm(value) {
         // 使用 clientDB 提交数据
 		value=Object.assign(value,{
-			categories:this.formData.categories
+			categories:this.formData.categories,
+			avatar:this.formData.avatar
 		});
 		var config=getApp().globalData.config;
 		if(config["800000"]=="1"){

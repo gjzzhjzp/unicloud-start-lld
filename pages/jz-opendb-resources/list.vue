@@ -83,10 +83,12 @@
 				console.log("loadSuccess", data);
 				data.forEach((item) => {
 					var url="";
-					if(Array.isArray(item.avatar)){
-						url=item.avatar[0].url;
-					}else{
-						url=item.avatar.url;
+					if(item.avatar){
+						if(Array.isArray(item.avatar)){
+							url=item.avatar[0].url;
+						}else{
+							url=item.avatar.url;
+						}
 					}
 					this.$set(item, "images", url);
 					this.$set(item, "show", false);

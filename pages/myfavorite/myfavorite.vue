@@ -66,6 +66,12 @@
 		onPageScroll(e) {
 			this.scrollTop = e.scrollTop;
 		},
+		// 下拉刷新
+		onPullDownRefresh(){
+			this.param.page=1;
+			this.addRandomData();
+			uni.stopPullDownRefresh();
+		},
 		onReachBottom() {
 			if(this.loadStatus != 'nomore'){
 				this.loadStatus = 'loading';

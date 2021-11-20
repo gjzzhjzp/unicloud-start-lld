@@ -1,10 +1,7 @@
 const {
 	Service
 } = require('uni-cloud-router')
-const {
-	setRz,
-	setFks
-} = require('jz-common')
+
 module.exports = class resourceService extends Service {
 	async add_like() {
 		try {
@@ -101,7 +98,6 @@ module.exports = class resourceService extends Service {
 			var rows = data.rows || 10;
 			var page = data.page || 1;
 			var zy_gs = "";
-			console.log("data11111111111111111",data);	
 			const collection = db.collection('jz-opendb-resources');
 			const collectionconfig = db.collection('jz-custom-config');
 			var config_800001=await collectionconfig.where({
@@ -109,7 +105,6 @@ module.exports = class resourceService extends Service {
 			}).get();
 			var config_800001_value=config_800001.data[0].config_val;
 			
-			console.log("config_800001",config_800001);
 			var where_obj = {
 				"article_status": 1,
 				"categories": new RegExp(data.categories, 'gi')
@@ -166,7 +161,6 @@ module.exports = class resourceService extends Service {
 					as: 'userinfo',
 				}).skip((page - 1) * rows)
 				.end();
-			console.log("resultdata", resultdata);
 			return {
 				"state": "0000",
 				"rows": resultdata.data,
@@ -198,7 +192,6 @@ module.exports = class resourceService extends Service {
 					as: 'userinfo',
 				})
 				.end()
-			console.log("resultdata", resultdata);
 			if (!resultdata.data[0].view_count) {
 				resultdata.data[0].view_count = 0;
 			}
@@ -228,14 +221,14 @@ module.exports = class resourceService extends Service {
 			"https://unicloud-api.dcloud.net.cn/unicloud/api/file/list", {
 				method: 'GET',
 				headers: {
-					token: "c9cf420d3b88dda3e419a5130ab25dfc"
+					token: "78742c45f9eb6323d794ce847d134e89"
 				},
 				data: {
 					"appid": "",
 					"provider": "aliyun",
-					"spaceId": "2db467a1-bbfa-474d-8795-4dbd19fb35cc",
+					"spaceId": "3a72b088-8226-498e-a9cc-a695d0ed4ce7",
 					"page": 1,
-					"pageSize": 10,
+					"pageSize": 80,
 					"folder": ""
 				},
 				contentType: 'json', // 指定以application/json发送data内的数据  

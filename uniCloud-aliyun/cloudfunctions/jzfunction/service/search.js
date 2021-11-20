@@ -3,12 +3,10 @@ const {
 } = require('uni-cloud-router')
 module.exports = class searchService extends Service {
 	async addSerach() {
-		// console.log("this.ctx",this.ctx.context.CLIENTIP);
 		const searchnumdb = this.db.collection("jz-custom-searchnum");
 		const searchdb = this.db.collection("jz-custom-search");
 		const IP = this.ctx.CLIENTIP;
 		const Time = new Date().format("yyyy-MM-dd hh:mm:ss");
-		console.log("Time", Time);
 		try {
 			// 记录搜索表
 			var title = this.ctx.data.keyword;

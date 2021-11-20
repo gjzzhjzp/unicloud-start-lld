@@ -1,10 +1,7 @@
 const {
 	Service
 } = require('uni-cloud-router')
-const {
-  setRz,
-  setFks
-} = require('jz-common')
+
 module.exports = class messageService extends Service {
 	async addMessage() {
 		//event为客户端上传的参数
@@ -19,7 +16,6 @@ module.exports = class messageService extends Service {
 						"message":event.message,
 						"time": new Date().format("yyyy-MM-dd")
 					});
-			setRz(context, "用户留言");
 			return {
 				"state": "0000",
 				"data": true,

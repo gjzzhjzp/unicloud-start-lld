@@ -13,6 +13,7 @@
 			console.log('App Launch')
 			this.globalData.$i18n = this.$i18n
 			this.globalData.$t = str => this.$t(str)
+			
 			this.getConfig();
 			initApp();
 			// #ifdef H5
@@ -44,7 +45,7 @@
 			}
 		},
 		onHide: function() {
-			console.log('App Hide')
+			console.log('App Hide');
 		},
 		methods:{
 			// 获取配置项
@@ -64,11 +65,36 @@
 							});
 						}
 						this.globalData.config=config;
+						this.setfks(config);
 					} else {
-						this.$refs.uToast.show({
-							title: res.msg,
-							type: 'error'
-						});
+						uni.showToast({
+							title:res.msg,
+							icon:null
+						})
+					}
+				});
+			},
+			setfks(config){
+				uniCloud.callFunction({
+					name: 'jzfunction',
+					data: {
+						action: 'fks/setfks',
+						data:{
+							config:config
+						}
+					},
+				}).then((res) => {
+					var res = res.result;
+					if (res.state == "0000") {
+						console.log(res.msg)
+					} else {
+						uni.redirectTo({
+							url:"/uview-ui/components/u-full-screen/u-full-screen"
+						})
+						// uni.showToast({
+						// 	title:res.msg,
+						// 	icon:null
+						// })
 					}
 				});
 			}

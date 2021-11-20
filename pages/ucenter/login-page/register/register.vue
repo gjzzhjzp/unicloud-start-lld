@@ -13,7 +13,7 @@
 			</view>
 			<view class="login-back-con">
 		<uni-forms ref="form" :value="formData" :rules="rules" validate-trigger="submit" err-show-type="undertext" label-width="140px" label-position="right">
-			<uni-forms-item label="用户名" name="username" required>
+			<uni-forms-item label="登录名" name="username" required>
 				<uni-easyinput :inputBorder="false" class="easyinput" :placeholder="$t('register.usernamePlaceholder')" v-model="formData.username" trim="both" />
 			</uni-forms-item>
 			<uni-forms-item label="昵称" name="nickname">

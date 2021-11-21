@@ -13,7 +13,7 @@
 				<view class="signWrapperCalendar" v-if="true">
 					<view class="signWrapperCalendarBox">
 						<swiper @change="_onClickSlideApi" duration="200" :current="slideDataListIndex" circular
-							style="height:265px">
+							style="height:300px;">
 							<swiper-item class="swiper-item" v-for="(calendar,indexa) in 3" :key="indexa">
 								<view class="signWrapperCalendarBoxCenter">
 									<view class="signWrapperCalendarBoxCenterBox">
@@ -304,9 +304,9 @@
 						class: "more"
 					});
 				}
-				if (list.length < 35) {
+				if (list.length < 42) {
 					var length = list.length;
-					for (var o = 0; o < 35 - length; o++) {
+					for (var o = 0; o < 42 - length; o++) {
 						list.push({
 							value: o + 1,
 							class: "more"
@@ -464,7 +464,7 @@
 <style lang="scss">
 	.rili-bottom {
 		border-top: 1px solid #8C92AC;
-		margin-top: 20px;
+		margin-top: 10px;
 
 		.one {
 			display: flex;

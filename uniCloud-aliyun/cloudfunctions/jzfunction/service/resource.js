@@ -106,8 +106,8 @@ module.exports = class resourceService extends Service {
 			var config_800001_value=config_800001.data[0].config_val;
 			
 			var where_obj = {
-				"article_status": 1,
-				"categories": new RegExp(data.categories, 'gi')
+				"article_status": 1
+				// "categories": new RegExp(data.categories, 'gi')
 			}
 			if(config_800001_value=='0'){///=1读取未授权资源，=0只读取授权资源
 			Object.assign(where_obj, {
@@ -143,15 +143,15 @@ module.exports = class resourceService extends Service {
 			if (type == "zx") {
 				collection_query = collection.aggregate().match(where).sort({
 					"last_modify_date": -1
-				}).limit(rows);
+				}).skip((page - 1) * rows).limit(rows);
 			} else if (type == "rm") {
 				collection_query = collection.aggregate().match(where).sort({
 					"view_count": -1
-				}).limit(rows);
+				}).skip((page - 1) * rows).limit(rows);
 			} else if (type == "sc") {
 				collection_query = collection.aggregate().match(where).sort({
 					"like_count": -1
-				}).limit(rows);
+				}).skip((page - 1) * rows).limit(rows);
 			}
 			// console.log("collection_query",collection_query);
 			var resultdata = await collection_query.lookup({
@@ -159,7 +159,7 @@ module.exports = class resourceService extends Service {
 					localField: 'user_id',
 					foreignField: '_id',
 					as: 'userinfo',
-				}).skip((page - 1) * rows)
+				})
 				.end();
 			return {
 				"state": "0000",

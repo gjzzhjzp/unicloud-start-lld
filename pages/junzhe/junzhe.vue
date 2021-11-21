@@ -6,7 +6,7 @@
 		<jz-notice :type="0"></jz-notice>
 		<view class="jz-container">
 		<view>
-			<jz-banner :type="1"></jz-banner>
+			<jz-banner ref="banner" :type="1"></jz-banner>
 		</view>
 		<jz-sy-list ref="sylist1" title="山河令" label="山河令"></jz-sy-list>
 		<jz-sy-list ref="sylist2" title="双人综艺" label="双人综艺"></jz-sy-list>
@@ -24,6 +24,7 @@
 		},
 		// 下拉刷新
 		onPullDownRefresh(){
+			this.$refs.banner.getList();
 			this.$refs.sylist1.getList();
 			this.$refs.sylist2.getList();
 			this.$refs.sylist3.getList();

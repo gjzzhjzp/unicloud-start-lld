@@ -6,21 +6,22 @@
 				@change="changeTabs"></u-tabs>
 		</view>
 		<view v-if="currenttab!=2">
-			<u-waterfall v-model="flowList" ref="uWaterfall">
+			<item-list :list="flowList"></item-list>
+			<!-- <u-waterfall v-model="flowList" ref="uWaterfall">
 				<template v-slot:left="{leftList}">
 					<item-list :list="leftList"></item-list>
 				</template>
 				<template v-slot:right="{rightList}">
 					<item-list :list="rightList"></item-list>
 				</template>
-			</u-waterfall>
+			</u-waterfall> -->
 		</view>
 		<view v-else>
 			<music-list :list="flowList"></music-list>
 		</view>
 		<u-loadmore v-show="flowList.length!=0" :status="loadStatus" @loadmore="addRandomData"></u-loadmore>
 		<u-back-top :scroll-top="scrollTop" top="1000" mode="square" icon="arrow-up" tips="顶部"></u-back-top>
-		<view style="margin-top: 20px;" v-show="flowList.length==0">
+		<view style="margin-top: 20px;text-align: center;" v-show="flowList.length==0">
 			<u-empty text="无收藏" mode="favor"></u-empty>
 		</view>
 	</view>
@@ -86,6 +87,7 @@
 				this.currenttab = index;
 				this.zy_gs = index;
 				// this.reset=true;
+				this.param.page=1;
 				this.flowList.splice(0, this.flowList.length);
 				this.addRandomData();
 			},
@@ -93,6 +95,9 @@
 				if (this.$refs.uWaterfall) {
 					this.$refs.uWaterfall.clear();
 				}
+				uni.showLoading({
+					title: '加载中...'
+				});
 				const db = uniCloud.database();
 				const uid = db.getCloudEnv('$cloudEnv_uid');
 				const collection = db.collection('opendb-news-favorite,jz-opendb-resources,uni-id-users');
@@ -100,7 +105,8 @@
 				var resultdata = await collection.where({
 					user_id: uid,
 					zy_gs: this.zy_gs
-				}).field('article_title,article_id,create_date{title,avatar,author,resources}').orderBy('create_date','desc').skip(skip).get();
+				}).field('article_title,article_id,create_date{title,avatar,author,resources}').orderBy('create_date','desc')
+				.skip(skip).limit(this.param.rows).get();
 				var rows = resultdata.result.data;
 				if (rows.length < this.param.rows) {
 					this.loadStatus = 'nomore';
@@ -116,6 +122,7 @@
 						this.flowList.push(obj);
 					}
 				});
+				uni.hideLoading();
 			} ///,user_id{nickname,avatar}
 		}
 	}

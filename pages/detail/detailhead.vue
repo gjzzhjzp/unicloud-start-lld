@@ -54,9 +54,9 @@
 		computed:{
 			tgr(){
 				if(this.data.userinfo&&this.data.userinfo.length>0){
-					return this.data.userinfo[0].nickname
+					return this.data.userinfo[0].nickname||"佚名"
 				}
-				return ""
+				return "佚名"
 			}
 		},
 		methods:{

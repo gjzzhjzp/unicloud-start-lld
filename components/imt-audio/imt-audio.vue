@@ -37,18 +37,16 @@
 					<image src="../../static/qxxunhuan.png" class="audio-icon"></image>
 				</view> -->
 				<view class="audio-control-mp3">
-					<view class="audio-control audio-control-prev" v-if="control"
-						@click="prev">
+					<view class="audio-control audio-control-prev" v-if="control" @click="prev">
 						<image src="../../static/music/next.png" class="audio-control-switch audio-icon1"></image>
 					</view>
-					<view v-show="!paused"  @click="pause">
+					<view v-show="!paused" @click="pause">
 						<image src="../../static/music/play1_sed.png" class="audio-control-switch audio-icon1"></image>
 					</view>
 					<view v-show="paused" @click="play">
 						<image src="../../static/music/play1.png" class="audio-control-switch audio-icon1"></image>
 					</view>
-					<view class="audio-control audio-control-next" v-if="control"
-						@click="next">
+					<view class="audio-control audio-control-next" v-if="control" @click="next">
 						<image src="../../static/music/pre.png" class="audio-control-switch audio-icon1"></image>
 					</view>
 				</view>
@@ -94,9 +92,9 @@
 					return {}
 				}
 			},
-			now:{
-				type:Number,
-				default(){
+			now: {
+				type: Number,
+				default () {
 					return 0
 				}
 			}
@@ -109,8 +107,8 @@
 				// 	title: "上一曲",
 				// 	icon: "none"
 				// });
-				this.$emit("pause",this.now);
-				this.$emit("play",this.now-1);
+				this.$emit("pause", this.now);
+				this.$emit("play", this.now - 1);
 			},
 			//返回next事件
 			next() {
@@ -119,8 +117,8 @@
 				// 	title: "下一曲",
 				// 	icon: "none"
 				// });
-				this.$emit("pause",this.now);
-				this.$emit("play",this.now+1);
+				this.$emit("pause", this.now);
+				this.$emit("play", this.now + 1);
 			},
 			//格式化时长
 			format(num) {
@@ -138,18 +136,21 @@
 				// #ifdef APP-PLUS
 				this.paused = false
 				//#endif
-				this.audio.play()
-				this.$emit("play",typeof now!="undefined"?now:this.now);
+				if(this.audio){
+					this.audio.play()
+				}
+				
+				this.$emit("play", typeof now != "undefined" ? now : this.now);
 			},
 			pause(now) {
 				// debugger;
 				this.audio.pause();
 				this.paused = true;
-				this.$emit("pause",typeof now!="undefined"?now:this.now);
+				this.$emit("pause", typeof now != "undefined" ? now : this.now);
 			},
 			//点击暂停按钮
 			// #ifdef APP-PLUS
-		
+
 			//#endif
 			//点击循环播放
 			xunhuan() {
@@ -288,7 +289,7 @@
 
 	.audio-control-mp3 {
 		display: flex;
-		    width: 125px;
+		width: 125px;
 	}
 
 	.audio-control {
@@ -370,15 +371,19 @@
 
 	.audio-control-image {
 		display: flex;
-		
+		max-width: calc(100vw - 125px);
+
 	}
-.audio-control-title{
-	display: flex;
-	color: #fff;
-	font-size: 16px;
-	line-height: 60px;
-	margin-left: 10px;
-}
+
+	.audio-control-title {
+		display: flex;
+		color: #fff;
+		font-size: 16px;
+		line-height: 60px;
+		margin-left: 10px;
+		max-width: calc(100vw - 205px);
+	}
+
 	.imt-audio {
 		background-color: #A6A9E0;
 	}

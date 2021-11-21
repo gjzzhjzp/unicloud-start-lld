@@ -19,7 +19,12 @@
 						</view>
 						<view class="item-container">
 							<view class="thumb-box" @click="toflbm(item1,index1)" v-for="(item1, index1) in item.children" :key="index1">
-								<image class="item-menu-image" :src="imageUrl(item1)" mode="aspectFill"></image>
+								<!-- <image class="item-menu-image" :src="imageUrl(item1)" mode="aspectFill"></image> -->
+								<!-- aaaa:{{imageUrl(item1)}} -->
+								<view class="item-menu-image">
+									<u-lazy-load  threshold="100" height="50px" border-radius="10" img-mode="aspectFill" :image="imageUrl(item1)"></u-lazy-load>
+									
+								</view>
 								<view class="item-menu-name">{{item1.name}}</view>
 							</view>
 						</view>

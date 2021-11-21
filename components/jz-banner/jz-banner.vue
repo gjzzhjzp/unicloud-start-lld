@@ -49,6 +49,7 @@
 					},
 				}).then((res) => {
 					console.log("getHotList", res);
+					this.bannerList.splice(0,this.bannerList.length);
 					if (res.result && res.result.rows) {
 						res.result.rows.forEach((item) => {
 							console.log(item)

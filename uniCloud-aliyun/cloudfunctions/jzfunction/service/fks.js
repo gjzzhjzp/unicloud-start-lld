@@ -17,7 +17,7 @@ module.exports = class fksService extends Service {
 			openxz = true;
 			maxCount = data.config["800003"]; ////最大访问人数
 		}
-		// console.log("maxCount",maxCount,count.total)
+		// console.log("this.ctx",this.ctx);
 		if (openxz&&count.total > parseInt(maxCount)) {
 			return {
 				state: "9999",

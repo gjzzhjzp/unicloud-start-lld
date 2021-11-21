@@ -2,7 +2,7 @@
 	<view class="detail-image">
 		<detailhead :data="data"></detailhead>
 		<view class="detail-image-item" @click="previewOpen(data)">
-			<image :src="data.avatar.url" mode="widthFix"></image>
+			<image :src="imageUrl()" mode="widthFix"></image>
 		</view>
 		<view class="detail-open">
 			<view>
@@ -41,6 +41,13 @@
 			this.initImage();
 		},
 		methods: {
+			imageUrl(){
+				if(Array.isArray(this.data.avatar)){
+					return this.data.avatar[0].url;
+				}else{
+					return this.data.avatar.url;
+				}
+			},
 			initImage() {
 				this.imgs.splice(0, this.imgs.length);
 				if (this.data && this.data.avatar.url) {

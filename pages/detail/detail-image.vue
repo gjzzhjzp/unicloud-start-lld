@@ -2,8 +2,8 @@
 	<view class="detail-image">
 		<detailhead :data="data"></detailhead>
 		<view class="detail-image-item" v-for="(item,index) in data.resources" :key="index">
-			<image :src="item.url"  @click="previewOpen(item)" :index="index" mode="widthFix"></image>
-			<!-- <u-lazy-load @click="previewOpen(item)" threshold="300" border-radius="10" :image="item.url" :index="index"></u-lazy-load> -->
+			<u-lazy-load v-if="item.url.indexOf('gif')==-1" @click="previewOpen(item)" threshold="300" border-radius="10" :image="item.url" :index="index"></u-lazy-load>
+		<image v-else :src="item.url"  @click="previewOpen(item)" :index="index" mode="widthFix"></image>
 		</view>
 		<kxj-previewImage ref="previewImage" :imgs="imgs"></kxj-previewImage>
 		<u-toast ref="uToast" />

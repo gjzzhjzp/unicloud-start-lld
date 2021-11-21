@@ -6,7 +6,7 @@
 		</jz-navbar>
 		<view class="jz-container">
 			<view>
-				<jz-banner></jz-banner>
+				<jz-banner ref="banner"></jz-banner>
 			</view>
 			<view>
 				<jz-grid></jz-grid>
@@ -28,6 +28,7 @@
 		},
 		// 下拉刷新
 		onPullDownRefresh(){
+			this.$refs.banner.getList();
 			this.$refs.sylist1.getList();
 			this.$refs.sylist2.getList();
 			this.$refs.sylist3.getList();

@@ -19,20 +19,20 @@
 				@click="searchType(item)">{{item.name}}
 				<u-icon size="20" name="arrow-down-fill"></u-icon>
 			</text>
-
 		</view>
 		<view v-if="currenttab!=2">
-			<u-waterfall v-model="flowList" ref="uWaterfall">
+			<item-list :list="flowList"></item-list>
+			<!-- <u-waterfall v-model="flowList" ref="uWaterfall">
 				<template v-slot:left="{leftList}">
 					<item-list :list="leftList"></item-list>
 				</template>
 				<template v-slot:right="{rightList}">
 					<item-list :list="rightList"></item-list>
 				</template>
-			</u-waterfall>
+			</u-waterfall> -->
 		</view>
 		<view v-else>
-			<music-list :list="flowList"></music-list>
+			<music-list :list="flowList_mp3"></music-list>
 		</view>
 		<template v-if="isEmpty&&currenttab!=2">
 			<view style="margin-top: 100rpx;">
@@ -56,6 +56,7 @@
 				scrollTop: 0,
 				loadStatus: 'loadmore',
 				flowList: [],
+				flowList_mp3: [],
 				list: [],
 				categories: "", ///分类编码
 				title: "列表", ///列表
@@ -104,7 +105,7 @@
 			musicList
 		},
 		// 下拉刷新
-		onPullDownRefresh(){
+		onPullDownRefresh() {
 			this.resetlist();
 			uni.stopPullDownRefresh()
 		},
@@ -135,22 +136,15 @@
 		onReachBottom() {
 			if (this.loadStatus == 'loadmore') {
 				this.loadStatus = 'loading';
-				setTimeout(() => {
-					this.reset = false;
-					this.addRandomData();
-				}, 1000);
+				this.reset = false;
+				this.addRandomData();
 			}
 		},
 		methods: {
 			resetlist() {
 				this.param.page = 1;
 				this.reset = true;
-				this.flowList.splice(0, this.flowList.length);
-				if (this.reset && this.$refs.uWaterfall) {
-					this.$refs.uWaterfall.clear();
-				}
 				this.addRandomData();
-				
 			},
 			loadmoreList() {
 				this.reset = false;
@@ -173,6 +167,10 @@
 				this.resetlist();
 			},
 			addRandomData() {
+				uni.showLoading({
+					title: '加载中...'
+				});
+				// debugger;
 				uniCloud.callFunction({
 					name: 'jzfunction',
 					data: {
@@ -189,20 +187,38 @@
 				}).then((res) => {
 					console.log("getList", res.result);
 					var res = res.result;
+					if (this.reset) {
+						if (this.zy_gs == '2') {
+							this.flowList_mp3.splice(0, this.flowList_mp3.length);
+						} else {
+							this.flowList.splice(0, this.flowList.length);
+						}
+					}
 					if (res.state == "0000") {
 						this.list = res.rows;
 						this.list.forEach((item1, index) => {
 							let item = JSON.parse(JSON.stringify(item1));
-							this.flowList.push(item);
+							if (this.zy_gs == '2') {
+								this.flowList_mp3.push(item);
+							} else {
+								this.flowList.push(item);
+							}
+							
 						});
-						if (this.flowList.length < this.param.rows) {
+						if (this.list.length < this.param.rows) {
 							this.loadStatus = 'nomore';
 						} else {
 							this.loadStatus = 'loadmore';
 							this.param.page++;
 						}
 						console.log("this.flowList", this.flowList);
-						if (this.flowList.length == 0) {
+						var resultlength=0;
+						if (this.zy_gs == '2') {
+							resultlength=this.flowList_mp3.length;
+						} else {
+							resultlength=this.flowList.length;
+						}
+						if (resultlength == 0) {
 							this.isEmpty = true;
 						} else {
 							this.isEmpty = false;
@@ -210,6 +226,7 @@
 					} else {
 						console.log("res.msg", res.msg);
 					}
+					uni.hideLoading();
 				});
 			}
 		}
@@ -227,9 +244,11 @@
 		background: #fff;
 		display: flex;
 	}
-	.search-row .u-icon{
+
+	.search-row .u-icon {
 		display: inline-block;
 	}
+
 	.search-row-col {
 		margin: 0px 10px;
 		color: #BABBCD;

@@ -6,7 +6,7 @@
 		<jz-notice :type="1"></jz-notice>
 		<view class="jz-container">
 			<view>
-				<jz-banner :type="2"></jz-banner>
+				<jz-banner ref="banner" :type="2"></jz-banner>
 			</view>
 			<view class="jz-sy-section">
 			</view>
@@ -25,6 +25,7 @@
 		},
 		// 下拉刷新
 		onPullDownRefresh(){
+			this.$refs.banner.getList();
 			this.$refs.sylist1.getList();
 			this.$refs.sylist2.getList();
 			this.$refs.sylist3.getList();

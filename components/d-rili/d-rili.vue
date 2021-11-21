@@ -76,7 +76,7 @@
 				slideDataListIndex: 1,
 				year: 2020,
 				month: 10,
-				curmonth:10,////当前月份，不随着滚动日历而改变
+				curmonth: 10, ////当前月份，不随着滚动日历而改变
 				day: 10,
 				dayList: [],
 				start_time: '', //	月初的时间戳
@@ -112,7 +112,7 @@
 				clickSelected: "", ///点击选中
 				jianlainri: [],
 				jianlainri_day: [],
-				jianlainri_day_detail:[]
+				jianlainri_day_detail: []
 			};
 		},
 		created() {
@@ -122,16 +122,20 @@
 		methods: {
 			getjilianri() {
 				var day = this.clickSelected || this.day;
-				this.jianlainri=[];
-					this.jianlainri_day.forEach((item,index)=>{
-						if(item==day){
-							this.jianlainri = [this.jianlainri_day_detail[index]];
-						}
-					});
+				this.jianlainri = [];
+				this.jianlainri_day.forEach((item, index) => {
+					if (item == day) {
+						this.jianlainri = [this.jianlainri_day_detail[index]];
+					}
+				});
 			},
 			getjilianri_month() {
 				const db = uniCloud.database();
 				var rq = "-" + this.month + "-";
+				if(this.month<10){
+					rq = "-0" + this.month + "-";
+				}
+				console.log("rq", rq);
 				db.collection('opendb-news-rili').where({
 					"rili_date": new RegExp(rq, 'gi'),
 				}).field("rili_date,rili_title").get().then((res) => {
@@ -139,8 +143,8 @@
 					this.jianlainri_day_detail.splice(0, this.jianlainri_day_detail.length);
 					res.result.data.forEach((item) => {
 						if (item.rili_date) {
-							var _day=parseInt(item.rili_date.split("-")[2]);
-							if(this.jianlainri_day.indexOf(_day)==-1){
+							var _day = parseInt(item.rili_date.split("-")[2]);
+							if (this.jianlainri_day.indexOf(_day) == -1) {
 								this.jianlainri_day.push(_day);
 								this.jianlainri_day_detail.push(item);
 							}
@@ -185,9 +189,14 @@
 
 				this.year = nowTimeData.year
 				this.month = nowTimeData.month
-				this.curmonth=nowTimeData.month
+				this.curmonth = nowTimeData.month
 				this.day = nowTimeData.day
-
+				// if (this.day < 10) {
+				// 	this.day = '0' + this.day
+				// }
+				// if (this.month < 10) {
+				// 	this.month = '0' + this.month
+				// }
 				// 今日时间为：2020-9-16
 				console.log('今日时间为：' + this.year + '-' + this.month + '-' + this.day)
 			},

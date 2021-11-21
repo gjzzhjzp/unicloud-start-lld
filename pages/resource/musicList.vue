@@ -55,10 +55,16 @@
 			curdata() {
 				var data = this.list[this.now];
 				console.log("data", data);
+				var avatarurl="";
+				if(Array.isArray(data.avatar)){
+					avatarurl=data.avatar[0].url;
+				}else{
+					avatarurl=data.avatar.url;
+				}
 				return {
 					title: data.title,
 					author: data.author,
-					avatarurl: data.avatar.url,
+					avatarurl: avatarurl,
 					selected: data.selected,
 					play: data.play
 				}
@@ -104,6 +110,7 @@
 					index = this.list.length - 1;
 				}
 				if (index < this.list.length && index >= 0) {
+					// debugger;
 					this.now = index;
 					this.$set(this.list[index], "play", true);
 					this.tohistory(this.list[index]);
@@ -140,7 +147,7 @@
 						}
 					});
 					// setTimeout(()=>{
-						if (!data["play"]) {
+						if (!data["play"]&&this.$refs.imtaudio) {
 							this.$refs.imtaudio.play(this.now);
 						} else {
 							this.$refs.imtaudio.pause(this.now);

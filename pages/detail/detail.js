@@ -25,15 +25,20 @@ export default {
 			// debugger;
 			if (this.hasLogin) {
 				console.log("this.data",this.data,this.data._id);
-				var res = await collection.where({
-					article_id: this.data._id,
-					user_id: db.getCloudEnv('$cloudEnv_uid')
-				}).get();
-				// console.log("res2222222222",res);
-				if (res.result && res.result.data.length > 0) {
-					this.islike = true;
-				} else {
-					this.islike = false;
+				if(this.data._id){
+					var res = await collection.where({
+						article_id: this.data._id,
+						user_id: db.getCloudEnv('$cloudEnv_uid')
+					}).get();
+					if (res.result && res.result.data.length > 0) {
+						if(res.result.data[0].article_id==this.data._id){
+							this.islike = true;
+						}else{
+							this.islike = false;
+						}
+					} else {
+						this.islike = false;
+					}
 				}
 			}
 			// console.log("likes",likes);

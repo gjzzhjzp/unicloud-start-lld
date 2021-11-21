@@ -34,7 +34,8 @@
 		}, {
 			"path": "pages/detail/detail",
 			"style": {
-				"navigationBarTitleText": "详情"
+				"navigationBarTitleText": "详情",
+				"enablePullDownRefresh":true
 			}
 		},
 		{

@@ -10,8 +10,10 @@
 					<u-col span="4" class="jz-sy-item" v-for="(item,index) in list" :key="index">
 						<view class="jz-sy-list-item" @click="toDetail(item)">
 							<view>
-								<u-image width="100%" height="140rpx" border-radius="10" :src="imageUrl(item)">
-								</u-image>
+								<u-lazy-load  threshold="300" height="140rpx" border-radius="10" img-mode="aspectFill" :image="imageUrl(item)"></u-lazy-load>
+								
+								<!-- <u-image width="100%" height="140rpx" border-radius="10" :src="imageUrl(item)">
+								</u-image> -->
 							</view>
 							<view class="jz-sy-list-text">{{item.title}}</view>
 						</view>

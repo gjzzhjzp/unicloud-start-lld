@@ -55,6 +55,11 @@
 		mounted(){
 			this.getResource(this.id);
 		},
+		// 下拉刷新
+		onPullDownRefresh(){
+			this.getResource(this.id);
+			uni.stopPullDownRefresh();
+		},
 		methods:{
 			// 获取资源
 			getResource(id){

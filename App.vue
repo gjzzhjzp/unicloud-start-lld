@@ -39,9 +39,9 @@
 			console.log('App Show');
 			var question_success= uni.getStorageSync("question_success");
 			if(!question_success){
-				uni.navigateTo({
+				uni.redirectTo({
 					url:"/pages/question/question"
-				})
+				});
 			}
 		},
 		onHide: function() {

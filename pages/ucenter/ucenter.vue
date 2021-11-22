@@ -1,6 +1,6 @@
 <template>
 	<view class="center">
-		<view class="userInfo" @click.capture="toUserInfo">
+		<view class="userInfo" @click.capture="$notMoreTap(toUserInfo,'notTap')">
 			<view class="usercenter-top">
 				<u-navbar :is-back="true" title="个人中心" :border-bottom="false" title-color="#fff" back-icon-color="#fff"
 					:background="{'background':'none'}">
@@ -15,14 +15,9 @@
 			</view>
 		</view>
 		<uni-list class="center-list" v-for="(sublist , index) in ucenterList" :key="index">
-			<uni-list-item v-for="(item,i) in sublist" :title="item.title" link :rightText="item.rightText" :key="i"
-				:clickable="true" :to="item.to" @click="ucenterListClick(item)" :thumb="item.thumb">
-				<template v-slot:footer>
-					<view v-if="item.showBadge" class="item-footer">
-						<text class="item-footer-text">{{item.rightText}}</text>
-						<view class="item-footer-badge"></view>
-					</view>
-				</template>
+			<uni-list-item v-for="(item,i) in sublist" :title="item.title" link  :key="i" :class="isbbgx?item.class:''"
+				:clickable="true" :to="item.to" @click="$notMoreTap(ucenterListClick,'notTap',item)" :thumb="item.thumb">
+				
 			</uni-list-item>
 		</uni-list>
 		<view class="bottom-back" @click="clickLogout">
@@ -55,22 +50,8 @@
 		},
 		data() {
 			return {
-				gridList: [{
-						"text": "收藏",
-						"icon": "chat",
-						"to": '/pages/myfavorite/myfavorite',
-					},
-					{
-						"text": "足迹",
-						"icon": "cloud-upload",
-						"to": '/pages/history/history',
-					},
-					{
-						"text": "投稿",
-						"icon": "cloud-upload",
-						"to": '/pages/jz-opendb-resources/list',
-					}
-				],
+				isbbgx:false,///时候版本更新
+				notTap:true,//一定要设置为true
 				ucenterList: [
 					[{
 							"title": this.$t('mine.userinfo'),
@@ -106,10 +87,11 @@
 						,
 						{
 							"title": "检测版本更新",
+							"class":"jcbbgx",
 							"to": '/pages/appbb/appbb',
 							"thumb": "/static/center/appbb.png"
 						},
-						//#endif
+						// #endif
 					]
 				],
 				listStyles: {
@@ -143,7 +125,26 @@
 				return getApp().globalData.config
 			}
 		},
+		created(){
+			//#ifdef APP-PLUS
+			this.checkBb();
+			//#endif
+		},
 		methods: {
+			// 检测版本
+			async checkBb() {
+				//#ifdef APP-PLUS
+				var app_bbh=plus.runtime.versionCode;
+				//#endif
+				const db = uniCloud.database();
+				const collection = db.collection('opendb-news-appbb');
+				var resultdata = await collection.where({
+					app_bbh: db.command.gt(app_bbh)
+				}).orderBy("app_bbh", "desc").get();
+				if (resultdata.result.data && resultdata.result.data.length > 0) {
+					this.isbbgx=true;
+				}
+			},
 			goback() {
 				uni.switchTab({
 					url: "/pages/index/index"
@@ -170,7 +171,7 @@
 					});
 				} else {
 					uni.navigateTo({
-						url: '/pages/ucenter/login-page/index/index'
+						url: '/pages/ucenter/login-page/pwd-login/pwd-login'
 					});
 				}
 			},
@@ -215,6 +216,7 @@
 </script>
 
 <style lang="scss" scoped>
+	
 	.usercenter-top {
 		color: #fff;
 		font-size: 16px;

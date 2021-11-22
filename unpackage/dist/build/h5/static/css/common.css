@@ -108,3 +108,15 @@ body.pages-resource-list uni-page-body {
 .jz-resources-add .icon-add {
 	height: 6px;
 }
+.jcbbgx .uni-list-item__icon-img::after{
+		    content: "";
+		    display: block;
+		    height: 6px;
+		    width: 6px;
+		    color: red;
+		    background-color: red;
+		    border-radius: 50%;
+		    position: absolute;
+		    right: 0px;
+		    top: 0px;
+	}

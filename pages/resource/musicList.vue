@@ -25,6 +25,15 @@
 				</view>
 			</view>
 		</view>
+		
+		<template v-if="isEmpty">
+			<view style="margin-top: 100rpx;">
+				<u-empty text="数据为空" mode="list"></u-empty>
+			</view>
+		</template>
+		<template v-else>
+			<u-loadmore :status="loadStatus" @loadmore="loadmoreList"></u-loadmore>
+		</template>
 		<view class="imt-audio" v-if="list.length>0">
 			<imt-audio ref="imtaudio" @play="play" @pause="pause" continue :src="list[now].resources[0].url"
 				:data="curdata" :now="now">
@@ -80,6 +89,18 @@
 				default () {
 					return []
 				}
+			},
+			isEmpty:{
+				type:Boolean,
+				default(){
+					return false;
+				}
+			},
+			loadStatus:{
+				type:String,
+				default(){
+					return "";
+				}
 			}
 		},
 		watch: {
@@ -98,6 +119,9 @@
 			console.log("this.list", this.list);
 		},
 		methods: {
+			loadmoreList(){
+				this.$emit("loadmore");
+			},
 			pause(index) {
 				// debugger;
 				this.$set(this.list[index], "play", false);
@@ -222,7 +246,7 @@
 					});
 				} else {
 					uni.navigateTo({
-						url: "/pages/ucenter/login-page/index/index"
+						url: "/pages/ucenter/login-page/pwd-login/pwd-login"
 					})
 				}
 			},
@@ -335,9 +359,14 @@
 	}
 
 	.imt-audio {
-		position: absolute;
+		position: fixed;
 		bottom: 0;
 		width: 100%;
+		z-index: 99;
+	}
+	.music-list-container .u-load-more-wrap{
+		    height: 90px !important;
+			align-items: flex-start;
 	}
 
 	.music-list {

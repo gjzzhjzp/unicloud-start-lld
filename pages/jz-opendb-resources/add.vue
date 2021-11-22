@@ -43,7 +43,7 @@
 				</uni-forms-item>
 				<uni-forms-item name="resources" label="附件资源">
 					<template v-if="formData.zy_gs==0">
-						<uni-file-picker file-mediatype="image" :limit="18" return-type="array"
+						<uni-file-picker file-mediatype="image" return-type="array"
 							v-model="formData.resources">
 						</uni-file-picker>
 					</template>

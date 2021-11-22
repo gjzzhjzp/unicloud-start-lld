@@ -1,7 +1,7 @@
 <template>
 	<div class="jz-grid">
 		<u-grid :col="5" :border="false" >
-			<u-grid-item v-for="(item,index) in gridList" :key="index" @click="tomore(item)">
+			<u-grid-item v-for="(item,index) in gridList" :key="index" @click="$notMoreTap(tomore,'notTap',item)">
 				<u-image width="100rpx" height="100rpx" :src="item.icon.url"></u-image>
 				<view class="grid-text">{{item.name}}</view>
 			</u-grid-item>
@@ -13,6 +13,7 @@
 	export default {
 		data() {
 			return {
+				notTap:true,//一定要设置为true
 				gridList:[]
 			}
 		},

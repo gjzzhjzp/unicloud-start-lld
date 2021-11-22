@@ -54,7 +54,7 @@
 				<view class="one-2">
 					<!-- 农历七月十四 -->
 				</view>
-				<view class="one-3" @click="todetail">
+				<view class="one-3" @click="$notMoreTap(todetail,'notTap')">
 					<u-icon name="arrow-right-double"></u-icon>
 				</view>
 			</view>
@@ -69,6 +69,7 @@
 	export default {
 		data() {
 			return {
+				notTap:true,//一定要设置为true
 				weekList: ['日', '一', '二', '三', '四', '五', '六'],
 				//	月份数组【2020-08-01	  2020-09-01   2020-10-01】
 				slideDataList: [],

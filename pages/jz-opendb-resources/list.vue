@@ -5,14 +5,14 @@
 			<u-alert-tips type="warning" description="向左滑动可编辑/删除投稿资源"></u-alert-tips>
 		</view>
 		<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}"
-			collection="jz-opendb-resources" @load="loadSuccess"
+			collection="jz-opendb-resources" @load="loadSuccess" :page-size	="10"
 			where="user_id == $cloudEnv_uid"
 			field="categories,labels,author,title,article_status,comment_status,avatar,resources,zy_gs,excerpt,content">
 			<view v-if="error">{{error.message}}</view>
 			<view v-else-if="data">
 				<u-swipe-action :show="item.show" :index="index" v-for="(item, index) in list" :key="item._id"
 					@click="click" @open="open" :options="options">
-					<view class="item u-border-bottom" @click="todetail(item)">
+					<view class="item u-border-bottom" @click="$notMoreTap(todetail,'notTap',item)">
 						<u-icon size="40" color="#18b566" v-if="item.article_status==1" name="checkmark"></u-icon>
 						<u-icon size="40" color="#fa3534" v-else name="close"></u-icon>
 						<image mode="aspectFill" :src="item.images" />
@@ -24,7 +24,7 @@
 			</view>
 			<uni-load-more :status="loading?'loading':(hasMore ? 'more' : 'noMore')"></uni-load-more>
 		</unicloud-db>
-		<uni-fab ref="fab" horizontal="right" vertical="bottom" :pop-menu="false" @fabClick="fabClick" />
+		<uni-fab ref="fab" horizontal="right" vertical="bottom" :pop-menu="false" @fabClick="$notMoreTap(fabClick,'notTap')" />
 	</view>
 </template>
 
@@ -32,6 +32,7 @@
 	export default {
 		data() {
 			return {
+				notTap:true,//一定要设置为true
 				loadMore: {
 					contentdown: '',
 					contentrefresh: '',
@@ -61,6 +62,7 @@
 			})
 		},
 		onReachBottom() {
+			// debugger;
 			this.$refs.udb.loadMore()
 		},
 		onShow() {
@@ -68,6 +70,7 @@
 		},
 		methods: {
 			reload() {
+				// debugger;
 				if (this.$refs.udb) {
 					this.$refs.udb.loadData({
 						clear: true
@@ -79,7 +82,8 @@
 					url: "/pages/detail/detail?id=" + item._id
 				});
 			},
-			loadSuccess(data) {
+			loadSuccess() {
+				var data=this.$refs.udb.dataList;
 				console.log("loadSuccess", data);
 				data.forEach((item) => {
 					var url="";

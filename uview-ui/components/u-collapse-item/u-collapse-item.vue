@@ -15,7 +15,7 @@
 			<slot v-else name="title-all" />
 		</view>
 		<view class="u-collapse-body" :style="[{
-				height: isShow ? 'calc(100vh - 90px)' : '0'
+				height: isShow ? (length>1?'calc(100vh - 140px)':'calc(100vh - 90px)') : '0'
 			}]">
 			<view class="u-collapse-content" :id="elId" :style="[bodyStyle]">
 				<slot></slot>
@@ -42,6 +42,10 @@
 	export default {
 		name: "u-collapse-item",
 		props: {
+			length:{
+				type: Number,
+				default: 1
+			},
 			// 标题
 			title: {
 				type: String,

@@ -4,7 +4,7 @@
 			<view class="jz-navbar-title">纪念日详情</view>
 		</jz-navbar>
 		<u-collapse>
-		<u-collapse-item :open="index==0?true:false" :title="item.rili_date" v-for="(item, index) in jianlainri" :key="index" >
+		<u-collapse-item :length="jianlainri.length" :open="index==0?true:false" :title="item.rili_date" v-for="(item, index) in jianlainri" :key="index" >
 			<view class="rili-bottom">
 				<view class="two">
 					{{item.rili_title}}

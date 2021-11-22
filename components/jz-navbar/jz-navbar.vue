@@ -8,10 +8,10 @@
 				<view class="sy-u-search">
 					<slot></slot>
 				</view>
-				<view v-show="!issy" style="margin: 10px;" @click="tosearch()">
+				<view v-show="!issy" style="margin: 10px;" @click="$notMoreTap(tosearch,'notTap')">
 					<u-image width="50rpx" height="50rpx" src="/static/head/search.png"></u-image>
 				</view>
-				<view style="margin: 10px;" @click="tousercenter()">
+				<view style="margin: 10px;" @click="$notMoreTap(tousercenter,'notTap')">
 					<u-image width="50rpx" height="50rpx" src="/static/head/user.png"></u-image>
 				</view>
 			</template>
@@ -24,7 +24,7 @@
 		name:"jz-navbar",
 		data(){
 			return {
-				
+				notTap:true//一定要设置为true
 			}
 		},
 		props:{

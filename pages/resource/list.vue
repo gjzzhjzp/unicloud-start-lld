@@ -20,6 +20,9 @@
 				<u-icon size="20" name="arrow-down-fill"></u-icon>
 			</text>
 		</view>
+		<view v-if="showTag" style="margin-left: 10px;">
+			<u-tag :text="tagname" mode="light"  closeable :show="showTag" @close="closetagClick"/>
+		</view>
 		<view v-if="currenttab!=2">
 			<item-list :list="flowList"></item-list>
 			<!-- <u-waterfall v-model="flowList" ref="uWaterfall">
@@ -32,15 +35,17 @@
 			</u-waterfall> -->
 		</view>
 		<view v-else>
-			<music-list :list="flowList_mp3"></music-list>
+			<music-list :list="flowList_mp3" :is-empty="isEmpty" :load-status="loadStatus" @loadmore="loadmoreList"></music-list>
 		</view>
-		<template v-if="isEmpty&&currenttab!=2">
-			<view style="margin-top: 100rpx;">
-				<u-empty text="数据为空" mode="list"></u-empty>
-			</view>
-		</template>
-		<template v-else>
-			<u-loadmore :status="loadStatus" @loadmore="loadmoreList"></u-loadmore>
+		<template v-if="currenttab!=2">
+			<template v-if="isEmpty">
+				<view style="margin-top: 100rpx;">
+					<u-empty text="数据为空" mode="list"></u-empty>
+				</view>
+			</template>
+			<template v-else>
+				<u-loadmore :status="loadStatus" @loadmore="loadmoreList"></u-loadmore>
+			</template>
 		</template>
 		<u-back-top :scroll-top="scrollTop" top="1000" mode="square" icon="arrow-up" tips="顶部"></u-back-top>
 	</view>
@@ -51,7 +56,8 @@
 	export default {
 		data() {
 			return {
-				// where:"",
+				tagname:"",////tag标签
+				showTag:false,
 				keyword: "",
 				scrollTop: 0,
 				loadStatus: 'loadmore',
@@ -96,7 +102,7 @@
 				zy_gs: "0", ////资源格式
 				param: {
 					page: 1,
-					rows: 10
+					rows: 16
 				}
 			}
 		},
@@ -112,7 +118,12 @@
 		onLoad(e) {
 			// debugger;
 			console.log("onLoad", e);
-			this.categories = e.categories || "";
+			if(e.flmc&&e.flbm){
+				this.showTag=true;
+				this.tagname=e.flmc;
+				this.categories=e.flbm||"";
+			}
+			// this.categories = e.categories || "";
 			this.type = e.type || "zx";
 			if (e.type) {
 				this.searchrows.forEach((item) => {
@@ -141,6 +152,11 @@
 			}
 		},
 		methods: {
+			closetagClick(){
+				this.showTag=false;
+				this.categories="";
+				this.resetlist();
+			},
 			resetlist() {
 				this.param.page = 1;
 				this.reset = true;
@@ -234,10 +250,7 @@
 </script>
 
 <style>
-	/* page不能写带scope的style标签中，否则无效 */
-	page {
-		background-color: rgb(240, 240, 240);
-	}
+	
 
 	.search-row {
 		padding: 8px 10px;

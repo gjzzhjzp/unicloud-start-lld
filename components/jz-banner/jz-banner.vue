@@ -26,7 +26,7 @@
 		methods: {
 			clickLb(index){
 				var item=this.bannerList[index];
-				console.log("item",item)
+				// console.log("item",item)
 				var open_url=item.open_url;
 				if(open_url){
 					if(open_url.substring(0,4)=="http"){

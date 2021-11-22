@@ -5,6 +5,7 @@ module.exports = class fksService extends Service {
 	async setfks() {
 		var ctx = this.ctx;
 		const data = this.ctx.data;
+		console.log("data11111111111111111",data);
 		var ip=ctx.context.CLIENTIP
 		var maxCount = 1000000;
 		var openxz = false;

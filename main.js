@@ -2,8 +2,10 @@ import App from './App'
 import store from './store'
 import i18n from './lang/i18n'
 import uView from "uview-ui";
+import notMoreTap from "@/common/notMoreTap.js";
 // import interceptor from "@/components/jz-common/interceptor.js"
 Vue.use(uView);
+Vue.prototype.$notMoreTap = notMoreTap.notMoreTap;
 // Vue.mixin(interceptor);
 // 引入音频
 import ZAudio from '@/components/uniapp-zaudio/index.js'

@@ -18,9 +18,8 @@
 							<text>{{item.name}}</text>
 						</view>
 						<view class="item-container">
-							<view class="thumb-box" @click="toflbm(item1,index1)" v-for="(item1, index1) in item.children" :key="index1">
+							<view class="thumb-box" @click="$notMoreTap(toflbm,'notTap',item1,item)" v-for="(item1, index1) in item.children" :key="index1">
 								<!-- <image class="item-menu-image" :src="imageUrl(item1)" mode="aspectFill"></image> -->
-								<!-- aaaa:{{imageUrl(item1)}} -->
 								<view class="item-menu-image">
 									<u-lazy-load  threshold="100" height="50px" border-radius="10" img-mode="aspectFill" :image="imageUrl(item1)"></u-lazy-load>
 									
@@ -39,6 +38,7 @@
 	export default {
 		data() {
 			return {
+				notTap:true,//一定要设置为true
 				scrollTop: 0, //tab标题的滚动条位置
 				oldScrollTop: 0,
 				current: 0, // 预设当前项的值
@@ -70,10 +70,13 @@
 				}
 			},
 			// 按分类编码筛选
-			toflbm(item){
+			toflbm(item,p_item){
 				// debugger;
+				// uni.navigateTo({
+				// 	url:"/pages/resource/list?title="+item.name
+				// })
 				uni.navigateTo({
-					url:"/pages/resource/list?title="+item.name
+					url:"/pages/resource/list?flbm="+item.flbm+"&flmc="+p_item.name+"_"+item.name
 				})
 			},
 			async getList(){

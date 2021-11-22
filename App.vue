@@ -75,13 +75,21 @@
 				});
 			},
 			setfks(config){
+				var parames={
+							config:config
+						};
+				var app_bbh="";
+				//#ifdef APP-PLUS
+				 app_bbh=plus.runtime.versionCode;
+				//#endif
+				if(app_bbh){
+					Object.assign(parames,{app_bbh:app_bbh});
+				}
 				uniCloud.callFunction({
 					name: 'jzfunction',
 					data: {
 						action: 'fks/setfks',
-						data:{
-							config:config
-						}
+						data:parames
 					},
 				}).then((res) => {
 					var res = res.result;

@@ -4,7 +4,7 @@
 			<u-search border-color="#7275D3" bg-color="#fff" v-model="keyword" height="60" placeholder="搜索..." @search="searchClick" @custom="searchClick"
 				:show-action="true"></u-search>
 		</u-navbar> -->
-		<u-search border-color="#7275D3" bg-color="#fff" v-model="keyword" height="60" placeholder="搜索..." @search="searchClick" @custom="searchClick"
+		<u-search border-color="#7275D3" bg-color="#fff" v-model="keyword" height="60" placeholder="搜索..." @search="$notMoreTap(searchClick,'notTap')" @custom="$notMoreTap(searchClick,'notTap')"
 			:show-action="true"></u-search>
 		<!-- <u-search border-color="#7275D3" placeholder="搜索..." bg-color="#fff" @focus="searchClick" v-model="keyword" @search="searchClick" @custom="searchClick"
 			:show-action="true"></u-search> -->
@@ -16,7 +16,8 @@
 		name:"jz-search",
 		data(){
 			return {
-				keyword:""
+				keyword:"",
+				notTap:true//一定要设置为true
 			}
 		},
 		methods:{

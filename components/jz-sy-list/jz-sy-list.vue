@@ -2,13 +2,13 @@
 	<view>
 		<view class="jz-sy-list-section">
 			<u-section line-color="#7275D3" :title="title" :right="true" sub-title="查看更多>>" :arrow="false"
-				@click="tomore"></u-section>
+				@click="$notMoreTap(tomore,'notTap')"></u-section>
 		</view>
 		<view class="jz-sy-list">
 			<template v-show="!isEmpty">
 				<u-row gutter="4">
 					<u-col span="4" class="jz-sy-item" v-for="(item,index) in list" :key="index">
-						<view class="jz-sy-list-item" @click="toDetail(item)">
+						<view class="jz-sy-list-item" @click="$notMoreTap(toDetail,'notTap',item)">
 							<view>
 								<u-lazy-load  threshold="300" height="140rpx" border-radius="10" img-mode="aspectFill" :image="imageUrl(item)"></u-lazy-load>
 								
@@ -40,6 +40,7 @@
 	export default {
 		data() {
 			return {
+				notTap:true,//一定要设置为true
 				list: [],
 				where: "",
 				isEmpty: true

@@ -2,6 +2,7 @@
 export default{
 	data(){
 		return {
+			notTap:true,//一定要设置为true
 			showmodel: false,
 			yqm: "",
 			curItem: {}

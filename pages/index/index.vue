@@ -1,8 +1,8 @@
 <template>
 	<view>
 		<jz-navbar>
-			<u-search border-color="#7275D3" bg-color="#fff" height="60" placeholder="" @focus="tosearch"
-				@search="tosearch" @custom="tosearch" :show-action="true"></u-search>
+			<u-search :disabled="true" border-color="#7275D3" bg-color="#fff" height="60" placeholder="" @focus="$notMoreTap(tosearch,'notTap')"
+				@click="$notMoreTap(tosearch,'notTap')" @search="$notMoreTap(tosearch,'notTap')" @custom="$notMoreTap(tosearch,'notTap')" :show-action="true"></u-search>
 		</jz-navbar>
 		<view class="jz-container">
 			<view>
@@ -23,7 +23,7 @@
 	export default {
 		data() {
 			return {
-
+notTap:true//一定要设置为true
 			}
 		},
 		// 下拉刷新
@@ -39,7 +39,7 @@
 			tosearch() {
 				uni.navigateTo({
 					url: "/pages/list/search/search"
-				})
+				});
 			},
 		}
 	}

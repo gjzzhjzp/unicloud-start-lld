@@ -17,10 +17,10 @@ function notMoreTap(means,clickName, ...data) {
 						that[clickName] = true;
 				}, 1000)
 		} else {
-				uni.showToast({
-					title:'请不要重复点击',
-					icon:'none'
-				})
+				// uni.showToast({
+				// 	title:'请不要重复点击',
+				// 	icon:'none'
+				// })
 		}
 }
 

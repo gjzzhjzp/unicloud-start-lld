@@ -47,20 +47,23 @@
 			</view>
 		</view>
 		<view class="rili-bottom" v-if="jianlainri.length>0">
-			<view class="one">
-				<view class="one-1">
-					{{jianlainri[0].rili_date}}
+		<!-- jianlainri:{{jianlainri}} -->
+			<view v-for="(item,index) in jianlainri" :key="index">
+				<view class="one">
+					<view class="one-1">
+						{{item.rili_date}}
+					</view>
+					<view class="one-2">
+						<!-- 农历七月十四 -->
+					</view>
+					<view v-if="index==0" class="one-3" @click="$notMoreTap(todetail,'notTap')">
+						<u-icon name="arrow-right-double"></u-icon>
+					</view>
 				</view>
-				<view class="one-2">
-					<!-- 农历七月十四 -->
+				<view class="two">
+					{{item.rili_title}}
+					<!-- ins发图卸载微博，配字清净 -->
 				</view>
-				<view class="one-3" @click="$notMoreTap(todetail,'notTap')">
-					<u-icon name="arrow-right-double"></u-icon>
-				</view>
-			</view>
-			<view class="two">
-				{{jianlainri[0].rili_title}}
-				<!-- ins发图卸载微博，配字清净 -->
 			</view>
 		</view>
 	</view>
@@ -122,11 +125,13 @@
 		},
 		methods: {
 			getjilianri() {
+				// debugger;
 				var day = this.clickSelected || this.day;
 				this.jianlainri = [];
 				this.jianlainri_day.forEach((item, index) => {
 					if (item == day) {
-						this.jianlainri = [this.jianlainri_day_detail[index]];
+						this.jianlainri.push(this.jianlainri_day_detail[index]);
+						// this.jianlainri = [this.jianlainri_day_detail[index]];
 					}
 				});
 			},
@@ -145,10 +150,10 @@
 					res.result.data.forEach((item) => {
 						if (item.rili_date) {
 							var _day = parseInt(item.rili_date.split("-")[2]);
-							if (this.jianlainri_day.indexOf(_day) == -1) {
+							// if (this.jianlainri_day.indexOf(_day) == -1) {
 								this.jianlainri_day.push(_day);
 								this.jianlainri_day_detail.push(item);
-							}
+							// }
 						}
 					});
 					console.log("jianlainri_day", this.jianlainri_day);

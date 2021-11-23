@@ -1,10 +1,10 @@
 <template>
 	<view class="container">
 		<u-navbar :is-back="true" back-icon-name="arrow-leftward" :back-icon-size="40">
-			<u-search border-color="#7275D3" bg-color="#fff" v-model="searchText" height="60"
-				:placeholder="hotWorld" @search="confirm" @custom="confirm" :show-action="true"></u-search>
+			<u-search border-color="#7275D3" bg-color="#fff" v-model="searchText" height="60" :placeholder="hotWorld"
+				@search="confirm" @custom="confirm" :show-action="true"></u-search>
 		</u-navbar>
-		
+
 		<view class="search-body">
 			<!-- 搜索历史 -->
 			<view class="word-container" v-if="localSearchList.length">
@@ -192,9 +192,7 @@
 				// 		this.searchText = value
 				// 	}
 
-				// 	this.localSearchListManage(value);
 
-				// 	this.searchLogDbAdd(value)
 				// } else 
 				if (word) {
 					this.searchText = word;
@@ -202,7 +200,8 @@
 				if (!this.searchText && this.hotWorld) {
 					this.searchText = this.hotWorld
 				}
-
+				this.localSearchListManage(this.searchText);
+				this.searchLogDbAdd(this.searchText)
 				uni.hideKeyboard();
 				this.loadList(this.searchText);
 			},
@@ -373,19 +372,16 @@
 	}
 
 
-	/deep/
-	.uni-searchbar {
+	/deep/ .uni-searchbar {
 		padding-left: 0;
 	}
 
 
-	/deep/
-	.uni-searchbar__box {
+	/deep/ .uni-searchbar__box {
 		border-width: 0;
 	}
 
-	/deep/
-	.uni-input-placeholder {
+	/deep/ .uni-input-placeholder {
 		font-size: 28rpx;
 	}
 
@@ -424,11 +420,13 @@
 		padding-left: 10rpx;
 		padding-right: 10rpx;
 	}
-// #ifdef APP-PLUS
-.search-associative {
-	top: 80px;
-}
-// #endif
+
+	// #ifdef APP-PLUS
+	.search-associative {
+		top: 80px;
+	}
+
+	// #endif
 	.search-icons {
 		padding: 16rpx;
 	}
@@ -478,7 +476,7 @@
 					}
 
 					#{&}-info {
-						
+
 						display: block;
 						flex: 1;
 						text-align: center;

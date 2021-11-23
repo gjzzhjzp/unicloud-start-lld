@@ -15,7 +15,7 @@
 				@change="changeTabs"></u-tabs>
 		</view>
 		<view class="search-row">
-			<text :class="['search-row-col',item.selected?'selected':'']" v-for="item in searchrows"
+			<text :class="['search-row-col',item.selected?'selected':'']" v-for="(item,index) in searchrows" :key="index"
 				@click="searchType(item)">{{item.name}}
 				<u-icon size="20" name="arrow-down-fill"></u-icon>
 			</text>

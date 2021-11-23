@@ -110,7 +110,7 @@ module.exports = class resourceService extends Service {
 			}
 			if(data.categories){
 				Object.assign(where_obj, {
-					"categories": data.categories
+					"categories": new RegExp(data.categories, 'gi')
 				});
 			}
 			if(config_800001_value=='0'){///=1读取未授权资源，=0只读取授权资源
@@ -142,7 +142,7 @@ module.exports = class resourceService extends Service {
 			} else {
 				where = where_obj;
 			}
-			console.log("where222222222", where);
+			// console.log("where222222222", where);
 			var collection_query = null;
 			if (type == "zx") {
 				collection_query = collection.aggregate().match(where).sort({

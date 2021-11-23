@@ -10,7 +10,7 @@
 			field="categories,labels,author,title,article_status,comment_status,avatar,resources,zy_gs,excerpt,content">
 			<view v-if="error">{{error.message}}</view>
 			<view v-else-if="data">
-				<u-swipe-action :show="item.show" :index="index" v-for="(item, index) in list" :key="item._id"
+				<u-swipe-action :show="item.show" :index="index" v-for="(item, index) in data" :key="item._id"
 					@click="click" @open="open" :options="options">
 					<view class="item u-border-bottom" @click="$notMoreTap(todetail,'notTap',item)">
 						<u-icon size="40" color="#18b566" v-if="item.article_status==1" name="checkmark"></u-icon>
@@ -82,9 +82,7 @@
 					url: "/pages/detail/detail?id=" + item._id
 				});
 			},
-			loadSuccess() {
-				var data=this.$refs.udb.dataList;
-				console.log("loadSuccess", data);
+			loadSuccess(data) {
 				data.forEach((item) => {
 					var url="";
 					if(item.avatar){

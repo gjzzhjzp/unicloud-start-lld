@@ -30,9 +30,9 @@ db.collection('jz-custom-fks').add({
 	"time": "22222222"
 });
 
-db.collection("jz-custom-search").where({
-	ip: "127.0.0.1"
-}).field('title').distinct().get();
+db.collection("jz-opendb-resources").where({
+	categories: null
+}).get();
 // 全部删除
 db.collection("opendb-news-history").where({
 	_id: db.command.neq(null)

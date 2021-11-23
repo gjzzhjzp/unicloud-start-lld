@@ -29,7 +29,7 @@
 				</view>
 				<view style="padding: 10px;">
 					版本升级说明：
-					<view class="bbsjsm" v-for="(item,index) in ljbb" :index="index">
+					<view class="bbsjsm" v-for="(item,index) in ljbb" :key="index">
 						<view>版本：{{item.app_bbmc}}</view>
 						<view style="margin-top: 6px;" v-html="item.app_bbsm"></view>
 					</view>

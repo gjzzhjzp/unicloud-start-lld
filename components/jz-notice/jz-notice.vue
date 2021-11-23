@@ -1,6 +1,8 @@
 <template>
 	<view class="jz-notice">
-		<u-notice-bar mode="vertical" :list="list"></u-notice-bar>
+		<template v-if="list.length>0">
+		<u-notice-bar :mode="mode" :list="list"></u-notice-bar>
+		</template>
 	</view>
 </template>
 
@@ -16,6 +18,12 @@
 				type:Number,
 				default(){
 					return 0
+				}
+			},
+			mode:{
+				type:String,
+				default(){
+					return "vertical"
 				}
 			}
 		},

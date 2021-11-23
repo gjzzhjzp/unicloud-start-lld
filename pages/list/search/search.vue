@@ -78,21 +78,13 @@
 	 * 云端一体搜索模板
 	 * @description uniCloud云端一体搜索模板，自带下拉候选、历史搜索、热搜。无需再开发服务器代码
 	 */
-	const searchLogDbName = 'opendb-search-log'; // 搜索记录数据库
+
 	const mallGoodsDbName = 'jz-opendb-resources'; // 文章数据库
 	const associativeSearchField = 'title'; // 联想时，搜索框值检索数据库字段名
 	const associativeField = '_id,title'; // 联想列表每一项携带的字段
-	const localSearchListKey = '__local_search_history'; //	本地历史存储字段名
-
-	// 数组去重
-	const arrUnique = arr => {
-		for (let i = arr.length - 1; i >= 0; i--) {
-			const curIndex = arr.indexOf(arr[i]);
-			const lastIndex = arr.lastIndexOf(arr[i])
-			curIndex != lastIndex && arr.splice(lastIndex, 1)
-		}
-		return arr
-	} // 节流
+const localSearchListKey = '__local_search_history'; //	本地历史存储字段名
+const searchLogDbName = 'opendb-search-log'; // 搜索记录数据库
+	import search from "./search.js"
 	// 防抖
 	function debounce(fn, interval, isFirstAutoRun) {
 		/**
@@ -135,7 +127,7 @@
 				mallGoodsDbName,
 				searchLogDbName,
 				statusBarHeight: '0px',
-				localSearchList: uni.getStorageSync(localSearchListKey),
+
 				localSearchListDel: false,
 				netHotListIsHide: false,
 				searchText: '',
@@ -147,9 +139,10 @@
 				speechEngine: 'iFly' //	语音识别引擎 iFly 讯飞 baidu 百度
 			}
 		},
+		mixins: [search],
 		created() {
 			this.db = uniCloud.database();
-			this.searchLogDb = this.db.collection(this.searchLogDbName);
+
 			this.mallGoodsDb = this.db.collection(this.mallGoodsDbName);
 			// #ifndef H5
 			uni.onKeyboardHeightChange((res) => {
@@ -200,24 +193,15 @@
 				if (!this.searchText && this.hotWorld) {
 					this.searchText = this.hotWorld
 				}
-				this.localSearchListManage(this.searchText);
-				this.searchLogDbAdd(this.searchText)
+				if(this.searchText){
+					this.localSearchListManage(this.searchText);
+					this.searchLogDbAdd(this.searchText)
+				}
+				
 				uni.hideKeyboard();
 				this.loadList(this.searchText);
 			},
-			localSearchListManage(word) {
-				let list = uni.getStorageSync(localSearchListKey);
-				if (list.length) {
-					this.localSearchList.unshift(word);
-					arrUnique(this.localSearchList);
-					if (this.localSearchList.length > 10) {
-						this.localSearchList.pop();
-					}
-				} else {
-					this.localSearchList = [word];
-				}
-				uni.setStorageSync(localSearchListKey, this.localSearchList);
-			},
+
 			LocalSearchListClear() {
 				uni.showModal({
 					content: "确认清空搜索历史吗",
@@ -261,42 +245,7 @@
 				});
 				// #endif
 			},
-			searchLogDbAdd(value) {
-				/*
-					在此处存搜索记录，如果登录则需要存 user_id，若未登录则存device_id
-				 */
-				this.getDeviceId().then(device_id => {
-					this.searchLogDb.add({
-						// user_id: device_id,
-						device_id,
-						content: value,
-						create_date: Date.now()
-					})
-				})
-			},
-			getDeviceId() {
-				return new Promise((resolve, reject) => {
-					const uniId = uni.getStorageSync('uni_id');
-					if (!uniId) {
-						// #ifdef APP-PLUS
-						plus.device.getInfo({
-							success: (deviceInfo) => {
-								resolve(deviceInfo.uuid)
-							},
-							fail: () => {
-								resolve(uni.getSystemInfoSync().system + '_' + Math.random().toString(
-									36).substr(2))
-							}
-						});
-						// #endif
-						// #ifndef APP-PLUS
-						resolve(uni.getSystemInfoSync().system + '_' + Math.random().toString(36).substr(2))
-						// #endif
-					} else {
-						resolve(uniId)
-					}
-				})
-			},
+
 			associativeClick(item) {
 				/**
 				 * 注意：这里用户根据自己的业务需要，选择跳转的页面即可

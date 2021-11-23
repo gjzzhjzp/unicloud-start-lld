@@ -195,6 +195,21 @@
 					"text": "加密"
 				}
 			]
+		},
+		"is_recommend": {
+			"bsonType": "int",
+			"title": "是否推荐",
+			"description": "是否推荐：0 不推荐 1 推荐",
+			"defaultValue": 0,
+			"enum": [{
+					"value": 0,
+					"text": "不推荐"
+				},
+				{
+					"value": 1,
+					"text": "推荐"
+				}
+			]
 		}
 	}
 }

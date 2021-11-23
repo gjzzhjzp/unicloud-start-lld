@@ -156,6 +156,13 @@ module.exports = class resourceService extends Service {
 				collection_query = collection.aggregate().match(where).sort({
 					"like_count": -1
 				}).skip((page - 1) * rows).limit(rows);
+			}else if (type == "tj") {
+				Object.assign(where,{
+					is_recommend:1
+				});
+				collection_query = collection.aggregate().match(where).sort({
+					"last_modify_date": -1
+				}).skip((page - 1) * rows).limit(rows);
 			}
 			// console.log("collection_query",collection_query);
 			var resultdata = await collection_query.lookup({

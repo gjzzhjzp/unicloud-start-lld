@@ -14,7 +14,7 @@
 		"type": {
 			"bsonType": "int",
 			"title": "类型",
-			"description": "类型：0 俊哲 1 山总",
+			"description": "类型：0 俊哲 1 山总 2 首页",
 			"defaultValue": 0,
 			"enum": [
 				{
@@ -24,6 +24,10 @@
 				{
 					"value": 1,
 					"text": "山总"
+				},
+				{
+					"value": 2,
+					"text": "首页"
 				}
 			]
 		},

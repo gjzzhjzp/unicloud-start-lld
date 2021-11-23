@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="jz-sy-list-section">
-			<u-section line-color="#7275D3" :title="title" :right="true" sub-title="查看更多>>" :arrow="false"
+			<u-section line-color="#7275D3" :title="title" :right="showright" sub-title="查看更多>>" :arrow="false"
 				@click="$notMoreTap(tomore,'notTap')"></u-section>
 		</view>
 		<view class="jz-sy-list">
@@ -65,6 +65,12 @@
 				type: String,
 				default () {
 					return ""
+				}
+			},
+			showright:{
+				type:Boolean,
+				default(){
+					return true
 				}
 			}
 		},

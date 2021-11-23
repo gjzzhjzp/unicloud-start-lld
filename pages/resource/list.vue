@@ -53,6 +53,7 @@
 <script>
 	import itemList from "./item-list.vue"
 	import musicList from "./musicList.vue"
+	import search from "../list/search/search.js"
 	export default {
 		data() {
 			return {
@@ -106,6 +107,7 @@
 				}
 			}
 		},
+		mixins:[search],
 		components: {
 			itemList,
 			musicList
@@ -113,7 +115,7 @@
 		// 下拉刷新
 		onPullDownRefresh() {
 			this.resetlist();
-			uni.stopPullDownRefresh()
+			uni.stopPullDownRefresh();
 		},
 		onLoad(e) {
 			// debugger;
@@ -180,6 +182,11 @@
 				this.resetlist();
 			},
 			confirm() {
+				var value=this.keyword;
+				if(value){
+					this.localSearchListManage(value);
+					this.searchLogDbAdd(value)
+				}
 				this.resetlist();
 			},
 			addRandomData() {

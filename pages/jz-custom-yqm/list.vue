@@ -38,11 +38,11 @@
 	export default {
 		data() {
 			return {
+				notTap:true,//一定要设置为true
 				loadMore: {
 					contentdown: '',
 					contentrefresh: '',
-					contentnomore: '',
-					notTap:true//一定要设置为true
+					contentnomore: ''
 				}
 			}
 		},

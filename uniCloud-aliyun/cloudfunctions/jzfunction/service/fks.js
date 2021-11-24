@@ -5,11 +5,11 @@ module.exports = class fksService extends Service {
 	async setfks() {
 		var ctx = this.ctx;
 		const data = this.ctx.data;
-		console.log("data11111111111111111",data);
-		var ip=ctx.context.CLIENTIP
+		var ip=ctx.context.CLIENTIP;
 		var maxCount = 1000000;
 		var openxz = false;
 		const db = uniCloud.database();
+		var app_bbh=data.app_bbh;
 		const collection_fks = db.collection('jz-custom-fks');
 		var count = await collection_fks.where({
 			time:new RegExp(new Date().format("yyyy-MM-dd"), 'gi')  
@@ -18,12 +18,21 @@ module.exports = class fksService extends Service {
 			openxz = true;
 			maxCount = data.config["800003"]; ////最大访问人数
 		}
-		// console.log("this.ctx",this.ctx);
+		console.log("app_bbh",app_bbh);
+		if (app_bbh&&app_bbh<data.config["800004"]) { /////开启访问人数限制
+			return {
+				state: "9999",
+				msg: "今日访问人数已达上线"
+			}
+		}
 		if (openxz&&count.total > parseInt(maxCount)) {
 			return {
 				state: "9999",
 				msg: "今日访问人数已达上线"
 			}
+			// return {
+			// 	state:"0000"
+			// }
 		} else {
 			var add_data = {
 				"ip": ip,

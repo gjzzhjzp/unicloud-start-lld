@@ -6,11 +6,11 @@
 		</view>
 		<view class="jz-sy-list">
 			<template v-show="!isEmpty">
-				<u-row gutter="4">
-					<u-col span="4" class="jz-sy-item" v-for="(item,index) in list" :key="index">
+				<u-row gutter="16">
+					<u-col span="6" class="jz-sy-item" v-for="(item,index) in list" :key="index">
 						<view class="jz-sy-list-item" @click="$notMoreTap(toDetail,'notTap',item)">
 							<view>
-								<u-lazy-load  threshold="300" height="140rpx" border-radius="10" img-mode="aspectFill" :image="imageUrl(item)"></u-lazy-load>
+								<u-lazy-load  threshold="300" height="200rpx" border-radius="10" img-mode="aspectFill" :image="imageUrl(item)"></u-lazy-load>
 								
 								<!-- <u-image width="100%" height="140rpx" border-radius="10" :src="imageUrl(item)">
 								</u-image> -->
@@ -104,7 +104,7 @@
 							label: this.label,
 							zy_gs: [0, 1, 3],
 							page: 1,
-							rows: 6
+							rows: 4
 						}
 				console.log("param",param);
 				uniCloud.callFunction({

@@ -4,6 +4,11 @@
 			<view class="er-item-list-warter1">
 				<u-lazy-load threshold="300" height="200" border-radius="10" img-mode="aspectFill" :image="imageUrl(item)" :index="index"></u-lazy-load>
 				<view style="padding: 8px;">
+					<!-- <view class="er-item-list-bq">
+						<view v-for="(item1,index1) in item.labelarr" :key="index1">
+							<u-tag :text="item1" type="primary" />
+						</view>
+					</view> -->
 					<view class="er-item-list-title">
 						{{item.title}}
 					</view>
@@ -49,10 +54,27 @@
 				}
 			}
 		},
+		watch:{
+			list(){
+				this.list.forEach((item)=>{
+					if(item.labels){
+						var arr=[];
+						var _labels=item.labels.split("，");
+						_labels.forEach((item1)=>{
+							if(item1){
+								arr.push(item1);
+							}
+						})
+						this.$set(item,"labelarr",arr);
+					}
+				});
+			}
+		},
 		mounted() {
 			console.log("list", this.list);
 		},
 		methods: {
+			
 			imageUrl(item) {
 				var url = "";
 				if (Array.isArray(item.avatar)) {

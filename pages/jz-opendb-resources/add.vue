@@ -29,8 +29,8 @@
 					<uni-easyinput placeholder="多个标签以逗号隔开" v-model="formData.labels" trim="both"></uni-easyinput>
 				</uni-forms-item>
 				<uni-forms-item name="avatar" label="封面大图" required>
-					<cloud-image @click="uploadAvatarImg" custom-class="uploadZy" v-if="formData.avatar" :src="formData.avatar[0].url" width="300rpx"
-						height="200rpx"></cloud-image>
+					<cloud-image @click="uploadAvatarImg" custom-class="uploadZy" v-if="formData.avatar"
+						:src="formData.avatar[0].url" width="300rpx" height="200rpx"></cloud-image>
 					<uni-icons @click="uploadAvatarImg" v-else class="chooseAvatar" type="plusempty" size="80"
 						color="#F1F1F1"></uni-icons>
 					<!-- <uni-file-picker file-mediatype="image" return-type="array" :limit="1" v-model="formData.avatar">
@@ -42,21 +42,23 @@
 					</uni-data-checkbox>
 				</uni-forms-item>
 				<uni-forms-item name="resources" label="附件资源">
-					<template v-if="formData.zy_gs==0">
-						<uni-file-picker file-mediatype="image" return-type="array"
-							v-model="formData.resources">
+					<template v-if="formData.zy_gs==0||formData.zy_gs==3">
+						<uni-file-picker file-mediatype="image" return-type="array" v-model="formData.resources">
 						</uni-file-picker>
+						<view class="resource-ts">提示：支持PNG,JPG图片格式</view>
 					</template>
 					<template v-else-if="formData.zy_gs==1">
 						<uni-file-picker file-mediatype="video" file-extname="mp4" :limit="1" return-type="array"
 							v-model="formData.resources">
 						</uni-file-picker>
+						<view class="resource-ts">提示：支持MP4格式</view>
 					</template>
 					<!-- #ifdef H5 -->
 					<template v-else-if="formData.zy_gs==2">
 						<uni-file-picker file-mediatype="all" file-extname="mp3" :limit="1" return-type="array"
 							v-model="formData.resources">
 						</uni-file-picker>
+						<view class="resource-ts">提示：支持MP3格式</view>
 					</template>
 					<template v-else>
 						<uni-file-picker file-mediatype="all" :limit="1" return-type="array"
@@ -98,6 +100,7 @@
 	const dbCollectionName = 'jz-opendb-resources';
 	import zycommon from "./zycommon.js"
 	import image from "@/pages/ucenter/userinfo/image.js"
+
 	function getValidator(fields) {
 		let result = {}
 		for (let key in validator) {
@@ -109,7 +112,7 @@
 	}
 
 	export default {
-		mixins: [zycommon,image],
+		mixins: [zycommon, image],
 		data() {
 			let formData = {
 				"author": "",
@@ -126,9 +129,9 @@
 				"zy_gs": 0
 			}
 			return {
-				avimage:{
-					width:600,
-					height:400
+				avimage: {
+					width: 600,
+					height: 400
 				},
 				formData,
 				formOptions: {
@@ -141,7 +144,7 @@
 							"text": "已授权"
 						}
 					],
-					 // #ifdef H5
+					// #ifdef H5
 					"zy_gs_localdata": [{
 						"value": 0,
 						"text": "图片"
@@ -155,16 +158,19 @@
 						"value": 3,
 						"text": "文章"
 					}],
-					 // #endif 
-					 // #ifdef APP-PLUS
-					 "zy_gs_localdata": [{
-					 	"value": 0,
-					 	"text": "图片"
-					 }, {
-					 	"value": 1,
-					 	"text": "视频"
-					 }],
-					  // #endif 
+					// #endif 
+					// #ifdef APP-PLUS
+					"zy_gs_localdata": [{
+						"value": 0,
+						"text": "图片"
+					}, {
+						"value": 1,
+						"text": "视频"
+					}, {
+						"value": 3,
+						"text": "文章"
+					}],
+					// #endif 
 					"is_encryption_localdata": [{
 							"value": 0,
 							"text": "不加密"
@@ -184,10 +190,10 @@
 			this.$refs.form.setRules(this.rules)
 		},
 		methods: {
-			setAvatarFile(avatar_file){
-				console.log("avatar_file",avatar_file);
+			setAvatarFile(avatar_file) {
+				console.log("avatar_file", avatar_file);
 				// formData.avatar[0].url;
-				this.$set(this.formData,"avatar",[avatar_file])
+				this.$set(this.formData, "avatar", [avatar_file])
 			},
 			/**
 			 * 验证表单并提交
@@ -245,6 +251,11 @@
 </script>
 
 <style>
+	.resource-ts {
+		color: red;
+		margin-top: 6px;
+	}
+
 	.uni-container {
 		padding: 15px;
 	}
@@ -290,7 +301,8 @@
 	.checklist-box {
 		margin-right: 15px;
 	}
-	.chooseAvatar{
-		    border: 1px solid #F1F1F1;
+
+	.chooseAvatar {
+		border: 1px solid #F1F1F1;
 	}
 </style>

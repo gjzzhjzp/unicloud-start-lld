@@ -25,13 +25,14 @@
 			<uni-load-more :status="loading?'loading':(hasMore ? 'more' : 'noMore')"></uni-load-more>
 		</unicloud-db>
 		<uni-fab ref="fab" horizontal="right" vertical="bottom" :pop-menu="false" @fabClick="$notMoreTap(fabClick,'notTap')" />
+		<u-back-top :scroll-top="scrollTop" top="1000" mode="square" icon="arrow-up" tips="顶部"></u-back-top>
 	</view>
 </template>
-
 <script>
 	export default {
 		data() {
 			return {
+				scrollTop:0,
 				notTap:true,//一定要设置为true
 				loadMore: {
 					contentdown: '',
@@ -65,6 +66,9 @@
 			// debugger;
 			this.$refs.udb.loadMore()
 		},
+		onPageScroll(e) {
+				this.scrollTop = e.scrollTop;
+			},
 		onShow() {
 			this.reload();
 		},

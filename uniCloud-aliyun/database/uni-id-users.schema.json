@@ -47,6 +47,17 @@
 			"description": "微博昵称",
 			"trim": "both"
 		},
+		"weibocontent": {
+			"bsonType": "string",
+			"title": "微博内容",
+			"description": "微博内容",
+			"trim": "both"
+		},
+		"isbdwb": {
+			"bsonType": "bool",
+			"title": "是否绑定微博",
+			"description": "是否绑定微博"
+		},
 		"douyinname": {
 			"bsonType": "string",
 			"title": "抖音昵称",

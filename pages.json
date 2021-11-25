@@ -74,6 +74,11 @@
 			"style": {
 				"navigationBarTitleText": ""
 			}
+		},{
+			"path": "pages/ucenter/login-page/pwd-login/pwd-weibo",
+			"style": {
+				"navigationBarTitleText": ""
+			}
 		}, {
 			"path": "pages/ucenter/login-page/register/register",
 			"style": {

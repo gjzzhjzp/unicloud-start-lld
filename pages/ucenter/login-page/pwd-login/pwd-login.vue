@@ -32,6 +32,11 @@
 			</view>
 			<!-- <uni-quick-login :agree="agree" ref="uniQuickLogin"></uni-quick-login> -->
 		</view>
+		<u-modal v-model="showmodel" :show-cancel-button="true" @confirm="confirmnc" width="85%" cancel-text="取消" confirm-text="立即绑定">
+			<view class="slot-content">
+				为加强注册审核，用户必须绑定微博账号。检测到你现在未绑定，是否立即绑定？
+			</view>
+		</u-modal>
 	</view>
 </template>
 
@@ -41,6 +46,7 @@
 		mixins: [mixin],
 		data() {
 			return {
+				showmodel:false,
 				"password": "",
 				"username": "",
 				"agree": true,
@@ -70,6 +76,11 @@
 						'&phoneArea=' + this.currenPhoneArea
 				})
 			},
+			confirmnc(){
+				uni.navigateTo({
+					url: "/pages/ucenter/login-page/pwd-login/pwd-weibo"
+				});
+			},
 			/**
 			 * 密码登录
 			 */
@@ -96,7 +107,17 @@
 					}) => {
 						console.log(result);
 						if (result.code === 0) {
-							this.loginSuccess(result)
+							console.log("result",result);
+							// this.loginSuccess(result)
+							this.checkisbdwb(result.userInfo.username).then((flag)=>{
+								if(flag){
+									// debugger;
+									 uni.setStorageSync("istgzcsh_success",true); //是否通过登录注册审核
+									 this.loginSuccess(result);
+								}else{
+									this.showmodel=true;
+								}
+							});
 						} else {
 							if (result.needCaptcha) {
 								uni.showToast({
@@ -115,6 +136,43 @@
 						}
 					}
 				})
+			},
+			// 检测时候绑定微博
+			 checkisbdwb(username){
+				return new Promise(async (reslove)=>{
+					const db = uniCloud.database();
+					const uid = db.getCloudEnv('$cloudEnv_uid');
+					const collection = db.collection('uni-id-users');
+					var result=await collection.where({
+						username:username
+					}).get();
+					if(result.result.data&&result.result.data.length>0){
+						var data=result.result.data[0];
+						if(data.isbdwb){
+							reslove(true);
+						}else{
+							if(data.weiboname&&data.weibocontent){
+								uni.showModal({
+									title: '提示',
+									showCancel: false,
+									confirmText: "退出",
+									content: '您已提交微博验证【'+data.weibocontent+'】申请，如已发微博，请等待管理员审核',
+									success: function(res) {
+										if (res.confirm) {
+											console.log("在这里退出App");
+										}
+									}
+								});
+							}else{
+								reslove(false);
+							}
+						}
+					}else{
+						reslove(false);
+					}
+					console.log("result",result);
+				});
+				
 			},
 			createCaptcha() {
 				uniCloud.callFunction({
@@ -152,7 +210,9 @@
 
 <style>
 	@import url("../common/login-page.css");
-
+.slot-content{
+		padding: 10px;
+	}
 	.usercenter-top {
 		color: #fff;
 		font-size: 16px;

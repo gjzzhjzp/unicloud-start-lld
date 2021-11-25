@@ -1,0 +1,25 @@
+{
+	"bsonType": "object",
+	"required": ["content"],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"content": {
+			"bsonType": "string",
+			"description": "微博内容",
+			"title": "微博内容"
+		},
+		"status": {
+			"bsonType": "bool",
+			"defaultValue": true,
+			"title": "生效状态"
+		}
+	}
+}

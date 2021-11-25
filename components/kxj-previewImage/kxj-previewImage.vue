@@ -39,7 +39,7 @@
 		<view class="page" v-if="imgs.length > 0">
 			<text class="text">{{ index + 1 }} / {{ imgs.length }}</text>
 		</view>
-		<view class="save" v-if="saveBtn" @click.stop.prevent="save"><text class="text">保存</text></view>
+		<view v-show="showImageXz" class="save" v-if="saveBtn" @click.stop.prevent="save"><text class="text">保存</text></view>
 		<!-- <view class="rotate" v-if="rotateBtn" @click.stop.prevent="rotate"><text class="text">旋转</text></view> -->
 		<view class="desc" v-if="descs.length > 0 && descs.length == imgs.length && descs[index].length > 0">{{ descs[index] }}</view>
 	</view>
@@ -94,8 +94,15 @@ export default {
 			deg: 0, //旋转角度
 			time: 0, //定时器
 			interval: 1000, //长按事件
-			scale: 1 //缩放比例
+			scale: 1 ,//缩放比例
+			showImageXz:true
 		};
+	},
+	created(){
+		// debugger;
+		var config=getApp().globalData.config;
+		var t_800007=config["800007"];
+		this.showImageXz=t_800007=='1'?true:false;
 	},
 	methods: {
 		//比例变化

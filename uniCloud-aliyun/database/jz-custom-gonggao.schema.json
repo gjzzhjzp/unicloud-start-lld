@@ -1,0 +1,45 @@
+{
+	"bsonType": "object",
+	"required": ["content","number"],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"number": {
+			"bsonType": "string",
+			"description": "公告编号",
+			"title": "公告编号"
+		},
+		"content": {
+			"bsonType": "string",
+			"description": "公告内容",
+			"title": "公告内容",
+			"component": {
+				"props": {
+					"type": "textarea",
+					"autoHeight":true,
+					"maxlength":1000
+				}
+			}
+		},
+		"status": {
+			"bsonType": "bool",
+			"defaultValue": true,
+			"title": "生效状态"
+		},
+		"date": {
+			"bsonType": "timestamp",
+			"title": "创建时间",
+			"description": "创建时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		}
+	}
+}

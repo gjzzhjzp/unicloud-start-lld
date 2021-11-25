@@ -21,7 +21,7 @@
 				<view class="detail-image-sc1" v-show="islike" @click="cancelFavorite">
 					<u-icon :size="30"  name="heart-fill" color="red"></u-icon> 已收藏
 				</view>
-				<view class="detail-image-sc1" v-if="data.zy_gs=='1'">
+				<view class="detail-image-sc1" v-if="data.zy_gs=='1'&&showmp4Xz">
 					<template v-if="data.resources.length>0">
 						<a class="download-head" :download="data.title" :href="data.resources[0].url">
 							<u-icon :size="30"  name="download"></u-icon> 下载
@@ -40,7 +40,7 @@
 		mixins:[detail],
 		data(){
 			return {
-				
+				showmp4Xz:false
 			}
 		},
 		props: {
@@ -50,6 +50,12 @@
 					return {}
 				}
 			}
+		},
+		created(){
+			// debugger;
+			var config=getApp().globalData.config;
+			var t_800005=config["800005"];
+			this.showmp4Xz=t_800005=='1'?true:false;
 		},
 		computed:{
 			tgr(){

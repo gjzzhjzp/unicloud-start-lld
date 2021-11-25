@@ -37,7 +37,8 @@
 			</view>
 			<u-modal v-model="showmodel" :show-cancel-button="true" @confirm="confirmnc" width="85%">
 				<view class="slot-content">
-					<view style="text-indent: 2em;">请确认微博昵称【{{formData.weiboname}}】输入正确，并在自己微博发送一条【{{wbcontent}}】的微博。</view>
+					<view style="text-indent: 2em;">为加强注册审核，用户必须绑定微博账号。</view>
+					<view style="text-indent: 2em;">请确认微博昵称【{{formData.weiboname}}】输入正确，并在自己微博发送一条【{{formData.weibocontent}}】的微博。</view>
 					<view style="text-indent: 2em;">如你确认无误，请点击确认按钮申请，管理员在24h内审核微博通过后可重新进入本系统。</view>
 				</view>
 			</u-modal>
@@ -51,26 +52,32 @@
 		mixins: [mixin],
 		data() {
 			return {
-				wbcontent: "山河不足重，重在遇知己",
 				showmodel: false,
 				formData: {
 					"username": "",
 					"nickname": "",
 					'password': '',
 					'pwd2': '',
-					'weiboname': "" ////微博昵称
+					'weiboname': "", ////微博昵称
+					"weibocontent":"山河不足重，重在遇知己"
 				},
 				rules,
 				agree: true
 			}
 		},
+		created(){
+			var weibonc=getApp().globalData.weiboyz;
+			var index=parseInt(Math.random()*weibonc.length);
+			this.$set(this.formData,"weibocontent",weibonc[index]);
+		},
 		onReady() {
-			this.$refs.form.setRules(this.rules)
+			this.$refs.form.setRules(this.rules);
+			
 		},
 		onLoad() {
 			uni.setNavigationBarTitle({
 				title: this.$t('register.navigationBarTitle')
-			})
+			});
 		},
 		methods: {
 			goback() {
@@ -80,7 +87,6 @@
 			 * 触发表单提交
 			 */
 			submit() {
-
 				uni.showLoading({
 					mask: true
 				})
@@ -111,7 +117,18 @@
 					}) => {
 						console.log(result);
 						if (result.code === 0) {
-							this.loginSuccess(result)
+							uni.showModal({
+								title: '提示',
+								showCancel: false,
+								confirmText: "退出",
+								content: '您已注册成功，且申请已提交，请尽快发微博，待管理员审核后方可登录',
+								success: function(res) {
+									if (res.confirm) {
+										console.log("在这里退出App");
+									}
+								}
+							});
+							// this.loginSuccess(result)
 						} else {
 							uni.showModal({
 								content: result.msg,

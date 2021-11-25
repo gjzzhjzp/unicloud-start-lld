@@ -16,5 +16,11 @@ export default function(result){
 		}
 	})
 	// console.log('判断需要返回几层',delta);
-	uni.navigateBack({delta})
+	if(pages.length==1&&delta==1){
+		uni.switchTab({
+			url:"/pages/index/index"
+		})
+	}else{
+		uni.navigateBack({delta})
+	}
 }

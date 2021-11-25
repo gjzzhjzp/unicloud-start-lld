@@ -13,11 +13,11 @@
 			console.log('App Launch')
 			this.globalData.$i18n = this.$i18n
 			this.globalData.$t = str => this.$t(str);
-			
+
 			this.getConfig();
 			initApp();
 			// #ifdef H5
-				// openApp() //创建在h5端全局悬浮引导用户下载app的功能
+			// openApp() //创建在h5端全局悬浮引导用户下载app的功能
 			// #endif
 
 			// #ifdef APP-PLUS
@@ -35,18 +35,18 @@
 			}*/
 			// #endif
 		},
-		onShow:  function() {
+		onShow: function() {
 			console.log('App Show');
-			var question_success= uni.getStorageSync("question_success");
-			var istgzcsh= uni.getStorageSync("istgzcsh_success");//是否通过注册审核
-			if(!question_success){
+			var question_success = uni.getStorageSync("question_success");
+			var istgzcsh = uni.getStorageSync("istgzcsh_success"); //是否通过登录注册审核
+			if (!question_success) {
 				uni.redirectTo({
-					url:"/pages/question/question"
+					url: "/pages/question/question"
 				});
-			}else{
-				if(!istgzcsh){
+			} else {
+				if (!istgzcsh) {
 					uni.redirectTo({
-						url:"/pages/ucenter/login-page/register/register"
+						url: "/pages/ucenter/login-page/pwd-login/pwd-login"
 					});
 				}
 			}
@@ -54,9 +54,9 @@
 		onHide: function() {
 			console.log('App Hide');
 		},
-		methods:{
-			// 获取配置项
-			getConfig(){
+		methods: {
+			// 获取配置项和微博内容
+			getConfig() {
 				uniCloud.callFunction({
 					name: 'jzfunction',
 					data: {
@@ -64,39 +64,51 @@
 					},
 				}).then((res) => {
 					var res = res.result;
-					var config={};
+					var config = {};
+					var weiboyz=[];
+					console.log("res",res);
 					if (res.state == "0000") {
-						if(res.data.data&&res.data.data.length>0){
-							res.data.data.forEach((item)=>{
-								config[item.config_bm]=item.config_val;
+						var configdata=res.data.config;
+						var weiboyzdata=res.data.weiboyz;
+						if (configdata.data && configdata.data.length > 0) {
+							configdata.data.forEach((item) => {
+								config[item.config_bm] = item.config_val;
 							});
 						}
-						this.globalData.config=config;
+						if (weiboyzdata.data && weiboyzdata.data.length > 0) {
+							weiboyzdata.data.forEach((item) => {
+								weiboyz.push(item.content);
+							});
+						}
+						this.globalData.config = config;
+						this.globalData.weiboyz = weiboyz;
 						this.setfks(config);
 					} else {
 						uni.showToast({
-							title:res.msg,
-							icon:null
+							title: res.msg,
+							icon: null
 						})
 					}
 				});
 			},
-			setfks(config){
-				var parames={
-							config:config
-						};
-				var app_bbh="";
+			setfks(config) {
+				var parames = {
+					config: config
+				};
+				var app_bbh = "";
 				//#ifdef APP-PLUS
-				 app_bbh=plus.runtime.versionCode;
+				app_bbh = plus.runtime.versionCode;
 				//#endif
-				if(app_bbh){
-					Object.assign(parames,{app_bbh:app_bbh});
+				if (app_bbh) {
+					Object.assign(parames, {
+						app_bbh: app_bbh
+					});
 				}
 				uniCloud.callFunction({
 					name: 'jzfunction',
 					data: {
 						action: 'fks/setfks',
-						data:parames
+						data: parames
 					},
 				}).then((res) => {
 					var res = res.result;
@@ -104,7 +116,7 @@
 						console.log(res.msg)
 					} else {
 						uni.redirectTo({
-							url:"/uview-ui/components/u-full-screen/u-full-screen"
+							url: "/uview-ui/components/u-full-screen/u-full-screen"
 						})
 						// uni.showToast({
 						// 	title:res.msg,
@@ -120,7 +132,7 @@
 <style lang="scss">
 	@import './static/css/common.css';
 	@import 'uview-ui/index.scss';
-	 // #ifdef APP-VUE 
+	// #ifdef APP-VUE 
 	@import "uview-ui/index.scss";
-	 // #endif 
+	// #endif 
 </style>

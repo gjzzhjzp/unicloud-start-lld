@@ -26,7 +26,7 @@
 				}
 			}
 		},
-		
+	
 		mounted() {
 			this.initImage();
 		},

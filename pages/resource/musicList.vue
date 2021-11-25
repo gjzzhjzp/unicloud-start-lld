@@ -13,7 +13,7 @@
 					<u-image v-show="item2.selected" width="60rpx" height="60rpx" src="/static/music/like_sed.png">
 					</u-image>
 				</view>
-				<view class="music-list-right-icon" @click="to_operate(item2,'download',index2)">
+				<view v-show="showMusicxz" class="music-list-right-icon" @click="to_operate(item2,'download',index2)">
 					<!-- item2:{{item2.resources[0]}} -->
 					<a :download='item2.title' :href="item2.resources[0].url"><u-image v-show="!item2.download" width="60rpx" height="60rpx" src="/static/music/download.png"></u-image></a>
 					<u-image v-show="item2.download" width="60rpx" height="60rpx" src="/static/music/download_sed.png"></u-image>
@@ -55,10 +55,17 @@
 		},
 		data() {
 			return {
+				showMusicxz:true,////是否显示音乐下载按钮
 				data: {},
 				allLove: [],
 				now: 0
 			}
+		},
+		created(){
+			// debugger;
+			var config=getApp().globalData.config;
+			var t_800006=config["800006"];
+			this.showMusicxz=t_800006=='1'?true:false;
 		},
 		computed: {
 			curdata() {

@@ -18,7 +18,6 @@ module.exports = class fksService extends Service {
 			openxz = true;
 			maxCount = data.config["800003"]; ////最大访问人数
 		}
-		console.log("app_bbh",app_bbh);
 		if (app_bbh&&app_bbh<data.config["800004"]) { /////开启访问人数限制
 			return {
 				state: "9999",

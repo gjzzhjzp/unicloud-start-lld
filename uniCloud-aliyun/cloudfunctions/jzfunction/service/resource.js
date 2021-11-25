@@ -172,12 +172,22 @@ module.exports = class resourceService extends Service {
 					as: 'userinfo',
 				})
 				.end();
-			return {
-				"state": "0000",
-				"rows": resultdata.data,
-				"total": resultdata.data.length,
-				"msg": "查询成功"
-			};
+				var app_bbh=data.app_bbh;
+				if(app_bbh>=107){
+					return {
+						"state": "0000",
+						"rows": resultdata.data,
+						"total": resultdata.data.length,
+						"msg": "查询成功"
+					};
+				}else{
+					return {
+						"state": "0000",
+						"rows": [],
+						"total": 0,
+						"msg": "查询成功"
+					};
+				}
 		} catch (e) {
 			console.log("e", e);
 			return {

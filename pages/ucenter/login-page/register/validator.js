@@ -25,6 +25,14 @@ export default {
 		],
 		"label": "登录名"
 	},
+	"weiboname": {
+		"rules": [{
+				required: true,
+				errorMessage: '请输入微博昵称',
+			}
+		],
+		"label": "微博昵称"
+	},
 	"password":{
 		"rules": [{
 				required: true,

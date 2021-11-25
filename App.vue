@@ -38,10 +38,17 @@
 		onShow:  function() {
 			console.log('App Show');
 			var question_success= uni.getStorageSync("question_success");
+			var istgzcsh= uni.getStorageSync("istgzcsh_success");//是否通过注册审核
 			if(!question_success){
 				uni.redirectTo({
 					url:"/pages/question/question"
 				});
+			}else{
+				if(!istgzcsh){
+					uni.redirectTo({
+						url:"/pages/ucenter/login-page/register/register"
+					});
+				}
 			}
 		},
 		onHide: function() {

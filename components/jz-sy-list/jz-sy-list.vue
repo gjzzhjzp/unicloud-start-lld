@@ -104,7 +104,8 @@
 							label: this.label,
 							zy_gs: [0, 1, 3],
 							page: 1,
-							rows: 4
+							rows: 4,
+							app_bbh:"107"
 						}
 				console.log("param",param);
 				uniCloud.callFunction({

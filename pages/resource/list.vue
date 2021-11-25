@@ -204,7 +204,8 @@
 							type: this.type || "zx",
 							zy_gs: this.zy_gs,
 							page: this.param.page,
-							rows: this.param.rows
+							rows: this.param.rows,
+							app_bbh:"107"
 						}
 					},
 				}).then((res) => {

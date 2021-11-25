@@ -163,6 +163,7 @@
 						success: res => {
 							if (res.confirm) {
 								this.logout();
+								uni.removeStorageSync("istgzcsh_success");
 								uni.navigateBack();
 							}
 						},

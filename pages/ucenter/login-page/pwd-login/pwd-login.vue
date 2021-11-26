@@ -115,7 +115,8 @@
 									 uni.setStorageSync("istgzcsh_success",true); //是否通过登录注册审核
 									 this.loginSuccess(result);
 								}else{
-									this.showmodel=true;
+									this.confirmnc();
+									// this.showmodel=true;
 								}
 							});
 						} else {

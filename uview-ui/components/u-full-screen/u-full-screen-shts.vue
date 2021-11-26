@@ -22,6 +22,9 @@
 		onReady() {
 			this.show = true;
 		},
+		created(){
+		console.log("22222222222222222222222222")	
+		},
 		methods: {
 			cancel() {
 				this.closeModal();

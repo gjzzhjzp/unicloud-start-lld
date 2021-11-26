@@ -12,12 +12,14 @@
 	</view>
 </template>
 <script>
+		import checksh from "@/common/checksh.js"
 	export default {
 		data() {
 			return {
 				list: []
 			}
 		},
+		mixins:[checksh],
 		created() {
 			this.getQuestion();
 		},
@@ -44,6 +46,10 @@
 				});
 			},
 			submit() {
+				// uni.setStorageSync("question_success",true);
+				// this.no_istgzcsh();
+				// return;
+				
 				var data = this.list;
 				var flag = true;
 				var dataid = [];
@@ -84,9 +90,10 @@
 					var res = res.result;
 					if (res.state == "0000") {
 						uni.setStorageSync("question_success",true);
-						uni.switchTab({
-							url: '/pages/index/index'
-						});
+						// uni.switchTab({
+						// 	url: '/pages/index/index'
+						// });
+						this.no_istgzcsh();
 					} else {
 						uni.setStorageSync("question_success",false);
 						this.$refs.uToast.show({

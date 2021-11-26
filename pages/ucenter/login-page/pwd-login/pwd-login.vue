@@ -107,11 +107,11 @@
 					}) => {
 						console.log(result);
 						if (result.code === 0) {
-							console.log("result",result);
-							// this.loginSuccess(result)
+							 uni.setStorageSync("userInfo",result.userInfo); 
 							this.checkisbdwb(result.userInfo.username).then((flag)=>{
 								if(flag){
 									// debugger;
+									
 									 uni.setStorageSync("istgzcsh_success",true); //是否通过登录注册审核
 									 this.loginSuccess(result);
 								}else{
@@ -142,11 +142,10 @@
 			 checkisbdwb(username){
 				return new Promise(async (reslove)=>{
 					const db = uniCloud.database();
-					const uid = db.getCloudEnv('$cloudEnv_uid');
 					const collection = db.collection('uni-id-users');
 					var result=await collection.where({
 						username:username
-					}).get();
+					}).field("username,isbdwb,weiboname,weibocontent,nickname").get();
 					if(result.result.data&&result.result.data.length>0){
 						var data=result.result.data[0];
 						if(data.isbdwb){

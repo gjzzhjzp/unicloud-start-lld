@@ -30,14 +30,39 @@
       	</uni-data-checkbox>
       </uni-forms-item>
       <uni-forms-item name="resources" label="附件资源">
-      	<template v-if="formData.zy_gs==0">
+		  <template v-if="formData.zy_gs==0||formData.zy_gs==3">
+		  	<uni-file-picker file-mediatype="image" return-type="array" v-model="formData.resources">
+		  	</uni-file-picker>
+		  	<view class="resource-ts">提示：支持PNG,JPG图片格式</view>
+		  </template>
+		  <template v-else-if="formData.zy_gs==1">
+		  	<uni-file-picker file-mediatype="video" file-extname="mp4" :limit="1" return-type="array"
+		  		v-model="formData.resources">
+		  	</uni-file-picker>
+		  	<view class="resource-ts">提示：支持MP4格式</view>
+		  </template>
+		  <!-- #ifdef H5 -->
+		  <template v-else-if="formData.zy_gs==2">
+		  	<uni-file-picker file-mediatype="all" file-extname="mp3" :limit="1" return-type="array"
+		  		v-model="formData.resources">
+		  	</uni-file-picker>
+		  	<view class="resource-ts">提示：支持MP3格式</view>
+		  </template>
+		  <template v-else>
+		  	<uni-file-picker file-mediatype="all" :limit="1" return-type="array"
+		  		v-model="formData.resources">
+		  	</uni-file-picker>
+		  </template>
+		  <!-- #endif -->
+		
+      	<!-- <template v-if="formData.zy_gs==0">
       		<uni-file-picker file-mediatype="image" return-type="array" v-model="formData.resources">
       		</uni-file-picker>
       	</template>
       	<template v-else>
       		<uni-file-picker file-mediatype="all" :limit="1" return-type="array" v-model="formData.resources">
       		</uni-file-picker>
-      	</template>
+      	</template> -->
       </uni-forms-item>
       <uni-forms-item name="aliyun_dz" label="外链">
         <uni-easyinput placeholder="请输入外链地址" v-model="formData.aliyun_dz" trim="both"></uni-easyinput>
@@ -50,6 +75,7 @@
       </uni-forms-item>
       <uni-forms-item name="is_encryption" label="是否加密">
         <uni-data-checkbox v-model="formData.is_encryption" :localdata="formOptions.is_encryption_localdata"></uni-data-checkbox>
+		<view class="resource-ts" v-show="formData.is_encryption==1">提示：勾选加密代表用户在本平台申请邀请码即可查看详情</view>
       </uni-forms-item>
       <view class="uni-button-group">
         <button type="primary" class="uni-button" @click="submit">提交</button>
@@ -234,6 +260,11 @@ import image from "@/pages/ucenter/userinfo/image.js"
 </script>
 
 <style>
+	.resource-ts {
+		color: red;
+		margin-top: 6px;
+	}
+	
   .uni-container {
     padding: 15px;
   }

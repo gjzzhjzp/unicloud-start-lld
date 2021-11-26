@@ -60,12 +60,10 @@
 			"title": "生效状态"
 		},
 		"date": {
-			"bsonType": "timestamp",
+			"bsonType": "string",
 			"title": "创建时间",
-			"description": "创建时间",
-			"forceDefaultValue": {
-				"$env": "now"
-			}
+			"description": "创建时间"
+			
 		}
 	}
 }

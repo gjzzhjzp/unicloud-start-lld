@@ -164,7 +164,10 @@
 							if (res.confirm) {
 								this.logout();
 								uni.removeStorageSync("istgzcsh_success");
-								uni.navigateBack();
+								// uni.navigateBack();
+								uni.navigateTo({
+									url: '/pages/ucenter/login-page/pwd-login/pwd-login'
+								});
 							}
 						},
 						fail: () => {},

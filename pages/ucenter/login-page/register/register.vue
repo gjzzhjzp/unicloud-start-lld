@@ -8,7 +8,7 @@
 			</view>
 			<view class="login-back-con">
 				<uni-forms ref="form" :value="formData" :rules="rules" validate-trigger="submit"
-					err-show-type="undertext" label-width="140px" label-position="right">
+					err-show-type="undertext" label-width="160px" label-position="right">
 					<uni-forms-item label="登录名" name="username" required>
 						<uni-easyinput :inputBorder="false" class="easyinput"
 							:placeholder="$t('register.usernamePlaceholder')" v-model="formData.username" trim="both" />
@@ -27,8 +27,8 @@
 							:placeholder="$t('register.passwordAgain')" type="password" v-model="formData.pwd2"
 							trim="both" />
 					</uni-forms-item>
-					<uni-forms-item label="微博昵称" name="weiboname" v-model="formData.weiboname" required>
-						<uni-easyinput :inputBorder="false" class="easyinput" placeholder="请输入微博昵称"
+					<uni-forms-item label="微博主页地址" name="weiboname" v-model="formData.weiboname" required>
+						<uni-easyinput :inputBorder="false" class="easyinput" placeholder="http://"
 							v-model="formData.weiboname" trim="both" />
 					</uni-forms-item>
 					<u-button class="send-btn" type="primary" @click="submit">注册并申请
@@ -37,8 +37,7 @@
 			</view>
 			<u-modal v-model="showmodel" :show-cancel-button="true" @confirm="confirmnc" width="85%">
 				<view class="slot-content">
-					<view style="text-indent: 2em;">为加强注册审核，用户必须绑定微博账号。</view>
-					<view style="text-indent: 2em;">请确认微博昵称【{{formData.weiboname}}】输入正确，并在自己微博发送一条【{{formData.weibocontent}}】的微博。</view>
+					<view style="text-indent: 2em;">请确认微博主页地址【{{formData.weiboname}}】输入正确，并在自己微博发送一条【{{formData.weibocontent}}】的微博。</view>
 					<view style="text-indent: 2em;">如你确认无误，请点击确认按钮申请，管理员在24h内审核微博通过后可重新进入本系统。</view>
 				</view>
 			</u-modal>
@@ -117,6 +116,7 @@
 					}) => {
 						console.log(result);
 						if (result.code === 0) {
+							uni.setStorageSync("userInfo",result.userInfo); 
 							uni.showModal({
 								title: '提示',
 								showCancel: false,
@@ -128,6 +128,7 @@
 									}
 								}
 							});
+							
 							// this.loginSuccess(result)
 						} else {
 							uni.showModal({
@@ -162,7 +163,7 @@
 	}
 
 	.er-register ::v-deep .uni-forms-item__label {
-		width: 70px !important;
+		width: 100px !important;
 	}
 
 	.usercenter-top {
@@ -192,7 +193,7 @@
 	}
 
 	.login-back-con {
-		width: 80%;
+		width: 90%;
 		margin: 290px auto 0px auto;
 	}
 

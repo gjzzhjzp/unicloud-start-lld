@@ -52,7 +52,8 @@ export default {
 			"/pages/shanzong/shanzong",
 			"/pages/junzhe/junzhe",
 			"/pages/jilianri/jilianri",
-			"/pages/jilianri/detail"
+			"/pages/jilianri/detail",
+			"/uview-ui/components/u-full-screen/u-full-screen-shts"
 		],
 		/*
 		login:配置登陆类型与优先级

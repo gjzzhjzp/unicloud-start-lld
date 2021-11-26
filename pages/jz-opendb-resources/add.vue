@@ -82,6 +82,7 @@
 					<uni-data-checkbox v-model="formData.is_encryption"
 						:localdata="formOptions.is_encryption_localdata">
 					</uni-data-checkbox>
+					<view class="resource-ts" v-show="formData.is_encryption==1">提示：勾选加密代表用户在本平台申请邀请码即可查看详情</view>
 				</uni-forms-item>
 				<view class="uni-button-group">
 					<u-button type="primary" class="uni-button" @click="submit">提交</u-button>

@@ -2,17 +2,17 @@
 	<view class=" pwd-login">
 		<view class="login-back">
 			<view class="usercenter-top">
-				<u-navbar :is-back="true" title="绑定微博" :border-bottom="false" title-color="#fff" back-icon-color="#fff"
+				<u-navbar :is-back="true" title="微博主页地址" :border-bottom="false" title-color="#fff" back-icon-color="#fff"
 					:background="{'background':'none'}">
 				</u-navbar>
 			</view>
 			<view class="login-back-con">
-				<input class="input-box" :inputBorder="false" v-model="weiboname" placeholder="请输入微博昵称" />
+				<input class="input-box" :inputBorder="false" v-model="weiboname" placeholder="http://" />
 				<u-button class="send-btn" type="primary" @click="confirmweibo">确定</u-button>
 			</view>
 			<u-modal v-model="showmodel" :show-cancel-button="true" @confirm="confirmnc" width="85%">
 				<view class="slot-content">
-					<view style="text-indent: 2em;">请确认微博昵称【{{weiboname}}】输入正确，并在自己微博发送一条【{{wbcontent}}】的微博。</view>
+					<view style="text-indent: 2em;">请确认微博主页地址【{{weiboname}}】输入正确，并在自己微博发送一条【{{wbcontent}}】的微博。</view>
 					<view style="text-indent: 2em;">如你确认无误，请点击确认按钮申请，管理员在24h内审核微博通过后可重新进入本系统。</view>
 				</view>
 			</u-modal>

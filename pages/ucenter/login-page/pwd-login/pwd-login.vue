@@ -3,7 +3,8 @@
 		<!-- <u-navbar :is-back="true" title="用户登录"></u-navbar> -->
 		<view class="login-back">
 			<view class="usercenter-top">
-				<u-navbar :is-back="true" title="用户登录" :border-bottom="false" title-color="#fff" back-icon-color="#fff" :background="{'background':'none'}">
+				<u-navbar :is-back="true" title="用户登录" :border-bottom="false" title-color="#fff" back-icon-color="#fff"
+					:background="{'background':'none'}">
 				</u-navbar>
 				<!-- <view class="usercenter-top-left" @click="goback">
 					<u-icon name="close" color="#fff" :size="40"></u-icon>
@@ -13,8 +14,7 @@
 				</view> -->
 			</view>
 			<view class="login-back-con">
-				<input class="input-box" :inputBorder="false" v-model="username"
-					placeholder="请输入登录名" />
+				<input class="input-box" :inputBorder="false" v-model="username" placeholder="请输入登录名" />
 				<input type="password" class="input-box" :inputBorder="false" v-model="password"
 					:placeholder="$t('pwdLogin.passwordPlaceholder')" />
 				<view class="captcha-box" v-if="captchaBase64">
@@ -27,16 +27,11 @@
 					<!-- <text class="link" @click="toRetrievePwd">{{$t('pwdLogin.forgetPassword')}}</text> -->
 					<text class="link" @click="toRegister">{{$t('pwdLogin.register')}}</text>
 				</view>
-				<u-button class="send-btn" :disabled="!canLogin" type="primary"
-					@click="pwdLogin">{{$t('pwdLogin.login')}}</u-button>
+				<u-button class="send-btn" :disabled="!canLogin" type="primary" @click="pwdLogin">
+					{{$t('pwdLogin.login')}}</u-button>
 			</view>
 			<!-- <uni-quick-login :agree="agree" ref="uniQuickLogin"></uni-quick-login> -->
 		</view>
-		<u-modal v-model="showmodel" :show-cancel-button="true" @confirm="confirmnc" width="85%" cancel-text="取消" confirm-text="立即绑定">
-			<view class="slot-content">
-				为加强注册审核，用户必须绑定微博账号。检测到你现在未绑定，是否立即绑定？
-			</view>
-		</u-modal>
 	</view>
 </template>
 
@@ -46,7 +41,6 @@
 		mixins: [mixin],
 		data() {
 			return {
-				showmodel:false,
 				"password": "",
 				"username": "",
 				"agree": true,
@@ -66,7 +60,7 @@
 			},
 		},
 		methods: {
-			goback(){
+			goback() {
 				uni.navigateBack();
 			},
 			// 页面跳转，找回密码
@@ -76,7 +70,7 @@
 						'&phoneArea=' + this.currenPhoneArea
 				})
 			},
-			confirmnc(){
+			confirmnc() {
 				uni.navigateTo({
 					url: "/pages/ucenter/login-page/pwd-login/pwd-weibo"
 				});
@@ -107,16 +101,13 @@
 					}) => {
 						console.log(result);
 						if (result.code === 0) {
-							 uni.setStorageSync("userInfo",result.userInfo); 
-							this.checkisbdwb(result.userInfo.username).then((flag)=>{
-								if(flag){
-									// debugger;
-									
-									 uni.setStorageSync("istgzcsh_success",true); //是否通过登录注册审核
-									 this.loginSuccess(result);
-								}else{
+							uni.setStorageSync("userInfo", result.userInfo);
+							this.checkisbdwb(result.userInfo.username).then((flag) => {
+								if (flag) {
+									uni.setStorageSync("istgzcsh_success", true); //是否通过登录注册审核
+									this.loginSuccess(result);
+								} else {
 									this.confirmnc();
-									// this.showmodel=true;
 								}
 							});
 						} else {
@@ -139,40 +130,43 @@
 				})
 			},
 			// 检测时候绑定微博
-			 checkisbdwb(username){
-				return new Promise(async (reslove)=>{
+			checkisbdwb(username) {
+				return new Promise(async (reslove) => {
 					const db = uniCloud.database();
 					const collection = db.collection('uni-id-users');
-					var result=await collection.where({
-						username:username
+					var result = await collection.where({
+						username: username
 					}).field("username,isbdwb,weiboname,weibocontent,nickname").get();
-					if(result.result.data&&result.result.data.length>0){
-						var data=result.result.data[0];
-						if(data.isbdwb){
+					if (result.result.data && result.result.data.length > 0) {
+						var data = result.result.data[0];
+						if (data.isbdwb) {
 							reslove(true);
-						}else{
-							if(data.weiboname&&data.weibocontent){
+						} else {
+							if (data.weiboname && data.weibocontent) {
 								uni.showModal({
 									title: '提示',
 									showCancel: false,
 									confirmText: "退出",
-									content: '您已提交微博验证【'+data.weibocontent+'】申请，如已发微博，请等待管理员审核',
+									content: '您已提交微博验证【' + data.weibocontent + '】申请，如已发微博，请等待管理员审核',
 									success: function(res) {
 										if (res.confirm) {
 											console.log("在这里退出App");
+											// #ifdef APP-PLUS  
+											plus.runtime.quit();
+											// #endif
 										}
 									}
 								});
-							}else{
+							} else {
 								reslove(false);
 							}
 						}
-					}else{
+					} else {
 						reslove(false);
 					}
-					console.log("result",result);
+					console.log("result", result);
 				});
-				
+
 			},
 			createCaptcha() {
 				uniCloud.callFunction({
@@ -210,9 +204,11 @@
 
 <style>
 	@import url("../common/login-page.css");
-.slot-content{
+
+	.slot-content {
 		padding: 10px;
 	}
+
 	.usercenter-top {
 		color: #fff;
 		font-size: 16px;
@@ -282,14 +278,16 @@
 	}
 
 	.login-back-con {
-		    width: 80%;
-		    margin: 290px auto 0px auto;
+		width: 80%;
+		margin: 290px auto 0px auto;
 	}
-	.login-back-con .u-btn{
-		    border-radius: 50px;
+
+	.login-back-con .u-btn {
+		border-radius: 50px;
 	}
-	.login-back-con .input-box{
-		    height: 40px;
-		    line-height: 40px;
+
+	.login-back-con .input-box {
+		height: 40px;
+		line-height: 40px;
 	}
 </style>

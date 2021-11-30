@@ -22,12 +22,12 @@
 						<view style="font-size: 20px;overflow: hidden;white-space: nowrap;">
 							{{data.title}}
 						</view>
-						<view style="margin-left: 6px;overflow: hidden;white-space: nowrap;">
+						<!-- <view style="margin-left: 6px;overflow: hidden;white-space: nowrap;">
 							—
 						</view>
 						<view style="margin-left: 6px;overflow: hidden;white-space: nowrap;">
 							{{data.author}}
-						</view>
+						</view> -->
 					</view>
 				</view>
 				<!-- <view v-show="dqxh" class="audio-control-switch1" @click="xunhuan">

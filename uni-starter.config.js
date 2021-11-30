@@ -53,7 +53,9 @@ export default {
 			"/pages/junzhe/junzhe",
 			"/pages/jilianri/jilianri",
 			"/pages/jilianri/detail",
-			"/uview-ui/components/u-full-screen/u-full-screen-shts"
+			"/uview-ui/components/u-full-screen/u-full-screen",
+			"/uview-ui/components/u-full-screen/u-full-screen-shts",
+			"/uview-ui/components/u-full-screen/u-full-screen-tsfwb"
 		],
 		/*
 		login:配置登陆类型与优先级

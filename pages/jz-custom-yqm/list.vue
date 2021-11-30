@@ -25,8 +25,8 @@
 							</u-td>
 							<u-td class="u-td" width="10%">
 								<view class="u-td3">
-								<u-icon size="36" v-show="item.status" name="checkmark"></u-icon>
-								<u-icon size="36" v-show="!item.status" name="close"></u-icon>
+								<u-icon size="36" v-if="item.status&&item.date==curdate" name="checkmark"></u-icon>
+								<u-icon size="36" v-else="!item.status" name="close"></u-icon>
 								</view>
 							</u-td>
 							<u-td class="u-td" width="30%">
@@ -55,7 +55,7 @@
 				<u-alert-tips type="warning" :description="description"></u-alert-tips>
 				<view style="margin-top: 10px;">
 					<text style="margin-right: 20px;">申请个数</text>
-					<u-number-box v-model="number" :max="5" :min="1" :size="32"></u-number-box>
+					<u-number-box v-model="number" :max="maxnumber" :min="1" :size="32"></u-number-box>
 				</view>
 			</view>
 		</u-modal>
@@ -70,15 +70,26 @@
 		data() {
 			return {
 				number: 1,
-				description: "邀请码用于查看加密资源详情，一天最多申请5个，每个邀请码用一次失效，且只能申请账号在申请当天使用，过期失效",
+				description: "",
 				showadd: false,
 				notTap: true, //一定要设置为true
 				loadMore: {
 					contentdown: '',
 					contentrefresh: '',
 					contentnomore: ''
-				}
+				},
+				curdate:"",
+				maxnumber:5//、每天申请的邀请码个数
 			}
+		},
+		created(){
+			this.curdate=this.getcurdate();
+		var config=getApp().globalData.config;
+		if(config["800008"]){
+			this.maxnumber=parseInt(config["800008"])||5;
+		}
+		console.log("this.maxnumber",this.maxnumber);
+		this.description="邀请码用于查看加密资源详情，一天最多申请"+this.maxnumber+"个，每个邀请码用一次失效，且只能申请账号在申请当天使用，过期失效";
 		},
 		onPullDownRefresh() {
 			this.$refs.udb.loadData({
@@ -91,6 +102,22 @@
 			this.$refs.udb.loadMore()
 		},
 		methods: {
+			getcurdate(){
+				//	初始化时间
+				var date = new Date();
+				
+				var year = date.getFullYear();
+				var month = parseInt(date.getMonth() + 1);
+				var day = date.getDate();
+				if (month < 10) {
+					month = '0' + month
+				}
+				if (day < 10) {
+					day = '0' + day
+				}
+				return year+"-"+month+"-"+day;
+				
+			},
 			// 确认申请邀请码
 			async confirmAdd() {
 				var number=this.number;
@@ -98,27 +125,36 @@
 				for(var i=0;i<number;i++){
 					var value={
 						status:true,
-						date:new Date().toLocaleDateString(),
+						date:this.curdate,
 						value:Math.random().toString(36).substr(2)+Math.random().toString(36).substr(2)
 					};
 					addvalues.push(value);
 				}
-				
 				var yqmlist = await db.collection(dbCollectionName).where({
 					user_id:uid,
-					date:new Date().toLocaleDateString()
+					date:this.curdate
 				}).get();
-				console.log("yqmlist",yqmlist);
-				if(yqmlist.result.data&&yqmlist.result.data.length>5){
+				// console.log("yqmlist",yqmlist);
+				
+				if(yqmlist.result.data&&yqmlist.result.data.length>=this.maxnumber){
+					// debugger;
 					uni.showToast({
 					  title: '今日邀请码申请已达上线',
 					  icon:"none"
 					});
-				}else{
+				}else if(yqmlist.result.data&&(this.number+yqmlist.result.data.length)>this.maxnumber){
+					uni.showToast({
+					  title: '今日已超出申请邀请码个数限制',
+					  icon:"none"
+					});
+				}
+				else{
 					return db.collection(dbCollectionName).add(addvalues).then((res) => {
 					  uni.showToast({
 					    title: '新增成功'
 					  });
+					  this.maxnumber=this.maxnumber-addvalues.length;
+					  this.number=1;
 					  if (this.$refs.udb) {
 					  	this.$refs.udb.loadData({
 					  		clear: true
@@ -153,20 +189,33 @@
 			},
 			// 清除无效邀请码
 			async clearYqm(){
-				var yqmlist = await db.collection(dbCollectionName).where({
-					user_id:uid,
-					status:false
-				}).remove();
-				console.log("yqmlist",yqmlist);
-				uni.showToast({
-				  title: '已清除',
-				  icon:"none"
+				var that=this;
+				uni.showModal({
+					title: '提示',
+					showCancel: false,
+					confirmText: "确定",
+					cancelText:"取消",
+					content: '只能清除往日的无效邀请码？是否清除？',
+					success: async function(res) {
+						if (res.confirm) {
+							var _date=that.curdate;
+							var yqmlist = await db.collection(dbCollectionName).where({
+								user_id:uid,
+								date:db.command.neq(_date)
+							}).remove();
+							console.log("yqmlist",yqmlist);
+							uni.showToast({
+							  title: '已清除',
+							  icon:"none"
+							});
+							if (that.$refs.udb) {
+								that.$refs.udb.loadData({
+									clear: true
+								}, () => {});
+							}
+						}
+					}
 				});
-				if (this.$refs.udb) {
-					this.$refs.udb.loadData({
-						clear: true
-					}, () => {});
-				}
 			},
 			handleItemClick(id) {
 				uni.navigateTo({
@@ -214,6 +263,7 @@
 
 	.u-td3 {
 		height: 30px;
+		text-align: center;
 	}
 
 	.u-td1 {

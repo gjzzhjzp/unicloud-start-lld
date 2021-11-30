@@ -15,7 +15,7 @@ function notMoreTap(means,clickName, ...data) {
 				}
 				setTimeout(()=> {
 						that[clickName] = true;
-				}, 1000)
+				}, 2000)
 		} else {
 				// uni.showToast({
 				// 	title:'请不要重复点击',

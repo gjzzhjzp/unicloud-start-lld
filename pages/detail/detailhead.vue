@@ -30,10 +30,13 @@
 				</view>
 			</view>
 		</view>
+		<view class="detail-image-sx3">
+			<view class="detail-image-sx31"><u-icon name="eye" :size="30"></u-icon>浏览量：{{data.view_count||0}}</view>
+			<view class="detail-image-sx32"><u-icon name="heart" :size="30"></u-icon>收藏量：{{data.like_count||0}}</view>
+		</view>
 		<u-toast ref="uToast" />
 	</view>
 </template>
-
 <script>
 	import detail from "./detail.js"
 	export default{
@@ -72,11 +75,20 @@
 </script>
 
 <style>
+	.detail-image-sx3{
+		display: flex;
+		color: #909399;
+		margin: 10px 6px;
+		justify-content: space-between;
+	}
+	.detail-image-sx31,.detail-image-sx32{
+		display: flex;
+	}
 	.detail-image-sc1{
 		display: flex;
 	}
-	.detail-image-sc1 .u-icon{
-		    margin-top: 2px;
+	.detail-image-sc1 .u-icon,.detail-image-sx3 .u-icon{
+		    margin-top: 3px;
 		    margin-right: 2px;
 	}
 	.detail-image-ly{

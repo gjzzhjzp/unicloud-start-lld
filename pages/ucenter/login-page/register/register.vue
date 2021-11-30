@@ -37,7 +37,8 @@
 			</view>
 			<u-modal v-model="showmodel" :show-cancel-button="true" @confirm="confirmnc" width="85%">
 				<view class="slot-content">
-					<view style="text-indent: 2em;">请确认微博主页地址【{{formData.weiboname}}】输入正确，并在自己微博发送一条【{{formData.weibocontent}}】的微博。</view>
+					<view style="text-indent: 2em;">
+						请确认微博主页地址【{{formData.weiboname}}】输入正确，并在自己微博发送一条【{{formData.weibocontent}}】的微博。</view>
 					<view style="text-indent: 2em;">如你确认无误，请点击确认按钮申请，管理员在24h内审核微博通过后可重新进入本系统。</view>
 				</view>
 			</u-modal>
@@ -58,20 +59,20 @@
 					'password': '',
 					'pwd2': '',
 					'weiboname': "", ////微博昵称
-					"weibocontent":"山河不足重，重在遇知己"
+					"weibocontent": "山河不足重，重在遇知己"
 				},
 				rules,
 				agree: true
 			}
 		},
-		created(){
-			var weibonc=getApp().globalData.weiboyz;
-			var index=parseInt(Math.random()*weibonc.length);
-			this.$set(this.formData,"weibocontent",weibonc[index]);
+		created() {
+			var weibonc = getApp().globalData.weiboyz;
+			var index = parseInt(Math.random() * weibonc.length);
+			this.$set(this.formData, "weibocontent", weibonc[index]);
 		},
 		onReady() {
 			this.$refs.form.setRules(this.rules);
-			
+
 		},
 		onLoad() {
 			uni.setNavigationBarTitle({
@@ -90,7 +91,7 @@
 					mask: true
 				})
 				this.$refs.form.validate().then((res) => {
-						console.log("res",res);
+						console.log("res", res);
 						this.showmodel = true;
 					}).catch((errors) => {
 						console.log(errors);
@@ -99,12 +100,12 @@
 						uni.hideLoading()
 					});
 			},
-			confirmnc(){
+			confirmnc() {
 				this.submitForm(this.formData);
-				this.showmodel=false;
+				this.showmodel = false;
 			},
 			submitForm(params) {
-				console.log("params",params);
+				console.log("params", params);
 				uniCloud.callFunction({
 					name: 'uni-id-cf',
 					data: {
@@ -116,7 +117,7 @@
 					}) => {
 						console.log(result);
 						if (result.code === 0) {
-							uni.setStorageSync("userInfo",result.userInfo); 
+							uni.setStorageSync("userInfo", result.userInfo);
 							uni.showModal({
 								title: '提示',
 								showCancel: false,
@@ -125,10 +126,12 @@
 								success: function(res) {
 									if (res.confirm) {
 										console.log("在这里退出App");
+										// #ifdef APP-PLUS  
+										plus.runtime.quit();
+										// #endif
 									}
 								}
 							});
-							
 							// this.loginSuccess(result)
 						} else {
 							uni.showModal({
@@ -145,9 +148,11 @@
 
 <style>
 	@import url("../common/login-page.css");
-	.slot-content{
+
+	.slot-content {
 		padding: 10px;
 	}
+
 	.er-register .title {
 		font-size: 24px;
 		margin-bottom: 30px;

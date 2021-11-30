@@ -16,13 +16,16 @@
 			<jz-sy-list ref="sylist4" title="同人文" label="同人文"></jz-sy-list>
 		</view>
 		<jz-tabbar></jz-tabbar>
+		<jz-gonggao ref="gonggao"></jz-gonggao>
 	</view>
 </template>
 <script>
+	import gonggao from "@/common/gonggao.js"
 	export default {
 		data() {
 			return {}
 		},
+		mixins: [gonggao],
 		// 下拉刷新
 		onPullDownRefresh(){
 			this.$refs.banner.getList();

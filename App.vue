@@ -1,7 +1,8 @@
 <script>
 	import initApp from '@/common/appInit.js';
 	import openApp from '@/common/openApp.js';
-	import checksh from "@/common/checksh.js"
+	import checksh from "@/common/checksh.js";
+
 	export default {
 		globalData: {
 			searchText: '',
@@ -10,6 +11,7 @@
 			$i18n: {},
 			$t: {}
 		},
+		
 		mixins:[checksh],
 		onLaunch: function() {
 			console.log('App Launch')
@@ -52,7 +54,6 @@
 			console.log('App Hide');
 		},
 		methods: {
-			
 			// 获取配置项和微博内容
 			getConfig() {
 				uniCloud.callFunction({
@@ -64,7 +65,6 @@
 					var res = res.result;
 					var config = {};
 					var weiboyz = [];
-					console.log("res", res);
 					if (res.state == "0000") {
 						var configdata = res.data.config;
 						var weiboyzdata = res.data.weiboyz;
@@ -116,10 +116,6 @@
 						uni.redirectTo({
 							url: "/uview-ui/components/u-full-screen/u-full-screen"
 						})
-						// uni.showToast({
-						// 	title:res.msg,
-						// 	icon:null
-						// })
 					}
 				});
 			}

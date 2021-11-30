@@ -32,9 +32,11 @@
 			</scroll-view>
 		</view>
 		<jz-tabbar></jz-tabbar>
+		<jz-gonggao ref="gonggao"></jz-gonggao>
 	</view>
 </template>
 <script>
+	import gonggao from "@/common/gonggao.js"
 	export default {
 		data() {
 			return {
@@ -52,6 +54,7 @@
 				sortList:[]///分类数据
 			}
 		},
+		mixins: [gonggao],
 		onLoad() {
 			
 		},
@@ -81,7 +84,7 @@
 			},
 			async getList(){
 				const db = uniCloud.database();
-				var categories=await db.collection("opendb-news-categories").get({
+				var categories=await db.collection("opendb-news-categories").orderBy("sort","asc").get({
 					getTree:{
 						startWith:"flbm=='100000'"////分类顶级编码
 					}

@@ -164,7 +164,6 @@ module.exports = class resourceService extends Service {
 					"last_modify_date": -1
 				}).skip((page - 1) * rows).limit(rows);
 			}
-			// console.log("collection_query",collection_query);
 			var resultdata = await collection_query.lookup({
 					from: 'uni-id-users',
 					localField: 'user_id',
@@ -172,21 +171,30 @@ module.exports = class resourceService extends Service {
 					as: 'userinfo',
 				})
 				.end();
-				var app_bbh=data.app_bbh;
-				if(app_bbh>=107){
-					return {
-						"state": "0000",
-						"rows": resultdata.data,
-						"total": resultdata.data.length,
-						"msg": "查询成功"
-					};
+				if(type == "tj"){
+						return {
+							"state": "0000",
+							"rows": resultdata.data,
+							"total": resultdata.data.length,
+							"msg": "查询成功"
+						};
 				}else{
-					return {
-						"state": "0000",
-						"rows": [],
-						"total": 0,
-						"msg": "查询成功"
-					};
+					var app_bbh=data.app_bbh;
+					if(app_bbh>=107){
+						return {
+							"state": "0000",
+							"rows": resultdata.data,
+							"total": resultdata.data.length,
+							"msg": "查询成功"
+						};
+					}else{
+						return {
+							"state": "0000",
+							"rows": [],
+							"total": 0,
+							"msg": "查询成功"
+						};
+					}
 				}
 		} catch (e) {
 			console.log("e", e);

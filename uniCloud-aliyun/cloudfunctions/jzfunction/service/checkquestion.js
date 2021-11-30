@@ -12,11 +12,14 @@ module.exports = class checkquestionService extends Service {
 		const collection = db.collection('jz-custom-question');
 		var datalist = await collection.where(
 			dbCmd.or({
-				_id: event[0]._id
+				_id: event[0]._id,
+				status:true
 			},{
-				_id: event[1]._id
+				_id: event[1]._id,
+				status:true
 			},{
-				_id: event[2]._id
+				_id: event[2]._id,
+				status:true
 			})
 		).get();
 		var result = datalist.data;

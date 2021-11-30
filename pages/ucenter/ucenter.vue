@@ -79,7 +79,7 @@
 							"thumb": "/static/center/yqm.png"
 						},
 						{
-							"title": this.$t('mine.feedback'),
+							"title": "意见反馈",
 							"to": '/uni_modules/uni-feedback/pages/opendb-feedback/opendb-feedback',
 							"thumb": "/static/center/question.png"
 						}

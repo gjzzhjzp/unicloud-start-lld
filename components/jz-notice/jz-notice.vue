@@ -37,7 +37,7 @@
 				var resultdata = await collection.where({
 					type:this.type
 				}).get();
-				console.log("足迹",resultdata);
+				// console.log("足迹",resultdata);
 				var rows=resultdata.result.data;
 				rows.forEach((item)=>{
 					this.list.push(item.content);

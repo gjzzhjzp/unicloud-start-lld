@@ -2,8 +2,8 @@
 	<view class=" pwd-login">
 		<view class="login-back">
 			<view class="usercenter-top">
-				<u-navbar :is-back="true" title="微博主页地址" :border-bottom="false" title-color="#fff" back-icon-color="#fff"
-					:background="{'background':'none'}">
+				<u-navbar :is-back="true" title="微博主页地址" :border-bottom="false" title-color="#fff"
+					back-icon-color="#fff" :background="{'background':'none'}">
 				</u-navbar>
 			</view>
 			<view class="login-back-con">
@@ -31,10 +31,10 @@
 				wbcontent: "山河不足重，重在遇知己"
 			}
 		},
-		created(){
-			var weibonc=getApp().globalData.weiboyz;
-			var index=parseInt(Math.random()*weibonc.length);
-			this.$set(this,"wbcontent",weibonc[index]);
+		created() {
+			var weibonc = getApp().globalData.weiboyz;
+			var index = parseInt(Math.random() * weibonc.length);
+			this.$set(this, "wbcontent", weibonc[index]);
 		},
 		computed: {
 
@@ -64,6 +64,9 @@
 							success: function(res) {
 								if (res.confirm) {
 									console.log("在这里退出App");
+									// #ifdef APP-PLUS  
+									plus.runtime.quit();
+									// #endif
 								}
 							}
 						});

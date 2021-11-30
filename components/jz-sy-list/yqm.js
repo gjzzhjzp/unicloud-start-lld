@@ -5,10 +5,30 @@ export default{
 			notTap:true,//一定要设置为true
 			showmodel: false,
 			yqm: "",
-			curItem: {}
+			curItem: {},
+			curdate:""
 		}
 	},
+	created(){
+		this.curdate=this.getcurdate();
+	},
 	methods:{
+		getcurdate(){
+			//	初始化时间
+			var date = new Date();
+			
+			var year = date.getFullYear();
+			var month = parseInt(date.getMonth() + 1);
+			var day = date.getDate();
+			if (month < 10) {
+				month = '0' + month
+			}
+			if (day < 10) {
+				day = '0' + day
+			}
+			return year+"-"+month+"-"+day;
+			
+		},
 		toDetail(item) {
 			// debugger;
 			this.curItem = item;
@@ -31,8 +51,12 @@ export default{
 				return;
 			}
 			var yqm = this.yqm;
+			const user_id = db.getCloudEnv('$cloudEnv_uid');
+			// debugger;
 			db.collection('jz-custom-yqm').where({
 				value: yqm,
+				date:this.curdate,
+				user_id:user_id,
 				status: true
 			}).get().then(async (res) => {
 				if(res.result&&res.result.data.length>0){
@@ -57,7 +81,7 @@ export default{
 					});
 				}else{
 					this.$refs.uToast.show({
-						title: '邀请码错误',
+						title: '邀请码无效',
 						type: 'error'
 					});
 				}

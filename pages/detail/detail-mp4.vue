@@ -1,22 +1,25 @@
 <template>
 	<view class="detail-image">
-		<detailhead :data="data"></detailhead>
-		<view class="detail-image-item" v-for="(item,index) in data.resources" :key="index">
-			<video id="myVideo" :src="item.url" controls></video>
-		</view>
+		<detailhead-mp4 :data="data">
+			<template slot="content">
+				<view class="detail-image-item" v-for="(item,index) in data.resources" :key="index">
+					<video id="myVideo" :src="item.url" controls></video>
+				</view>
+			</template>
+		</detailhead-mp4>
 		<u-toast ref="uToast" />
 	</view>
 </template>
 <script>
 	import detail from "./detail.js"
-	import detailhead from "./detailhead.vue"
+	import detailheadMp4 from "./detailheadMp4.vue"
 	export default {
 		data() {
 			return {
 				imgs: []
 			}
 		},
-		components:{detailhead},
+		components:{detailheadMp4},
 		mixins:[detail],
 		props: {
 			data: {

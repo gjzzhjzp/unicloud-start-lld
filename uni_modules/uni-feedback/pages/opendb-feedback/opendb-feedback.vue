@@ -6,12 +6,16 @@
 		</view>
 		<view class="jz-container">
 			<uni-forms ref="form" :value="formData" validate-trigger="submit" err-show-type="toast">
-				<uni-forms-item name="content" label="意见建议" required>
+				<uni-forms-item name="type" label="类型" required>
+					<uni-data-checkbox v-model="formData.type" :localdata="formOptions.type_localdata">
+					</uni-data-checkbox>
+				</uni-forms-item>
+				<uni-forms-item name="content" label="内容" required>
 					<textarea @input="binddata('content', $event.detail.value)" class="uni-textarea-border"
 						v-model="formData.content" trim="right"></textarea>
 				</uni-forms-item>
 				<uni-forms-item name="imgs" label="图片列表">
-					<uni-file-picker file-mediatype="image" :limit="6" return-type="array" v-model="formData.imgs">
+					<uni-file-picker file-mediatype="image" return-type="array" v-model="formData.imgs">
 					</uni-file-picker>
 				</uni-forms-item>
 				<uni-forms-item name="contact" label="联系方式">
@@ -50,11 +54,26 @@
 				"content": "",
 				"imgs": [],
 				"contact": "",
-				"mobile": ""
+				"mobile": "",
+				"type":0
 			}
 			return {
 				formData,
-				formOptions: {},
+				formOptions: {
+					"type_localdata": [{
+							"value": 0,
+							"text": "系统bug"
+						},
+						{
+							"value": 1,
+							"text": "意见建议"
+						},
+						{
+							"value": 2,
+							"text": "我有话说"
+						}
+					]
+				},
 				rules: {
 					...getValidator(Object.keys(formData))
 				}

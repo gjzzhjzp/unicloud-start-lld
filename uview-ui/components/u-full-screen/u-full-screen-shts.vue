@@ -21,9 +21,10 @@
 		},
 		onReady() {
 			this.show = true;
-		},
-		created(){
-		console.log("22222222222222222222222222")	
+			var config=getApp().globalData.config;
+			if(config["800010"]){
+				this.content=config["800010"];
+			}
 		},
 		methods: {
 			cancel() {

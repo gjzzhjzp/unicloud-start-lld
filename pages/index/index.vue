@@ -6,7 +6,7 @@
 				@search="$notMoreTap(tosearch,'notTap')" @custom="$notMoreTap(tosearch,'notTap')" :show-action="true">
 			</u-search>
 		</jz-navbar>
-		<jz-notice :type="2" mode="horizontal"></jz-notice>
+		<jz-notice ref="notice" :type="2" mode="horizontal"></jz-notice>
 		<view class="jz-container">
 			<view>
 				<jz-banner ref="banner"></jz-banner>
@@ -20,16 +20,19 @@
 			<jz-sy-list ref="sylist3" title="山河令" label="山河令"></jz-sy-list>
 			<!-- <jz-sy-list ref="sylist4" title="夺笋" label="夺笋"></jz-sy-list> -->
 			<jz-tabbar></jz-tabbar>
+			<jz-gonggao ref="gonggao"></jz-gonggao>
 		</view>
 	</view>
 </template>
 <script>
+	import gonggao from "@/common/gonggao.js"
 	export default {
 		data() {
 			return {
 				notTap: true //一定要设置为true
 			}
 		},
+		mixins: [gonggao],
 		// 下拉刷新
 		onPullDownRefresh() {
 			this.$refs.banner.getList();

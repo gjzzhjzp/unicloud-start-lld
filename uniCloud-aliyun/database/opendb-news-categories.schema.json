@@ -59,10 +59,7 @@
 		"sort": {
 			"bsonType": "int",
 			"description": "类别显示顺序",
-			"label": "排序",
-			"permission": {
-				"write": false
-			}
+			"label": "排序"
 		},
 		"article_count": {
 			"bsonType": "int",

@@ -19,6 +19,10 @@
 		},
 		onReady() {
 			this.show = true;
+			var config=getApp().globalData.config;
+			if(config["800009"]){
+				this.content=config["800009"];
+			}
 		},
 		methods: {
 			cancel() {

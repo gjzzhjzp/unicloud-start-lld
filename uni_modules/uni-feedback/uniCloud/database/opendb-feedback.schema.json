@@ -1,6 +1,6 @@
 {
 	"bsonType": "object",
-	"required": ["content"],
+	"required": ["content","type"],
 	"permission": {
 		"create": "auth.uid != null",
 		"read": true,
@@ -10,6 +10,25 @@
 	"properties": {
 		"_id": {
 			"description": "ID，系统自动生成"
+		},
+		"type": {
+			"bsonType": "int",
+			"title": "留言类型",
+			"description": "留言类型：0 系统bug 1 意见建议 2 我有话说",
+			"defaultValue": 0,
+			"enum": [{
+					"value": 0,
+					"text": "系统bug"
+				},
+				{
+					"value": 1,
+					"text": "意见建议"
+				},
+				{
+					"value": 2,
+					"text": "我有话说"
+				}
+			]
 		},
 		"user_id": {
 			"bsonType": "string",
@@ -37,36 +56,13 @@
 		"imgs": {
 			"bsonType": "array",
 			"arrayType": "file",
-			"maxLength": 6,
 			"fileMediaType": "image",
 			"title": "图片列表"
-		},
-		"is_reply": {
-			"bsonType": "bool",
-			"title": "是否是回复类型"
-		},
-		"feedback_id": {
-			"bsonType": "string",
-			"title": "被回复留言ID"
 		},
 		"contact": {
 			"bsonType": "string",
 			"title": "联系人",
 			"trim": "both"
-		},
-		"mobile": {
-			"bsonType": "string",
-			"title": "联系电话",
-			"pattern": "^\\+?[0-9-]{3,20}$",
-			"trim": "both"
-		},
-		"reply_count": {
-			"permission": {
-				"write": false
-			},
-			"bsonType": "int",
-			"title": "被回复条数",
-			"defaultValue": 0
 		}
 	}
 }

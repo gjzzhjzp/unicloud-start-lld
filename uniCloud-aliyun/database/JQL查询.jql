@@ -34,7 +34,7 @@ db.collection("jz-opendb-resources").where({
 	categories: null
 }).get();
 // 全部删除
-db.collection("opendb-news-history").where({
+db.collection("jz-custom-fks").where({
 	_id: db.command.neq(null)
 }).remove()
 

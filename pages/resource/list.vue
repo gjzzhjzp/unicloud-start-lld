@@ -15,13 +15,13 @@
 				@change="changeTabs"></u-tabs>
 		</view>
 		<view class="search-row">
-			<text :class="['search-row-col',item.selected?'selected':'']" v-for="(item,index) in searchrows" :key="index"
-				@click="searchType(item)">{{item.name}}
+			<text :class="['search-row-col',item.selected?'selected':'']" v-for="(item,index) in searchrows"
+				:key="index" @click="searchType(item)">{{item.name}}
 				<u-icon size="20" name="arrow-down-fill"></u-icon>
 			</text>
 		</view>
 		<view v-if="showTag" style="margin-left: 10px;">
-			<u-tag :text="tagname" mode="light"  closeable :show="showTag" @close="closetagClick"/>
+			<u-tag :text="tagname" mode="light" closeable :show="showTag" @close="closetagClick" />
 		</view>
 		<view v-if="currenttab!=2">
 			<item-list :list="flowList"></item-list>
@@ -35,7 +35,8 @@
 			</u-waterfall> -->
 		</view>
 		<view v-else>
-			<music-list :list="flowList_mp3" :is-empty="isEmpty" :load-status="loadStatus" @loadmore="loadmoreList"></music-list>
+			<music-list :list="flowList_mp3" :is-empty="isEmpty" :load-status="loadStatus" @loadmore="loadmoreList">
+			</music-list>
 		</view>
 		<template v-if="currenttab!=2">
 			<template v-if="isEmpty">
@@ -57,8 +58,8 @@
 	export default {
 		data() {
 			return {
-				tagname:"",////tag标签
-				showTag:false,
+				tagname: "", ////tag标签
+				showTag: false,
 				keyword: "",
 				scrollTop: 0,
 				loadStatus: 'loadmore',
@@ -107,7 +108,7 @@
 				}
 			}
 		},
-		mixins:[search],
+		mixins: [search],
 		components: {
 			itemList,
 			musicList
@@ -119,11 +120,11 @@
 		},
 		onLoad(e) {
 			// debugger;
-			console.log("onLoad", e);
-			if(e.flmc&&e.flbm){
-				this.showTag=true;
-				this.tagname=e.flmc;
-				this.categories=e.flbm||"";
+			// console.log("onLoad", e);
+			if (e.flmc && e.flbm) {
+				this.showTag = true;
+				this.tagname = e.flmc;
+				this.categories = e.flbm || "";
 			}
 			// this.categories = e.categories || "";
 			this.type = e.type || "zx";
@@ -154,9 +155,9 @@
 			}
 		},
 		methods: {
-			closetagClick(){
-				this.showTag=false;
-				this.categories="";
+			closetagClick() {
+				this.showTag = false;
+				this.categories = "";
 				this.resetlist();
 			},
 			resetlist() {
@@ -182,8 +183,8 @@
 				this.resetlist();
 			},
 			confirm() {
-				var value=this.keyword;
-				if(value){
+				var value = this.keyword;
+				if (value) {
 					this.localSearchListManage(value);
 					this.searchLogDbAdd(value)
 				}
@@ -193,7 +194,10 @@
 				uni.showLoading({
 					title: '加载中...'
 				});
-				// debugger;
+				var app_bbh = "107";
+				//#ifdef APP-PLUS
+				app_bbh = plus.runtime.versionCode;
+				//#endif
 				uniCloud.callFunction({
 					name: 'jzfunction',
 					data: {
@@ -205,11 +209,11 @@
 							zy_gs: this.zy_gs,
 							page: this.param.page,
 							rows: this.param.rows,
-							app_bbh:"107"
+							app_bbh: app_bbh
 						}
 					},
 				}).then((res) => {
-					console.log("getList", res.result);
+					// console.log("getList", res.result);
 					var res = res.result;
 					if (this.reset) {
 						if (this.zy_gs == '2') {
@@ -227,7 +231,7 @@
 							} else {
 								this.flowList.push(item);
 							}
-							
+
 						});
 						if (this.list.length < this.param.rows) {
 							this.loadStatus = 'nomore';
@@ -235,12 +239,12 @@
 							this.loadStatus = 'loadmore';
 							this.param.page++;
 						}
-						console.log("this.flowList", this.flowList);
-						var resultlength=0;
+						// console.log("this.flowList", this.flowList);
+						var resultlength = 0;
 						if (this.zy_gs == '2') {
-							resultlength=this.flowList_mp3.length;
+							resultlength = this.flowList_mp3.length;
 						} else {
-							resultlength=this.flowList.length;
+							resultlength = this.flowList.length;
 						}
 						if (resultlength == 0) {
 							this.isEmpty = true;
@@ -258,8 +262,6 @@
 </script>
 
 <style>
-	
-
 	.search-row {
 		padding: 8px 10px;
 		background: #fff;

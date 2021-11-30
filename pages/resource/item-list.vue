@@ -1,8 +1,9 @@
 <template>
 	<view class="er-item-list">
-		<view class="er-item-list-warter" v-for="(item, index) in list" :key="index" @click="toDetail(item)">
+		<view class="er-item-list-warter" v-for="(item, index) in list" :key="index" @click="$notMoreTap(toDetail,'notTap',item)">
 			<view class="er-item-list-warter1">
-				<u-lazy-load threshold="300" height="200" border-radius="10" img-mode="aspectFill" :image="imageUrl(item)" :index="index"></u-lazy-load>
+				<u-lazy-load threshold="300" height="200" border-radius="10" img-mode="aspectFill"
+					:image="imageUrl(item)" :index="index"></u-lazy-load>
 				<view style="padding: 8px;">
 					<!-- <view class="er-item-list-bq">
 						<view v-for="(item1,index1) in item.labelarr" :key="index1">
@@ -42,7 +43,7 @@
 	export default {
 		data() {
 			return {
-
+				notTap: true, //一定要设置为true
 			}
 		},
 		mixins: [yqm],
@@ -54,18 +55,18 @@
 				}
 			}
 		},
-		watch:{
-			list(){
-				this.list.forEach((item)=>{
-					if(item.labels){
-						var arr=[];
-						var _labels=item.labels.split("，");
-						_labels.forEach((item1)=>{
-							if(item1){
+		watch: {
+			list() {
+				this.list.forEach((item) => {
+					if (item.labels) {
+						var arr = [];
+						var _labels = item.labels.split("，");
+						_labels.forEach((item1) => {
+							if (item1) {
 								arr.push(item1);
 							}
 						})
-						this.$set(item,"labelarr",arr);
+						this.$set(item, "labelarr", arr);
 					}
 				});
 			}
@@ -74,7 +75,7 @@
 			console.log("list", this.list);
 		},
 		methods: {
-			
+
 			imageUrl(item) {
 				var url = "";
 				if (Array.isArray(item.avatar)) {
@@ -161,20 +162,20 @@
 		align-items: center;
 	}
 
-	.er-item-list .er-item-list-warter {
-		
-	}
+	.er-item-list .er-item-list-warter {}
 
 	.er-item-list-right {
 		display: flex;
 		justify-content: center;
 		align-items: center;
 	}
-	.er-item-list .er-item-list-warter{
+
+	.er-item-list .er-item-list-warter {
 		width: 50%;
 		display: inline-block;
 	}
-	.er-item-list-warter1{
+
+	.er-item-list-warter1 {
 		box-shadow: 0px 0px 6px #d5d5d6;
 		border-radius: 10px;
 		margin: 10px;

@@ -27,7 +27,14 @@
 			"bsonType": "string",
 			"title": "配置项值",
 			"description": "配置项值",
-			"trim": "both"
+			"trim": "both",
+			"component":{
+				"props":{
+					"type":"textarea",
+					"autoHeight":true,
+					"maxlength":1000
+				}
+			}
 		},
 		"config_describe": {
 			"bsonType": "string",

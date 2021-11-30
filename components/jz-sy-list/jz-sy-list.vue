@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="jz-sy-list-section">
-			<u-section line-color="#7275D3" :title="title" :right="showright" sub-title="查看更多>>" :arrow="false"
+			<u-section line-color="#7275D3" :font-size="32" :title="title" :right="showright" sub-title="查看更多>>" :arrow="false"
 				@click="$notMoreTap(tomore,'notTap')"></u-section>
 		</view>
 		<view class="jz-sy-list">
@@ -10,8 +10,9 @@
 					<u-col span="6" class="jz-sy-item" v-for="(item,index) in list" :key="index">
 						<view class="jz-sy-list-item" @click="$notMoreTap(toDetail,'notTap',item)">
 							<view>
-								<u-lazy-load  threshold="300" height="200rpx" border-radius="10" img-mode="aspectFill" :image="imageUrl(item)"></u-lazy-load>
-								
+								<u-lazy-load threshold="300" height="200rpx" border-radius="10" img-mode="aspectFill"
+									:image="imageUrl(item)"></u-lazy-load>
+
 								<!-- <u-image width="100%" height="140rpx" border-radius="10" :src="imageUrl(item)">
 								</u-image> -->
 							</view>
@@ -40,7 +41,7 @@
 	export default {
 		data() {
 			return {
-				notTap:true,//一定要设置为true
+				notTap: true, //一定要设置为true
 				list: [],
 				where: "",
 				isEmpty: true
@@ -67,9 +68,9 @@
 					return ""
 				}
 			},
-			showright:{
-				type:Boolean,
-				default(){
+			showright: {
+				type: Boolean,
+				default () {
 					return true
 				}
 			}
@@ -80,10 +81,10 @@
 			this.getList();
 		},
 		methods: {
-			imageUrl(item){
-				if(Array.isArray(item.avatar)){
+			imageUrl(item) {
+				if (Array.isArray(item.avatar)) {
 					return item.avatar[0].url;
-				}else{
+				} else {
 					return item.avatar.url;
 				}
 			},
@@ -99,20 +100,24 @@
 				}
 			},
 			getList() {
-				var param= {
-							type: this.type,
-							label: this.label,
-							zy_gs: [0, 1, 3],
-							page: 1,
-							rows: 4,
-							app_bbh:"107"
-						}
-				console.log("param",param);
+				var app_bbh="107";
+				//#ifdef APP-PLUS
+				app_bbh = plus.runtime.versionCode;
+				//#endif
+				var param = {
+					type: this.type,
+					label: this.label,
+					zy_gs: [0, 1, 3],
+					page: 1,
+					rows: 4,
+					app_bbh: app_bbh
+				}
+				// console.log("param", param);
 				uniCloud.callFunction({
 					name: 'jzfunction',
 					data: {
 						action: 'resource/getList',
-						data:param
+						data: param
 					},
 				}).then((res) => {
 					var res = res.result;
@@ -150,6 +155,6 @@
 	}
 
 	.jz-sy-list-section {
-		margin: 10rpx 0px;
+		margin: 14rpx 0px;
 	}
 </style>

@@ -1,6 +1,6 @@
 {
 	"bsonType": "object",
-	"required": ["content","number"],
+	"required": ["content","title","number"],
 	"permission": {
 		"read": true,
 		"create": true,
@@ -15,6 +15,11 @@
 			"bsonType": "string",
 			"description": "公告编号",
 			"title": "公告编号"
+		},
+		"title": {
+			"bsonType": "string",
+			"description": "标题",
+			"title": "标题"
 		},
 		"content": {
 			"bsonType": "string",

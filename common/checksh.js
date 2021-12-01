@@ -12,19 +12,23 @@ export default{
 			if (!istgzcsh) {
 				this.checkwbsftg().then((flag)=>{
 					if(flag){
-						uni.showModal({
-							title: '提示',
-							showCancel: false,
-							confirmText: "确定",
-							content: '你的微博审核已通过，请重新登陆',
-							success: function(res) {
-								if (res.confirm) {
-									uni.redirectTo({
-										url: "/pages/ucenter/login-page/pwd-login/pwd-login"
-									});
-								}
-							}
+						uni.redirectTo({
+							url: "/uview-ui/components/u-full-screen/u-full-screen-shtg"
 						});
+						
+						// uni.showModal({
+						// 	title: '提示',
+						// 	showCancel: false,
+						// 	confirmText: "确定",
+						// 	content: '你的微博审核已通过，请重新登陆',
+						// 	success: function(res) {
+						// 		if (res.confirm) {
+						// 			uni.redirectTo({
+						// 				url: "/pages/ucenter/login-page/pwd-login/pwd-login"
+						// 			});
+						// 		}
+						// 	}
+						// });
 					}else{
 						uni.redirectTo({
 							url: "/uview-ui/components/u-full-screen/u-full-screen-shts"
@@ -50,10 +54,12 @@ export default{
 					reslove(false);
 					return;
 				}
+				// debugger;
 				const collection = db.collection('uni-id-users');
 				var result=await collection.where({
 					username:username
 				}).field("username,isbdwb,weiboname,weibocontent,nickname").get();
+				console.log("result11111111111",result);
 				if(result.result.data&&result.result.data.length>0){
 					var data=result.result.data[0];
 					if(data.isbdwb){

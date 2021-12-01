@@ -1,7 +1,7 @@
 const {
 	Service
 } = require('uni-cloud-router')
-
+const BASE64=require("./common/base64.js")
 module.exports = class resourceService extends Service {
 	async add_like() {
 		try {
@@ -87,6 +87,16 @@ module.exports = class resourceService extends Service {
 			};
 		}
 	}
+	async  getUserRole(ctx) {
+		var _token = ctx.event.uniIdToken;
+		var __token ={};
+		if(_token){
+			_token = _token.split(".")[1];
+			var __token = BASE64.decode(_token);
+			__token=JSON.parse(__token.split("}")[0]+"}");
+		}
+		return __token.role;
+	}
 	// 获取资源列表
 	async getList() {
 		try {
@@ -98,25 +108,31 @@ module.exports = class resourceService extends Service {
 			var rows = data.rows || 10;
 			var page = data.page || 1;
 			var zy_gs = "";
+			// return ;
 			const collection = db.collection('jz-opendb-resources');
 			const collectionconfig = db.collection('jz-custom-config');
-			var config_800001=await collectionconfig.where({
-				config_bm:"800001"
+			var config_800001 = await collectionconfig.where({
+				config_bm: "800001"
 			}).get();
-			var config_800001_value=config_800001.data[0].config_val;
-			
+			var config_800001_value = config_800001.data[0].config_val;
 			var where_obj = {
-				"article_status": 1
+				"article_status": 1,
+				"is_off": db.command.neq(1)
 			}
-			if(data.categories){
+			// 如果是管理员，读取全部资源，包括下架资源
+			var roles=await this.getUserRole(context);
+			if(roles&&(roles.indexOf("Master")!=-1||roles.indexOf("AUDITOR")!=-1)){
+				delete where_obj.is_off;
+			}
+			if (data.categories) {
 				Object.assign(where_obj, {
 					"categories": new RegExp(data.categories, 'gi')
 				});
 			}
-			if(config_800001_value=='0'){///=1读取未授权资源，=0只读取授权资源
-			Object.assign(where_obj, {
-				is_grant: 1
-			});
+			if (config_800001_value == '0') { ///=1读取未授权资源，=0只读取授权资源
+				Object.assign(where_obj, {
+					is_grant: 1
+				});
 			}
 			if (typeof data.zy_gs != "object") {
 				zy_gs = parseInt(data.zy_gs) || 0;
@@ -142,7 +158,6 @@ module.exports = class resourceService extends Service {
 			} else {
 				where = where_obj;
 			}
-			// console.log("where222222222", where);
 			var collection_query = null;
 			if (type == "zx") {
 				collection_query = collection.aggregate().match(where).sort({
@@ -156,9 +171,9 @@ module.exports = class resourceService extends Service {
 				collection_query = collection.aggregate().match(where).sort({
 					"like_count": -1
 				}).skip((page - 1) * rows).limit(rows);
-			}else if (type == "tj") {
-				Object.assign(where,{
-					is_recommend:1
+			} else if (type == "tj") {
+				Object.assign(where, {
+					is_recommend: 1
 				});
 				collection_query = collection.aggregate().match(where).sort({
 					"last_modify_date": -1
@@ -171,31 +186,31 @@ module.exports = class resourceService extends Service {
 					as: 'userinfo',
 				})
 				.end();
-				if(type == "tj"){
-						return {
-							"state": "0000",
-							"rows": resultdata.data,
-							"total": resultdata.data.length,
-							"msg": "查询成功"
-						};
-				}else{
-					var app_bbh=data.app_bbh;
-					if(app_bbh>=107){
-						return {
-							"state": "0000",
-							"rows": resultdata.data,
-							"total": resultdata.data.length,
-							"msg": "查询成功"
-						};
-					}else{
-						return {
-							"state": "0000",
-							"rows": [],
-							"total": 0,
-							"msg": "查询成功"
-						};
-					}
+			if (type == "tj") {
+				return {
+					"state": "0000",
+					"rows": resultdata.data,
+					"total": resultdata.data.length,
+					"msg": "查询成功"
+				};
+			} else {
+				var app_bbh = data.app_bbh;
+				if (app_bbh >= 107) {
+					return {
+						"state": "0000",
+						"rows": resultdata.data,
+						"total": resultdata.data.length,
+						"msg": "查询成功"
+					};
+				} else {
+					return {
+						"state": "0000",
+						"rows": [],
+						"total": 0,
+						"msg": "查询成功"
+					};
 				}
+			}
 		} catch (e) {
 			console.log("e", e);
 			return {

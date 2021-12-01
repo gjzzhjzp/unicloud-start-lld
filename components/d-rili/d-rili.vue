@@ -173,9 +173,10 @@
 				this.getjilianri();
 			},
 			todetail() {
+				// debugger;
 				var rq = "";
-				var day = this.clickSelected;
-				if (day < 10) {
+				var day = this.clickSelected|| this.day;
+				if (day.toString().length < 2) {
 					day = '0' + day
 				}
 				rq = this.month + "-" + day;

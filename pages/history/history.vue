@@ -29,6 +29,8 @@
 <script>
 	import itemList from "../resource/item-list.vue"
 	import musicList from "../resource/musicList.vue"
+	
+	import userinfo from "../common/common/userinfo.js"
 	export default {
 		data() {
 			return {
@@ -57,6 +59,7 @@
 				}
 			}
 		},
+		mixins:[userinfo],
 		components: {
 			itemList,
 			musicList
@@ -90,7 +93,7 @@
 				this.addRandomData();
 			},
 			async addRandomData() {
-				// debugger;
+				var that=this;
 				if (this.$refs.uWaterfall) {
 					this.$refs.uWaterfall.clear();
 				}
@@ -104,9 +107,8 @@
 				var resultdata = await collection.where({
 					user_id: uid,
 					zy_gs: this.zy_gs
-				}).field('article_title,update_date,article_id{title,avatar,author,resources}').orderBy('update_date','desc')
+				}).field('article_title,update_date,article_id{title,avatar,author,resources,is_off,article_status}').orderBy('update_date','desc')
 				.skip(skip).limit(this.param.rows).get();
-				console.log("足迹", resultdata);
 				var rows = resultdata.result.data;
 				if(rows.length<this.param.rows){
 					this.loadStatus = 'nomore';
@@ -116,8 +118,15 @@
 				}
 				rows.forEach((item) => {
 					var obj = item.article_id[0];
-					if (obj) {
-						this.flowList.push(obj);
+					var roles = that.getuserrole();
+					if (roles.indexOf("Master") != -1 || roles.indexOf("AUDITOR") != -1) {
+						if (obj) {
+							this.flowList.push(obj);
+						}
+					} else {
+						if (obj && obj.article_status == 1 && obj.is_off != 1) {
+							this.flowList.push(obj);
+						}
 					}
 				});
 				uni.hideLoading();

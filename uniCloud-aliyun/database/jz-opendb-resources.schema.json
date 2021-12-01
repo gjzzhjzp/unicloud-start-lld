@@ -210,6 +210,21 @@
 					"text": "推荐"
 				}
 			]
+		},
+		"is_off": {
+			"bsonType": "int",
+			"title": "是否下架",
+			"description": "是否下架：0 不下架 1 下架",
+			"defaultValue": 0,
+			"enum": [{
+					"value": 0,
+					"text": "不下架"
+				},
+				{
+					"value": 1,
+					"text": "下架"
+				}
+			]
 		}
 	}
 }

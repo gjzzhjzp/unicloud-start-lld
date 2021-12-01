@@ -28,7 +28,7 @@
 					</template>
 				</view>
 			</view>
-			<view style="display: flex;">
+			<view style="display: flex;" v-show="showllsc">
 				<view class="detail-image-sx31">
 					<u-icon name="eye" :size="30"></u-icon>浏览量：{{data.view_count||0}}
 				</view>
@@ -63,7 +63,8 @@
 		data() {
 			return {
 				showmp4Xz: false,
-				labels: []
+				labels: [],
+				showllsc: true
 			}
 		},
 		props: {
@@ -74,12 +75,13 @@
 				}
 			}
 		},
-		created() {
+		mounted() {
 			// debugger;
 			var config = getApp().globalData.config;
 			var t_800005 = config["800005"];
+			var t_800011 = config["800011"];
 			this.showmp4Xz = t_800005 == '1' ? true : false;
-
+			this.showllsc = t_800011 == '1' ? true : false;
 			// debugger;
 			var labels = this.data.labels;
 			this.labels = labels.split("，");

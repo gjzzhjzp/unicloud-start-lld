@@ -163,10 +163,11 @@
 						success: res => {
 							if (res.confirm) {
 								this.logout();
-								uni.removeStorageSync("istgzcsh_success");
+								uni.clearStorageSync();///清除所有缓存
+								// uni.removeStorageSync("istgzcsh_success");
 								// uni.navigateBack();
-								uni.navigateTo({
-									url: '/pages/ucenter/login-page/pwd-login/pwd-login'
+								uni.redirectTo({
+									url: '/pages/question/question'
 								});
 							}
 						},
@@ -174,7 +175,7 @@
 						complete: () => {}
 					});
 				} else {
-					uni.navigateTo({
+					uni.redirectTo({
 						url: '/pages/ucenter/login-page/pwd-login/pwd-login'
 					});
 				}

@@ -29,6 +29,8 @@
 <script>
 	import itemList from "../resource/item-list.vue"
 	import musicList from "../resource/musicList.vue"
+	import userinfo from "../common/common/userinfo.js"
+
 	export default {
 		data() {
 			return {
@@ -61,6 +63,7 @@
 			itemList,
 			musicList
 		},
+		mixins: [userinfo],
 		onLoad() {
 			this.addRandomData();
 		},
@@ -68,13 +71,13 @@
 			this.scrollTop = e.scrollTop;
 		},
 		// 下拉刷新
-		onPullDownRefresh(){
-			this.param.page=1;
+		onPullDownRefresh() {
+			this.param.page = 1;
 			this.addRandomData();
 			uni.stopPullDownRefresh();
 		},
 		onReachBottom() {
-			if(this.loadStatus != 'nomore'){
+			if (this.loadStatus != 'nomore') {
 				this.loadStatus = 'loading';
 				setTimeout(() => {
 					this.addRandomData();
@@ -87,11 +90,12 @@
 				this.currenttab = index;
 				this.zy_gs = index;
 				// this.reset=true;
-				this.param.page=1;
+				this.param.page = 1;
 				this.flowList.splice(0, this.flowList.length);
 				this.addRandomData();
 			},
 			async addRandomData() {
+				var that = this;
 				if (this.$refs.uWaterfall) {
 					this.$refs.uWaterfall.clear();
 				}
@@ -103,10 +107,12 @@
 				const collection = db.collection('opendb-news-favorite,jz-opendb-resources,uni-id-users');
 				var skip = (this.param.page - 1) * this.param.rows || 0;
 				var resultdata = await collection.where({
-					user_id: uid,
-					zy_gs: this.zy_gs
-				}).field('article_title,article_id,create_date{title,avatar,author,resources}').orderBy('create_date','desc')
-				.skip(skip).limit(this.param.rows).get();
+						user_id: uid,
+						zy_gs: this.zy_gs
+					}).field(
+						'article_title,article_id,create_date{title,avatar,author,resources,is_off,article_status}')
+					.orderBy('create_date', 'desc')
+					.skip(skip).limit(this.param.rows).get();
 				var rows = resultdata.result.data;
 				if (rows.length < this.param.rows) {
 					this.loadStatus = 'nomore';
@@ -114,16 +120,25 @@
 					this.param.page++;
 					this.loadStatus = 'loadmore';
 				}
-				console.log("rows111", rows);
+				// console.log("rows111", rows);
 				rows.forEach((item) => {
 					var obj = item.article_id[0];
-					if (obj) {
-						delete obj.is_encryption;
-						this.flowList.push(obj);
+					// debugger;
+					var roles = that.getuserrole();
+					if (roles.indexOf("Master") != -1 || roles.indexOf("AUDITOR") != -1) {
+						if (obj) {
+							delete obj.is_encryption;
+							that.flowList.push(obj);
+						}
+					} else {
+						if (obj && obj.article_status == 1 && obj.is_off != 1) {
+							delete obj.is_encryption;
+							that.flowList.push(obj);
+						}
 					}
 				});
 				uni.hideLoading();
-			} ///,user_id{nickname,avatar}
+			}
 		}
 	}
 </script>

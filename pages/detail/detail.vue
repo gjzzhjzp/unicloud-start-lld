@@ -13,7 +13,8 @@
 					<detail-mp3 :data="detaildata"></detail-mp3>
 				</template>
 				<template v-else-if="zy_gs=='3'">
-					<detail-open :data="detaildata"></detail-open>
+					<detail-image :data="detaildata"></detail-image>
+					<!-- <detail-open :data="detaildata"></detail-open> -->
 				</template>
 			</template>
 			<template v-else>

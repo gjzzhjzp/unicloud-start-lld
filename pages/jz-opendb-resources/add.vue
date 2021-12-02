@@ -4,10 +4,10 @@
 		<view style="margin: 4px 0px;">
 			<!-- #ifdef H5 -->
 			<u-alert-tips type="warning" description="上传图片附件资源时多张上传请使用APP或QQ浏览器,
-				其他手机浏览器暂不支持多张同时上传,视频不能上传超过100M的视频,超过100M的视频走外链"></u-alert-tips>
+				其他手机浏览器暂不支持多张同时上传,视频不能上传超过100M的视频,超过100M的视频走外链,上传图片视频等需要等待进度条上传完成提交才有效"></u-alert-tips>
 			<!-- #endif -->
 			<!-- #ifdef APP-PLUS -->
-			<u-alert-tips type="warning" description="视频不能上传超过100M的视频,超过100M的走外链"></u-alert-tips>
+			<u-alert-tips type="warning" description="视频不能上传超过100M的视频,超过100M的走外链,上传图片视频等需要等待进度条上传完成提交才有效"></u-alert-tips>
 			<!-- #endif -->
 		</view>
 		<view class="jz-container">
@@ -20,7 +20,7 @@
 				</uni-forms-item>
 				<uni-forms-item name="categorieszw" label="分类">
 					<uni-easyinput placeholder="请选择分类" v-model="formData.categorieszw" trim="both"
-						@focus="opencategories">
+						@focus="opencategories" >
 					</uni-easyinput>
 					<yunmiao-cascader ref="cascader" value-name="flbm" :cascaderData="cascaderData"
 						@confirem="cascaderConfirem"></yunmiao-cascader>

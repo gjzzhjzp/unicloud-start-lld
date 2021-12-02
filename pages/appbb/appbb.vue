@@ -5,9 +5,9 @@
 			<view style="margin-bottom: 10px;">
 				您当前的版本是{{app_bbmc}},可升级到最新版本
 			</view>
-			<u-image :src="zxbb.app_bbtp[0].url" height="250px" mode="heightFix"></u-image>
+			<u-image v-if="showewm" :src="zxbb.app_bbtp[0].url" height="250px" mode="heightFix"></u-image>
 			<view class="zxbb_button" style="margin: 10px;">
-				<view class="zxbb_button_a">
+				<view class="zxbb_button_a" v-if="showewm">
 					<a class="zxbb_button_a1" @click="saveImage" target="_self">保存图片</a>
 				</view>
 				<view class="zxbb_button_a">
@@ -21,7 +21,7 @@
 						<view>
 							1、直接点击下载最新版APP》打开手机文件管理器》找到刚下载的apk文件》安装升级
 						</view>
-						<view style="margin-top: 6px;">
+						<view style="margin-top: 6px;" v-if="showewm">
 							2、保存图片》微信二维码扫码》右上角选择浏览器打开(或直接通过浏览器扫码)》自动下载APP》安装升级
 						</view>
 					</view>
@@ -48,7 +48,8 @@
 				app_bbmc: "0.0.0",
 				app_bbh: 0,
 				zxbb: {},
-				ljbb:[]///历届版本
+				ljbb:[],///历届版本
+				showewm:true///是否显示二维码
 			}
 		},
 		created() {
@@ -57,6 +58,8 @@
 			this.app_bbmc=plus.runtime.version;
 			//#endif
 			this.checkBb();
+			var config=getApp().globalData.config;
+			this.showewm=config["800012"]=="1"?true:false
 		},
 		// 下拉刷新
 		onPullDownRefresh(){

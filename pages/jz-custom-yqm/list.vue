@@ -89,7 +89,7 @@
 			this.maxnumber=parseInt(config["800008"])||5;
 		}
 		console.log("this.maxnumber",this.maxnumber);
-		this.description="邀请码用于查看加密资源详情，一天最多申请"+this.maxnumber+"个，每个邀请码用一次失效，且只能申请账号在申请当天使用，过期失效";
+		this.description="注意：邀请码用于查看加密资源详情，一天最多申请"+this.maxnumber+"个，每个邀请码用一次失效，且只能申请账号在申请当天使用，过期失效";
 		},
 		onPullDownRefresh() {
 			this.$refs.udb.loadData({

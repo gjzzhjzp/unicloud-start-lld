@@ -28,17 +28,22 @@
 					<text class="link" @click="toRegister">{{$t('pwdLogin.register')}}</text>
 				</view>
 				<u-button class="send-btn" :disabled="!canLogin" type="primary" @click="pwdLogin">
-					{{$t('pwdLogin.login')}}</u-button>
+					{{$t('pwdLogin.login')}}
+				</u-button>
 			</view>
-			<!-- <uni-quick-login :agree="agree" ref="uniQuickLogin"></uni-quick-login> -->
 		</view>
+		<sevicecontent ref="sevicecontent" @confirm="confirmcontent"></sevicecontent>
 	</view>
 </template>
 
 <script>
 	import mixin from '../common/login-page.mixin.js';
+	import sevicecontent from "./sevicecontent.vue"
 	export default {
 		mixins: [mixin],
+		components: {
+			sevicecontent
+		},
 		data() {
 			return {
 				"password": "",
@@ -75,17 +80,12 @@
 					url: "/pages/ucenter/login-page/pwd-login/pwd-weibo"
 				});
 			},
-			/**
-			 * 密码登录
-			 */
-			pwdLogin() {
-				if (!this.agree) {
-					return uni.showToast({
-						title: this.$t('common').noAgree,
-						icon: 'none'
-					});
-				}
+			// 登录确认
+			confirmcontent() {
 				// 下边是可以登录
+				uni.showLoading({
+					title: '正在处理...'
+				});
 				uniCloud.callFunction({
 					name: 'uni-id-cf',
 					data: {
@@ -99,10 +99,12 @@
 					success: ({
 						result
 					}) => {
-						console.log(result);
+						// console.log(result);
+
 						if (result.code === 0) {
 							uni.setStorageSync("userInfo", result.userInfo);
 							this.checkisbdwb(result.userInfo.username).then((flag) => {
+								uni.hideLoading();
 								if (flag) {
 									uni.setStorageSync("istgzcsh_success", true); //是否通过登录注册审核
 									this.loginSuccess(result);
@@ -111,6 +113,7 @@
 								}
 							});
 						} else {
+							uni.hideLoading();
 							if (result.needCaptcha) {
 								uni.showToast({
 									title: result.msg,
@@ -127,7 +130,19 @@
 							}
 						}
 					}
-				})
+				});
+			},
+			/**
+			 * 密码登录
+			 */
+			pwdLogin() {
+				// debugger;
+				var agree_service = uni.getStorageSync("agree_service");
+				if (agree_service) {
+					this.confirmcontent();
+				} else {
+					this.$refs.sevicecontent.show();
+				}
 			},
 			// 检测时候绑定微博
 			checkisbdwb(username) {

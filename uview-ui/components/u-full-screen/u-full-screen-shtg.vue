@@ -25,7 +25,7 @@
 				this.closeModal();
 			},
 			confirm() {
-				uni.redirectTo({
+				uni.reLaunch({
 					url: "/pages/ucenter/login-page/pwd-login/pwd-login"
 				});
 				// this.closeModal();

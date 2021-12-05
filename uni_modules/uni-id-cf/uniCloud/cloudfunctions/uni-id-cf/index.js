@@ -203,13 +203,13 @@ exports.main = async (event, context) => {
 			if (/^1\d{10}$/.test(username)) {
 				return {
 					code: 401,
-					msg: '用户名不能是手机号'
+					msg: '登录名不能是手机号'
 				}
 			};
 			if (/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/.test(username)) {
 				return {
 					code: 401,
-					msg: '用户名不能是邮箱'
+					msg: '登录名不能是邮箱'
 				}
 			}
 			res = await uniID.register({

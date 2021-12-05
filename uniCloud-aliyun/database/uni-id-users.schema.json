@@ -11,8 +11,8 @@
 		},
 		"username": {
 			"bsonType": "string",
-			"title": "用户名",
-			"description": "用户名，不允许重复",
+			"title": "登录名",
+			"description": "登录名，不允许重复",
 			"trim": "both",
 			"permission": {
 				"write": false

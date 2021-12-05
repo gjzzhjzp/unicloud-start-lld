@@ -4,8 +4,8 @@ export default {
 	},
 	onShow() {
 		var istgzcsh = uni.getStorageSync("istgzcsh_success"); //是否通过登录注册审核
-		var question_success = uni.getStorageSync("question_success");
-		if(istgzcsh&&question_success){
+		var question_success1 = uni.getStorageSync("question_success1");
+		if(istgzcsh&&question_success1){
 			this.getgonggao();
 		}
 		if(this.$refs.notice){

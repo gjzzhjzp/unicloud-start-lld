@@ -100,7 +100,7 @@
 				}
 			},
 			getList() {
-				var app_bbh="107";
+				var app_bbh="115";
 				//#ifdef APP-PLUS
 				app_bbh = plus.runtime.versionCode;
 				//#endif
@@ -121,7 +121,6 @@
 					},
 				}).then((res) => {
 					var res = res.result;
-					console.log("res", res)
 					if (res.state == "0000") {
 						this.list = res.rows;
 						if (this.list.length > 0) {

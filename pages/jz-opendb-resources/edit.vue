@@ -1,6 +1,15 @@
 <template>
   <view class="uni-container">
 	  <u-navbar :is-back="true" title="我的投稿"></u-navbar>
+	  <view style="margin: 4px 0px;">
+	  	<!-- #ifdef H5 -->
+	  	<u-alert-tips type="warning" description="上传图片附件资源时多张上传请使用APP或QQ浏览器,
+	  		其他手机浏览器暂不支持多张同时上传,视频不能上传超过100M的视频,超过100M的视频走外链,上传图片视频等需要等待进度条上传完成提交才有效"></u-alert-tips>
+	  	<!-- #endif -->
+	  	<!-- #ifdef APP-PLUS -->
+	  	<u-alert-tips type="warning" description="视频不能上传超过100M的视频,超过100M的走外链,上传图片视频等需要等待进度条上传完成提交才有效"></u-alert-tips>
+	  	<!-- #endif -->
+	  </view>
     <uni-forms ref="form" :value="formData" validate-trigger="submit" err-show-type="toast">
 		<uni-forms-item name="title" label="标题" required>
 		  <uni-easyinput placeholder="请输入标题" v-model="formData.title" trim="both"></uni-easyinput>
@@ -218,10 +227,17 @@ import image from "@/pages/ucenter/userinfo/image.js"
 			});
 		}
         return db.collection(dbCollectionName).doc(this.formDataId).update(value).then((res) => {
-          uni.showToast({
-            icon: 'none',
-            title: '修改成功'
-          });
+          if (config["800000"] == "1") {
+          	uni.showToast({
+          		icon: 'none',
+          		title: '您的投稿已提交，请等待管理员审核'
+          	});
+          } else {
+          	uni.showToast({
+          		icon: 'none',
+          		title: '修改成功'
+          	});
+          }
           this.getOpenerEventChannel().emit('refreshData')
           setTimeout(() => uni.navigateBack(), 500)
         }).catch((err) => {

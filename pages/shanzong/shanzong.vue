@@ -13,6 +13,7 @@
 			<jz-sy-list ref="sylist1" title="夺笋" label="夺笋"></jz-sy-list>
 			<jz-sy-list ref="sylist2" title="二创图片" label="二创图片"></jz-sy-list>
 			<jz-sy-list ref="sylist3" title="表情包" label="表情包"></jz-sy-list>
+			<jz-sy-list ref="sylist5" title="原创" label="原创"></jz-sy-list>
 			<jz-sy-list ref="sylist4" title="同人文" label="同人文"></jz-sy-list>
 		</view>
 		<jz-tabbar></jz-tabbar>
@@ -33,6 +34,7 @@
 			this.$refs.sylist2.getList();
 			this.$refs.sylist3.getList();
 			this.$refs.sylist4.getList();
+			this.$refs.sylist5.getList();
 			uni.stopPullDownRefresh()
 		},
 	}

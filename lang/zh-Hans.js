@@ -172,8 +172,8 @@ export default {
 		chooseOtherLogin: "点击了第三方登陆",
 	},
 	pwdLogin:{
-		pwdLogin: "用户名密码登录",
-		placeholder: "请输入手机号/用户名",
+		pwdLogin: "登录名密码登录",
+		placeholder: "请输入手机号/登录名",
 		passwordPlaceholder: "请输入密码",
 		verifyCodePlaceholder: "请输入验证码",
 		login: "登录",

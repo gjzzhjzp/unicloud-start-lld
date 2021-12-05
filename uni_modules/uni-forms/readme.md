@@ -127,7 +127,7 @@ uni-app的内置组件已经有了 `<form>`组件，用于提交表单内容。
 				<uni-easyinput type="text" v-model="formData.name" placeholder="请输入姓名" />
 			</uni-forms-item>
 			<uni-forms-item label="邮箱" name="email">
-				<input class="input" v-model="formData.email" type="text" placeholder="请输入用户名" @input="binddata('email',$event.detail.value)" />
+				<input class="input" v-model="formData.email" type="text" placeholder="请输入登录名" @input="binddata('email',$event.detail.value)" />
 			</uni-forms-item>
 		</uni-forms>
 		<button @click="submit">Submit</button>

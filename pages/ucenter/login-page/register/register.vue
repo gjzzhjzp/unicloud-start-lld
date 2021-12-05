@@ -43,13 +43,16 @@
 				</view>
 			</u-modal>
 		</view>
+		<sevicecontent ref="sevicecontent" @confirm="confirmcontent"></sevicecontent>
 	</view>
 </template>
 <script>
 	import rules from './validator.js';
 	import mixin from '../common/login-page.mixin.js';
+	import sevicecontent from "../pwd-login/sevicecontent.vue"
 	export default {
 		mixins: [mixin],
+		components:{sevicecontent},
 		data() {
 			return {
 				showmodel: false,
@@ -91,8 +94,12 @@
 					mask: true
 				})
 				this.$refs.form.validate().then((res) => {
-						console.log("res", res);
-						this.showmodel = true;
+						var agree_service = uni.getStorageSync("agree_service");
+						if(agree_service){
+							this.showmodel = true;
+						}else{
+							this.$refs.sevicecontent.show();
+						}
 					}).catch((errors) => {
 						console.log(errors);
 					})
@@ -100,12 +107,17 @@
 						uni.hideLoading()
 					});
 			},
+			confirmcontent(){
+				this.showmodel = true;
+			},
 			confirmnc() {
 				this.submitForm(this.formData);
 				this.showmodel = false;
 			},
 			submitForm(params) {
-				console.log("params", params);
+				uni.showLoading({
+					title: '正在处理...'
+				});
 				uniCloud.callFunction({
 					name: 'uni-id-cf',
 					data: {
@@ -115,7 +127,7 @@
 					success: ({
 						result
 					}) => {
-						console.log(result);
+						uni.hideLoading();
 						if (result.code === 0) {
 							uni.setStorageSync("userInfo", result.userInfo);
 							uni.showModal({

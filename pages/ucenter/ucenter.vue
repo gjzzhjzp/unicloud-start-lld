@@ -163,18 +163,26 @@
 							if (res.confirm) {
 								this.logout();
 								uni.clearStorageSync();///清除所有缓存
-								// uni.removeStorageSync("istgzcsh_success");
-								// uni.navigateBack();
-								uni.redirectTo({
-									url: '/pages/question/question'
-								});
+								var config=getApp().globalData.config;
+								if(config&&config["800015"]=="1"){
+									var yqm_success=uni.getStorageSync("yqm_success");
+									if(!yqm_success){
+										uni.reLaunch({
+											url: "/uview-ui/components/u-full-screen/u-full-screen-yqm"
+										})
+									}
+								}else{
+									uni.reLaunch({
+										url: '/pages/question/question'
+									});
+								}
 							}
 						},
 						fail: () => {},
 						complete: () => {}
 					});
 				} else {
-					uni.redirectTo({
+					uni.reLaunch({
 						url: '/pages/ucenter/login-page/pwd-login/pwd-login'
 					});
 				}

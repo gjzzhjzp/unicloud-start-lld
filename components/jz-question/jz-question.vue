@@ -4,6 +4,12 @@
 			<u-form-item required :label="item.title" v-for="(item,index) in list" label-position="top" :key="index">
 				<u-input v-model="item.answer" />
 			</u-form-item>
+			<u-form-item required label="相信国家，相信党，永远跟党走" label-position="top" :key="4">
+				<u-input v-model="answer" placeholder="请完整输入以上内容"/>
+			</u-form-item>
+			<u-form-item required label="人民有信仰，民族有希望，国家有力量" label-position="top" :key="5">
+				<u-input v-model="answer2" placeholder="请完整输入以上内容"/>
+			</u-form-item>
 		</u-form>
 		<view class="jz-bottom">
 			<u-button type="primary" @click="submit">确定</u-button>
@@ -16,7 +22,9 @@
 	export default {
 		data() {
 			return {
-				list: []
+				list: [],
+				answer:"",
+				answer2:""
 			}
 		},
 		mixins:[checksh],
@@ -34,9 +42,6 @@
 					var res = res.result;
 					if (res.state == "0000") {
 						this.list = res.data;
-						this.list.push({
-							title:"龚俊的老婆是谁？"
-						})
 					} else {
 						this.$refs.uToast.show({
 							title: res.msg,
@@ -46,15 +51,11 @@
 				});
 			},
 			submit() {
-				// uni.setStorageSync("question_success",true);
-				// this.no_istgzcsh();
-				// return;
-				
 				var data = this.list;
 				var flag = true;
 				var dataid = [];
 				data.forEach((item,index) => {
-						if (!item.answer) {
+						if (!this.answer||!this.answer2) {
 							this.$refs.uToast.show({
 								title: "宝，请输入完整答案哦~",
 								type: 'error'
@@ -72,7 +73,7 @@
 				if (!flag) {
 					return;
 				}else{
-					if(data[3].answer!="张哲瀚"){
+					if(this.answer!="相信国家，相信党，永远跟党走"||this.answer2!="人民有信仰，民族有希望，国家有力量"){
 						this.$refs.uToast.show({
 							title: "答案错误",
 							type: 'error'
@@ -80,6 +81,9 @@
 						return;
 					}
 				}
+				uni.showLoading({
+					title: '正在处理...'
+				});
 				uniCloud.callFunction({
 					name: 'jzfunction',
 					data: {
@@ -88,14 +92,12 @@
 					},
 				}).then((res) => {
 					var res = res.result;
+					uni.hideLoading();
 					if (res.state == "0000") {
-						uni.setStorageSync("question_success",true);
-						// uni.switchTab({
-						// 	url: '/pages/index/index'
-						// });
-						this.no_istgzcsh();
+						uni.setStorageSync("question_success1",true);
+						this.no_istgzcsh("question");
 					} else {
-						uni.setStorageSync("question_success",false);
+						uni.setStorageSync("question_success1",false);
 						this.$refs.uToast.show({
 							title: res.msg,
 							type: 'error'

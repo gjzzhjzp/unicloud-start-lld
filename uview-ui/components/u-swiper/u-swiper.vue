@@ -14,7 +14,13 @@
 						transform: effect3d && uCurrent != index ? 'scaleY(0.9)' : 'scaleY(1)',
 						margin: effect3d && uCurrent != index ? '0 20rpx' : 0,
 					}">
-					<image class="u-swiper-image" :src="item[name] || item" :mode="imgMode"></image>
+					<u-link v-if="item.url" :href="item.url?item.url:'javascript:void(0)'" style="width: 100%;">
+						<image class="u-swiper-image" :src="item[name]" mode="aspectFill"></image>
+					</u-link>
+					<image v-else class="u-swiper-image" :src="item[name]" mode="aspectFill"></image>
+					<!-- <slot name="image" :item="item">
+						<image class="u-swiper-image" :src="item[name] || item" :mode="imgMode"></image>
+					</slot> -->
 					<view v-if="title && item.title" class="u-swiper-title u-line-1" :style="[{
 							'padding-bottom': titlePaddingBottom
 						}, titleStyle]">

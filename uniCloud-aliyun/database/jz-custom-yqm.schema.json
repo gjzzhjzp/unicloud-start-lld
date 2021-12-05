@@ -34,6 +34,21 @@
 				}
 			]
 		},
+		"user_type": {
+			"bsonType": "int",
+			"title": "使用状态",
+			"description": "使用状态：0 资源 1 平台",
+			"defaultValue": 0,
+			"enum": [{
+					"value": 0,
+					"text": "资源"
+				},
+				{
+					"value": 1,
+					"text": "平台"
+				}
+			]
+		},
 		"user_name": {
 			"bsonType": "string",
 			"title": "账号昵称",

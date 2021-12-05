@@ -194,7 +194,7 @@
 				uni.showLoading({
 					title: '加载中...'
 				});
-				var app_bbh = "107";
+				var app_bbh = "115";
 				//#ifdef APP-PLUS
 				app_bbh = plus.runtime.versionCode;
 				//#endif

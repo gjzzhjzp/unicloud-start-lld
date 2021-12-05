@@ -1,12 +1,12 @@
 <template>
-	<view class="container">
+	<view class="container jz-opendb-resources-container">
 		<u-navbar :is-back="true" title="我的投稿"></u-navbar>
 		<view style="margin: 4px 0px;">
 			<u-alert-tips type="warning" description="向左滑动可编辑/删除投稿资源"></u-alert-tips>
 		</view>
 		<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}"
 			collection="jz-opendb-resources" @load="loadSuccess" :page-size	="10"
-			where="user_id == $cloudEnv_uid"
+			where="user_id == $cloudEnv_uid" orderby="last_modify_date desc"
 			field="categories,labels,author,title,article_status,comment_status,avatar,resources,zy_gs,excerpt,content">
 			<view v-if="error">{{error.message}}</view>
 			<view v-else-if="data">
@@ -14,7 +14,8 @@
 					@click="click" @open="open" :options="options">
 					<view class="item u-border-bottom" @click="$notMoreTap(todetail,'notTap',item)">
 						<u-icon size="40" color="#18b566" v-if="item.article_status==1" name="checkmark"></u-icon>
-						<u-icon size="40" color="#fa3534" v-else name="close"></u-icon>
+						
+						<u-icon size="40" v-else name="/static/lock.png"></u-icon>
 						<image mode="aspectFill" :src="item.images" />
 						<view class="title-wrap">
 							<text class="title u-line-2">{{ item.title }}</text>

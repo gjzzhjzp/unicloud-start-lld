@@ -16,7 +16,6 @@ export default{
 		getcurdate(){
 			//	初始化时间
 			var date = new Date();
-			
 			var year = date.getFullYear();
 			var month = parseInt(date.getMonth() + 1);
 			var day = date.getDate();

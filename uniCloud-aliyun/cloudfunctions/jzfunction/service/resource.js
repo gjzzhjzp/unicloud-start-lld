@@ -186,16 +186,17 @@ module.exports = class resourceService extends Service {
 					as: 'userinfo',
 				})
 				.end();
-			if (type == "tj") {
-				return {
-					"state": "0000",
-					"rows": resultdata.data,
-					"total": resultdata.data.length,
-					"msg": "查询成功"
-				};
-			} else {
+			// if (type == "tj") {
+			// 	return {
+			// 		"state": "0000",
+			// 		"rows": resultdata.data,
+			// 		"total": resultdata.data.length,
+			// 		"msg": "查询成功"
+			// 	};
+			// } else {
 				var app_bbh = data.app_bbh;
-				if (app_bbh >= 107) {
+				// console.log("app_bbh33333333333333333",app_bbh);
+				if (app_bbh >= 113) {
 					return {
 						"state": "0000",
 						"rows": resultdata.data,
@@ -210,7 +211,7 @@ module.exports = class resourceService extends Service {
 						"msg": "查询成功"
 					};
 				}
-			}
+			// }
 		} catch (e) {
 			console.log("e", e);
 			return {

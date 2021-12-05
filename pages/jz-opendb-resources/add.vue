@@ -7,7 +7,8 @@
 				其他手机浏览器暂不支持多张同时上传,视频不能上传超过100M的视频,超过100M的视频走外链,上传图片视频等需要等待进度条上传完成提交才有效"></u-alert-tips>
 			<!-- #endif -->
 			<!-- #ifdef APP-PLUS -->
-			<u-alert-tips type="warning" description="视频不能上传超过100M的视频,超过100M的走外链,上传图片视频等需要等待进度条上传完成提交才有效"></u-alert-tips>
+			<u-alert-tips type="warning" description="视频不能上传超过100M的视频,超过100M的走外链,上传图片视频等需要等待进度条上传完成提交才有效">
+			</u-alert-tips>
 			<!-- #endif -->
 		</view>
 		<view class="jz-container">
@@ -20,7 +21,7 @@
 				</uni-forms-item>
 				<uni-forms-item name="categorieszw" label="分类">
 					<uni-easyinput placeholder="请选择分类" v-model="formData.categorieszw" trim="both"
-						@focus="opencategories" >
+						@focus="opencategories">
 					</uni-easyinput>
 					<yunmiao-cascader ref="cascader" value-name="flbm" :cascaderData="cascaderData"
 						@confirem="cascaderConfirem"></yunmiao-cascader>
@@ -234,10 +235,17 @@
 				}
 				console.log("value", value);
 				return db.collection(dbCollectionName).add(value).then((res) => {
-					uni.showToast({
-						icon: 'none',
-						title: '新增成功'
-					});
+					if (config["800000"] == "1") {
+						uni.showToast({
+							icon: 'none',
+							title: '您的投稿已提交，请等待管理员审核'
+						});
+					} else {
+						uni.showToast({
+							icon: 'none',
+							title: '投稿成功'
+						});
+					}
 					this.getOpenerEventChannel().emit('refreshData')
 					setTimeout(() => uni.navigateBack(), 500)
 				}).catch((err) => {

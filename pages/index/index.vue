@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view v-if="showindex">
 		<jz-navbar>
 			<u-search :disabled="true" border-color="#7275D3" bg-color="#fff" height="60" placeholder=""
 				@focus="$notMoreTap(tosearch,'notTap')" @click="$notMoreTap(tosearch,'notTap')"
@@ -29,10 +29,17 @@
 	export default {
 		data() {
 			return {
-				notTap: true //一定要设置为true
+				notTap: true, //一定要设置为true
+				showindex:false
 			}
 		},
 		mixins: [gonggao],
+		onShow: function() {
+			var question_success1 = uni.getStorageSync("question_success1");
+			if (question_success1) {
+				this.showindex=true;
+			}
+		},
 		// 下拉刷新
 		onPullDownRefresh() {
 			this.$refs.banner.getList();

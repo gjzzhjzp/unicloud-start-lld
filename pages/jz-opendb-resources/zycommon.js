@@ -15,7 +15,7 @@ export default{
 	methods:{
 		// 获取分类
 		async getcategories() {
-			var categories = await db.collection("opendb-news-categories").get({
+			var categories = await db.collection("opendb-news-categories").orderBy("sort","asc").get({
 				getTree: {
 					startWith: "flbm=='100000'" ////分类顶级编码
 				}

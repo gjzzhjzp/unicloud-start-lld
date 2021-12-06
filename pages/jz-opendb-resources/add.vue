@@ -7,7 +7,7 @@
 				其他手机浏览器暂不支持多张同时上传,视频不能上传超过100M的视频,超过100M的视频走外链,上传图片视频等需要等待进度条上传完成提交才有效"></u-alert-tips>
 			<!-- #endif -->
 			<!-- #ifdef APP-PLUS -->
-			<u-alert-tips type="warning" description="视频不能上传超过100M的视频,超过100M的走外链,上传图片视频等需要等待进度条上传完成提交才有效">
+			<u-alert-tips type="warning" description="注意:视频不能上传超过100M的视频,超过100M的走外链,上传图片视频等需要等待进度条上传完成提交才有效;请注意视频上传时网络不好会导致视频自动压缩">
 			</u-alert-tips>
 			<!-- #endif -->
 		</view>
@@ -207,10 +207,18 @@
 					mask: true
 				});
 				this.$refs.form.validate().then((res) => {
+					// debugger;
+					if(this.formData.resources.length==0&&!this.formData.aliyun_dz){
+						uni.showToast({
+							title:"外链或附件资源必须填一项",
+							icon:"none"
+						});
+						return;
+					}
 					return this.submitForm(res)
 				}).catch(() => {}).finally(() => {
 					uni.hideLoading()
-				})
+				});
 			},
 
 			/**

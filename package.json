@@ -2,7 +2,7 @@
 	"id": "uni-starter",
 	"displayName": "uni-starter",
 	"version": "1.1.18",
-	"description": "云端一体应用快速开发基本项目模版",
+	"description": "",
 	"keywords": [
         "login",
         "登录",
@@ -17,7 +17,7 @@
 	"dcloudext": {
 		"category": [
 			"uniCloud",
-			"云端一体项目模板"
+			""
 		],
 		"sale": {
 			"regular": {

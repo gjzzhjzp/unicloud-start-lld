@@ -33,6 +33,14 @@ db.collection('jz-custom-fks').add({
 db.collection("jz-opendb-resources").where({
 	categories: null
 }).get();
+
+db.collection("jz-opendb-resources").where({
+	zy_gs: 1,
+	"categories": "100011"
+}).update({
+	"is_off":1
+});
+
 // 全部删除
 db.collection("jz-custom-fks").where({
 	_id: db.command.neq(null)

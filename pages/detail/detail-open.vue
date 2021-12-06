@@ -1,7 +1,8 @@
 <template>
 	<view class="detail-image">
 		<detailhead :data="data"></detailhead>
-		<view class="detail-image-item" @click="previewOpen(data)">
+		<!-- @click="previewOpen(data)" -->
+		<view class="detail-image-item" >
 			<image :src="imageUrl()" mode="widthFix"></image>
 		</view>
 		<view class="detail-open">

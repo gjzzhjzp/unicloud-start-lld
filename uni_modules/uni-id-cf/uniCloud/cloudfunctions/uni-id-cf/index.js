@@ -257,7 +257,7 @@ exports.main = async (event, context) => {
 			if (!needCaptcha || passed) {
 				res = await uniID.login({
 					...params,
-					queryField: ['username', 'nickname']
+					queryField: ['username']
 				});
 				res.type = 'login'
 				await loginLog(res);

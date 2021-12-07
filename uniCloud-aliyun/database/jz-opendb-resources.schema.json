@@ -6,10 +6,10 @@
 		"avatar"
 	],
 	"permission": {
-		"read": "doc.state || auth.uid == doc.user_id || 'AUDITOR' in auth.role||'Master' in auth.role",
+		"read": "doc.state || auth.uid == doc.user_id || 'AUDITOR' in auth.role||'Master' in auth.role||'only_zylist' in auth.role",
 		"create": "auth.uid != null",
-		"update": "'AUDITOR' in auth.role||auth.uid == doc.user_id||'Master' in auth.role",
-		"delete": "auth.uid == doc.user_id||'AUDITOR' in auth.role||'Master' in auth.role"
+		"update": "'AUDITOR' in auth.role||auth.uid == doc.user_id||'Master' in auth.role||'only_zylist' in auth.role",
+		"delete": "auth.uid == doc.user_id||'AUDITOR' in auth.role||'Master' in auth.role||'only_zylist' in auth.role"
 	},
 	"properties": {
 		"_id": {

@@ -55,8 +55,19 @@
 		},
 		"isbdwb": {
 			"bsonType": "bool",
-			"title": "是否绑定微博",
-			"description": "是否绑定微博"
+			"title": "是否验证微博",
+			"description": "是否验证微博"
+		},
+		"original": {
+			"bsonType": "bool",
+			"title": "是否原创",
+			"description": "是否原创"
+		},
+		"beizhu": {
+			"bsonType": "string",
+			"title": "备注",
+			"description": "备注",
+			"trim": "both"
 		},
 		"douyinname": {
 			"bsonType": "string",
@@ -109,62 +120,6 @@
 				}
 			]
 		},
-		"mobile": {
-			"bsonType": "string",
-			"title": "手机号码",
-			"description": "手机号码",
-			"pattern": "^\\+?[0-9-]{3,20}$",
-			"trim": "both",
-			"permission": {
-				"write": false
-			}
-		},
-		"mobile_confirmed": {
-			"bsonType": "int",
-			"description": "手机号验证状态：0 未验证 1 已验证",
-			"title": "手机号验证状态",
-			"defaultValue": 0,
-			"enum": [{
-					"text": "未验证",
-					"value": 0
-				},
-				{
-					"text": "已验证",
-					"value": 1
-				}
-			],
-			"permission": {
-				"write": false
-			}
-		},
-		"email": {
-			"bsonType": "string",
-			"format": "email",
-			"title": "邮箱",
-			"description": "邮箱地址",
-			"trim": "both",
-			"permission": {
-				"write": false
-			}
-		},
-		"email_confirmed": {
-			"bsonType": "int",
-			"description": "邮箱验证状态：0 未验证 1 已验证",
-			"title": "邮箱验证状态",
-			"defaultValue": 0,
-			"enum": [{
-					"text": "未验证",
-					"value": 0
-				},
-				{
-					"text": "已验证",
-					"value": 1
-				}
-			],
-			"permission": {
-				"write": false
-			}
-		},
 		"avatar": {
 			"bsonType": "string",
 			"title": "头像地址",
@@ -172,28 +127,14 @@
 			"trim": "both"
 		},
 		"avatar_file": {
-			 "bsonType": "file",
-			      "title": "头像文件",
-			      "description": "用file类型方便使用uni-file-picker组件"
+			"bsonType": "file",
+			"title": "头像文件",
+			"description": "用file类型方便使用uni-file-picker组件"
 		},
 		"background_file": {
 			"bsonType": "file",
 			"title": "背景图",
 			"description": "用file类型方便使用uni-file-picker组件"
-		},
-		"department_id": {
-			"bsonType": "array",
-			"description": "部门ID",
-			"permission": {
-				"write": false
-			},
-			"title": "部门",
-			"enumType": "tree",
-			"enum": {
-				"collection": "opendb-department",
-				"orderby": "name asc",
-				"field": "_id as value, name as text"
-			}
 		},
 		"role": {
 			"bsonType": "array",
@@ -208,44 +149,6 @@
 				"write": false
 			}
 		},
-		"wx_unionid": {
-			"bsonType": "string",
-			"description": "微信unionid",
-			"permission": {
-				"write": false
-			}
-		},
-		"wx_openid": {
-			"bsonType": "object",
-			"description": "微信各个平台openid",
-			"properties": {
-				"app-plus": {
-					"bsonType": "string",
-					"description": "app平台微信openid"
-				},
-				"mp-weixin": {
-					"bsonType": "string",
-					"description": "微信小程序平台openid"
-				}
-			},
-			"permission": {
-				"write": false
-			}
-		},
-		"ali_openid": {
-			"bsonType": "string",
-			"description": "支付宝平台openid",
-			"permission": {
-				"write": false
-			}
-		},
-		"apple_openid": {
-			"bsonType": "string",
-			"description": "苹果登录openid",
-			"permission": {
-				"write": false
-			}
-		},
 		"comment": {
 			"bsonType": "string",
 			"title": "备注",
@@ -255,78 +158,7 @@
 				"write": false
 			}
 		},
-		"realname_auth": {
-			"bsonType": "object",
-			"description": "实名认证信息",
-			"required": [
-				"type",
-				"auth_status"
-			],
-			"permission": {
-				"write": false
-			},
-			"properties": {
-				"type": {
-					"bsonType": "int",
-					"minimum": 0,
-					"maximum": 1,
-					"description": "用户类型：0 个人用户 1 企业用户"
-				},
-				"auth_status": {
-					"bsonType": "int",
-					"minimum": 0,
-					"maximum": 3,
-					"description": "认证状态：0 未认证 1 等待认证 2 认证通过 3 认证失败"
-				},
-				"auth_date": {
-					"bsonType": "timestamp",
-					"description": "认证通过时间"
-				},
-				"real_name": {
-					"bsonType": "string",
-					"description": "真实姓名/企业名称"
-				},
-				"identity": {
-					"bsonType": "string",
-					"description": "身份证号码/营业执照号码"
-				},
-				"id_card_front": {
-					"bsonType": "string",
-					"description": "身份证正面照 URL"
-				},
-				"id_card_back": {
-					"bsonType": "string",
-					"description": "身份证反面照 URL"
-				},
-				"in_hand": {
-					"bsonType": "string",
-					"description": "手持身份证照片 URL"
-				},
-				"license": {
-					"bsonType": "string",
-					"description": "营业执照 URL"
-				},
-				"contact_person": {
-					"bsonType": "string",
-					"description": "联系人姓名"
-				},
-				"contact_mobile": {
-					"bsonType": "string",
-					"description": "联系人手机号码"
-				},
-				"contact_email": {
-					"bsonType": "string",
-					"description": "联系人邮箱"
-				}
-			}
-		},
-		"score": {
-			"bsonType": "int",
-			"description": "用户积分，积分变更记录可参考：uni-id-scores表定义",
-			"permission": {
-				"write": false
-			}
-		},
+		
 		"register_date": {
 			"bsonType": "timestamp",
 			"description": "注册时间",

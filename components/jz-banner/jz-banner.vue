@@ -1,17 +1,10 @@
 <template>
 	<div class="jz-banner">
 		<u-swiper :list="bannerList" :height="height" :autoplay="true">
-			<!--<template slot="image" slot-scope="scope">
-				 {{scope.item.image}} 
-				<u-link v-if="scope.item.open_url" :href="scope.item.open_url?scope.item.open_url:'javascript:void(0)'" style="width: 100%;">
-					<image class="u-swiper-image" :src="scope.item.image" mode="aspectFill"></image>
-				</u-link>
-				<image v-else class="u-swiper-image" :src="scope.item.image" mode="aspectFill"></image>
-			</template>-->
+			
 		</u-swiper>
 	</div>
 </template>
-
 <script>
 	export default {
 		data() {

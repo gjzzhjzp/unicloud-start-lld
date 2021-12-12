@@ -127,7 +127,6 @@ const searchLogDbName = 'opendb-search-log'; // 搜索记录数据库
 				mallGoodsDbName,
 				searchLogDbName,
 				statusBarHeight: '0px',
-
 				localSearchListDel: false,
 				netHotListIsHide: false,
 				searchText: '',
@@ -142,7 +141,6 @@ const searchLogDbName = 'opendb-search-log'; // 搜索记录数据库
 		mixins: [search],
 		created() {
 			this.db = uniCloud.database();
-
 			this.mallGoodsDb = this.db.collection(this.mallGoodsDbName);
 			// #ifndef H5
 			uni.onKeyboardHeightChange((res) => {

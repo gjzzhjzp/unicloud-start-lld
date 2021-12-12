@@ -1,17 +1,16 @@
+import Vue from 'vue'
 import App from './App'
 import store from './store'
 import i18n from './lang/i18n'
 import uView from "uview-ui";
 import notMoreTap from "@/common/notMoreTap.js";
-// import interceptor from "@/components/jz-common/interceptor.js"
+import router from './router'
+import { RouterMount } from 'uni-simple-router'
 Vue.use(uView);
 Vue.prototype.$notMoreTap = notMoreTap.notMoreTap;
-// Vue.mixin(interceptor);
 // 引入音频
 import ZAudio from '@/components/uniapp-zaudio/index.js'
-// import ZAudio from 'uniapp-zaudio' // npm引用方式
 
-console.log(`ZAudio当前版本`,ZAudio.version)
 let zaudio = new ZAudio({
 	continuePlay: true, //续播
 	autoPlay: false, //自动播放 部分浏览器不支持
@@ -20,7 +19,7 @@ let zaudio = new ZAudio({
 Vue.prototype.$zaudio = zaudio
 
 // #ifndef VUE3
-import Vue from 'vue'
+// import Vue from 'vue'
 Vue.config.productionTip = false
 Vue.prototype.$store = store
 App.mpType = 'app'
@@ -29,7 +28,14 @@ const app = new Vue({
 	store,
 	...App
 })
-app.$mount()
+// app.$mount()
+// #ifdef H5
+	RouterMount(app,'#app');
+// #endif
+
+// #ifndef H5
+	app.$mount(); //为了兼容小程序及app端必须这样写才有效果
+// #endif
 // #endif
 
 

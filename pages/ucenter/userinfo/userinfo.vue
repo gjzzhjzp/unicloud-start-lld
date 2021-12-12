@@ -4,14 +4,22 @@
 		<uni-list>
 			<uni-list-item class="item">
 				<template v-slot:body>
-					<view class="item">
+					<view :class="['item']">
 						<text>{{$t('userinfo.ProfilePhoto')}}</text>
-						<cloud-image @click="uploadAvatarImg" v-if="avatar_file" :src="avatar_file.url" width="50px"
-							height="50px"></cloud-image>
-						<uni-icons @click="uploadAvatarImg" v-else class="chooseAvatar" type="plusempty" size="30"
-							color="#dddddd"></uni-icons>
+						<view :class="[isoriginal?'original':'']">
+							<view class="original" v-if="isoriginal">
+								<image class="original-img" src="@/static/center/ori_back.png"></image>
+							</view>
+							<cloud-image @click="uploadAvatarImg" v-if="avatar_file" :src="avatar_file.url" width="50px"
+								height="50px"></cloud-image>
+							<uni-icons @click="uploadAvatarImg" v-else class="chooseAvatar" type="plusempty" size="30"
+								color="#dddddd"></uni-icons>
+						</view>
 					</view>
 				</template>
+			</uni-list-item>
+			<uni-list-item class="item" title="用户/登录名"
+				:rightText="userInfo.username||$t('userinfo.notSet')" >
 			</uni-list-item>
 			<uni-list-item class="item" @click="setNickname('')" :title="$t('userinfo.nickname')"
 				:rightText="userInfo.nickname||$t('userinfo.notSet')" link>
@@ -54,6 +62,7 @@
 	const db = uniCloud.database();
 	const usersTable = db.collection('uni-id-users')
 	import image from "./image.js"
+	import ucenter from "../ucenter.js"
 	export default {
 		data() {
 			return {
@@ -73,7 +82,7 @@
 				showpassmodal: false
 			}
 		},
-		mixins:[image],
+		mixins:[image,ucenter],
 		onLoad() {
 			this.univerifyStyle.authButton.title = this.$t('userinfo.bindPhoneNumber')
 			this.univerifyStyle.otherLoginButton.title = this.$t('userinfo.bindOtherLogin')
@@ -295,6 +304,17 @@
 	}
 </script>
 <style lang="scss" scoped>
+	.original{
+		position: relative;
+	}
+	.original-img{
+		   width: 70px;
+		       height: 70px;
+		       position: absolute;
+		       top: -8px;
+		       left: -11px;
+	}
+	
 	/* #ifndef APP-NVUE */
 	view {
 		display: flex;

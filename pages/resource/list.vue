@@ -4,8 +4,15 @@
 		<view class="search-container">
 			<!-- 搜索框 -->
 			<view class="search-container-bar">
+
 				<u-navbar :is-back="true" back-icon-name="arrow-leftward" :back-icon-size="40">
-					<u-search border-color="#7275D3" bg-color="#fff" v-model="keyword" height="60" placeholder="请输入..."
+					<view style="width: 120rpx;">
+						<u-dropdown>
+							<u-dropdown-item @change="changedropItem" v-model="dvalue" :title="dtitle"
+								:options="doptions"></u-dropdown-item>
+						</u-dropdown>
+					</view>
+					<u-search border-color="#7275D3" bg-color="#fff" v-model="keyword" height="60" :placeholder="dplaceholder"
 						@search="confirm" @custom="confirm" :show-action="true"></u-search>
 				</u-navbar>
 			</view>
@@ -25,14 +32,6 @@
 		</view>
 		<view v-if="currenttab!=2">
 			<item-list :list="flowList"></item-list>
-			<!-- <u-waterfall v-model="flowList" ref="uWaterfall">
-				<template v-slot:left="{leftList}">
-					<item-list :list="leftList"></item-list>
-				</template>
-				<template v-slot:right="{rightList}">
-					<item-list :list="rightList"></item-list>
-				</template>
-			</u-waterfall> -->
 		</view>
 		<view v-else>
 			<music-list :list="flowList_mp3" :is-empty="isEmpty" :load-status="loadStatus" @loadmore="loadmoreList">
@@ -58,6 +57,18 @@
 	export default {
 		data() {
 			return {
+				dvalue: 1,
+				dtitle: "资源",
+				doptions: [{
+						label: '资源',
+						value: 1,
+					},
+					{
+						label: '用户',
+						value: 2,
+					}
+				],
+				dplaceholder:"请输入...",
 				tagname: "", ////tag标签
 				showTag: false,
 				keyword: "",
@@ -155,6 +166,16 @@
 			}
 		},
 		methods: {
+			changedropItem(value) {
+				this.dvalue = value;
+				if (value == 1) {
+					this.dtitle = "资源";
+					this.dplaceholder="请输入...";
+				} else {
+					this.dtitle = "用户";
+					this.dplaceholder="请输入用户名/昵称";
+				}
+			},
 			closetagClick() {
 				this.showTag = false;
 				this.categories = "";
@@ -184,7 +205,8 @@
 			},
 			confirm() {
 				var value = this.keyword;
-				if (value) {
+				if (value&&this.dvalue==1) {
+					// debugger;
 					this.localSearchListManage(value);
 					this.searchLogDbAdd(value)
 				}
@@ -198,10 +220,16 @@
 				//#ifdef APP-PLUS
 				app_bbh = plus.runtime.versionCode;
 				//#endif
+				var url="resource/getList";
+				if(this.dvalue==2){
+					url="resource/getListByuser";
+				}
+				// return;
+				// debugger;
 				uniCloud.callFunction({
 					name: 'jzfunction',
 					data: {
-						action: 'resource/getList',
+						action: url,
 						data: {
 							label: this.keyword,
 							categories: this.categories || '',

@@ -39,6 +39,7 @@
 				}).get();
 				// console.log("足迹",resultdata);
 				var rows=resultdata.result.data;
+				this.list.splice(0,this.list.length);
 				rows.forEach((item)=>{
 					this.list.push(item.content);
 				});

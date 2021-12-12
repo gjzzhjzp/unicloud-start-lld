@@ -6,18 +6,24 @@
 					:background="{'background':'none'}">
 				</u-navbar>
 			</view>
-			<cloud-image width="150rpx" height="150rpx" v-if="userInfo.avatar_file&&userInfo.avatar_file.url"
-				:src="userInfo.avatar_file.url"></cloud-image>
-			<image v-else class="logo-img" src="@/static/center/nologin.png"></image>
+			<view :class="['userinfo-image',isoriginal?'original':'']">
+				<view class="original" v-if="isoriginal">
+					<image class="original-img" src="@/static/center/ori_back.png"></image>
+				</view>
+				<cloud-image width="150rpx" height="150rpx" v-if="userInfo.avatar_file&&userInfo.avatar_file.url"
+					:src="userInfo.avatar_file.url"></cloud-image>
+				<image v-else class="logo-img" src="@/static/center/nologin.png"></image>
+			</view>
 			<view class="logo-title">
 				<text class="uer-name" v-if="hasLogin">{{userInfo.nickname||userInfo.username||userInfo.mobile}}</text>
 				<text class="uer-name" v-else>{{$t('mine.notLogged')}}</text>
 			</view>
 		</view>
 		<uni-list class="center-list" v-for="(sublist , index) in ucenterList" :key="index">
-			<uni-list-item v-for="(item,i) in sublist" :title="item.title" link  :key="i" :class="isbbgx?item.class:''"
-				:clickable="true" :to="item.to" @click="$notMoreTap(ucenterListClick,'notTap',item)" :thumb="item.thumb">
-				
+			<uni-list-item v-for="(item,i) in sublist" :title="item.title" link :key="i" :class="isbbgx?item.class:''"
+				:clickable="true" :to="item.to" @click="$notMoreTap(ucenterListClick,'notTap',item)"
+				:thumb="item.thumb">
+
 			</uni-list-item>
 		</uni-list>
 		<view class="bottom-back" @click="clickLogout">
@@ -37,6 +43,7 @@
 	import UniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js';
 	const uniShare = new UniShare()
 	const db = uniCloud.database();
+	import ucenter from "./ucenter.js"
 	export default {
 		onBackPress({
 			from
@@ -48,10 +55,11 @@
 				return uniShare.isShow;
 			}
 		},
+		mixins:[ucenter],
 		data() {
 			return {
-				isbbgx:false,///时候版本更新
-				notTap:true,//一定要设置为true
+				isbbgx: false, ///时候版本更新
+				notTap: true, //一定要设置为true
 				ucenterList: [
 					[{
 							"title": this.$t('mine.userinfo'),
@@ -86,7 +94,7 @@
 						//#ifdef APP-PLUS
 						{
 							"title": "检测版本更新",
-							"class":"jcbbgx",
+							"class": "jcbbgx",
 							"to": '/pages/appbb/appbb',
 							"thumb": "/static/center/appbb.png"
 						},
@@ -102,11 +110,12 @@
 						"style": "solid", // 边框样式
 						"radius": "100%" // 边框圆角，支持百分比
 					}
-				}
+				},
+				
 			}
 		},
 		onLoad() {
-			
+
 		},
 		computed: {
 			...mapGetters({
@@ -124,16 +133,20 @@
 				return getApp().globalData.config
 			}
 		},
-		created(){
+		created() {
+			// if(typeof this.userInfo.original=="undefined"){
+				this.getUserinfo();
+			// }
 			//#ifdef APP-PLUS
 			this.checkBb();
 			//#endif
 		},
 		methods: {
+			
 			// 检测版本
 			async checkBb() {
 				//#ifdef APP-PLUS
-				var app_bbh=plus.runtime.versionCode;
+				var app_bbh = plus.runtime.versionCode;
 				//#endif
 				const db = uniCloud.database();
 				const collection = db.collection('opendb-news-appbb');
@@ -141,7 +154,7 @@
 					app_bbh: db.command.gt(app_bbh)
 				}).orderBy("app_bbh", "desc").get();
 				if (resultdata.result.data && resultdata.result.data.length > 0) {
-					this.isbbgx=true;
+					this.isbbgx = true;
 				}
 			},
 			goback() {
@@ -154,24 +167,28 @@
 			}),
 			clickLogout() {
 				if (this.hasLogin) {
+					var config = getApp().globalData.config;
+					var content="确认退出登录？";
+					if (config && config["800015"] == "1") {
+						content="退出登录需要重新输入邀请码，确认退出登录？";
+					}
 					uni.showModal({
 						title: this.$t('settings.tips'),
-						content: this.$t('settings.exitLogin'),
+						content: content,
 						cancelText: this.$t('settings.cancelText'),
 						confirmText: this.$t('settings.confirmText'),
 						success: res => {
 							if (res.confirm) {
 								this.logout();
-								uni.clearStorageSync();///清除所有缓存
-								var config=getApp().globalData.config;
-								if(config&&config["800015"]=="1"){
-									var yqm_success=uni.getStorageSync("yqm_success");
-									if(!yqm_success){
+								uni.clearStorageSync(); ///清除所有缓存
+								if (config && config["800015"] == "1") {
+									var yqm_success = uni.getStorageSync("yqm_success");
+									if (!yqm_success) {
 										uni.reLaunch({
 											url: "/uview-ui/components/u-full-screen/u-full-screen-yqm"
-										})
+										});
 									}
-								}else{
+								} else {
 									uni.reLaunch({
 										url: '/pages/question/question'
 									});
@@ -228,7 +245,9 @@
 </script>
 
 <style lang="scss" scoped>
-	
+	// .userinfo-image.original{
+	// 	background: url("/static/center/ori_back.png");
+	// }
 	.usercenter-top {
 		color: #fff;
 		font-size: 16px;
@@ -296,6 +315,16 @@
 		width: 150rpx;
 		height: 150rpx;
 		border-radius: 150rpx;
+	}
+	.original{
+		position: relative;
+	}
+	.original-img{
+		    width: 210rpx;
+		    height: 210rpx;
+		    position: absolute;
+		    top: -24rpx;
+		    left: -30rpx;
 	}
 
 	.logo-title {

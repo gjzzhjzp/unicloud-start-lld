@@ -5,20 +5,19 @@
 				<u-lazy-load threshold="300" height="200" border-radius="10" img-mode="aspectFill"
 					:image="imageUrl(item)" :index="index"></u-lazy-load>
 				<view style="padding: 8px;">
-					<!-- <view class="er-item-list-bq">
-						<view v-for="(item1,index1) in item.labelarr" :key="index1">
-							<u-tag :text="item1" type="primary" />
-						</view>
-					</view> -->
 					<view class="er-item-list-title">
 						{{item.title}}
 					</view>
 					<view class="er-item-list-author" v-if="item.userinfo">
 						<view class="er-item-list-img">
+							<view class="original" v-if="item.userinfo&&item.userinfo[0].original">
+								<image class="original-img" src="@/static/center/ori_back.png"></image>
+							</view>
 							<u-avatar :size="50"
 								:src="(item.userinfo&&item.userinfo[0].avatar_file)?item.userinfo[0].avatar_file.url:''">
 							</u-avatar>
-							{{item.userinfo&&item.userinfo[0].nickname?item.userinfo[0].nickname:'佚名'}}
+							<text style="margin-left: 4px;">{{item.userinfo&&item.userinfo[0].nickname?item.userinfo[0].nickname:'佚名'}}</text>
+							
 						</view>
 						<view class="er-item-list-right">
 							<u-icon name="heart"></u-icon>{{item.like_count||0}}
@@ -90,6 +89,16 @@
 </script>
 
 <style lang="scss" scoped>
+	.original{
+		position: relative;
+	}
+	.original-img{
+		      width: 68rpx;
+		      height: 68rpx;
+		      position: absolute;
+		      top: -32rpx;
+		      left: -10rpx;
+	}
 	.er-item-list-warter {
 		border-radius: 8px;
 		// margin: 10px;

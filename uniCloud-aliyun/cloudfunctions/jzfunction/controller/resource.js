@@ -11,6 +11,9 @@ module.exports = class resourceController extends Controller {
 	async getList(){
 		return await this.service.resource.getList()
 	}
+	async getListByuser(){
+		return await this.service.resource.getListByuser()
+	}
 	async getResource(){
 		return await this.service.resource.getResource()
 	}

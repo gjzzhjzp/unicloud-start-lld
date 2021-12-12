@@ -73,6 +73,18 @@
 				default () {
 					return true
 				}
+			},
+			zy_gs:{
+				type: Number,
+				default () {
+					return undefined
+				}
+			},
+			categories:{
+				type: String,
+				default () {
+					return ""
+				}
 			}
 		},
 		mixins: [yqm],
@@ -112,7 +124,17 @@
 					rows: 4,
 					app_bbh: app_bbh
 				}
-				// console.log("param", param);
+				if(typeof this.zy_gs!="undefined"){
+					Object.assign(param,{
+						zy_gs:this.zy_gs
+					});
+				}
+				if(this.categories){
+					Object.assign(param,{
+						categories:this.categories
+					});
+				}
+				console.log("param222222222", param);
 				uniCloud.callFunction({
 					name: 'jzfunction',
 					data: {

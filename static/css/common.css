@@ -155,3 +155,16 @@ body.pages-resource-list uni-page-body {
 	display: block;
 	height: 100%;
 }
+.u-dropdown__content__mask{
+	display: none;
+}
+.comment-input1{
+	width: 100%;
+	flex: 1;
+}
+.comment-input1 .u-input{
+background-color: #F0F2F1;	
+width: 100%;
+flex: 1;
+border-radius: 50px !important;
+}

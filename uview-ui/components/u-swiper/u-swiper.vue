@@ -2,25 +2,28 @@
 	<view class="u-swiper-wrap" :style="{
 		borderRadius: `${borderRadius}rpx`
 	}">
-		<swiper :current="elCurrent" @change="change" @animationfinish="animationfinish" :interval="interval" :circular="circular" :duration="duration" :autoplay="autoplay"
-		 :previous-margin="effect3d ? effect3dPreviousMargin + 'rpx' : '0'" :next-margin="effect3d ? effect3dPreviousMargin + 'rpx' : '0'"
-		 :style="{
+		<swiper :current="elCurrent" @change="change" @animationfinish="animationfinish" :interval="interval"
+			:circular="circular" :duration="duration" :autoplay="autoplay"
+			:previous-margin="effect3d ? effect3dPreviousMargin + 'rpx' : '0'"
+			:next-margin="effect3d ? effect3dPreviousMargin + 'rpx' : '0'" :style="{
 				height: height + 'rpx',
 				backgroundColor: bgColor
 			}">
 			<swiper-item class="u-swiper-item" v-for="(item, index) in list" :key="index">
-				<view class="u-list-image-wrap" @tap.stop.prevent="listClick(index)" :class="[uCurrent != index ? 'u-list-scale' : '']" :style="{
+				<view class="u-list-image-wrap" @tap.stop.prevent="listClick(index)"
+					:class="[uCurrent != index ? 'u-list-scale' : '']" :style="{
 						borderRadius: `${borderRadius}rpx`,
 						transform: effect3d && uCurrent != index ? 'scaleY(0.9)' : 'scaleY(1)',
 						margin: effect3d && uCurrent != index ? '0 20rpx' : 0,
 					}">
-					<u-link v-if="item.url" :href="item.url?item.url:'javascript:void(0)'" style="width: 100%;">
+					<u-link v-if="item.url&&item.url.indexOf('http')!=-1" :href="item.url?item.url:'javascript:void(0)'"
+						style="width: 100%;">
 						<image class="u-swiper-image" :src="item[name]" mode="aspectFill"></image>
 					</u-link>
-					<image v-else class="u-swiper-image" :src="item[name]" mode="aspectFill"></image>
-					<!-- <slot name="image" :item="item">
-						<image class="u-swiper-image" :src="item[name] || item" :mode="imgMode"></image>
-					</slot> -->
+					<view v-else @click="clickImage(item)" style="width: 100%;height: 100%;">
+						<image class="u-swiper-image" :src="item[name]" mode="aspectFill"></image>
+					</view>
+
 					<view v-if="title && item.title" class="u-swiper-title u-line-1" :style="[{
 							'padding-bottom': titlePaddingBottom
 						}, titleStyle]">
@@ -36,16 +39,16 @@
 				padding: `0 ${effect3d ? '74rpx' : '24rpx'}`
 			}">
 			<block v-if="mode == 'rect'">
-				<view class="u-indicator-item-rect" :class="{ 'u-indicator-item-rect-active': index == uCurrent }" v-for="(item, index) in list"
-				 :key="index"></view>
+				<view class="u-indicator-item-rect" :class="{ 'u-indicator-item-rect-active': index == uCurrent }"
+					v-for="(item, index) in list" :key="index"></view>
 			</block>
 			<block v-if="mode == 'dot'">
-				<view class="u-indicator-item-dot" :class="{ 'u-indicator-item-dot-active': index == uCurrent }" v-for="(item, index) in list"
-				 :key="index"></view>
+				<view class="u-indicator-item-dot" :class="{ 'u-indicator-item-dot-active': index == uCurrent }"
+					v-for="(item, index) in list" :key="index"></view>
 			</block>
 			<block v-if="mode == 'round'">
-				<view class="u-indicator-item-round" :class="{ 'u-indicator-item-round-active': index == uCurrent }" v-for="(item, index) in list"
-				 :key="index"></view>
+				<view class="u-indicator-item-round" :class="{ 'u-indicator-item-round-active': index == uCurrent }"
+					v-for="(item, index) in list" :key="index"></view>
 			</block>
 			<block v-if="mode == 'number'">
 				<view class="u-indicator-item-number">{{ uCurrent + 1 }}/{{ list.length }}</view>
@@ -171,7 +174,7 @@
 			// 标题的样式，对象形式
 			titleStyle: {
 				type: Object,
-				default() {
+				default () {
 					return {}
 				}
 			}
@@ -179,7 +182,7 @@
 		watch: {
 			// 如果外部的list发生变化，判断长度是否被修改，如果前后长度不一致，重置uCurrent值，避免溢出
 			list(nVal, oVal) {
-				if(nVal.length !== oVal.length) this.uCurrent = 0;
+				if (nVal.length !== oVal.length) this.uCurrent = 0;
 			},
 			// 监听外部current的变化，实时修改内部依赖于此测uCurrent值，如果更新了current，而不是更新uCurrent，
 			// 就会错乱，因为指示器是依赖于uCurrent的
@@ -201,9 +204,11 @@
 			titlePaddingBottom() {
 				let tmp = 0;
 				if (this.mode == 'none') return '12rpx';
-				if (['bottomLeft', 'bottomCenter', 'bottomRight'].indexOf(this.indicatorPos) >= 0 && this.mode == 'number') {
+				if (['bottomLeft', 'bottomCenter', 'bottomRight'].indexOf(this.indicatorPos) >= 0 && this.mode ==
+					'number') {
 					tmp = '60rpx';
-				} else if (['bottomLeft', 'bottomCenter', 'bottomRight'].indexOf(this.indicatorPos) >= 0 && this.mode != 'number') {
+				} else if (['bottomLeft', 'bottomCenter', 'bottomRight'].indexOf(this.indicatorPos) >= 0 && this.mode !=
+					'number') {
 					tmp = '40rpx';
 				} else {
 					tmp = '12rpx';
@@ -216,6 +221,14 @@
 			}
 		},
 		methods: {
+			clickImage(item) {
+				console.log("1111", item);
+				if (item.url) {
+					uni.navigateTo({
+						url: item.url
+					});
+				}
+			},
 			listClick(index) {
 				this.$emit('click', index);
 			},
@@ -238,7 +251,7 @@
 
 <style lang="scss" scoped>
 	@import "../../libs/css/style.components.scss";
-	
+
 	.u-swiper-wrap {
 		position: relative;
 		overflow: hidden;

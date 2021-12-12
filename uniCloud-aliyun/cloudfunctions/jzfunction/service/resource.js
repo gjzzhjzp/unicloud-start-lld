@@ -1,7 +1,7 @@
 const {
 	Service
 } = require('uni-cloud-router')
-const BASE64=require("./common/base64.js")
+const BASE64 = require("./common/base64.js")
 module.exports = class resourceService extends Service {
 	async add_like() {
 		try {
@@ -87,13 +87,13 @@ module.exports = class resourceService extends Service {
 			};
 		}
 	}
-	async  getUserRole(ctx) {
+	async getUserRole(ctx) {
 		var _token = ctx.event.uniIdToken;
-		var __token ={};
-		if(_token){
+		var __token = {};
+		if (_token) {
 			_token = _token.split(".")[1];
 			var __token = BASE64.decode(_token);
-			__token=JSON.parse(__token.split("}")[0]+"}");
+			__token = JSON.parse(__token.split("}")[0] + "}");
 		}
 		return __token.role;
 	}
@@ -120,8 +120,8 @@ module.exports = class resourceService extends Service {
 				"is_off": db.command.neq(1)
 			}
 			// 如果是管理员，读取全部资源，包括下架资源
-			var roles=await this.getUserRole(context);
-			if(roles&&(roles.indexOf("Master")!=-1||roles.indexOf("AUDITOR")!=-1)){
+			var roles = await this.getUserRole(context);
+			if (roles && (roles.indexOf("Master") != -1 || roles.indexOf("AUDITOR") != -1)) {
 				delete where_obj.is_off;
 			}
 			if (data.categories) {
@@ -186,16 +186,24 @@ module.exports = class resourceService extends Service {
 					as: 'userinfo',
 				})
 				.end();
-			// if (type == "tj") {
-			// 	return {
-			// 		"state": "0000",
-			// 		"rows": resultdata.data,
-			// 		"total": resultdata.data.length,
-			// 		"msg": "查询成功"
-			// 	};
-			// } else {
-				var app_bbh = data.app_bbh;
-				// console.log("app_bbh33333333333333333",app_bbh);
+			var app_bbh = data.app_bbh;
+			if (type == "tj") {
+				if (app_bbh) {
+					return {
+						"state": "0000",
+						"rows": resultdata.data,
+						"total": resultdata.data.length,
+						"msg": "查询成功"
+					};
+				} else {
+					return {
+						"state": "0000",
+						"rows": [resultdata.data[0]],
+						"total": resultdata.data.length,
+						"msg": "查询成功"
+					};
+				}
+			} else {
 				if (app_bbh >= 113) {
 					return {
 						"state": "0000",
@@ -211,7 +219,132 @@ module.exports = class resourceService extends Service {
 						"msg": "查询成功"
 					};
 				}
-			// }
+			}
+		} catch (e) {
+			console.log("e", e);
+			return {
+				"state": "9999",
+				"rows": [],
+				"msg": "查询失败"
+			};
+		}
+	}
+	// 通过查询用户获取资源列表
+	async getListByuser() {
+		try {
+			console.log("2222222222222222222222222222222222222222")
+			var db = this.db;
+			var context = this.ctx;
+			var data = this.ctx.data;
+			var type = data.type || "zx";
+			var label = data.label; ////用户名/昵称
+			var rows = data.rows || 10;
+			var page = data.page || 1;
+			var zy_gs = "";
+			const collection = db.collection('jz-opendb-resources');
+			const collectionconfig = db.collection('jz-custom-config');
+			var config_800001 = await collectionconfig.where({
+				config_bm: "800001"
+			}).get();
+			var config_800001_value = config_800001.data[0].config_val;
+			var where_obj = {
+				"article_status": 1,
+				"is_off": db.command.neq(1)
+			}
+			// 如果是管理员，读取全部资源，包括下架资源
+			var roles = await this.getUserRole(context);
+			if (roles && (roles.indexOf("Master") != -1 || roles.indexOf("AUDITOR") != -1)) {
+				delete where_obj.is_off;
+			}
+			if (data.categories) {
+				Object.assign(where_obj, {
+					"categories": new RegExp(data.categories, 'gi')
+				});
+			}
+			if (config_800001_value == '0') { ///=1读取未授权资源，=0只读取授权资源
+				Object.assign(where_obj, {
+					is_grant: 1
+				});
+			}
+			if (typeof data.zy_gs != "object") {
+				zy_gs = parseInt(data.zy_gs) || 0;
+				Object.assign(where_obj, {
+					zy_gs: zy_gs
+				});
+			} else {
+				Object.assign(where_obj, {
+					zy_gs: db.command.neq(2)
+				});
+			}
+			var where = {}; ///查询条件
+			if (data.label) {
+				const collection_user = db.collection('uni-id-users');
+				var resultuser = await collection_user.aggregate().match(
+					db.command.or([{
+						"username": new RegExp(data.label, 'gi')
+					}, {
+						"nickname": new RegExp(data.label, 'gi')
+					}])
+				).end();
+				var userdata = resultuser.data;
+				var userids = [];
+				userdata.forEach((item) => {
+					userids.push(item._id);
+				});
+				var _where = [];
+				userids.forEach((item1) => {
+					_where.push(Object.assign({
+						"user_id": item1
+					}, where_obj));
+				});
+				where = db.command.or(_where);
+			} else {
+				where = where_obj;
+			}
+			var collection_query = null;
+			if (type == "zx") {
+				collection_query = collection.aggregate().match(where).sort({
+					"last_modify_date": -1
+				}).skip((page - 1) * rows).limit(rows);
+			} else if (type == "rm") {
+				collection_query = collection.aggregate().match(where).sort({
+					"view_count": -1
+				}).skip((page - 1) * rows).limit(rows);
+			} else if (type == "sc") {
+				collection_query = collection.aggregate().match(where).sort({
+					"like_count": -1
+				}).skip((page - 1) * rows).limit(rows);
+			} else if (type == "tj") {
+				Object.assign(where, {
+					is_recommend: 1
+				});
+				collection_query = collection.aggregate().match(where).sort({
+					"last_modify_date": -1
+				}).skip((page - 1) * rows).limit(rows);
+			}
+			var resultdata = await collection_query.lookup({
+					from: 'uni-id-users',
+					localField: 'user_id',
+					foreignField: '_id',
+					as: 'userinfo',
+				})
+				.end();
+			var app_bbh = data.app_bbh;
+			if (app_bbh >= 113) {
+				return {
+					"state": "0000",
+					"rows": resultdata.data,
+					"total": resultdata.data.length,
+					"msg": "查询成功"
+				};
+			} else {
+				return {
+					"state": "0000",
+					"rows": [],
+					"total": 0,
+					"msg": "查询成功"
+				};
+			}
 		} catch (e) {
 			console.log("e", e);
 			return {
@@ -247,6 +380,19 @@ module.exports = class resourceService extends Service {
 			}).update({
 				view_count: resultdata.data[0].view_count
 			});
+			var resource_id=resultdata.data[0]._id;
+			const danmulist =await db.collection('jz-opendb-danmu').where({
+				resource_id:resource_id
+			}).get();
+			var danmu_list=[];
+			danmulist.data.forEach((item)=>{
+				danmu_list.push({
+					text:item.danmu_text,
+					color:item.danmu_color,
+					time:item.danmu_time
+				})
+			})
+			resultdata.data[0].danmulist=danmu_list;
 			return {
 				"state": "0000",
 				"rows": resultdata.data,

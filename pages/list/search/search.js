@@ -12,6 +12,7 @@ const arrUnique = arr => {
 export default {
 	data() {
 		return {
+			searchLogDbName,
 			localSearchList: uni.getStorageSync(localSearchListKey),
 		}
 	},
@@ -35,11 +36,12 @@ export default {
 			uni.setStorageSync(localSearchListKey, this.localSearchList);
 		},
 		searchLogDbAdd(value) {
+			var that=this;
 			/*
 				在此处存搜索记录，如果登录则需要存 user_id，若未登录则存device_id
 			 */
 			this.getDeviceId().then(device_id => {
-				this.searchLogDb.add({
+				that.searchLogDb.add({
 					// user_id: device_id,
 					device_id,
 					content: value,

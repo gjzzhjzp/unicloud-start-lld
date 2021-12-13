@@ -56,6 +56,16 @@
 			"description": "被回复的评论ID，comment_type为1时有效",
 			"foreignKey": "opendb-news-comments._id"
 		},
+		"all_reply_comment_id": {
+			"bsonType": "string",
+			"title": "所有被回复的评论ID",
+			"description": "所有被回复的评论ID，comment_type为1时有效"
+		},
+		"comment_cj": {
+			"bsonType": "int",
+			"title": "评论层级",
+			"description": "评论层级"
+		},
 		"comment_date": {
 			"title": "评论发表时间",
 			"bsonType": "timestamp",

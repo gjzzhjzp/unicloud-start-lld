@@ -50,7 +50,7 @@
 					<uni-file-picker file-mediatype="video" file-extname="mp4" :limit="1" return-type="array"
 						v-model="formData.resources">
 					</uni-file-picker>
-					<view class="resource-ts">提示：支持MP4格式</view>
+					<view class="resource-ts">提示：支持MP4格式(注意：网络不好视频会自动压缩)</view>
 				</template>
 				<!-- #ifdef H5 -->
 				<template v-else-if="formData.zy_gs==2">

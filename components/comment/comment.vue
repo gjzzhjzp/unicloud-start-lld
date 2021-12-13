@@ -35,7 +35,7 @@
 						<view class="bottom-right">
 							<view class="itemb">
 								<view class="like" :class="{ highlight: res.isLike }">
-									<u-icon v-if="!res.isLike" name="thumb-up" :size="40" color="#A0A0A0"
+									<u-icon v-if="!res.isLike" name="/static/comment/like.png" :size="40" color="#A0A0A0"
 										@click="getLike(index)">
 									</u-icon>
 									<u-icon v-if="res.isLike" name="thumb-up-fill" :size="40" color="rgb(114, 117, 211)"
@@ -48,7 +48,7 @@
 								<u-icon size="40" @click="replycomment(res)" name="/static/comment/reply.png"></u-icon>
 							</view>
 							<view class="itemb">
-								<u-icon size="40" name="/static/comment/jubao.png"></u-icon>
+								<u-icon size="40" @click="openmore(res)" name="/static/comment/more.png"></u-icon>
 							</view>
 						</view>
 					</view>
@@ -68,11 +68,16 @@
 				发送
 			</text>
 		</view>
+		<operator ref="operator" @reload="getComment"></operator>
 	</view>
 </template>
 <script>
+	import {
+		mapGetters,
+		mapMutations
+	} from 'vuex';
 	const db = uniCloud.database();
-		const uid = db.getCloudEnv('$cloudEnv_uid');
+	const uid = db.getCloudEnv('$cloudEnv_uid');
 	import reply from "./reply.vue"
 	import commontImage from "./commontImage.vue"
 	import operator from "./operator.vue"
@@ -99,6 +104,12 @@
 		created() {
 			this.getComment();
 		},
+		computed: {
+			...mapGetters({
+				userInfo: 'user/info',
+				hasLogin: 'user/hasLogin'
+			})
+		},
 		props: {
 			zydata: {
 				type: Object,
@@ -108,6 +119,19 @@
 			}
 		},
 		methods: {
+			openmore(res) {
+				if (res.user_id[0]._id == this.userInfo._id) {
+					this.$refs.operator.list = [{
+						text: "删除"
+					}];
+				} else {
+					this.$refs.operator.list = [{
+						text: "举报"
+					}];
+				}
+				this.$refs.operator.curcomment=res;
+				this.$refs.operator.open();
+			},
 			// 切换评论的显示方式
 			toggleType() {
 				if (this.toptype == "zx") {
@@ -133,22 +157,25 @@
 					user_id: uid,
 					comment_content: this.inputvalue,
 					like_count: 0,
+					comment_cj:this.relaydata.comment_cj||1,///评论层级
 					comment_type: this.relaydata.comment_type || 0,
 					reply_user_id: this.relaydata.reply_user_id || "0",
-					reply_comment_id: this.relaydata.reply_comment_id || "0"
+					reply_comment_id: this.relaydata.reply_comment_id || "0",
+					all_reply_comment_id:this.relaydata.all_reply_comment_id || "0",
 				});
 				this.inputvalue = "";
 				this.getComment();
 			},
 			// 回复
 			replycomment(item) {
-				// debugger;
 				console.log("item", item);
 				this.placeholder = "回复 @" + item.user_id[0].nickname + ":";
 				this.relaydata = {
+					comment_cj:item.comment_cj+1,
 					comment_type: 1,
 					reply_user_id: item.user_id[0]._id,
-					reply_comment_id: item._id
+					reply_comment_id: item._id,
+					all_reply_comment_id:item.all_reply_comment_id+","+item._id
 				}
 			},
 			// 跳转到全部回复
@@ -164,7 +191,7 @@
 				if (that.commentList[index].isLike == true) {
 					that.commentList[index].like_count++;
 					await db.collection("opendb-news-likepl").add({
-						article_id:this.zydata._id,
+						article_id: this.zydata._id,
 						user_id: uid,
 						comment_id: that.commentList[index]._id,
 						comment_content: that.commentList[index].comment_content
@@ -184,39 +211,41 @@
 			},
 			// 评论列表
 			async getComment() {
+				uni.showLoading({
+					title:"加载中"
+				});
 				var that = this;
 				var comments = {};
 				var dbcomments = db.collection("opendb-news-comments,uni-id-users").where({
 					article_id: that.zydata._id
 				}).field(
-					"article_id,user_id{nickname,avatar_file,original},reply_user_id{nickname,avatar_file},comment_content,like_count,comment_type,comment_date,reply_comment_id"
+					"article_id,user_id{nickname,avatar_file,original},reply_user_id{nickname,avatar_file},comment_content,like_count,comment_type,comment_date,reply_comment_id,comment_cj,all_reply_comment_id"
 				);
 				if (that.toptype == "zx") {
 					comments = await dbcomments.orderBy("comment_date", "desc").get();
 				} else {
 					comments = await dbcomments.orderBy("like_count", "desc").get();
 				}
-				
 				if (comments.result && comments.result.data.length > 0) {
 					// 获取当前登录用户点赞的评论列表
-					var like_pl=[];
-					var likepl=await db.collection("opendb-news-likepl").where({
+					var like_pl = [];
+					var likepl = await db.collection("opendb-news-likepl").where({
 						article_id: that.zydata._id,
 						user_id: uid
 					}).get();
-					if(likepl.result && likepl.result.data.length > 0){
-						var likelist=likepl.result.data;
-						likelist.forEach((item1)=>{
-							if(item1.comment_id){
+					if (likepl.result && likepl.result.data.length > 0) {
+						var likelist = likepl.result.data;
+						likelist.forEach((item1) => {
+							if (item1.comment_id) {
 								like_pl.push(item1.comment_id);
 							}
 						})
 					}
-					comments.result.data.forEach((item2)=>{
-						if(like_pl.indexOf(item2._id)!=-1){
-							this.$set(item2,"isLike",true);
-						}else{
-							this.$set(item2,"isLike",false);
+					comments.result.data.forEach((item2) => {
+						if (like_pl.indexOf(item2._id) != -1) {
+							this.$set(item2, "isLike", true);
+						} else {
+							this.$set(item2, "isLike", false);
 						}
 					});
 					that.commentList = that.getTree(comments.result.data);
@@ -228,7 +257,7 @@
 							}
 						})
 					}
-					// console.log("this.currentData",this.currentData);
+					uni.hideLoading();
 				}
 			},
 			getTree(data) {

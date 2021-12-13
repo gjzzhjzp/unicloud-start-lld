@@ -63,6 +63,11 @@
 			"title": "是否原创",
 			"description": "是否原创"
 		},
+		"forbiddenwords": {
+			"bsonType": "bool",
+			"title": "是否禁言",
+			"description": "是否禁言"
+		},
 		"beizhu": {
 			"bsonType": "string",
 			"title": "备注",

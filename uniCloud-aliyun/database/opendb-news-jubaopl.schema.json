@@ -1,6 +1,6 @@
 {
 	"bsonType": "object",
-	"required": ["article_id","comment_id", "user_id"],
+	"required": ["article_id","comment_id", "user_id","jubao_content"],
 	"permission": {
 		"read": "doc.user_id == auth.uid",
 		"create": "auth.uid != null",
@@ -22,9 +22,10 @@
 			"description": "评论id，参考opendb-news-comments表",
 			"foreignKey": "opendb-news-comments._id"
 		},
-		"comment_content": {
+		"jubao_content": {
 			"bsonType": "string",
-			"description": "评论内容"
+			"title": "举报原因",
+			"description": "举报原因"
 		},
 		"user_id": {
 			"bsonType": "string",

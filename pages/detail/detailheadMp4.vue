@@ -164,11 +164,12 @@
 	}
 
 	.detail-image-bq {
-		display: flex;
+		/* display: flex; */
 	}
 
 	.detail-image-bq1 {
-		margin: 0px 6px;
+		margin:  6px;
+		display: inline-block;
 	}
 
 	.detail-image-sx3 {

@@ -37,7 +37,7 @@
 				<view class="bottom-right">
 					<view class="itemb">
 						<view class="like" :class="{ highlight: res.isLike }">
-							<u-icon v-if="!res.isLike" name="thumb-up" :size="40" @click="getLike()">
+							<u-icon v-if="!res.isLike" name="/static/comment/like.png" :size="40" @click="getLike()">
 							</u-icon>
 							<u-icon v-if="res.isLike" name="thumb-up-fill" color="rgb(114, 117, 211)" :size="40"
 								@click="getLike()"></u-icon>
@@ -47,8 +47,8 @@
 					<view class="itemb" @click="replycomment(res)">
 						<u-icon size="40" name="/static/comment/reply.png"></u-icon>
 					</view>
-					<view class="itemb">
-						<u-icon size="40" name="/static/comment/jubao.png"></u-icon>
+					<view class="itemb" @click="openmore(res)">
+						<u-icon size="40" name="/static/comment/more.png"></u-icon>
 					</view>
 				</view>
 			</view>
@@ -93,7 +93,7 @@
 						<view class="bottom-right">
 							<view class="itemb">
 								<view class="like" :class="{ highlight: item.isLike }">
-									<u-icon v-if="!item.isLike" name="thumb-up" :size="40" @click="getLike(index)">
+									<u-icon v-if="!item.isLike" name="/static/comment/like.png" :size="40" @click="getLike(index)">
 									</u-icon>
 									<u-icon v-if="item.isLike" name="thumb-up-fill" color="rgb(114, 117, 211)"
 										:size="40" @click="getLike(index)">
@@ -104,8 +104,8 @@
 							<view class="itemb" @click="replycomment(item)">
 								<u-icon size="40" name="/static/comment/reply.png"></u-icon>
 							</view>
-							<view class="itemb">
-								<u-icon size="40" name="/static/comment/jubao.png"></u-icon>
+							<view class="itemb" @click="openmore(item)">
+								<u-icon size="40" name="/static/comment/more.png"></u-icon>
 							</view>
 						</view>
 					</view>
@@ -121,13 +121,19 @@
 				发送
 			</text>
 		</view>
+		<operator ref="operator" @reload="reload()"></operator>
 	</view>
 </template>
 
 <script>
+	import {
+		mapGetters,
+		mapMutations
+	} from 'vuex';
 	const db = uniCloud.database();
 	const uid = db.getCloudEnv('$cloudEnv_uid');
 	import commontImage from "./commontImage.vue"
+	import operator from "./operator.vue"
 	export default {
 		data() {
 			return {
@@ -143,7 +149,8 @@
 			};
 		},
 		components: {
-			commontImage
+			commontImage,
+			operator
 		},
 		created() {
 			this.getReply();
@@ -162,9 +169,15 @@
 				}
 			}
 		},
+		computed: {
+			...mapGetters({
+				userInfo: 'user/info',
+				hasLogin: 'user/hasLogin'
+			})
+		},
 		watch: {
 			res() {
-				console.log("data11111111111", this.res);
+				this.commentList.splice(0,this.commentList.length);
 				if (this.res.children) {
 					this._dealChildren(this.res.children);
 				}
@@ -185,6 +198,23 @@
 			console.log("this.commentList", this.commentList);
 		},
 		methods: {
+			// reloadcomment(){
+			// 	this.$emit("reload");
+			// },
+			openmore(res) {
+				// debugger;
+				if (res.user_id[0]._id == this.userInfo._id) {
+					this.$refs.operator.list = [{
+						text: "删除"
+					}];
+				} else {
+					this.$refs.operator.list = [{
+						text: "举报"
+					}];
+				}
+				this.$refs.operator.curcomment=res;
+				this.$refs.operator.open();
+			},
 			_dealChildren(ary) {
 				ary.forEach((item) => {
 					this.commentList.push(item);
@@ -195,12 +225,15 @@
 			},
 			// 回复
 			replycomment(item) {
+				// debugger;
 				console.log("item", item);
 				this.placeholder = "回复 @" + item.user_id[0].nickname + ":";
 				this.relaydata = {
 					comment_type: 1,
 					reply_user_id: item.user_id[0]._id,
-					reply_comment_id: item._id
+					reply_comment_id: item._id,
+					comment_cj:item.comment_cj+1,
+					all_reply_comment_id:item.all_reply_comment_id+","+item._id
 				}
 			},
 			// 发送评论
@@ -214,8 +247,10 @@
 					comment_content: that.inputvalue,
 					like_count: 0,
 					comment_type: 1,
+					comment_cj:that.relaydata.comment_cj||2,///评论层级
 					reply_user_id: that.relaydata.reply_user_id || that.comment.user_id[0]._id,
-					reply_comment_id: that.relaydata.reply_comment_id || that.comment._id
+					reply_comment_id: that.relaydata.reply_comment_id || that.comment._id,
+					all_reply_comment_id:that.relaydata.all_reply_comment_id || that.comment.all_reply_comment_id+","+that.comment._id,
 				});
 				that.inputvalue = "";
 				// this.getComment();

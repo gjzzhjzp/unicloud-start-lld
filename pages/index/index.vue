@@ -7,6 +7,7 @@
 			</u-search>
 		</jz-navbar>
 		<jz-notice ref="notice" :type="2" mode="horizontal"></jz-notice>
+		<!-- <u-button @click="importExcel">导入</u-button> -->
 		<view class="jz-container">
 			<view>
 				<jz-banner ref="banner"></jz-banner>
@@ -21,6 +22,7 @@
 			<!-- <jz-sy-list ref="sylist4" title="夺笋" label="夺笋"></jz-sy-list> -->
 			<jz-tabbar></jz-tabbar>
 			<jz-gonggao ref="gonggao"></jz-gonggao>
+			
 		</view>
 	</view>
 </template>

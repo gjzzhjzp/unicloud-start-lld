@@ -147,9 +147,6 @@
 			"description": "最后修改时间",
 			"defaultValue": {
 				"$env": "now"
-			},
-			"permission": {
-				"write": false
 			}
 		},
 		"aliyun_dz": {

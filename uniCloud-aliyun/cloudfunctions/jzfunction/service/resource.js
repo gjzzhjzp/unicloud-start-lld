@@ -161,7 +161,7 @@ module.exports = class resourceService extends Service {
 			var collection_query = null;
 			if (type == "zx") {
 				collection_query = collection.aggregate().match(where).sort({
-					"last_modify_date": -1
+					"publish_date": -1
 				}).skip((page - 1) * rows).limit(rows);
 			} else if (type == "rm") {
 				collection_query = collection.aggregate().match(where).sort({
@@ -176,7 +176,7 @@ module.exports = class resourceService extends Service {
 					is_recommend: 1
 				});
 				collection_query = collection.aggregate().match(where).sort({
-					"last_modify_date": -1
+					"publish_date": -1
 				}).skip((page - 1) * rows).limit(rows);
 			}
 			var resultdata = await collection_query.lookup({
@@ -304,7 +304,7 @@ module.exports = class resourceService extends Service {
 			var collection_query = null;
 			if (type == "zx") {
 				collection_query = collection.aggregate().match(where).sort({
-					"last_modify_date": -1
+					"publish_date": -1
 				}).skip((page - 1) * rows).limit(rows);
 			} else if (type == "rm") {
 				collection_query = collection.aggregate().match(where).sort({
@@ -319,7 +319,7 @@ module.exports = class resourceService extends Service {
 					is_recommend: 1
 				});
 				collection_query = collection.aggregate().match(where).sort({
-					"last_modify_date": -1
+					"publish_date": -1
 				}).skip((page - 1) * rows).limit(rows);
 			}
 			var resultdata = await collection_query.lookup({

@@ -258,6 +258,8 @@
 						})
 					}
 					uni.hideLoading();
+				}else{
+					uni.hideLoading();
 				}
 			},
 			getTree(data) {

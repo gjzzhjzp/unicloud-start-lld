@@ -222,7 +222,8 @@
 				// 使用 clientDB 提交数据
 				value = Object.assign(value, {
 					categories: this.formData.categories,
-					avatar: this.formData.avatar
+					avatar: this.formData.avatar,
+					last_modify_date:db.env.now
 				});
 				var config = getApp().globalData.config;
 				if (config["800000"] == "1") {

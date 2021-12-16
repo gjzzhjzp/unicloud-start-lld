@@ -248,7 +248,13 @@
 			},
 			// 发送评论
 			async sendComment() {
-				// debugger;
+				if(this.userInfo.forbiddenwords){
+					this.$refs.uToast.show({
+						title: '你已被禁言，请联系管理员',
+						type: 'error'
+					});
+					return;
+				}
 				var that = this;
 				const uid = db.getCloudEnv('$cloudEnv_uid');
 				await db.collection("opendb-news-comments").add({

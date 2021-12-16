@@ -107,6 +107,7 @@ module.exports = class resourceService extends Service {
 			var label = data.label; ///标签
 			var rows = data.rows || 10;
 			var page = data.page || 1;
+			var ignore=data.ignore;
 			var zy_gs = "";
 			// return ;
 			const collection = db.collection('jz-opendb-resources');
@@ -144,6 +145,12 @@ module.exports = class resourceService extends Service {
 					zy_gs: db.command.neq(2)
 				});
 			}
+			if(ignore){
+				Object.assign(where_obj, {
+					_id: db.command.neq(ignore)
+				});
+			}
+			console.log("where_obj222222222222",where_obj);
 			var where = {}; ///查询条件
 			if (data.label) {
 				where = db.command.or([Object.assign({

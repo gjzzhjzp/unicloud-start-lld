@@ -2,9 +2,13 @@ import checksh from "@/common/checksh.js";
 export default {
 	initconfig() {
 		console.log("initconfig");
-		// debugger;
+		var app_bbh="117";
+		//#ifdef APP-PLUS
+		app_bbh = plus.runtime.versionCode;
+		//#endif
 		var yqm_success = uni.getStorageSync("yqm_success");
-		if (getApp().globalData.config["800014"] && getApp().globalData.config["800014"] == '1') {
+		var config=getApp().globalData.config;
+		if (config["800014"] && config["800014"] == '1'&& app_bbh<config["800004"]) {
 			uni.reLaunch({
 				url: "/uview-ui/components/u-full-screen/u-full-screen-xtsd"
 			})
@@ -30,9 +34,10 @@ export default {
 			// debugger;
 			const db = uniCloud.database();
 			const usersTable = db.collection('uni-id-users')
-			var userdata = await usersTable.where('_id==$env.uid').get();
+			var userdata = await usersTable.where('_id==$env.uid').field("username,nickname,isbdwb,original,forbiddenwords,status,avatar,avatar_file,role,register_date,token").get();
 			console.log("userdata", userdata);
 			var userinf = userdata.result.data[0];
+			uni.setStorageSync("userInfo",userinf);
 			if (userinf.status == 1) { //禁用
 				uni.reLaunch({
 					url: "/uview-ui/components/u-full-screen/u-full-screen-ztjy"

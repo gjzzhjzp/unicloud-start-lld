@@ -4,15 +4,17 @@
 			<template slot="content">
 				<template v-if="data.aliyun_dz&&data.aliyun_dz.indexOf('/jzmp4/')!=-1">
 					<view class="detail-image-item">
-						<video id="myVideo" :danmu-btn="danmubtn" :enable-danmu="enabledanmu" :danmu-list="data.danmulist"
-							autoplay :src="data.aliyun_dz" controls @timeupdate="timeupdate"></video>
+						<video id="myVideo" :danmu-btn="danmubtn" :enable-danmu="enabledanmu"
+							:danmu-list="data.danmulist" autoplay :src="data.aliyun_dz" controls
+							@timeupdate="timeupdate"></video>
 					</view>
 				</template>
 				<template v-else>
-				<view class="detail-image-item" v-for="(item,index) in data.resources" :key="index">
-						<video id="myVideo" :danmu-btn="danmubtn" :enable-danmu="enabledanmu" :danmu-list="data.danmulist"
-							autoplay :src="item.url" controls @timeupdate="timeupdate"></video>
-				</view>
+					<view class="detail-image-item" v-for="(item,index) in data.resources" :key="index">
+						<video id="myVideo" :danmu-btn="danmubtn" :enable-danmu="enabledanmu"
+							:danmu-list="data.danmulist" autoplay :src="item.url" controls
+							@timeupdate="timeupdate"></video>
+					</view>
 				</template>
 				<!-- #ifndef MP-ALIPAY -->
 				<u-popup v-model="showsenddanmu" mode="bottom">
@@ -40,7 +42,7 @@
 					</view>
 					<view class="closedanmu" v-show="!showdanmu">
 						<view class="closedanmu_1">
-							<u-icon size="72"  @click="openDanmu()" name="/static/comment/closedanmu.png"></u-icon>
+							<u-icon size="72" @click="openDanmu()" name="/static/comment/closedanmu.png"></u-icon>
 						</view>
 					</view>
 				</view>
@@ -53,6 +55,10 @@
 	</view>
 </template>
 <script>
+	import {
+		mapGetters,
+		mapMutations
+	} from 'vuex';
 	import detail from "./detail.js"
 	import detailheadMp4 from "./detailheadMp4.vue"
 	const db = uniCloud.database();
@@ -64,7 +70,7 @@
 				danmubtn: true,
 				enabledanmu: true,
 				danmulist: [],
-				showdanmu:true,///显示弹幕
+				showdanmu: true, ///显示弹幕
 				showsenddanmu: false,
 				videoContext: null,
 				currentTime: "" ///当前播放时间
@@ -82,15 +88,21 @@
 				}
 			}
 		},
+		computed: {
+			...mapGetters({
+				userInfo: 'user/info',
+				hasLogin: 'user/hasLogin'
+			})
+		},
 		created() {
 			var config = getApp().globalData.config;
-			var t_800018 = config["800018"];//、显示弹幕
-			if(t_800018==1){
-				this.danmubtn=true;
-				this.enabledanmu=true;
-			}else{
-				this.danmubtn=false;
-				this.enabledanmu=false;
+			var t_800018 = config["800018"]; //、显示弹幕
+			if (t_800018 == 1) {
+				this.danmubtn = true;
+				this.enabledanmu = true;
+			} else {
+				this.danmubtn = false;
+				this.enabledanmu = false;
 			}
 		},
 		mounted() {
@@ -104,11 +116,11 @@
 			}
 		},
 		methods: {
-			openDanmu(){
-				this.showdanmu=true;
+			openDanmu() {
+				this.showdanmu = true;
 			},
-			closedanmu(){
-				this.showdanmu=false;
+			closedanmu() {
+				this.showdanmu = false;
 			},
 			opensendDanmu() {
 				this.showsenddanmu = true;
@@ -123,6 +135,13 @@
 			},
 			// 发送弹幕
 			async sendDanmu() {
+				if (this.userInfo.forbiddenwords) {
+					this.$refs.uToast.show({
+						title: '你已被禁言，请联系管理员',
+						type: 'error'
+					});
+					return;
+				}
 				this.videoContext.sendDanmu({
 					text: this.danmuValue,
 					color: "#fff"
@@ -151,23 +170,26 @@
 	}
 </script>
 <style>
-	.danmubutton{
+	.danmubutton {
 		width: 300rpx;
-		
+
 	}
-	.closedanmu{
+
+	.closedanmu {
 		display: flex;
 		height: 72rpx;
 		line-height: 72rpx;
 		width: 100%;
 		justify-content: end;
 	}
-	.closedanmu_1{
+
+	.closedanmu_1 {
 		width: 120rpx;
 		border-radius: 50px;
 		background: #E3E3E3;
 		text-align: center;
 	}
+
 	.opendanmu {
 		display: flex;
 		height: 72rpx;

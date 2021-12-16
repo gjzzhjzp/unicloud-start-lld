@@ -66,7 +66,7 @@
 				</view>
 			</view>
 			<!-- data.categories:{{data.categories}} -->
-			<jz-sy-list ref="sylist" :label="tjcategories" title="推荐资源" :showright="false" :zy_gs="1"></jz-sy-list>
+			<jz-sy-list ref="sylist" :label="tjcategories" :ignore="data._id" title="推荐资源" :showright="false" :zy_gs="1"></jz-sy-list>
 		</view>
 		<view v-show="current==1">
 			<slot name="comment"></slot>
@@ -143,7 +143,7 @@
 			tjcategories() {
 				// debugger;
 				var tjcategories = "";
-				if (this.data.categories) {
+				if (this.data.categorieszw) {
 					tjcategories = this.data.categorieszw.split(",")[0];
 				}
 				return tjcategories;

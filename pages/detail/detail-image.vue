@@ -1,10 +1,11 @@
 <template>
 	<view class="detail-image">
 		<detailhead :data="data"></detailhead>
-		<view class="detail-image-item" v-for="(item,index) in data.resources" :key="index">
+		<nine-squared :list="data.resources"></nine-squared>
+		<!-- <view class="detail-image-item" v-for="(item,index) in data.resources" :key="index">
 			<u-lazy-load v-if="item.url.indexOf('gif')==-1" @click="previewOpen(item)" threshold="300" border-radius="10" :image="item.url" :index="index"></u-lazy-load>
-		<image v-else :src="item.url"  @click="previewOpen(item)" :index="index" mode="widthFix"></image>
-		</view>
+			<image v-else :src="item.url"  @click="previewOpen(item)" :index="index" mode="widthFix"></image>
+		</view> -->
 		<kxj-previewImage ref="previewImage" :imgs="imgs"></kxj-previewImage>
 		<u-toast ref="uToast" />
 	</view>
@@ -12,13 +13,14 @@
 <script>
 	import detail from "./detail.js"
 	import detailhead from "./detailhead.vue"
+	import nineSquared from "./nineSquared.vue"
 	export default {
 		data() {
 			return {
 				imgs: []
 			}
 		},
-		components:{detailhead},
+		components:{detailhead,nineSquared},
 		mixins:[detail],
 		props: {
 			data: {

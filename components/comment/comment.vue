@@ -71,6 +71,7 @@
 			</text>
 		</view>
 		<operator ref="operator" @reload="getComment"></operator>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 <script>
@@ -171,7 +172,13 @@
 			},
 			// 发送评论
 			async sendComment() {
-				// debugger;
+				if(this.userInfo.forbiddenwords){
+					this.$refs.uToast.show({
+						title: '你已被禁言，请联系管理员',
+						type: 'error'
+					});
+					return;
+				}
 				const uid = db.getCloudEnv('$cloudEnv_uid');
 				await db.collection("opendb-news-comments").add({
 					article_id: this.zydata._id,

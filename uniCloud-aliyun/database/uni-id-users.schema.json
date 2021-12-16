@@ -1,8 +1,7 @@
 {
 	"bsonType": "object",
 	"permission": {
-		"read": true,
-		// "'read' in auth.permission||doc._id == auth.uid"
+		"read": "'read' in auth.permission||doc._id == auth.uid||true ",
 		"update": "doc._id == auth.uid||'read' in auth.permission"
 	},
 	"required": [],
@@ -87,18 +86,15 @@
 			"description": "用户性别：0 未知 1 男性 2 女性",
 			"defaultValue": 0,
 			"enum": [{
-					"text": "未知",
-					"value": 0
-				},
-				{
-					"text": "男",
-					"value": 1
-				},
-				{
-					"text": "女",
-					"value": 2
-				}
-			]
+				"text": "未知",
+				"value": 0
+			}, {
+				"text": "男",
+				"value": 1
+			}, {
+				"text": "女",
+				"value": 2
+			}]
 		},
 		"status": {
 			"bsonType": "int",
@@ -109,22 +105,18 @@
 				"write": false
 			},
 			"enum": [{
-					"text": "正常",
-					"value": 0
-				},
-				{
-					"text": "禁用",
-					"value": 1
-				},
-				{
-					"text": "审核中",
-					"value": 2
-				},
-				{
-					"text": "审核拒绝",
-					"value": 3
-				}
-			]
+				"text": "正常",
+				"value": 0
+			}, {
+				"text": "禁用",
+				"value": 1
+			}, {
+				"text": "审核中",
+				"value": 2
+			}, {
+				"text": "审核拒绝",
+				"value": 3
+			}]
 		},
 		"avatar": {
 			"bsonType": "string",
@@ -164,7 +156,6 @@
 				"write": false
 			}
 		},
-		
 		"register_date": {
 			"bsonType": "timestamp",
 			"description": "注册时间",

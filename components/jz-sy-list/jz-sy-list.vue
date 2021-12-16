@@ -85,6 +85,12 @@
 				default () {
 					return ""
 				}
+			},
+			ignore:{
+				type:String,
+				default(){
+					return ""
+				}
 			}
 		},
 		mixins: [yqm],
@@ -132,6 +138,11 @@
 				if(this.categories){
 					Object.assign(param,{
 						categories:this.categories
+					});
+				}
+				if(this.ignore){
+					Object.assign(param,{
+						ignore:this.ignore
 					});
 				}
 				console.log("param222222222", param);

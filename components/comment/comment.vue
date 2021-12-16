@@ -7,7 +7,8 @@
 				{{topright}}
 			</view>
 		</view>
-		<view class="comment-container1">
+		<view class="comment-container1 slot-gonggao_content">
+			<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y" >
 			<view class="comment" v-for="(res, index) in commentList" :key="res.id">
 				<view class="left">
 					<commont-image :src="res.user_id[0].avatar_file.url" :isoriginal="!!(res.user_id[0].original==1)">
@@ -54,6 +55,7 @@
 					</view>
 				</view>
 			</view>
+		</scroll-view>
 		</view>
 		<u-popup v-model="showreply" mode="bottom" border-radius="30" height="80%">
 			<view class="reply-container">
@@ -84,6 +86,7 @@
 	export default {
 		data() {
 			return {
+				scrollTop:0,
 				toptype: "zx",
 				topleft: "最新评论",
 				topright: "按时间",
@@ -211,6 +214,7 @@
 			},
 			// 评论列表
 			async getComment() {
+				// debugger;
 				uni.showLoading({
 					title:"加载中"
 				});
@@ -226,6 +230,7 @@
 				} else {
 					comments = await dbcomments.orderBy("like_count", "desc").get();
 				}
+				console.log("comments",comments);
 				if (comments.result && comments.result.data.length > 0) {
 					// 获取当前登录用户点赞的评论列表
 					var like_pl = [];
@@ -289,12 +294,16 @@
 </script>
 
 <style lang="scss" scoped>
-	.comment-container {
-		// display: flex;
-		// flex: 1;
-		// direction: ver;
+	// .comment-container1{
+	// 	position: fixed;
+	// 	bottom: 50px;
+	// }
+	.slot-gonggao_content {
+		overflow: auto;
 	}
-
+	.slot-gonggao_content>uni-scroll-view{
+		max-height: calc(100vh - 920rpx);
+	}
 	.bottom-right {
 		display: flex;
 

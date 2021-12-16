@@ -13,13 +13,13 @@
 
 		</slot>
 		<u-sticky>
-			<view class="detailtabs" style="display: flex;">
+			<view v-if="tablist.length>1||(showdanmu&&showsendDanmu)" class="detailtabs" style="display: flex;">
 				<view style="flex: 1;">
 					<u-tabs :font-size="32" active-color="#7275D3" :list="tablist" :is-scroll="false" :bar-width="100"
 						:current="current" @change="changeTab">
 					</u-tabs>
 				</view>
-				<view>
+				<view v-if="showdanmu&&showsendDanmu">
 					<slot name="danmubutton"></slot>
 				</view>
 			</view>
@@ -88,7 +88,8 @@
 					name: '简介'
 				}],
 				showpl: true,
-				showdanmu: true
+				showdanmu: true,
+				showsendDanmu:true
 			}
 		},
 		props: {
@@ -105,6 +106,7 @@
 			var t_800011 = config["800011"];
 			var t_800017 = config["800017"];
 			var t_800018 = config["800018"];
+			var t_800019 = config["800019"];
 			if (t_800017 == 1) {
 				this.showpl = true;
 			} else {
@@ -114,6 +116,11 @@
 				this.showdanmu = true;
 			} else {
 				this.showdanmu = false;
+			}
+			if (t_800019 == 1) {
+				this.showsendDanmu = true;
+			} else {
+				this.showsendDanmu = false;
 			}
 			if (this.showpl) {
 				this.tablist.push({

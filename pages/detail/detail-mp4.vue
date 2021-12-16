@@ -82,6 +82,17 @@
 				}
 			}
 		},
+		created() {
+			var config = getApp().globalData.config;
+			var t_800018 = config["800018"];//、显示弹幕
+			if(t_800018==1){
+				this.danmubtn=true;
+				this.enabledanmu=true;
+			}else{
+				this.danmubtn=false;
+				this.enabledanmu=false;
+			}
+		},
 		mounted() {
 			this.initImage();
 			this.videoContext = uni.createVideoContext('myVideo');

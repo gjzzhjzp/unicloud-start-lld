@@ -7,7 +7,7 @@
 				{{topright}}
 			</view>
 		</view>
-		<view class="comment-container1 slot-gonggao_content">
+		<view  :class="['comment-container1','slot-gonggao_content',showsendpl?'':'nosendpl']">
 			<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y" >
 			<view class="comment" v-for="(res, index) in commentList" :key="res.id">
 				<view class="left">
@@ -57,12 +57,12 @@
 			</view>
 		</scroll-view>
 		</view>
-		<u-popup v-model="showreply" mode="bottom" border-radius="30" height="80%">
+		<u-popup v-model="showreply" mode="bottom" border-radius="30" height="90%">
 			<view class="reply-container">
-				<reply :res="currentData" @reload="getComment" :zydata="zydata" @close="closepopup"></reply>
+				<reply :res="currentData" :showsendpl="showsendpl" @reload="getComment" :zydata="zydata" @close="closepopup"></reply>
 			</view>
 		</u-popup>
-		<view class="comment-container2">
+		<view class="comment-container2" v-show="showsendpl">
 			<view class="comment-input1">
 				<u-input v-model="inputvalue" height="60" type="text" :border="true" :placeholder="placeholder" />
 			</view>
@@ -95,7 +95,9 @@
 				showreply: false,
 				currentData: {},
 				placeholder: "发送一条友善的评论...",
-				relaydata: {}
+				relaydata: {},
+				showpl:true,
+				showsendpl:true
 			};
 		},
 
@@ -105,7 +107,23 @@
 			commontImage
 		},
 		created() {
-			this.getComment();
+			var config = getApp().globalData.config;
+			var t_800017 = config["800017"];//、显示评论
+			var t_800018 = config["800018"];//、显示弹幕
+			var t_800020 = config["800020"];//、显示发评论
+			if(t_800017==1){
+				this.showpl=true;
+			}else{
+				this.showpl=false;
+			}
+			if(t_800020==1){
+				this.showsendpl=true;
+			}else{
+				this.showsendpl=false;
+			}
+			if(this.showpl){
+				this.getComment();
+			}
 		},
 		computed: {
 			...mapGetters({
@@ -214,7 +232,6 @@
 			},
 			// 评论列表
 			async getComment() {
-				// debugger;
 				uni.showLoading({
 					title:"加载中"
 				});
@@ -254,7 +271,6 @@
 						}
 					});
 					that.commentList = that.getTree(comments.result.data);
-					// console.log("that.commentList", that.commentList);
 					if (that.currentData._id) {
 						that.commentList.forEach((item) => {
 							if (item._id == that.currentData._id) {
@@ -268,7 +284,6 @@
 				}
 			},
 			getTree(data) {
-				// console.log("data3333333333",data);
 				let result = [];
 				let map = {};
 				data.forEach(item => {
@@ -286,7 +301,6 @@
 						result.push(item);
 					}
 				});
-				// console.log("result",result);
 				return result;
 			}
 		}
@@ -303,6 +317,9 @@
 	}
 	.slot-gonggao_content>uni-scroll-view{
 		max-height: calc(100vh - 920rpx);
+	}
+	.slot-gonggao_content.nosendpl>uni-scroll-view{
+		max-height: calc(100vh - 820rpx);
 	}
 	.bottom-right {
 		display: flex;

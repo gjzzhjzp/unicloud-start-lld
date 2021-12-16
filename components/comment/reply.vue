@@ -21,7 +21,6 @@
 						<commont-image :src="res.user_id[0].avatar_file.url"
 							:isoriginal="!!(res.user_id[0].original==1)">
 						</commont-image>
-						<!-- <image :src="res.user_id[0].avatar_file.url" mode=""></image> -->
 					</view>
 					<view class="user-info">
 						<view class="name">{{ res.user_id[0].nickname }}</view>
@@ -61,6 +60,8 @@
 				{{topright}}
 			</view>
 		</view> -->
+		<view :class="['slot-gonggao_content1',showsendpl?'':'nosendpl1']">
+		<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y" >
 		<view class="all-reply">
 			<view class="item" v-for="(item, index) in commentList" :key="index">
 				<view class="comment">
@@ -113,7 +114,9 @@
 				</view>
 			</view>
 		</view>
-		<view class="comment-container2">
+		</scroll-view>
+		</view>
+		<view class="comment-container2" v-if="showsendpl">
 			<view class="comment-input1">
 				<u-input v-model="inputvalue" height="60" type="text" :border="true" :placeholder="placeholder" />
 			</view>
@@ -137,6 +140,7 @@
 	export default {
 		data() {
 			return {
+				scrollTop:0,
 				toptype: "zx",
 				topleft: "最新评论",
 				topright: "按时间",
@@ -166,6 +170,12 @@
 				type: Object,
 				default () {
 					return {}
+				}
+			},
+			showsendpl:{
+				type: Boolean,
+				default () {
+					return true
 				}
 			}
 		},
@@ -334,6 +344,15 @@
 </script>
 
 <style lang="scss" scoped>
+	.slot-gonggao_content1 {
+		overflow: auto;
+	}
+	.slot-gonggao_content1>uni-scroll-view{
+		max-height: calc(100vh - 640rpx);
+	}
+	.slot-gonggao_content1.nosendpl1>uni-scroll-view{
+		max-height: calc(100vh - 520rpx);
+	}
 	.comment-container2 {
 		display: flex;
 		position: fixed;

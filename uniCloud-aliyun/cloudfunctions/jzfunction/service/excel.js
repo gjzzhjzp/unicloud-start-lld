@@ -23,7 +23,7 @@ module.exports = class excelService extends Service {
 			}
 			item.danmu_time=item.danmu_time.split(",")[0];
 			item.resource_id=id;
-			item.danmu_color="rgb(114, 117, 211)";
+			item.danmu_color="#fff";
 		});
 		await danmu.add(data);
 		return {

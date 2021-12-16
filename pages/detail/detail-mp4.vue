@@ -2,10 +2,18 @@
 	<view class="detail-image">
 		<detailhead-mp4 :data="data">
 			<template slot="content">
+				<template v-if="data.aliyun_dz&&data.aliyun_dz.indexOf('/jzmp4/')!=-1">
+					<view class="detail-image-item">
+						<video id="myVideo" :danmu-btn="danmubtn" :enable-danmu="enabledanmu" :danmu-list="data.danmulist"
+							autoplay :src="data.aliyun_dz" controls @timeupdate="timeupdate"></video>
+					</view>
+				</template>
+				<template v-else>
 				<view class="detail-image-item" v-for="(item,index) in data.resources" :key="index">
-					<video id="myVideo" :danmu-btn="danmubtn" :enable-danmu="enabledanmu" :danmu-list="data.danmulist"
-						autoplay :src="item.url" controls @timeupdate="timeupdate"></video>
+						<video id="myVideo" :danmu-btn="danmubtn" :enable-danmu="enabledanmu" :danmu-list="data.danmulist"
+							autoplay :src="item.url" controls @timeupdate="timeupdate"></video>
 				</view>
+				</template>
 				<!-- #ifndef MP-ALIPAY -->
 				<u-popup v-model="showsenddanmu" mode="bottom">
 					<view class="danmu-container">

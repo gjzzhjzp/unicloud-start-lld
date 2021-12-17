@@ -1,7 +1,7 @@
 <template>
 	<view class="detail-image">
 		<detailhead :data="data"></detailhead>
-		<nine-squared :list="data.resources"></nine-squared>
+		<nine-squared :list="data.resources" @preview="previewOpen"></nine-squared>
 		<!-- <view class="detail-image-item" v-for="(item,index) in data.resources" :key="index">
 			<u-lazy-load v-if="item.url.indexOf('gif')==-1" @click="previewOpen(item)" threshold="300" border-radius="10" :image="item.url" :index="index"></u-lazy-load>
 			<image v-else :src="item.url"  @click="previewOpen(item)" :index="index" mode="widthFix"></image>

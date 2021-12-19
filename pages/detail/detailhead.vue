@@ -62,7 +62,7 @@
 		},
 		mounted() {
 			// debugger;
-			var config = getApp().globalData.config;
+			var config = getApp().globalData.systemconfig;
 			var t_800005 = config["800005"];
 			var t_800011 = config["800011"];
 			this.showllsc = t_800011 == '1' ? true : false;

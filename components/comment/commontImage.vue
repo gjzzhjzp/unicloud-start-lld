@@ -3,7 +3,11 @@
 		<view class="original" v-if="isoriginal">
 			<image class="original-img" src="@/static/center/ori_back.png"></image>
 		</view>
-		<image :src="src" mode="aspectFill"></image>
+		<image :src="src" style="{
+				width: '64rpx',
+				height: '64rpx',
+				border-radius: '50%'
+			}" mode="aspectFill"></image>
 	</view>
 </template>
 
@@ -36,17 +40,10 @@
 	}
 
 	.original-img {
-		    width: 88rpx;
-		    height: 88rpx;
-		    position: absolute;
-		    top: -10rpx;
-		    left: -12rpx;
-	}
-
-	image {
-		width: 64rpx;
-		height: 64rpx;
-		border-radius: 50%;
-		background-color: #f2f2f2;
+		width: 88rpx;
+		height: 88rpx;
+		position: absolute;
+		top: -11rpx;
+		left: -14rpx;
 	}
 </style>

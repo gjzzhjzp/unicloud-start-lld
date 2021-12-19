@@ -1,0 +1,52 @@
+{
+	"bsonType": "object",
+	"required": [
+		"user_id",
+		"manager_id",
+		"comment"
+	],
+	"permission": {
+		"read": true,
+		"create": "auth.uid != null",
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "存储文档 ID（文章 ID），系统自动生成"
+		},
+		"user_id": {
+			"bsonType": "string",
+			"title": "用户ID",
+			"description": "用户ID，参考`uni-id-users` 表",
+			"foreignKey": "uni-id-users._id"
+		},
+		"manager_id": {
+			"bsonType": "string",
+			"title": "管理员ID",
+			"description": "管理员ID，参考`uni-id-users` 表",
+			"forceDefaultValue": {
+				"$env": "uid"
+			},
+			"foreignKey": "uni-id-users._id"
+		},
+		"type": {
+			"bsonType": "int",
+			"title": "系统消息类型",
+			"description": "系统消息类型： 0 针对文章的回复  1 针对评论的回复"
+		},
+		"comment": {
+			"bsonType": "string",
+			"title": "消息内容",
+			"description": "消息内容"
+		},
+		"comment_date": {
+			"title": "创建时间",
+			"bsonType": "timestamp",
+			"description": "创建时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		}
+	}
+}

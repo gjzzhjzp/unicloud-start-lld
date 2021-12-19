@@ -1,0 +1,44 @@
+{
+	"bsonType": "object",
+	"required": [
+		"resources_id",
+		"comment"
+	],
+	"permission": {
+		"read": true,
+		"create": "auth.uid != null",
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "歌词id，系统自动生成"
+		},
+		"resources_id": {
+			"bsonType": "string",
+			"title": "资源ID",
+			"description": "资源ID，参考`jz-opendb-resources` 表",
+			"foreignKey": "jz-opendb-resources._id"
+		},
+		"comment": {
+			"bsonType": "string",
+			"title": "歌词内容",
+			"description": "歌词内容",
+			"component": {
+				"props": {
+					"type": "textarea",
+					"autoHeight":true,
+					"maxlength":10000
+				}
+			}
+		},
+		"created_date": {
+			"title": "创建时间",
+			"bsonType": "timestamp",
+			"description": "创建时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		}
+	}
+}

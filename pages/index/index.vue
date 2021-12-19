@@ -6,7 +6,7 @@
 				@search="$notMoreTap(tosearch,'notTap')" @custom="$notMoreTap(tosearch,'notTap')" :show-action="true">
 			</u-search>
 		</jz-navbar>
-		<jz-notice ref="notice" :type="2" mode="horizontal"></jz-notice>
+		<jz-notice ref="notice" :type="2" mode="row"></jz-notice>
 		<!-- <u-button @click="importExcel">导入</u-button> -->
 		<view class="jz-container">
 			<view>

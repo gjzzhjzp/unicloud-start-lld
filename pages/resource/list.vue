@@ -6,14 +6,16 @@
 			<view class="search-container-bar">
 
 				<u-navbar :is-back="true" back-icon-name="arrow-leftward" :back-icon-size="40">
-					<view style="width: 120rpx;">
-						<u-dropdown>
-							<u-dropdown-item @change="changedropItem" v-model="dvalue" :title="dtitle"
-								:options="doptions"></u-dropdown-item>
-						</u-dropdown>
-					</view>
-					<u-search border-color="#7275D3" bg-color="#fff" v-model="keyword" height="60" :placeholder="dplaceholder"
-						@search="confirm" @custom="confirm" :show-action="true"></u-search>
+					<template slot="right">
+						<view style="width: 120rpx;">
+							<u-dropdown>
+								<u-dropdown-item @change="changedropItem" v-model="dvalue" :title="dtitle"
+									:options="doptions"></u-dropdown-item>
+							</u-dropdown>
+						</view>
+						<u-search border-color="#7275D3" bg-color="#fff" v-model="keyword" height="60" :placeholder="dplaceholder"
+							@search="confirm" @custom="confirm" :show-action="true"></u-search>
+					</template>
 				</u-navbar>
 			</view>
 		</view>
@@ -22,10 +24,10 @@
 				@change="changeTabs"></u-tabs>
 		</view>
 		<view class="search-row">
-			<text :class="['search-row-col',item.selected?'selected':'']" v-for="(item,index) in searchrows"
+			<view :class="['search-row-col',item.selected?'selected':'']" v-for="(item,index) in searchrows"
 				:key="index" @click="searchType(item)">{{item.name}}
 				<u-icon size="20" name="arrow-down-fill"></u-icon>
-			</text>
+			</view>
 		</view>
 		<view v-if="showTag" style="margin-left: 10px;">
 			<u-tag :text="tagname" mode="light" closeable :show="showTag" @close="closetagClick" />
@@ -130,8 +132,6 @@
 			uni.stopPullDownRefresh();
 		},
 		onLoad(e) {
-			// debugger;
-			// console.log("onLoad", e);
 			if (e.flmc && e.flbm) {
 				this.showTag = true;
 				this.tagname = e.flmc;
@@ -159,6 +159,7 @@
 			this.scrollTop = e.scrollTop;
 		},
 		onReachBottom() {
+			// debugger;
 			if (this.loadStatus == 'loadmore') {
 				this.loadStatus = 'loading';
 				this.reset = false;
@@ -198,9 +199,9 @@
 				this.type = item.type;
 				this.resetlist();
 			},
-			changeTabs(index) {
-				this.currenttab = index;
-				this.zy_gs = index;
+			changeTabs(item) {
+				this.currenttab = item.index;
+				this.zy_gs = item.index;
 				this.resetlist();
 			},
 			confirm() {
@@ -224,8 +225,6 @@
 				if(this.dvalue==2){
 					url="resource/getListByuser";
 				}
-				// return;
-				// debugger;
 				uniCloud.callFunction({
 					name: 'jzfunction',
 					data: {

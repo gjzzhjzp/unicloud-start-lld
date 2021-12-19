@@ -28,7 +28,7 @@
 					</view>
 				</view>
 			</view>
-			<view style="display: flex;justify-content: space-between;margin-top:30rpx">
+			<view class="flex1">
 				<view class="date" style="margin-left: 70rpx;">
 					<uni-dateformat :threshold="[]" :date="res.comment_date" format="'yyyy-MM-dd hh:mm:ss">
 					</uni-dateformat>
@@ -61,60 +61,62 @@
 			</view>
 		</view> -->
 		<view :class="['slot-gonggao_content1',showsendpl?'':'nosendpl1']">
-		<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y" >
-		<view class="all-reply">
-			<view class="item" v-for="(item, index) in commentList" :key="index">
-				<view class="comment">
-					<view class="top">
-						<view class="left">
-							<view class="heart-photo">
-								<commont-image :src="item.user_id[0].avatar_file.url"
-									:isoriginal="!!(item.user_id[0].original==1)">
-								</commont-image>
-								<!-- <image :src="item.user_id[0].avatar_file.url" mode=""></image> -->
-							</view>
-							<view class="user-info">
-								<view class="name">{{ item.user_id[0].nickname }}</view>
-								<view class="content" v-if="item.reply_comment_id[0]._id!=res._id">回复 <text
-										style="color: #7275D3;">@{{item.reply_user_id[0].nickname}}</text>：{{ item.comment_content }}
+			<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y">
+				<view class="all-reply">
+					<view class="item" v-for="(item, index) in commentList" :key="index">
+						<view class="comment">
+							<view class="top">
+								<view class="left">
+									<view class="heart-photo">
+										<commont-image :src="item.user_id[0].avatar_file.url"
+											:isoriginal="!!(item.user_id[0].original==1)">
+										</commont-image>
+										<!-- <image :src="item.user_id[0].avatar_file.url" mode=""></image> -->
+									</view>
+									<view class="user-info">
+										<view class="name">{{ item.user_id[0].nickname }}</view>
+										<view class="content" v-if="item.reply_comment_id[0]._id!=res._id">回复 <text
+												style="color: #7275D3;">@{{item.reply_user_id[0].nickname}}</text>：{{ item.comment_content }}
+										</view>
+										<view class="content" v-else>{{ item.comment_content }}</view>
+									</view>
 								</view>
-								<view class="content" v-else>{{ item.comment_content }}</view>
 							</view>
-						</view>
-					</view>
-					<!-- <view class="reply" v-if="item.reply_user_id.length>0">
+							<!-- <view class="reply" v-if="item.reply_user_id.length>0">
 						<view class="username">{{ item.reply_user_id[0].nickname }}</view>
 						<view class="text">{{ item.reply_comment_id[0].comment_content }}</view>
 					</view> -->
-					<view style="display: flex;justify-content: space-between;margin-top:30rpx">
-						<view class="date" style="margin-left: 70rpx;">
-							<uni-dateformat :threshold="[]" :date="item.comment_date" format="'yyyy-MM-dd hh:mm:ss">
-							</uni-dateformat>
-						</view>
-						<view class="bottom-right">
-							<view class="itemb">
-								<view class="like" :class="{ highlight: item.isLike }">
-									<u-icon v-if="!item.isLike" name="/static/comment/like.png" :size="40" @click="getLike(index)">
-									</u-icon>
-									<u-icon v-if="item.isLike" name="thumb-up-fill" color="rgb(114, 117, 211)"
-										:size="40" @click="getLike(index)">
-									</u-icon>
-									<view class="num" v-show="item.like_count>0">{{ item.like_count }}</view>
+							<view class="flex2">
+								<view class="date" style="margin-left: 70rpx;">
+									<uni-dateformat :threshold="[]" :date="item.comment_date"
+										format="'yyyy-MM-dd hh:mm:ss">
+									</uni-dateformat>
+								</view>
+								<view class="bottom-right">
+									<view class="itemb">
+										<view class="like" :class="{ highlight: item.isLike }">
+											<u-icon v-if="!item.isLike" name="/static/comment/like.png" :size="40"
+												@click="getLike(index)">
+											</u-icon>
+											<u-icon v-if="item.isLike" name="thumb-up-fill" color="rgb(114, 117, 211)"
+												:size="40" @click="getLike(index)">
+											</u-icon>
+											<view class="num" v-show="item.like_count>0">{{ item.like_count }}</view>
+										</view>
+									</view>
+									<view class="itemb" @click="replycomment(item)">
+										<u-icon size="40" name="/static/comment/reply.png"></u-icon>
+									</view>
+									<view class="itemb" @click="openmore(item)">
+										<u-icon size="40" name="/static/comment/more.png"></u-icon>
+									</view>
 								</view>
 							</view>
-							<view class="itemb" @click="replycomment(item)">
-								<u-icon size="40" name="/static/comment/reply.png"></u-icon>
-							</view>
-							<view class="itemb" @click="openmore(item)">
-								<u-icon size="40" name="/static/comment/more.png"></u-icon>
-							</view>
+
 						</view>
 					</view>
-
 				</view>
-			</view>
-		</view>
-		</scroll-view>
+			</scroll-view>
 		</view>
 		<view class="comment-container2" v-if="showsendpl">
 			<view class="comment-input1">
@@ -140,7 +142,7 @@
 	export default {
 		data() {
 			return {
-				scrollTop:0,
+				scrollTop: 0,
 				toptype: "zx",
 				topleft: "最新评论",
 				topright: "按时间",
@@ -172,7 +174,7 @@
 					return {}
 				}
 			},
-			showsendpl:{
+			showsendpl: {
 				type: Boolean,
 				default () {
 					return true
@@ -186,14 +188,17 @@
 			})
 		},
 		watch: {
-			res() {
-				this.commentList.splice(0,this.commentList.length);
-				if (this.res.children) {
-					this._dealChildren(this.res.children);
+			res: {
+				deep: true,
+				handler() {
+					this.commentList.splice(0, this.commentList.length);
+					if (this.res.children) {
+						this._dealChildren(this.res.children);
+					}
+					this.commentList.sort(function(a, b) {
+						return b.comment_date > a.comment_date ? 1 : -1
+					})
 				}
-				this.commentList.sort(function(a, b) {
-					return b.comment_date > a.comment_date ? 1 : -1
-				})
 			}
 		},
 		mounted() {
@@ -222,7 +227,7 @@
 						text: "举报"
 					}];
 				}
-				this.$refs.operator.curcomment=res;
+				this.$refs.operator.curcomment = res;
 				this.$refs.operator.open();
 			},
 			_dealChildren(ary) {
@@ -242,13 +247,13 @@
 					comment_type: 1,
 					reply_user_id: item.user_id[0]._id,
 					reply_comment_id: item._id,
-					comment_cj:item.comment_cj+1,
-					all_reply_comment_id:item.all_reply_comment_id+","+item._id
+					comment_cj: item.comment_cj + 1,
+					all_reply_comment_id: item.all_reply_comment_id + "," + item._id
 				}
 			},
 			// 发送评论
 			async sendComment() {
-				if(this.userInfo.forbiddenwords){
+				if (this.userInfo.forbiddenwords) {
 					this.$refs.uToast.show({
 						title: '你已被禁言，请联系管理员',
 						type: 'error'
@@ -263,14 +268,15 @@
 					comment_content: that.inputvalue,
 					like_count: 0,
 					comment_type: 1,
-					comment_cj:that.relaydata.comment_cj||2,///评论层级
+					comment_cj: that.relaydata.comment_cj || 2, ///评论层级
 					reply_user_id: that.relaydata.reply_user_id || that.comment.user_id[0]._id,
 					reply_comment_id: that.relaydata.reply_comment_id || that.comment._id,
-					all_reply_comment_id:that.relaydata.all_reply_comment_id || that.comment.all_reply_comment_id+","+that.comment._id,
+					all_reply_comment_id: that.relaydata.all_reply_comment_id || that.comment
+						.all_reply_comment_id + "," + that.comment._id,
 				});
 				that.inputvalue = "";
 				// this.getComment();
-				that.$emit("reload");
+				that.$emit("reload", that.relaydata.reply_comment_id || that.comment._id);
 			},
 			// 切换评论的显示方式
 			toggleType() {
@@ -294,13 +300,13 @@
 			// 点赞
 			async getLike(index) {
 				// debugger;
-				var that=this;
+				var that = this;
 				if (typeof index != "undefined" && (index === 0 || index > 0)) {
 					this.commentList[index].isLike = !this.commentList[index].isLike;
 					if (this.commentList[index].isLike == true) {
 						this.commentList[index].like_count++;
 						await db.collection("opendb-news-likepl").add({
-							article_id:this.zydata._id,
+							article_id: this.zydata._id,
 							user_id: uid,
 							comment_id: that.commentList[index]._id,
 							comment_content: that.commentList[index].comment_content
@@ -329,7 +335,7 @@
 						this.comment.isLike = !this.comment.isLike;
 						this.comment.like_count++;
 						await db.collection("opendb-news-likepl").add({
-							article_id:this.zydata._id,
+							article_id: this.zydata._id,
 							user_id: uid,
 							comment_id: this.comment._id,
 							comment_content: this.comment.comment_content
@@ -350,17 +356,33 @@
 </script>
 
 <style lang="scss" scoped>
+	.flex1,.flex2 {
+		/* #ifdef H5 */
+		display: flex;
+		/* #endif */
+		flex-direction: row;
+		justify-content: space-between;
+		margin-top: 30rpx;
+	}
 	.slot-gonggao_content1 {
 		overflow: auto;
 	}
-	.slot-gonggao_content1>uni-scroll-view{
+.comment-input1{
+	flex: 1;
+}
+	.slot-gonggao_content1>uni-scroll-view {
 		max-height: calc(100vh - 640rpx);
 	}
-	.slot-gonggao_content1.nosendpl1>uni-scroll-view{
+
+	.slot-gonggao_content1.nosendpl1>uni-scroll-view {
 		max-height: calc(100vh - 520rpx);
 	}
+
 	.comment-container2 {
+		/* #ifdef H5 */
 		display: flex;
+		/* #endif */
+		flex-direction: row;
 		position: fixed;
 		bottom: 0px;
 		width: 100%;
@@ -376,19 +398,28 @@
 	}
 
 	.bottom-right {
+		/* #ifdef H5 */
 		display: flex;
+		/* #endif */
+		flex-direction: row;
 
 		.itemb {
 			margin: 0 10rpx;
 
 			.like {
+				/* #ifdef H5 */
 				display: flex;
+				/* #endif */
+				flex-direction: row;
 			}
 		}
 	}
 
 	.reply_head {
+		/* #ifdef H5 */
 		display: flex;
+		/* #endif */
+		flex-direction: row;
 		justify-content: space-between;
 		padding: 30rpx;
 	}
@@ -403,12 +434,18 @@
 		background-color: #ffffff;
 
 		.top {
+			/* #ifdef H5 */
 			display: flex;
+			/* #endif */
+			flex-direction: row;
 			justify-content: space-between;
 		}
 
 		.left {
+			/* #ifdef H5 */
 			display: flex;
+			/* #endif */
+			flex-direction: row;
 
 			.heart-photo {
 				image {
@@ -427,6 +464,12 @@
 					font-size: 28rpx;
 					margin-bottom: 4rpx;
 				}
+				.content{
+					/* #ifdef H5 */
+					display: flex;
+					/* #endif */
+					flex-direction: row;
+				}
 
 				.date {
 					font-size: 20rpx;
@@ -436,7 +479,10 @@
 		}
 
 		.right {
+			/* #ifdef H5 */
 			display: flex;
+			/* #endif */
+			flex-direction: row;
 			font-size: 20rpx;
 			align-items: center;
 			color: #9a9a9a;

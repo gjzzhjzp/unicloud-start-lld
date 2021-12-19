@@ -225,7 +225,7 @@
 					avatar: this.formData.avatar,
 					last_modify_date:db.env.now
 				});
-				var config = getApp().globalData.config;
+				var config = getApp().globalData.systemconfig;
 				if (config["800000"] == "1") {
 					// 审核
 					value = Object.assign(value, {

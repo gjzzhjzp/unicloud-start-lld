@@ -83,10 +83,9 @@
 			}
 		},
 		methods: {
-			changeTabs(index) {
-				console.log("index", index);
-				this.currenttab = index;
-				this.zy_gs = index;
+			changeTabs(item) {
+				this.currenttab = item.index;
+				this.zy_gs = item.index;
 				// this.reset=true;
 				this.param.page=1;
 				this.flowList.splice(0, this.flowList.length);

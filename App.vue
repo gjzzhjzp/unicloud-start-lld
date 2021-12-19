@@ -35,8 +35,5 @@
 
 <style lang="scss">
 	@import './static/css/common.css';
-	@import 'uview-ui/index.scss';
-	// #ifdef APP-VUE 
-	@import "uview-ui/index.scss";
-	// #endif 
+	@import "@/uni_modules/uview-ui/index.scss";
 </style>

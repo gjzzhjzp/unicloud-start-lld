@@ -34,9 +34,16 @@ export default{
 			if (item.is_encryption == 1) {
 				this.showmodel = true;
 			} else {
-				uni.navigateTo({
-					url: "/pages/detail/detail?id=" + item._id
-				});
+				if(item.zy_gs==1){
+					uni.navigateTo({
+						url: "/pages/detail/detailvideo?id=" + item._id
+					});
+				}else{
+					uni.navigateTo({
+						url: "/pages/detail/detail?id=" + item._id
+					});
+				}
+				
 			}
 		},
 		confirm() {

@@ -1,31 +1,39 @@
 <template>
 	<view :class="['detailhead','detailhead'+data.zy_gs]">
-		<view class="detail-image-title">
-			<view class="title">
-				{{data.title}}
-			</view>
-			<view style="text-align: right;color: #909399;width: 120px;">
-				<uni-dateformat class="last_modify_date" :date="data.last_modify_date" format="yyyy-MM-dd"
-					:threshold="[60000, 2592000000]" />
-			</view>
-		</view>
 		<slot name="content">
 
 		</slot>
 		<u-sticky>
-			<view v-if="tablist.length>1||(showdanmu&&showsendDanmu)" class="detailtabs" style="display: flex;">
+			<view v-if="tablist.length>1||(showdanmu&&showsendDanmu)" class="detailtabs" style="">
 				<view style="flex: 1;">
 					<u-tabs :font-size="32" active-color="#7275D3" :list="tablist" :is-scroll="false" :bar-width="100"
 						:current="current" @change="changeTab">
 					</u-tabs>
 				</view>
-				<view v-if="showdanmu&&showsendDanmu">
+				<view style="background-color: #fff;" v-if="showdanmu&&showsendDanmu">
 					<slot name="danmubutton"></slot>
 				</view>
 			</view>
 		</u-sticky>
 		<view v-show="current==0">
+			<view class="detail-image-title">
+				<view class="title">
+					{{data.title}}
+				</view>
+				<view style="text-align: right;color: #909399;width: 120px;">
+					<uni-dateformat class="last_modify_date" :date="data.last_modify_date" format="yyyy-MM-dd"
+						:threshold="[60000, 2592000000]" />
+				</view>
+			</view>
 			<view class="detail-image-sx3">
+				<view class="showllsc" v-show="showllsc">
+					<view class="detail-image-sx31">
+						<u-icon name="eye" :size="30"></u-icon>浏览量：{{data.view_count||0}}
+					</view>
+					<view class="detail-image-sx32">
+						<u-icon name="heart" :size="30"></u-icon>收藏量：{{data.like_count||0}}
+					</view>
+				</view>
 				<view class="detail-image-sc">
 					<view class="detail-image-sc1" v-show="!islike" @click="toFavorite">
 						<u-icon :size="30" name="heart"></u-icon> 收藏
@@ -41,14 +49,6 @@
 						</template>
 					</view>
 				</view>
-				<view style="display: flex;" v-show="showllsc">
-					<view class="detail-image-sx31">
-						<u-icon name="eye" :size="30"></u-icon>浏览量：{{data.view_count||0}}
-					</view>
-					<view class="detail-image-sx32">
-						<u-icon name="heart" :size="30"></u-icon>收藏量：{{data.like_count||0}}
-					</view>
-				</view>
 			</view>
 			<view class="detail-image-sx">
 				<view class="detail-image-ly">
@@ -60,13 +60,24 @@
 				<view class="detail-image-jj1">简介：</view>
 				<view class="detail-image-jj2" v-html="data.excerpt||'无'"></view>
 			</view>
+			<view class="detail-open " style="" v-if="data.aliyun_dz&&data.aliyun_dz.indexOf('/jzmp4/')==-1">
+				<view>
+					外链地址：
+				</view>
+				<view>
+					<u-link :href="data.aliyun_dz" color="rgb(114, 117, 211)">点击跳转</u-link>
+				</view>
+			</view>
 			<view class="detail-image-bq">
 				<view class="detail-image-bq1" v-for="(item,index) in labels" :key="index">
 					<u-tag :text="'# '+item" type="primary" shape="circle" />
 				</view>
 			</view>
-			<!-- data.categories:{{data.categories}} -->
-			<jz-sy-list ref="sylist" :label="tjcategories" :ignore="data._id" title="推荐资源" :showright="false" :zy_gs="1"></jz-sy-list>
+			<view style="margin-top: 40rpx;">
+				<jz-sy-list ref="sylist" :label="tjcategories" :ignore="data._id" title="推荐资源" :showright="false"
+					:zy_gs="data.zy_gs"></jz-sy-list>
+
+			</view>
 		</view>
 		<view v-show="current==1">
 			<slot name="comment"></slot>
@@ -81,7 +92,7 @@
 		data() {
 			return {
 				showmp4Xz: false,
-				labels: [],
+				// labels: [],
 				showllsc: true,
 				current: 0,
 				tablist: [{
@@ -89,7 +100,7 @@
 				}],
 				showpl: true,
 				showdanmu: true,
-				showsendDanmu:true
+				showsendDanmu: true
 			}
 		},
 		props: {
@@ -98,10 +109,28 @@
 				default () {
 					return {}
 				}
+			},
+			plNumber: {
+				type: Number,
+				default () {
+					return 0
+				}
+			}
+		},
+		watch: {
+			plNumber() {
+				this.tablist.forEach((item) => {
+					if (item.name.indexOf('评论') != -1) {
+						item.name = "评论" + this.plNumber
+					}
+				})
+				// this.tablist.push({
+				// 	name: '评论'
+				// });
 			}
 		},
 		created() {
-			var config = getApp().globalData.config;
+			var config = getApp().globalData.systemconfig;
 			var t_800005 = config["800005"];
 			var t_800011 = config["800011"];
 			var t_800017 = config["800017"];
@@ -129,11 +158,18 @@
 			}
 			this.showmp4Xz = t_800005 == '1' ? true : false;
 			this.showllsc = t_800011 == '1' ? true : false;
-			var labels = this.data.labels;
-			this.labels = labels.split("，");
+			
 			// console.log("labels", this.labels);
 		},
+		
 		computed: {
+			labels(){
+				var labels = this.data.labels;
+				if (labels) {
+					return labels.split("，")
+				}
+				return [];
+			},
 			tgr() {
 				if (this.data.userinfo && this.data.userinfo.length > 0) {
 					return this.data.userinfo[0].nickname || "佚名"
@@ -150,16 +186,41 @@
 			}
 		},
 		methods: {
-			changeTab(index) {
-				this.current = index;
+			changenumber(plNumber) {
+				this.$emit("changenumber", plNumber);
+				// debugger;
+				// var tabs=this.$parent.tablist;
+				// console.log("tabs",tabs);
+			},
+			changeTab(item) {
+				this.current = item.index;
 			}
 		}
 	}
 </script>
 
 <style>
+	.showllsc {
+		/* #ifdef H5 */
+		display: flex;
+		/* #endif */
+		flex-direction: row;
+	}
+
+	.detail-open {
+		/* #ifdef H5 */
+		display: flex;
+		/* #endif */
+		flex-direction: row;
+		text-align: center;
+	}
+
 	.detailtabs {
 		border-bottom: 1px solid #ddd;
+		/* #ifdef H5 */
+		display: flex;
+		/* #endif */
+		flex-direction: row;
 	}
 
 	.detail-image-jj1 {
@@ -170,17 +231,32 @@
 		flex: 1;
 	}
 
-	.detail-image-bq {
-		/* display: flex; */
-	}
-
-	.detail-image-bq1 {
-		margin:  6px;
-		display: inline-block;
-	}
-
-	.detail-image-sx3 {
+	.detail-open {
+		/* #ifdef H5 */
 		display: flex;
+		/* #endif */
+		flex-direction: row;
+		margin: 10px 6px;
+		font-size: 1em;
+		color: #909399;
+	}
+
+	.detail-image-bq {
+		/* #ifdef H5 */
+		display: flex;
+		/* #endif */
+		flex-direction: row;
+		flex-wrap: wrap;
+		margin-top: 6px;
+	}
+.detail-image-bq1{
+	margin: 6px;
+}
+	.detail-image-sx3 {
+		/* #ifdef H5 */
+		display: flex;
+		/* #endif */
+		flex-direction: row;
 		color: #909399;
 		margin: 10px 6px;
 		justify-content: space-between;
@@ -188,12 +264,21 @@
 
 	.detail-image-sx31,
 	.detail-image-sx32 {
+		/* #ifdef H5 */
 		display: flex;
+		/* #endif */
+		flex-direction: row;
+	}
+
+	.detail-image-sx32 {
 		margin-left: 20px;
 	}
 
 	.detail-image-sc1 {
+		/* #ifdef H5 */
 		display: flex;
+		/* #endif */
+		flex-direction: row;
 
 	}
 
@@ -204,9 +289,13 @@
 	}
 
 	.detail-image-ly {
+		/* #ifdef H5 */
 		display: flex;
+		/* #endif */
+		flex-direction: row;
 		width: 100%;
-		/* width: calc(100% - 65px); */
+		font-size: 1em;
+		color: #909399;
 	}
 
 	.detail-image-ly1 {
@@ -222,12 +311,15 @@
 		text-overflow: ellipsis;
 		max-width: 50%;
 		margin-left: 10px;
-		/* max-width: 150px; */
 	}
 
 	.detail-image-title {
 		margin-top: 10px;
+		margin-left: 6px;
+		/* #ifdef H5 */
 		display: flex;
+		/* #endif */
+		flex-direction: row;
 		justify-content: space-between;
 	}
 
@@ -236,15 +328,23 @@
 	}
 
 	.detail-image-sx {
+		/* #ifdef H5 */
 		display: flex;
+		/* #endif */
+		flex-direction: row;
 		justify-content: space-between;
-		margin: 10px 6px;
-		font-size: 1.1em;
+		margin-top: 10px;
+		margin-left: 6px;
+		font-size: 1em;
 	}
 
 	.detail-image-jj {
+		/* #ifdef H5 */
 		display: flex;
-		margin: 10px 6px;
+		/* #endif */
+		flex-direction: row;
+		margin-top: 10px;
+		margin-left: 6px;
 		font-size: 1em;
 		color: #909399;
 	}
@@ -254,13 +354,19 @@
 	}
 
 	.detail-image-sc {
+		/* #ifdef H5 */
 		display: flex;
+		/* #endif */
+		flex-direction: row;
 	}
 
-	.detail-image-sc a {
+	.detail-image-sc .download-head {
+		/* #ifdef H5 */
 		display: flex;
+		/* #endif */
+		flex-direction: row;
 		text-decoration: none;
-		color: inherit;
+		/* color: inherit; */
 		margin-left: 8px;
 	}
 </style>

@@ -13,7 +13,7 @@
 			}
 		},
 		created(){
-			var config=getApp().globalData.config;
+			var config=getApp().globalData.systemconfig;
 			if(config["800016"]){
 				this.content=config["800016"];
 			}

@@ -100,7 +100,7 @@ export default {
 	},
 	created(){
 		// debugger;
-		var config=getApp().globalData.config;
+		var config=getApp().globalData.systemconfig;
 		var t_800007=config["800007"];
 		this.showImageXz=t_800007=='1'?true:false;
 	},

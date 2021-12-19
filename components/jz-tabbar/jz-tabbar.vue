@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-tabbar v-model="current" :list="list" active-color="#409eff" :icon-size="40"></u-tabbar>
+		<o-tabbar v-model="current" :list="list" active-color="#409eff" :icon-size="26"></o-tabbar>
 	</view>
 </template>
 <script>

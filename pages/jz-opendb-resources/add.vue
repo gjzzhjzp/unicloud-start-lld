@@ -229,7 +229,7 @@
 				value = Object.assign(value, {
 					categories: this.formData.categories
 				});
-				var config = getApp().globalData.config;
+				var config = getApp().globalData.systemconfig;
 				if (config["800000"] == "1") {
 					// 审核
 					value = Object.assign(value, {

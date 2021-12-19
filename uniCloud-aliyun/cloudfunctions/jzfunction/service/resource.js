@@ -107,7 +107,7 @@ module.exports = class resourceService extends Service {
 			var label = data.label; ///标签
 			var rows = data.rows || 10;
 			var page = data.page || 1;
-			var ignore=data.ignore;
+			var ignore = data.ignore;
 			var zy_gs = "";
 			// return ;
 			const collection = db.collection('jz-opendb-resources');
@@ -145,12 +145,11 @@ module.exports = class resourceService extends Service {
 					zy_gs: db.command.neq(2)
 				});
 			}
-			if(ignore){
+			if (ignore) {
 				Object.assign(where_obj, {
 					_id: db.command.neq(ignore)
 				});
 			}
-			console.log("where_obj222222222222",where_obj);
 			var where = {}; ///查询条件
 			if (data.label) {
 				where = db.command.or([Object.assign({
@@ -186,13 +185,29 @@ module.exports = class resourceService extends Service {
 					"publish_date": -1
 				}).skip((page - 1) * rows).limit(rows);
 			}
-			var resultdata = await collection_query.lookup({
-					from: 'uni-id-users',
-					localField: 'user_id',
-					foreignField: '_id',
-					as: 'userinfo',
-				})
-				.end();
+			var resultdata = {};
+			if (zy_gs == 2) {
+				resultdata = await collection_query.lookup({
+						from: 'uni-id-users',
+						localField: 'user_id',
+						foreignField: '_id',
+						as: 'userinfo',
+					}).lookup({
+						from: 'jz-custom-gechi',
+						localField: '_id',
+						foreignField: 'resources_id',
+						as: 'gechi',
+					})
+					.end();
+			} else {
+				resultdata = await collection_query.lookup({
+						from: 'uni-id-users',
+						localField: 'user_id',
+						foreignField: '_id',
+						as: 'userinfo',
+					})
+					.end();
+			}
 			var app_bbh = data.app_bbh;
 			if (type == "tj") {
 				if (app_bbh) {
@@ -239,7 +254,6 @@ module.exports = class resourceService extends Service {
 	// 通过查询用户获取资源列表
 	async getListByuser() {
 		try {
-			console.log("2222222222222222222222222222222222222222")
 			var db = this.db;
 			var context = this.ctx;
 			var data = this.ctx.data;
@@ -329,13 +343,29 @@ module.exports = class resourceService extends Service {
 					"publish_date": -1
 				}).skip((page - 1) * rows).limit(rows);
 			}
-			var resultdata = await collection_query.lookup({
-					from: 'uni-id-users',
-					localField: 'user_id',
-					foreignField: '_id',
-					as: 'userinfo',
-				})
-				.end();
+			var resultdata = {};
+			if (zy_gs == 2) {
+				resultdata = await collection_query.lookup({
+						from: 'uni-id-users',
+						localField: 'user_id',
+						foreignField: '_id',
+						as: 'userinfo',
+					}).lookup({
+						from: 'jz-custom-gechi',
+						localField: '_id',
+						foreignField: 'resources_id',
+						as: 'gechi',
+					})
+					.end();
+			} else {
+				resultdata = await collection_query.lookup({
+						from: 'uni-id-users',
+						localField: 'user_id',
+						foreignField: '_id',
+						as: 'userinfo',
+					})
+					.end();
+			}
 			var app_bbh = data.app_bbh;
 			if (app_bbh >= 113) {
 				return {
@@ -376,36 +406,45 @@ module.exports = class resourceService extends Service {
 					foreignField: '_id',
 					as: 'userinfo',
 				})
-				.end()
-			if (!resultdata.data[0].view_count) {
-				resultdata.data[0].view_count = 0;
-			}
-			// // 浏览数+1
-			resultdata.data[0].view_count += 1;
-			await db.collection('jz-opendb-resources').where({
-				_id: data._id
-			}).update({
-				view_count: resultdata.data[0].view_count
-			});
-			var resource_id=resultdata.data[0]._id;
-			const danmulist =await db.collection('jz-opendb-danmu').where({
-				resource_id:resource_id
-			}).get();
-			var danmu_list=[];
-			danmulist.data.forEach((item)=>{
-				danmu_list.push({
-					text:item.danmu_text,
-					color:item.danmu_color,
-					time:item.danmu_time
+				.end();
+			if (resultdata.data && resultdata.data.length > 0) {
+				if (!resultdata.data[0].view_count) {
+					resultdata.data[0].view_count = 0;
+				}
+				// // 浏览数+1
+				resultdata.data[0].view_count += 1;
+				await db.collection('jz-opendb-resources').where({
+					_id: data._id
+				}).update({
+					view_count: resultdata.data[0].view_count
+				});
+				var resource_id = resultdata.data[0]._id;
+				const danmulist = await db.collection('jz-opendb-danmu').where({
+					resource_id: resource_id
+				}).get();
+				var danmu_list = [];
+				danmulist.data.forEach((item) => {
+					danmu_list.push({
+						text: item.danmu_text,
+						color: item.danmu_color,
+						time: item.danmu_time
+					})
 				})
-			})
-			resultdata.data[0].danmulist=danmu_list;
-			return {
-				"state": "0000",
-				"rows": resultdata.data,
-				"total": resultdata.data.length,
-				"msg": "查询成功"
-			};
+				resultdata.data[0].danmulist = danmu_list;
+				return {
+					"state": "0000",
+					"rows": resultdata.data,
+					"total": resultdata.data.length,
+					"msg": "查询成功"
+				};
+			} else {
+				return {
+					"state": "0000",
+					"rows": [],
+					"total": 0,
+					"msg": "查询成功"
+				};
+			}
 		} catch (e) {
 			return {
 				"state": "9999",

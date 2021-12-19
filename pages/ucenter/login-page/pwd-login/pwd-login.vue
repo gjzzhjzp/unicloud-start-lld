@@ -6,12 +6,6 @@
 				<u-navbar :is-back="true" title="用户登录" :border-bottom="false" title-color="#fff" back-icon-color="#fff"
 					:background="{'background':'none'}">
 				</u-navbar>
-				<!-- <view class="usercenter-top-left" @click="goback">
-					<u-icon name="close" color="#fff" :size="40"></u-icon>
-				</view>
-				<view class="usercenter-top-mine">
-					用户登录
-				</view> -->
 			</view>
 			<view class="login-back-con">
 				<input class="input-box" :inputBorder="false" v-model="username" placeholder="请输入登录名" />
@@ -24,7 +18,7 @@
 				</view>
 				<!-- <uni-agreements @setAgree="agree = $event"></uni-agreements> -->
 				<view class="auth-box">
-					<!-- <text class="link" @click="toRetrievePwd">{{$t('pwdLogin.forgetPassword')}}</text> -->
+					<text class="link" @click="toRetrievePwd">{{$t('pwdLogin.forgetPassword')}}</text>
 					<text class="link" @click="toRegister">{{$t('pwdLogin.register')}}</text>
 				</view>
 				<u-button class="send-btn" :disabled="!canLogin" type="primary" @click="pwdLogin">
@@ -33,6 +27,11 @@
 			</view>
 		</view>
 		<sevicecontent ref="sevicecontent" @confirm="confirmcontent"></sevicecontent>
+		<u-modal v-model="showfindpass">
+			<view class="slot-content" style="padding: 10px;">
+				{{passcontent}}
+			</view>
+		</u-modal>
 	</view>
 </template>
 
@@ -46,6 +45,7 @@
 		},
 		data() {
 			return {
+				showfindpass: false,
 				"password": "",
 				"username": "",
 				"agree": true,
@@ -53,7 +53,18 @@
 				"captcha": ""
 			}
 		},
+		created(){
+			
+		},
 		computed: {
+			passcontent(){
+				var con="";
+				var config=getApp().globalData.systemconfig;
+				if(config["800021"]){
+					con=config["800021"];
+				}
+				return con;
+			},
 			canLogin() {
 				return this.username.length && this.isPwd;
 			},
@@ -70,10 +81,7 @@
 			},
 			// 页面跳转，找回密码
 			toRetrievePwd() {
-				uni.navigateTo({
-					url: '../pwd-retrieve/pwd-retrieve?phoneNumber=' + (this.isPhone ? this.username : '') +
-						'&phoneArea=' + this.currenPhoneArea
-				})
+			this.showfindpass=true;
 			},
 			confirmnc() {
 				uni.navigateTo({
@@ -258,8 +266,8 @@
 		margin-bottom: 20px;
 	} */
 	.auth-box {
-		/* flex-direction: row;
-		justify-content: right; */
+		flex-direction: row;
+		justify-content: space-between;
 		margin-top: 20px;
 		text-align: right;
 	}

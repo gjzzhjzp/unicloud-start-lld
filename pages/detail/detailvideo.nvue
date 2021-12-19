@@ -1,0 +1,416 @@
+<template>
+	<view class="jz-container">
+		<u-navbar :is-back="true" :title="title"></u-navbar>
+		<view>
+			<detailhead-mp4 :data="data" :pl-number="plNumber">
+				<template slot="content">
+					<div class="content">
+						<chunlei-video isBack autoplay ref="video" orientation class="video" :episode="11"
+							:index="index" color="#c93756" @playEpi="playEpi" :downloadBtn="true"
+							@clickDownload="clickDownload" :title="videoList[index-1].title"
+							:audio="videoList[index-1].audio" :poster="videoList[index-1].poster"
+							@fullscreenchange="fullscreenchange" :srcList="videoList[index-1].srcList"
+							:download="videoList[index-1].download" :gDuration="videoList[index-1].gDuration"
+							:danmuList="videoList[index-1].danmuList" :initialTime="videoList[index-1].initialTime">
+						</chunlei-video>
+					</div>
+					<u-popup v-model="showsenddanmu" mode="bottom">
+						<view class="comment-container2">
+							<view class="comment-input1">
+								<u-input v-model="danmuValue" height="60" type="text" :border="true"
+									placeholder="请输入友善的弹幕见证当下..." />
+							</view>
+							<text class="comment-input-button" @click.stop="sendDanmu">
+								发送
+							</text>
+						</view>
+					</u-popup>
+				</template>
+				<template slot="danmubutton">
+					<view class="danmubutton">
+						<view class="opendanmu" v-if="showdanmu">
+							<view class="opendanmu_1" @click="opensendDanmu">点我发弹幕</view>
+							<view class="opendanmu_2" @click="closedanmu()">
+								<u-icon size="72" name="/static/comment/opendanmu.png"></u-icon>
+							</view>
+						</view>
+						<view class="closedanmu" v-else="!showdanmu">
+							<view class="closedanmu_1">
+								<u-icon size="72" @click="openDanmu()" name="/static/comment/closedanmu.png"></u-icon>
+							</view>
+						</view>
+					</view>
+				</template>
+				<template slot="comment">
+					<comment ref="comment" :zydata="data" @changenumber="changenumber"></comment>
+				</template>
+			</detailhead-mp4>
+		</view>
+	</view>
+</template>
+<script>
+	import chunleiVideo from '@/components/chunlei-video/chunlei-video.nvue'
+	import detailheadMp4 from "./detailheadMp41.nvue"
+	import detailvideo from "./detailvideo.js"
+	export default {
+		components: {
+			chunleiVideo,
+			detailheadMp4
+		},
+		mixins: [detailvideo],
+		data() {
+			return {
+				title: "",
+				videoList: [{}],
+				downloadList: [],
+				index: 1, //当前集数
+				fullScreen: false,
+				platform: ''
+			}
+		},
+		async created() {
+			//#ifdef APP-PLUS
+			plus.screen.lockOrientation("portrait-primary")
+			//#endif
+			uni.getSystemInfo({
+				success: (e) => {
+					// #ifndef MP
+					this.platform = e.platform
+					// #endif
+				}
+			})
+		},
+		async mounted() {
+			await this.pushVideoList()
+			//this.$refs.video.videoPlay()   //refs调动播放
+
+		},
+		onShow() {
+			//展示播放
+			if (typeof this.$refs.video != 'undefined') this.$refs.video.pageShow()
+		},
+		onHide() {
+			//隐藏暂停播放
+			this.$refs.video.pageHide()
+		},
+		methods: {
+			fullscreenchange(e) {
+				this.fullScreen = e
+			},
+			clickDownload(e) {
+				if (!this.videoList[e.idx - 1].download) {
+					let frist = true
+
+					//继续下载
+					for (let item of this.downloadList) {
+						if (item.epi == e.idx && item.text != '完成') {
+							item.text = '暂停'
+							item.task.start()
+							frist = false
+						}
+					}
+					this.videoList[e.idx - 1].download = true
+
+					if (!frist) return
+
+					//创建下载
+					const downloader = {
+						epi: e.idx, //集数
+						task: null,
+						progress: 0,
+						text: '暂停',
+						filename: '',
+						index: 0
+					}
+					this.downloadList.push(downloader)
+					let idx = this.downloadList.length - 1
+
+
+					let localName = {}
+					//m3u8不处理 标记格式  
+					localName = this.getSaveName(e.src, this.videoList[e.idx - 1].title)
+
+					this.downloadList[idx].task = plus.downloader.createDownload(e.src, localName, (d, status) => {
+						// 下载完成
+						if (status == 200) {
+							this.downloadList[idx].text = '打开'
+
+							//保存本地视频至list
+							let filename = plus.io.convertLocalFileSystemURL(d.filename)
+
+							const video = {
+								...this.videoList[e.idx - 1]
+							}
+							video.src = filename
+							video.title = `本地视频第${e.idx}集`
+							video.initialTime = 0
+							this.videoList.push(video)
+							this.downloadList[idx].filename = filename
+
+							this.videoList[e.idx - 1].download = false
+
+							//保存索引用于跳转
+							this.downloadList[idx].index = this.videoList.length
+
+							this.setGlobalData()
+							uni.showToast({
+								title: `下载成功,文件保存至${filename}`,
+								icon: 'none'
+							})
+						} else {
+							console.log("下载失败");
+						}
+					});
+					//监听下载
+					this.downloadList[idx].task.addEventListener("statechanged", (download, status) => {
+						let progress = isNaN(download.downloadedSize / download.totalSize) ? 0 : download
+							.downloadedSize / download.totalSize * 100
+						this.downloadList[idx].progress = Math.floor(progress)
+						// if(download.state == 4 && status == 200){
+						// 	// 下载完成 
+						// 	console.log("Download success: " + download.getFileName());  
+						// }  
+					}, false);
+					this.downloadList[idx].task.start();
+				} else { //暂停
+					for (let item of this.downloadList) {
+						if (item.epi == e.idx && item.text != '完成') {
+							this.videoList[e.idx - 1].download = false
+							item.text = '继续'
+							item.task.pause()
+						}
+					}
+				}
+
+			},
+			clickDownloadBtn(idx, itm) {
+				if (itm.text == '继续') {
+					itm.text = '暂停'
+					this.videoList[itm.epi - 1].download = true
+					itm.task.start();
+				} else if (itm.text == '暂停') {
+					itm.text = '继续'
+					this.videoList[itm.epi - 1].download = false
+					itm.task.pause();
+				} else {
+					this.playEpi(itm.index)
+				}
+			},
+			// 暂停下载任务 
+			pauseDownload(idx) {
+				this.downloadList[idx].task.pause();
+			},
+			// 取消下载任务 
+			abortDownload(idx) {
+				this.downloadList[idx].task.abort();
+			},
+			tapBtn() {
+				this.$refs.video.videoPlay()
+			},
+			//获取视频当前进度
+			getCurrent() {
+				uni.showToast({
+					title: `${this.$refs.video.getCurrent()}`,
+					icon: 'none'
+				})
+
+			},
+			playEpi(val) {
+				this.index = val
+
+			},
+			pushVideoList() {
+				let promise = new Promise((resolve, reject) => {
+					uni.request({
+						url: 'https://api.apiopen.top/videoRecommend?id=127395',
+						success: (res) => {
+							let videoGroup = []
+							for (let item of res.data.result) {
+								if (item.type == 'videoSmallCard') {
+									for (let itm of item.data.playInfo) {
+
+										itm.title = itm.name
+										itm.src = itm.url
+
+									}
+									videoGroup.push({
+										srcList: item.data.playInfo,
+										title: item.data.title,
+										gDuration: item.data.duration, //大概总时长
+										download: false,
+										task: {}
+									})
+								}
+							}
+							this.videoList = [...this.videoList, ...videoGroup]
+							resolve()
+						}
+					})
+				})
+				return promise
+			},
+			getSaveName(src, title) {
+
+				if (/\.m3u8$/.test(src)) {
+					return {}
+				} else {
+					return {
+						filename: `_downloads/${title}.mp4`
+					}
+				}
+				// else if(/\.flv$/.test(src)){
+				// 	return {
+				// 		filename:`_downloads/本地:${title}.flv`
+				// 	}
+				// }
+			},
+			setGlobalData() {
+				let length = 0
+				for (let item of this.downloadList) {
+					if (item.text == '打开') {
+						length++
+					}
+				}
+				getApp().globalData.downloadLength = length
+			}
+		}
+	}
+</script>
+
+<style>
+	.comment-input1 {
+		flex: 1;
+	}
+
+	.content {
+		width: 750rpx;
+		align-items: center;
+		margin-left: -10px;
+	}
+
+	.video {
+		height: 200px;
+		width: 750rpx;
+	}
+
+	.btn {
+		width: 500rpx;
+		margin-top: 50rpx;
+	}
+
+	.progress-box {
+		padding: 40rpx;
+		height: 150rpx;
+		margin-top: 50rpx;
+		border-radius: 5px;
+		border-color: #e9e7ef;
+		border-style: solid;
+		border-width: 2px;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.box-content {
+		width: 300rpx;
+		padding: 20rpx;
+		justify-content: center;
+	}
+
+	.box-btn {
+		height: 80rpx;
+		width: 100rpx;
+		border-color: #161823;
+	}
+
+	.box-image {
+		height: 80rpx;
+		width: 80rpx;
+	}
+
+	.box-text {
+		font-size: 16px;
+	}
+
+	.comment-input-button {
+		line-height: 72rpx;
+		margin: 0 16rpx;
+		color: #909399;
+	}
+
+	.comment-container2 {
+		/* #ifdef H5 */
+		display: flex;
+		/* #endif */
+		flex-direction: row;
+		position: fixed;
+		bottom: 0px;
+		width: 100%;
+		background-color: #fff;
+		padding: 10px;
+		border-top: 1px solid #ddd;
+	}
+
+	.danmubutton {
+		width: 300rpx;
+		margin-top: 4rpx;
+	}
+
+	.closedanmu {
+		/* #ifdef H5 */
+		display: flex;
+		/* #endif */
+		flex-direction: row;
+		height: 72rpx;
+		line-height: 72rpx;
+		width: 100%;
+		justify-content: flex-end;
+	}
+
+	.closedanmu_1 {
+		width: 120rpx;
+		border-radius: 50px;
+		background: #E3E3E3;
+		text-align: center;
+		float: right;
+		position: absolute;
+		right: 10px;
+		height: 72rpx;
+	}
+
+	.opendanmu {
+		/* #ifdef H5 */
+		display: flex;
+		/* #endif */
+		flex-direction: row;
+		height: 72rpx;
+		line-height: 72rpx;
+	}
+
+	.opendanmu_1 {
+		border-top-left-radius: 50px;
+		border-bottom-left-radius: 50px;
+		padding: 0 20rpx;
+		background: #E3E3E3;
+	}
+
+	.opendanmu_2 {
+		background: #fff;
+		padding: 0 20rpx;
+		border-top-right-radius: 50px;
+		border-bottom-right-radius: 50px;
+	}
+
+	.danmu-container {
+		padding: 10px 10px 20px 10px;
+	}
+
+	.detail-image-item {
+		margin: 20rpx 0;
+	}
+
+	/* .detail-image-item video {
+		width: 100%;
+		border-radius: 10px;
+	} */
+</style>

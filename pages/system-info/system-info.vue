@@ -1,0 +1,54 @@
+<template>
+	<view class="system-info">
+		<u-navbar :is-back="true" title="系统消息"></u-navbar>
+		<view class="jz-container">
+			<view class="infos" v-for="(item,index) in infos" :key="index">
+				<yd-chatitem ref="chatitem" :message="item.comment" :leftTime="item.comment_date"></yd-chatitem>
+			</view>
+		</view>
+	</view>
+</template>
+<script>
+	import {
+		mapGetters,
+		mapMutations
+	} from 'vuex';
+	const db = uniCloud.database();
+	const systeminfoTable = db.collection('jz-custom-systeminfo')
+	export default {
+		data() {
+			return {
+				infos: []
+			}
+		},
+		mounted() {
+			this.getinfos();
+		},
+		computed:{
+			...mapGetters({
+				userInfo: 'user/info',
+				hasLogin: 'user/hasLogin'
+			})
+		},
+		methods: {
+			async getinfos() {
+				var res = await db.collection('jz-custom-systeminfo').where('user_id==$env.uid')
+				.field("comment,comment_date").get();
+				console.log("res",res);
+				if(res.result.data&&res.result.data.length>0){
+					this.infos=res.result.data;
+					var ids=[];
+					this.infos.forEach((item)=>{
+						ids.push(item._id);
+					});
+					uni.setStorageSync("systeminfo_"+this.userInfo._id,ids.join(","));
+				}
+			}
+		}
+	}
+</script>
+<style>
+	.infos{
+		margin-top: 20rpx;
+	}
+</style>

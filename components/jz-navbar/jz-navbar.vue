@@ -1,17 +1,17 @@
 <template>
 	<view class="jz-navbar">
-		<u-navbar :is-back="isBack">
-			<template>
-				<view v-show="showlogo" style="margin: 10px;">
+		<u-navbar :title="title">
+			<template slot="right">
+				<view v-show="showlogo" >
 					<u-image width="200rpx" height="60rpx" src="/static/head/logo.png"></u-image>
 				</view>
 				<view class="sy-u-search">
 					<slot></slot>
 				</view>
-				<view v-show="!issy" style="margin: 10px;" @click="$notMoreTap(tosearch,'notTap')">
+				<view v-show="!issy"  @click="$notMoreTap(tosearch,'notTap')">
 					<u-image width="50rpx" height="50rpx" src="/static/head/search.png"></u-image>
 				</view>
-				<view style="margin: 10px;" @click="$notMoreTap(tousercenter,'notTap')">
+				<view  @click="$notMoreTap(tousercenter,'notTap')">
 					<u-image width="50rpx" height="50rpx" src="/static/head/user.png"></u-image>
 				</view>
 			</template>
@@ -28,6 +28,12 @@
 			}
 		},
 		props:{
+			title:{
+				type:String,
+				default(){
+					return ""
+				}
+			},
 			showlogo:{
 				type:Boolean,
 				default(){

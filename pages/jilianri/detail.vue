@@ -12,7 +12,7 @@
 			</view>
 			<view class="rili-images">
 				<view class="detail-image-item" v-for="(item,index) in item.rili_images" :key="index">
-					<u-lazy-load threshold="300" border-radius="20" :image="item.url" :index="index"></u-lazy-load>
+					<o-lazy-load threshold="300" border-radius="20" :image="item.url" :index="index"></o-lazy-load>
 				</view>
 			</view>
 			<view class="rili-content">

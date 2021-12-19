@@ -10,8 +10,8 @@
 	color: #fff;
 	background: #7275D3;
 	padding: 4rpx 12rpx;
-	width: 50px !important;
-	line-height: 20px;
+	width: 100rpx !important;
+	line-height: 40rpx;
 }
 
 .search-container .u-search .u-action.u-action-active {
@@ -19,7 +19,7 @@
 	border-radius: 20px;
 	color: #fff;
 	background: #7275D3;
-	padding: 5px 10px;
+	padding: 10rpx 20rpx;
 	width: 60px;
 	line-height: 20px;
 }
@@ -126,7 +126,8 @@ body.pages-resource-list uni-page-body {
 	height: 6px;
 }
 
-.jcbbgx .uni-list-item__icon-img::after {
+.jcbbgx .uni-list-item__icon-img::after,
+.systeminfo .uni-list-item__icon-img::after {
 	content: "";
 	display: block;
 	height: 6px;
@@ -149,9 +150,40 @@ body.pages-resource-list uni-page-body {
 	display: block;
 	height: 100%;
 }
+
 .jz-banner .u-swiper-image,
 .jz-banner .u-swiper-image * {
 	width: 100%;
 	display: block;
 	height: 100%;
+}
+
+.u-dropdown__content__mask {
+	display: none;
+}
+
+.comment-input1 {
+	width: 100%;
+	flex: 1;
+}
+
+.comment-input1 .u-input {
+	background-color: #F0F2F1;
+	width: 100%;
+	flex: 1;
+	border-radius: 50px !important;
+}
+
+.gechi-all .u-tabs {
+	background: transparent !important;
+	color: #fff;
+}
+
+.smallImage1 * {
+	height: 100% !important;
+	width: 100% !important;
+}
+
+.comment-container uni-image {
+	background: transparent !important;
 }

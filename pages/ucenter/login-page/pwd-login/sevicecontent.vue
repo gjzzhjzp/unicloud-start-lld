@@ -39,7 +39,7 @@
 		},
 		created(){
 			// debugger;
-			var config=getApp().globalData.config;
+			var config=getApp().globalData.systemconfig;
 			if(config["800013"]){
 				this.content=config["800013"];
 			}

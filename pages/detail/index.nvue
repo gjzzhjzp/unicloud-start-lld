@@ -1,0 +1,336 @@
+<template>
+	<div class="content">
+		<chunlei-video 
+			isBack
+			autoplay
+			ref="video"
+			orientation
+			class="video"
+			:episode="11"
+			:index="index"
+			color="#c93756"
+			@playEpi="playEpi" 
+			:downloadBtn="true"
+			@clickDownload="clickDownload"
+			:title="videoList[index-1].title"
+			:audio="videoList[index-1].audio"
+			:poster="videoList[index-1].poster"
+			@fullscreenchange="fullscreenchange"
+			:srcList="videoList[index-1].srcList" 
+			:download="videoList[index-1].download"
+			:gDuration="videoList[index-1].gDuration" 
+			:danmuList="videoList[index-1].danmuList" 
+			:initialTime="videoList[index-1].initialTime"
+		>
+		</chunlei-video>
+		<button @click="tapBtn" class="btn">播放暂停</button>
+		<button @click="getCurrent" class="btn">视频当前进度</button>
+		<div class="progress-box" v-for="(item,index) in downloadList" :key="index" v-if="!fullScreen">
+			<image src="../../static/video.png" class="box-image"></image>
+			<div class="box-content">
+				<!-- <progress :percent="item.progress" stroke-width="3" /> -->
+				<text class="box-text">第{{item.epi}}集({{item.progress}}%)</text>
+			</div>
+			<button @click="clickDownloadBtn(index,item)" class="box-btn" plain>{{item.text}}</button>
+		</div>
+	</div>
+</template>
+
+<script>
+	import chunleiVideo from '@/components/chunlei-video/chunlei-video.nvue'
+	export default { 
+		components:{
+			chunleiVideo
+		},
+		data() {
+			return {
+				srcList:[
+					{title:'流畅',src:'http://baobab.kaiyanapp.com/api/v1/playUrl?vid=164016&resourceType=video&editionType=low&source=aliyun&playUrlType=url_oss'},
+					{title:'标清',src:'http://baobab.kaiyanapp.com/api/v1/playUrl?vid=164016&resourceType=video&editionType=normal&source=aliyun&playUrlType=url_oss'},
+					{title:'高清',src:'http://baobab.kaiyanapp.com/api/v1/playUrl?vid=164016&resourceType=video&editionType=high&source=aliyun&playUrlType=url_oss'}
+				],
+				title: '无辣不欢，你没见过小龙虾的大场面',
+				gDuration:1162, //大概总时长
+				videoList:[{
+					srcList:[
+						{title:'流畅',src:'http://baobab.kaiyanapp.com/api/v1/playUrl?vid=164016&resourceType=video&editionType=low&source=aliyun&playUrlType=url_oss'},
+						{title:'标清',src:'http://baobab.kaiyanapp.com/api/v1/playUrl?vid=164016&resourceType=video&editionType=normal&source=aliyun&playUrlType=url_oss'},
+						{title:'高清',src:'http://baobab.kaiyanapp.com/api/v1/playUrl?vid=164016&resourceType=video&editionType=high&source=aliyun&playUrlType=url_oss'}
+					],
+					danmuList:[
+						{text: '我就算从这跳下去',color: '#fff',time: 1,avatar:'../../static/avatar.png'},
+						{text: '密集恐惧症患者',color: '#fff',time: 4,avatar:'../../static/avatar.png'},
+						{text: '也不会吃你一口小龙虾',color: '#fff',time: 2,avatar:'../../static/avatar.png'},
+						{text: '也不会吃你一口小龙虾',color: '#fff',time: 3,avatar:'../../static/avatar.png'},
+						{text: '也不会吃你一口小龙虾',color: '#fff',time: 105,avatar:'../../static/avatar.png'},
+						{text: '也不会吃你一口小龙虾',color: '#fff',time: 106,avatar:'../../static/avatar.png'},
+						{text: '也不会吃你一口小龙虾',color: '#fff',time: 107,avatar:'../../static/avatar.png'},
+						{text: '真香!!!',color: '#fff',time: 111,avatar:'../../static/avatar.png'},
+						{text: '真香！！！！！',color: '#fff',time: 114},
+						{text: '真香！！！',color: '#fff',time: 118},
+						{text: '前方高能!!!',color: '#fff',time: 123,avatar:'../../static/avatar.png'},
+					],
+					title: '无辣不欢，你没见过小龙虾的大场面',
+					initialTime: 100,
+					gDuration:1162, //大概总时长
+					download:false,
+					audio:'../../static/audio.mp3',
+					poster:'../../static/avatar.png'
+				}],
+				downloadList:[],
+				index:1 ,//当前集数
+				fullScreen: false,
+				platform:''
+			}
+		},
+		async created() {
+			//#ifdef APP-PLUS
+			plus.screen.lockOrientation("portrait-primary")
+			//#endif
+			uni.getSystemInfo({
+				success: (e) => {
+					// #ifndef MP
+					this.platform = e.platform
+					// #endif
+				}
+			})
+		},
+		async mounted() {
+			await this.pushVideoList()
+			//this.$refs.video.videoPlay()   //refs调动播放
+			
+		},
+		onShow() {
+			//展示播放
+			if(typeof this.$refs.video!='undefined') this.$refs.video.pageShow()
+		},
+		onHide() {
+			//隐藏暂停播放
+			this.$refs.video.pageHide()
+		},
+		methods: {
+			fullscreenchange(e){
+				this.fullScreen = e
+			},
+			clickDownload(e) {
+				if(!this.videoList[e.idx-1].download){
+					let frist = true
+					
+					//继续下载
+					for (let item of this.downloadList) {
+						if(item.epi == e.idx&&item.text!='完成') {
+							item.text = '暂停'
+							item.task.start()
+							frist = false
+						} 
+					}
+					this.videoList[e.idx-1].download = true
+					
+					if(!frist) return
+					
+					//创建下载
+					const downloader = {
+						epi: e.idx, //集数
+						task: null,
+						progress: 0,
+						text: '暂停',
+						filename:'',
+						index: 0
+					}
+					this.downloadList.push(downloader)
+					let idx = this.downloadList.length - 1
+					
+					
+					let localName ={}
+					//m3u8不处理 标记格式  
+					localName = this.getSaveName(e.src,this.videoList[e.idx-1].title)
+					
+					this.downloadList[idx].task = plus.downloader.createDownload(e.src, localName , (d, status)=>{
+						// 下载完成
+						if(status == 200){ 
+							this.downloadList[idx].text = '打开'
+							
+							//保存本地视频至list
+							let filename = plus.io.convertLocalFileSystemURL(d.filename)
+							
+							const video = {...this.videoList[e.idx-1]}
+							video.src = filename
+							video.title = `本地视频第${e.idx}集`
+							video.initialTime = 0
+							this.videoList.push(video)
+							this.downloadList[idx].filename = filename
+							
+							this.videoList[e.idx-1].download = false
+							
+							//保存索引用于跳转
+							this.downloadList[idx].index = this.videoList.length
+							
+							this.setGlobalData()
+							uni.showToast({title:`下载成功,文件保存至${filename}`,icon:'none'})
+						} else {
+							 console.log("下载失败"); 
+						}  
+					});
+					//监听下载
+					this.downloadList[idx].task.addEventListener("statechanged", (download, status)=>{
+						let progress = isNaN(download.downloadedSize/download.totalSize)?0:download.downloadedSize/download.totalSize*100
+						this.downloadList[idx].progress = Math.floor(progress) 
+						// if(download.state == 4 && status == 200){
+						// 	// 下载完成 
+						// 	console.log("Download success: " + download.getFileName());  
+						// }  
+					}, false);
+					this.downloadList[idx].task.start();
+				}else{ //暂停
+					for (let item of this.downloadList) {
+						if(item.epi == e.idx&&item.text!='完成') {
+							this.videoList[e.idx-1].download = false
+							item.text = '继续'
+							item.task.pause()
+						}
+					}
+				}
+				
+			},
+			clickDownloadBtn(idx,itm){
+				if(itm.text == '继续'){
+					itm.text = '暂停'
+					this.videoList[itm.epi-1].download = true
+					itm.task.start();
+				}else if(itm.text == '暂停'){
+					itm.text = '继续'
+					this.videoList[itm.epi-1].download = false
+					itm.task.pause();
+				}else{
+					this.playEpi(itm.index)
+				}
+			},
+			// 暂停下载任务 
+			pauseDownload(idx) {
+				this.downloadList[idx].task.pause();
+			},
+			// 取消下载任务 
+			abortDownload(idx) {
+				this.downloadList[idx].task.abort();
+			},
+			tapBtn(){
+				this.$refs.video.videoPlay()
+			},
+			//获取视频当前进度
+			getCurrent(){
+				uni.showToast({
+					title: `${this.$refs.video.getCurrent()}`,
+					icon:'none'
+				})
+				
+			},
+			playEpi(val){
+				this.index = val
+				
+			},
+			pushVideoList(){
+				let promise = new Promise((resolve,reject)=>{
+					uni.request({
+						url: 'https://api.apiopen.top/videoRecommend?id=127395',
+						success: (res) => {
+							let videoGroup = []
+							for (let item of res.data.result) {
+								if(item.type == 'videoSmallCard'){
+									for (let itm of item.data.playInfo) {
+										
+										itm.title = itm.name
+										itm.src = itm.url
+										
+									}
+									videoGroup.push({
+										srcList:item.data.playInfo,
+										title: item.data.title,
+										gDuration:item.data.duration, //大概总时长
+										download:false,
+										task:{}
+									})
+								}
+							}
+							this.videoList = [...this.videoList,...videoGroup]
+							resolve()
+						}
+					})
+				}) 
+				return promise
+			},
+			getSaveName(src,title){
+				
+				if(/\.m3u8$/.test(src)){
+					return {}
+				}else{
+					return {
+						filename:`_downloads/${title}.mp4`
+					}
+				}
+				// else if(/\.flv$/.test(src)){
+				// 	return {
+				// 		filename:`_downloads/本地:${title}.flv`
+				// 	}
+				// }
+			},
+			setGlobalData(){
+				let length = 0
+				for (let item of this.downloadList) {
+					if(item.text=='打开'){
+						length++
+					}
+				}
+				getApp().globalData.downloadLength = length
+			}
+		}
+	}
+</script>
+
+<style>
+	
+	.content {
+		
+		width: 750rpx;
+		align-items: center;
+	}
+	
+	.video{
+		height: 200px;
+		width: 750rpx;
+	}
+
+	.btn{
+		width: 500rpx;
+		margin-top:50rpx;
+	}
+	.progress-box{
+		padding: 40rpx;
+		height: 150rpx;
+		margin-top:50rpx;
+		border-radius: 5px;
+		border-color: #e9e7ef;
+		border-style: solid;
+		border-width: 2px;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+	}
+	.box-content{
+		width: 300rpx;
+		padding: 20rpx;
+		justify-content: center;
+	}
+	
+	.box-btn{
+		height: 80rpx;
+		width: 100rpx;
+		border-color: #161823;
+	}
+	.box-image{
+		height: 80rpx;
+		width: 80rpx;
+	}
+	.box-text{
+		font-size: 16px;
+	}
+</style>

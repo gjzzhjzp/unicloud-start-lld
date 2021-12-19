@@ -2,8 +2,8 @@
 	<view class="er-item-list">
 		<view class="er-item-list-warter" v-for="(item, index) in list" :key="index" @click="$notMoreTap(toDetail,'notTap',item)">
 			<view class="er-item-list-warter1">
-				<u-lazy-load threshold="300" height="200" border-radius="10" img-mode="aspectFill"
-					:image="imageUrl(item)" :index="index"></u-lazy-load>
+				<o-lazy-load threshold="300" height="200" border-radius="10" img-mode="aspectFill"
+					:image="imageUrl(item)" :index="index"></o-lazy-load>
 				<view style="padding: 8px;">
 					<view class="er-item-list-title">
 						{{item.title}}

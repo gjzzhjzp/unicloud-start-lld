@@ -7,12 +7,12 @@ export default {
 		app_bbh = plus.runtime.versionCode;
 		//#endif
 		var yqm_success = uni.getStorageSync("yqm_success");
-		var config=getApp().globalData.config;
+		var config=getApp().globalData.systemconfig;
 		if (config["800014"] && config["800014"] == '1'&& app_bbh<config["800004"]) {
 			uni.reLaunch({
 				url: "/uview-ui/components/u-full-screen/u-full-screen-xtsd"
 			})
-		} else if (getApp().globalData.config["800015"] && getApp().globalData.config["800015"] == "1" && !
+		} else if (config["800015"] && config["800015"] == "1" && !
 			yqm_success) {
 			uni.reLaunch({
 				url: "/uview-ui/components/u-full-screen/u-full-screen-yqm"
@@ -74,7 +74,8 @@ export default {
 							weiboyz.push(item.content);
 						});
 					}
-					getApp().globalData.config = config;
+					console.log("configaaaaaaaaaaaaaaaaaaa",config);
+					getApp().globalData.systemconfig = config;
 					getApp().globalData.weiboyz = weiboyz;
 					// this.setfks(config);
 					reslove(config);

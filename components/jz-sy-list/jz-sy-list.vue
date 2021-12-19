@@ -1,25 +1,26 @@
 <template>
 	<view>
 		<view class="jz-sy-list-section">
-			<u-section line-color="#7275D3" :font-size="32" :title="title" :right="showright" sub-title="查看更多>>" :arrow="false"
-				@click="$notMoreTap(tomore,'notTap')"></u-section>
+			<u--text size="15" :text="title"></u--text>
+			<u--text size="15" text="查看更多" @click="$notMoreTap(tomore,'notTap')"></u--text>
+			<!-- <o-section line-color="#7275D3" :font-size="32" :title="title" :right="showright" sub-title="查看更多>>"
+				:arrow="false" @click="$notMoreTap(tomore,'notTap')"></o-section> -->
 		</view>
 		<view class="jz-sy-list">
 			<template v-show="!isEmpty">
-				<u-row gutter="16">
-					<u-col span="6" class="jz-sy-item" v-for="(item,index) in list" :key="index">
+				<u-grid :border="false" col="2">
+					<u-grid-item  v-for="(item,index) in list" :key="index">
 						<view class="jz-sy-list-item" @click="$notMoreTap(toDetail,'notTap',item)">
 							<view>
-								<u-lazy-load threshold="300" height="200rpx" border-radius="10" img-mode="aspectFill"
-									:image="imageUrl(item)"></u-lazy-load>
-
-								<!-- <u-image width="100%" height="140rpx" border-radius="10" :src="imageUrl(item)">
-								</u-image> -->
+								<!-- <o-lazy-load threshold="300" height="200rpx" border-radius="10" img-mode="aspectFill"
+				               			:image="imageUrl(item)"></o-lazy-load> -->
+								<u-image width="100%" height="200rpx" border-radius="10" :src="imageUrl(item)">
+								</u-image>
 							</view>
 							<view class="jz-sy-list-text">{{item.title}}</view>
 						</view>
-					</u-col>
-				</u-row>
+					</u-grid-item>
+				</u-grid>
 			</template>
 			<template v-if="isEmpty">
 				<u-empty text="数据为空" mode="list"></u-empty>
@@ -74,21 +75,21 @@
 					return true
 				}
 			},
-			zy_gs:{
+			zy_gs: {
 				type: Number,
 				default () {
 					return undefined
 				}
 			},
-			categories:{
+			categories: {
 				type: String,
 				default () {
 					return ""
 				}
 			},
-			ignore:{
-				type:String,
-				default(){
+			ignore: {
+				type: String,
+				default () {
 					return ""
 				}
 			}
@@ -118,7 +119,7 @@
 				}
 			},
 			getList() {
-				var app_bbh="115";
+				var app_bbh = "115";
 				//#ifdef APP-PLUS
 				app_bbh = plus.runtime.versionCode;
 				//#endif
@@ -130,19 +131,19 @@
 					rows: 4,
 					app_bbh: app_bbh
 				}
-				if(typeof this.zy_gs!="undefined"){
-					Object.assign(param,{
-						zy_gs:this.zy_gs
+				if (typeof this.zy_gs != "undefined") {
+					Object.assign(param, {
+						zy_gs: this.zy_gs
 					});
 				}
-				if(this.categories){
-					Object.assign(param,{
-						categories:this.categories
+				if (this.categories) {
+					Object.assign(param, {
+						categories: this.categories
 					});
 				}
-				if(this.ignore){
-					Object.assign(param,{
-						ignore:this.ignore
+				if (this.ignore) {
+					Object.assign(param, {
+						ignore: this.ignore
 					});
 				}
 				console.log("param222222222", param);
@@ -175,6 +176,7 @@
 <style lang="scss">
 	.jz-sy-list-item {
 		margin: 6px 4px;
+		width: 100%;
 	}
 
 	.jz-sy-list-text {

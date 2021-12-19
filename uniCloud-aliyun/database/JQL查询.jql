@@ -40,10 +40,13 @@ db.collection("jz-opendb-resources").where({
 }).update({
 	"is_off":1
 });
-
 // 全部删除
-db.collection("jz-opendb-danmu").where({
+db.collection("jz-custom-yqm").where({
 	_id: db.command.neq(null)
+}).remove()
+
+db.collection("jz-custom-yqm").where({
+	status:false
 }).remove()
 
 db.collection("opendb-news-categories").where({

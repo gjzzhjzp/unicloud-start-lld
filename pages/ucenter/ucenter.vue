@@ -20,9 +20,9 @@
 			</view>
 		</view>
 		<uni-list class="center-list" v-for="(sublist , index) in ucenterList" :key="index">
-			<uni-list-item v-for="(item,i) in sublist" :title="item.title" link :key="i" :class="isbbgx?item.class:''"
-				:clickable="true" :to="item.to" @click="$notMoreTap(ucenterListClick,'notTap',item)"
-				:thumb="item.thumb">
+			<uni-list-item v-for="(item,i) in sublist" :title="item.title" link :key="i"
+				:class="[isbbgx?item.addclass:'',isnewinfo?item.class:'']" :clickable="true" :to="item.to"
+				@click="$notMoreTap(ucenterListClick,'notTap',item)" :thumb="item.thumb">
 
 			</uni-list-item>
 		</uni-list>
@@ -55,10 +55,11 @@
 				return uniShare.isShow;
 			}
 		},
-		mixins:[ucenter],
+		mixins: [ucenter],
 		data() {
 			return {
-				isbbgx: false, ///时候版本更新
+				isbbgx: false, ///是否版本更新
+				isnewinfo: false, ///是否有新的系统消息
 				notTap: true, //一定要设置为true
 				ucenterList: [
 					[{
@@ -91,10 +92,16 @@
 							"to": '/uni_modules/uni-feedback/pages/opendb-feedback/opendb-feedback',
 							"thumb": "/static/center/question.png"
 						},
+						{
+							"title": "系统消息",
+							"to": '/pages/system-info/system-info',
+							"thumb": "/static/center/info.png",
+							"class": "systeminfo"
+						},
 						//#ifdef APP-PLUS
 						{
 							"title": "检测版本更新",
-							"class": "jcbbgx",
+							"addclass": "jcbbgx",
 							"to": '/pages/appbb/appbb',
 							"thumb": "/static/center/appbb.png"
 						},
@@ -111,7 +118,6 @@
 						"radius": "100%" // 边框圆角，支持百分比
 					}
 				},
-				
 			}
 		},
 		onLoad() {
@@ -135,14 +141,14 @@
 		},
 		created() {
 			// if(typeof this.userInfo.original=="undefined"){
-				this.getUserinfo();
+			this.getUserinfo();
 			// }
 			//#ifdef APP-PLUS
 			this.checkBb();
 			//#endif
+			this.checknewinfo();
 		},
 		methods: {
-			
 			// 检测版本
 			async checkBb() {
 				//#ifdef APP-PLUS
@@ -157,6 +163,23 @@
 					this.isbbgx = true;
 				}
 			},
+			// 检测时候有新的系统消息
+			async checknewinfo() {
+				var res = await db.collection('jz-custom-systeminfo').where('user_id==$env.uid')
+					.field("comment").get();
+				if (res.result.data && res.result.data.length > 0) {
+					var old_news=uni.getStorageSync("systeminfo_"+this.userInfo._id);
+					var infos = res.result.data;
+					var ids = [];
+					infos.forEach((item) => {
+						if(old_news.indexOf(item._id)==-1){
+							this.isnewinfo=true;
+							return;
+						}
+					});
+					console.log("this.isnewinfo",this.isnewinfo);
+				}
+			},
 			goback() {
 				uni.switchTab({
 					url: "/pages/index/index"
@@ -167,10 +190,10 @@
 			}),
 			clickLogout() {
 				if (this.hasLogin) {
-					var config = getApp().globalData.config;
-					var content="确认退出登录？";
+					var config = getApp().globalData.systemconfig;
+					var content = "确认退出登录？";
 					if (config && config["800015"] == "1") {
-						content="退出登录需要重新输入邀请码，确认退出登录？";
+						content = "退出登录需要重新输入邀请码，确认退出登录？";
 					}
 					uni.showModal({
 						title: this.$t('settings.tips'),
@@ -316,15 +339,17 @@
 		height: 150rpx;
 		border-radius: 150rpx;
 	}
-	.original{
+
+	.original {
 		position: relative;
 	}
-	.original-img{
-		    width: 210rpx;
-		    height: 210rpx;
-		    position: absolute;
-		    top: -24rpx;
-		    left: -30rpx;
+
+	.original-img {
+		width: 210rpx;
+		height: 210rpx;
+		position: absolute;
+		top: -24rpx;
+		left: -30rpx;
 	}
 
 	.logo-title {

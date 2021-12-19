@@ -1,9 +1,9 @@
 <template>
 	<view class="smallImage">
 		<view class="smallImage1">
-			<u-lazy-load  v-if="data.url.indexOf('gif')==-1" @click="previewOpen(data)"
-			 threshold="300"  border-radius="10" :image="data.url" img-mode="widthFix"></u-lazy-load>
-			<image v-else :src="data.url"  @click="previewOpen(data)"  mode="widthFix"></image>
+			<o-lazy-load  v-if="data.url.indexOf('gif')==-1" @click="previewOpen(data)"
+			 threshold="300"  border-radius="10" :image="data.url" img-mode="aspectFill"></o-lazy-load>
+			<image v-else :src="data.url"  @click="previewOpen(data)"  mode="aspectFill"></image>
 		</view>
 	</view>
 </template>
@@ -21,6 +21,12 @@
 				type:Object,
 				default(){
 					return {}
+				}
+			},
+			single:{
+				type:Boolean,
+				default(){
+					return false
 				}
 			}
 		},
@@ -53,8 +59,5 @@
 		justify-content: center;
 		align-items: center;
 	}
-	.smallImage1>*{
-		height: 100%;
-		width: 100%;
-	}
+	
 </style>

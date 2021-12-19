@@ -1,10 +1,11 @@
 <template>
 	<view class="container">
 		<u-navbar :is-back="true" back-icon-name="arrow-leftward" :back-icon-size="40">
+			<template slot="right">
 			<u-search border-color="#7275D3" bg-color="#fff" v-model="searchText" height="60" :placeholder="hotWorld"
 				@search="confirm" @custom="confirm" :show-action="true"></u-search>
+				</template>
 		</u-navbar>
-
 		<view class="search-body">
 			<!-- 搜索历史 -->
 			<view class="word-container" v-if="localSearchList.length">

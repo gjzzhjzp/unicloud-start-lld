@@ -1,6 +1,6 @@
 <template>
 	<div class="jz-banner">
-		<u-swiper :list="bannerList" :height="height" :autoplay="true">
+		<u-swiper :list="bannerList" :height="height" :autoplay="true" indicator  indicatorMode="line">
 			
 		</u-swiper>
 	</div>
@@ -10,7 +10,7 @@
 		data() {
 			return {
 				bannerList: [],
-				height:320
+				height:160
 			}
 		},
 		props:{
@@ -56,15 +56,15 @@
 							// console.log(item);
 							if(Array.isArray(item.bannerfile)){
 								this.bannerList.push({
-									image: item.bannerfile[0].url,
+									url: item.bannerfile[0].url,
 									title: item.title,
-									url:item.open_url
+									click:item.open_url
 								});
 							}else{
 								this.bannerList.push({
-									image: item.bannerfile.url,
+									url: item.bannerfile.url,
 									title: item.title,
-									url:item.open_url
+									click:item.open_url
 								});
 							}
 						})

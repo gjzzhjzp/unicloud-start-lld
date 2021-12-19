@@ -4,7 +4,8 @@ let state = {
 		//是否已经登录
 		hasLogin: Boolean(Object.keys(userInfoHistory).length),
 		//用户信息
-		info: userInfoHistory
+		info: userInfoHistory,
+		plNumber:0
 	},
 	getters = {
 		info(state) {

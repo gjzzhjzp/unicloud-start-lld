@@ -15,8 +15,12 @@
 				</view>
 				<view v-show="showMusicxz" class="music-list-right-icon" @click="to_operate(item2,'download',index2)">
 					<!-- item2:{{item2.resources[0]}} -->
-					<a :download='item2.title' :href="item2.resources[0].url"><u-image v-show="!item2.download" width="60rpx" height="60rpx" src="/static/music/download.png"></u-image></a>
-					<u-image v-show="item2.download" width="60rpx" height="60rpx" src="/static/music/download_sed.png"></u-image>
+					<a :download='item2.title' :href="item2.resources?item2.resources[0].url:''">
+						<u-image v-show="!item2.download" width="60rpx" height="60rpx" src="/static/music/download.png">
+						</u-image>
+					</a>
+					<u-image v-show="item2.download" width="60rpx" height="60rpx" src="/static/music/download_sed.png">
+					</u-image>
 				</view>
 				<view class="music-list-right-icon" @click="to_operate(item2,'play',index2)">
 					<u-image v-show="!item2.play" width="60rpx" height="60rpx" src="/static/music/play.png"></u-image>
@@ -25,7 +29,7 @@
 				</view>
 			</view>
 		</view>
-		
+
 		<template v-if="isEmpty">
 			<view style="margin-top: 100rpx;">
 				<u-empty text="数据为空" mode="list"></u-empty>
@@ -34,11 +38,17 @@
 		<template v-else>
 			<u-loadmore :status="loadStatus" @loadmore="loadmoreList"></u-loadmore>
 		</template>
-		<view class="imt-audio" v-if="list.length>0">
-			<imt-audio ref="imtaudio" @play="play" @pause="pause" continue :src="list[now].resources[0].url"
+		<view class="imt-audio"  v-if="list.length>0">
+			<imt-audio ref="imtaudio" @togechi="togechi" @play="play" @pause="pause" continue :src="(list[now]&&list[now].resources)?list[now].resources[0].url:''"
 				:data="curdata" :now="now">
 			</imt-audio>
 		</view>
+		<u-popup :show="showpopup" :mask="false" mode="bottom" height="80vh" @close="closepopup" close-icon-color="#fff">
+			<view>
+				<gechi :curdata="list[now]" width="100%">
+				</gechi>
+			</view>
+		</u-popup>
 		<u-toast ref="uToast" />
 	</view>
 </template>
@@ -46,44 +56,50 @@
 	import {
 		mapGetters
 	} from 'vuex';
-	const db = uniCloud.database()
+	const db = uniCloud.database();
+	import gechi from "@/components/gechi/gechi.vue"
 	export default {
 		name: "musicList",
 		// mixins: [detail],
 		components: {
 			// mp3
+			gechi
 		},
 		data() {
 			return {
-				showMusicxz:true,////是否显示音乐下载按钮
+				showpopup: false,
+				showMusicxz: true, ////是否显示音乐下载按钮
 				data: {},
 				allLove: [],
 				now: 0
 			}
 		},
-		created(){
+		created() {
 			// debugger;
-			var config=getApp().globalData.config;
-			var t_800006=config["800006"];
-			this.showMusicxz=t_800006=='1'?true:false;
+			var config = getApp().globalData.systemconfig;
+			var t_800006 = config["800006"];
+			this.showMusicxz = t_800006 == '1' ? true : false;
 		},
 		computed: {
 			curdata() {
 				var data = this.list[this.now];
 				console.log("data", data);
-				var avatarurl="";
-				if(Array.isArray(data.avatar)){
-					avatarurl=data.avatar[0].url;
-				}else{
-					avatarurl=data.avatar.url;
+				var avatarurl = "";
+				if(data){
+					if (Array.isArray(data.avatar)) {
+						avatarurl = data.avatar[0].url;
+					} else {
+						avatarurl = data.avatar.url;
+					}
+					return {
+						title: data.title,
+						author: data.author,
+						avatarurl: avatarurl,
+						selected: data.selected,
+						play: data.play
+					}
 				}
-				return {
-					title: data.title,
-					author: data.author,
-					avatarurl: avatarurl,
-					selected: data.selected,
-					play: data.play
-				}
+				
 			},
 			...mapGetters({
 				userInfo: 'user/info',
@@ -97,21 +113,22 @@
 					return []
 				}
 			},
-			isEmpty:{
-				type:Boolean,
-				default(){
+			isEmpty: {
+				type: Boolean,
+				default () {
 					return false;
 				}
 			},
-			loadStatus:{
-				type:String,
-				default(){
+			loadStatus: {
+				type: String,
+				default () {
 					return "";
 				}
 			}
 		},
 		watch: {
 			list() {
+				// debugger;
 				if (this.allLove.length == 0) {
 					this.getAllLove().then(() => {
 						this.initList();
@@ -126,7 +143,18 @@
 			console.log("this.list", this.list);
 		},
 		methods: {
-			loadmoreList(){
+			closepopup(){
+				this.showpopup = false;
+			},
+			togechi() {
+				// debugger;
+				this.showpopup = true;
+				// var data=this.list[this.now];
+				// uni.navigateTo({
+				// 	url:"/pages/gechiAll/gechiAll?id="+data._id
+				// })
+			},
+			loadmoreList() {
 				this.$emit("loadmore");
 			},
 			pause(index) {
@@ -178,11 +206,11 @@
 						}
 					});
 					// setTimeout(()=>{
-						if (!data["play"]&&this.$refs.imtaudio) {
-							this.$refs.imtaudio.play(this.now);
-						} else {
-							this.$refs.imtaudio.pause(this.now);
-						}
+					if (!data["play"] && this.$refs.imtaudio) {
+						this.$refs.imtaudio.play(this.now);
+					} else {
+						this.$refs.imtaudio.pause(this.now);
+					}
 					// },1000)
 				} else if (type == "download") {
 					// this.$refs.uToast.show({
@@ -371,9 +399,10 @@
 		width: 100%;
 		z-index: 99;
 	}
-	.music-list-container .u-load-more-wrap{
-		    height: 90px !important;
-			align-items: flex-start;
+
+	.music-list-container .u-load-more-wrap {
+		height: 90px !important;
+		align-items: flex-start;
 	}
 
 	.music-list {

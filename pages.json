@@ -9,6 +9,21 @@
 			"style": {
 				"navigationBarTitleText": "对暗号"
 			}
+		},{
+			"path": "pages/gechi/gechi",
+			"style": {
+				"navigationBarTitleText": "歌词滚动"
+			}
+		},{
+			"path": "pages/gechiAll/gechiAll",
+			"style": {
+				"navigationBarTitleText": "歌词"
+			}
+		},{
+			"path":"pages/system-info/system-info",
+			"style": {
+				"navigationBarTitleText": "系统消息"
+			}
 		}, {
 			"path": "pages/404/404",
 			"style": {
@@ -40,6 +55,12 @@
 			"path": "pages/detail/detail",
 			"style": {
 				"navigationBarTitleText": "详情",
+				"enablePullDownRefresh":true
+			}
+		}, {
+			"path": "pages/detail/detailvideo",
+			"style": {
+				"navigationBarTitleText": "视频详情",
 				"enablePullDownRefresh":true
 			}
 		},
@@ -319,7 +340,7 @@
 		}]
 	},
 	"easycom": {
-		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+		"^o-(.*)": "@/olduview/o-$1/o-$1.vue"
 	},
 	"subPackages": [
 

@@ -16,26 +16,14 @@
 			</view>
 			<!-- #endif -->
 			<view class="audio-control-wrapper" :style="{color}">
-				<view class="audio-control-image">
+				<view class="audio-control-image" @click="togechi()">
 					<image :src="data.avatarurl" class="avatarurl" mode="aspectFill"></image>
 					<view class="audio-control-title">
 						<view style="font-size: 20px;overflow: hidden;white-space: nowrap;">
 							{{data.title}}
 						</view>
-						<!-- <view style="margin-left: 6px;overflow: hidden;white-space: nowrap;">
-							—
-						</view>
-						<view style="margin-left: 6px;overflow: hidden;white-space: nowrap;">
-							{{data.author}}
-						</view> -->
 					</view>
 				</view>
-				<!-- <view v-show="dqxh" class="audio-control-switch1" @click="xunhuan">
-					<image src="../../static/xunhuan.png" class="audio-icon"></image>
-				</view>
-				<view v-show="qxdqxh" class="audio-control-switch1" @click="qxxunhuan">
-					<image src="../../static/qxxunhuan.png" class="audio-icon"></image>
-				</view> -->
 				<view class="audio-control-mp3">
 					<view class="audio-control audio-control-prev" v-if="control" @click="prev">
 						<image src="../../static/music/next.png" class="audio-control-switch audio-icon1"></image>
@@ -100,6 +88,9 @@
 			}
 		},
 		methods: {
+			togechi(){
+				this.$emit("togechi");
+			},
 			//返回prev事件
 			prev() {
 				// this.$emit('prev')

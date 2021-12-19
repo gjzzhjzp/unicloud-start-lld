@@ -58,7 +58,7 @@
 			this.app_bbmc=plus.runtime.version;
 			//#endif
 			this.checkBb();
-			var config=getApp().globalData.config;
+			var config=getApp().globalData.systemconfig;
 			this.showewm=config["800012"]=="1"?true:false
 		},
 		// 下拉刷新

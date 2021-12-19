@@ -84,7 +84,7 @@
 		},
 		created(){
 			this.curdate=this.getcurdate();
-		var config=getApp().globalData.config;
+		var config=getApp().globalData.systemconfig;
 		if(config["800008"]){
 			this.maxnumber=parseInt(config["800008"])||5;
 		}

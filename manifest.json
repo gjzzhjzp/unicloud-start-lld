@@ -2,7 +2,7 @@
     "name" : "俊哲宇宙",
     "appid" : "__UNI__0583E60",
     "description" : "俊哲宇宙",
-    "versionName" : "1.1.6",
+    "versionName" : "1.1.7",
     "versionCode" : 116,
     "transformPx" : false,
     "app-plus" : {
@@ -132,9 +132,9 @@
                 "iosStyle" : "common",
                 "androidStyle" : "default",
                 "android" : {
-                    "hdpi" : "D:/Users/LYS/Pictures/壁纸/res/drawable-hdpi/3_9.9.png",
-                    "xhdpi" : "D:/Users/LYS/Pictures/壁纸/res/drawable-xhdpi/3_9.9.png",
-                    "xxhdpi" : "D:/Users/LYS/Pictures/壁纸/res/drawable-xxhdpi/3_9.9.png"
+                    "hdpi" : "C:/Users/87261/Pictures/res/drawable-hdpi/3_9.9.png",
+                    "xhdpi" : "C:/Users/87261/Pictures/res/drawable-xhdpi/3_9.9.png",
+                    "xxhdpi" : "C:/Users/87261/Pictures/res/drawable-xxhdpi/3_9.9.png"
                 }
             }
         },

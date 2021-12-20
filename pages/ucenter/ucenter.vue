@@ -3,7 +3,7 @@
 		<view class="userInfo" @click.capture="$notMoreTap(toUserInfo,'notTap')">
 			<view class="usercenter-top">
 				<u-navbar :is-back="true" title="个人中心" :border-bottom="false" title-color="#fff" back-icon-color="#fff"
-					:background="{'background':'none'}">
+					 bgColor="none">
 				</u-navbar>
 			</view>
 			<view :class="['userinfo-image',isoriginal?'original':'']">

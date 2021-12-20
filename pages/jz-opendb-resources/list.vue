@@ -5,27 +5,30 @@
 			<u-alert-tips type="warning" description="向左滑动可编辑/删除投稿资源"></u-alert-tips>
 		</view>
 		<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}"
-			collection="jz-opendb-resources" @load="loadSuccess" :page-size	="10"
-			where="user_id == $cloudEnv_uid" orderby="last_modify_date desc"
+			collection="jz-opendb-resources" @load="loadSuccess" :page-size="10" where="user_id == $cloudEnv_uid"
+			orderby="last_modify_date desc"
 			field="categories,labels,author,title,article_status,comment_status,avatar,resources,zy_gs,excerpt,content">
 			<view v-if="error">{{error.message}}</view>
 			<view v-else-if="data">
-				<u-swipe-action :show="item.show" :index="index" v-for="(item, index) in data" :key="item._id"
-					@click="click" @open="open" :options="options">
-					<view class="item u-border-bottom" @click="$notMoreTap(todetail,'notTap',item)">
-						<u-icon size="40" color="#18b566" v-if="item.article_status==1" name="checkmark"></u-icon>
-						
-						<u-icon size="40" v-else name="/static/lock.png"></u-icon>
-						<image mode="aspectFill" :src="item.images" />
-						<view class="title-wrap">
-							<text class="title u-line-2">{{ item.title }}</text>
+				<u-swipe-action>
+					<u-swipe-action-item :show="item.show" :index="index" v-for="(item, index) in data" :key="item._id"
+						@click="click" @open="open" :options="options">
+						<view class="item u-border-bottom" @click="$notMoreTap(todetail,'notTap',item)">
+							<u-icon size="20" color="#18b566" v-if="item.article_status==1" name="checkmark"></u-icon>
+
+							<u-icon size="20" v-else name="/static/lock.png"></u-icon>
+							<image mode="aspectFill" :src="item.images" />
+							<view class="title-wrap">
+								<text class="title u-line-2">{{ item.title }}</text>
+							</view>
 						</view>
-					</view>
+					</u-swipe-action-item>
 				</u-swipe-action>
 			</view>
 			<uni-load-more :status="loading?'loading':(hasMore ? 'more' : 'noMore')"></uni-load-more>
 		</unicloud-db>
-		<uni-fab ref="fab" horizontal="right" vertical="bottom" :pop-menu="false" @fabClick="$notMoreTap(fabClick,'notTap')" />
+		<uni-fab ref="fab" horizontal="right" vertical="bottom" :pop-menu="false"
+			@fabClick="$notMoreTap(fabClick,'notTap')" />
 		<u-back-top :scroll-top="scrollTop" top="1000" mode="square" icon="arrow-up" tips="顶部"></u-back-top>
 	</view>
 </template>
@@ -33,8 +36,8 @@
 	export default {
 		data() {
 			return {
-				scrollTop:0,
-				notTap:true,//一定要设置为true
+				scrollTop: 0,
+				notTap: true, //一定要设置为true
 				loadMore: {
 					contentdown: '',
 					contentrefresh: '',
@@ -68,8 +71,8 @@
 			this.$refs.udb.loadMore()
 		},
 		onPageScroll(e) {
-				this.scrollTop = e.scrollTop;
-			},
+			this.scrollTop = e.scrollTop;
+		},
 		onShow() {
 			this.reload();
 		},
@@ -89,12 +92,12 @@
 			},
 			loadSuccess(data) {
 				data.forEach((item) => {
-					var url="";
-					if(item.avatar){
-						if(Array.isArray(item.avatar)){
-							url=item.avatar[0].url;
-						}else{
-							url=item.avatar.url;
+					var url = "";
+					if (item.avatar) {
+						if (Array.isArray(item.avatar)) {
+							url = item.avatar[0].url;
+						} else {
+							url = item.avatar.url;
 						}
 					}
 					this.$set(item, "images", url);
@@ -104,6 +107,7 @@
 				return data;
 			},
 			click(index, index1) {
+				debugger;
 				var id = this.list[index]._id;
 				if (index1 == 1) {
 					this.handleDelete(id);
@@ -117,7 +121,7 @@
 					success: (res) => {
 						// 删除数据成功后跳转到list页面
 						uni.navigateTo({
-			 			url: './list'
+							url: './list'
 						})
 					}
 				})
@@ -174,7 +178,8 @@
 		color: $u-content-color;
 		margin-top: 20rpx;
 	}
-	.u-icon{
+
+	.u-icon {
 		margin: 0 6px;
 	}
 </style>

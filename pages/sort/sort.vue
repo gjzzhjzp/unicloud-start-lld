@@ -21,8 +21,10 @@
 							<view class="thumb-box" @click="$notMoreTap(toflbm,'notTap',item1,item)" v-for="(item1, index1) in item.children" :key="index1">
 								<!-- <image class="item-menu-image" style="height:50px;border-radius: 10rpx;" :src="imageUrl(item1)" mode="aspectFill"></image> -->
 								<view class="item-menu-image">
-									<o-lazy-load  threshold="100" height="50px" border-radius="10" img-mode="aspectFill" :image="imageUrl(item1)"></o-lazy-load>
-									
+									<view style="width:100%;height:100%;margin: 0px 6px;">
+										<o-lazy-load  threshold="100" height="50px" border-radius="10" img-mode="aspectFill" :image="imageUrl(item1)"></o-lazy-load>
+										
+									</view>
 								</view>
 								<view class="item-menu-name">{{item1.name}}</view>
 							</view>

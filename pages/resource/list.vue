@@ -7,12 +7,12 @@
 
 				<u-navbar :is-back="true" back-icon-name="arrow-leftward" :back-icon-size="40">
 					<template slot="right">
-						<view style="width: 120rpx;">
-							<u-dropdown>
-								<u-dropdown-item @change="changedropItem" v-model="dvalue" :title="dtitle"
-									:options="doptions"></u-dropdown-item>
-							</u-dropdown>
-						</view>
+						<!-- <view style="width: 120rpx;">
+							<o-dropdown>
+								<o-dropdown-item @change="changedropItem" v-model="dvalue" :title="dtitle"
+									:options="doptions"></o-dropdown-item>
+							</o-dropdown>
+						</view> -->
 						<u-search border-color="#7275D3" bg-color="#fff" v-model="keyword" height="60" :placeholder="dplaceholder"
 							@search="confirm" @custom="confirm" :show-action="true"></u-search>
 					</template>
@@ -20,13 +20,15 @@
 			</view>
 		</view>
 		<view>
-			<u-tabs active-color="#7275D3" bar-width="0" :list="tabslist" :is-scroll="false" :current="currenttab"
+			<u-tabs   :activeStyle="{
+						color: '#7275D3'
+					}" line-width="0" :list="tabslist" :is-scroll="false" :current="currenttab"
 				@change="changeTabs"></u-tabs>
 		</view>
 		<view class="search-row">
 			<view :class="['search-row-col',item.selected?'selected':'']" v-for="(item,index) in searchrows"
 				:key="index" @click="searchType(item)">{{item.name}}
-				<u-icon size="20" name="arrow-down-fill"></u-icon>
+				<u-icon size="12" color="#909399" name="arrow-down-fill"></u-icon>
 			</view>
 		</view>
 		<view v-if="showTag" style="margin-left: 10px;">

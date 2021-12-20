@@ -1,20 +1,24 @@
 <template>
 	<view>
 		<view class="jz-sy-list-section">
-			<u--text size="15" :text="title"></u--text>
-			<u--text size="15" text="查看更多" @click="$notMoreTap(tomore,'notTap')"></u--text>
-			<!-- <o-section line-color="#7275D3" :font-size="32" :title="title" :right="showright" sub-title="查看更多>>"
-				:arrow="false" @click="$notMoreTap(tomore,'notTap')"></o-section> -->
+			<u-row justify="space-between" >
+				<u-col span="3">
+					<u--text size="15" :text="title" :bold="true"></u--text>
+				</u-col>
+				<u-col span="3" class="space-between-right" justify="flex-end">
+					<u--text size="15" type="info" text="查看更多>>" @click="$notMoreTap(tomore,'notTap')"></u--text>
+				</u-col>
+			</u-row>
 		</view>
 		<view class="jz-sy-list">
 			<template v-show="!isEmpty">
 				<u-grid :border="false" col="2">
-					<u-grid-item  v-for="(item,index) in list" :key="index">
+					<u-grid-item v-for="(item,index) in list" :key="index">
 						<view class="jz-sy-list-item" @click="$notMoreTap(toDetail,'notTap',item)">
-							<view>
+							<view class="jz-sy-list-image">
 								<!-- <o-lazy-load threshold="300" height="200rpx" border-radius="10" img-mode="aspectFill"
 				               			:image="imageUrl(item)"></o-lazy-load> -->
-								<u-image width="100%" height="200rpx" border-radius="10" :src="imageUrl(item)">
+								<u-image width="100%" height="200rpx" radius="6" :src="imageUrl(item)">
 								</u-image>
 							</view>
 							<view class="jz-sy-list-text">{{item.title}}</view>
@@ -146,7 +150,6 @@
 						ignore: this.ignore
 					});
 				}
-				console.log("param222222222", param);
 				uniCloud.callFunction({
 					name: 'jzfunction',
 					data: {
@@ -175,14 +178,15 @@
 </script>
 <style lang="scss">
 	.jz-sy-list-item {
-		margin: 6px 4px;
 		width: 100%;
 	}
-
+	.jz-sy-list-image{
+		padding: 6px 4px;
+		
+	}
 	.jz-sy-list-text {
 		color: $u-type-primary;
-		margin-top: 10rpx;
-		margin-left: 10rpx;
+		padding: 6px;
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow: ellipsis;

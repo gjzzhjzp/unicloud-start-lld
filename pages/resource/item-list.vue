@@ -2,7 +2,7 @@
 	<view class="er-item-list">
 		<view class="er-item-list-warter" v-for="(item, index) in list" :key="index" @click="$notMoreTap(toDetail,'notTap',item)">
 			<view class="er-item-list-warter1">
-				<o-lazy-load threshold="300" height="200" border-radius="10" img-mode="aspectFill"
+				<o-lazy-load threshold="300" height="100" border-radius="10" img-mode="aspectFill"
 					:image="imageUrl(item)" :index="index"></o-lazy-load>
 				<view style="padding: 8px;">
 					<view class="er-item-list-title">
@@ -13,7 +13,7 @@
 							<view class="original" v-if="item.userinfo&&item.userinfo[0].original">
 								<image class="original-img" src="@/static/center/ori_back.png"></image>
 							</view>
-							<u-avatar :size="50"
+							<u-avatar :size="25"
 								:src="(item.userinfo&&item.userinfo[0].avatar_file)?item.userinfo[0].avatar_file.url:''">
 							</u-avatar>
 							<text style="margin-left: 4px;">{{item.userinfo&&item.userinfo[0].nickname?item.userinfo[0].nickname:'佚名'}}</text>

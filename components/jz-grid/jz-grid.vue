@@ -52,4 +52,7 @@
 	.grid-text{
 		color:$u-type-primary;
 	}
+	.jz-grid{
+		margin-top: 10px;
+	}
 </style>

@@ -2,7 +2,7 @@
 	<view class="jz-navbar">
 		<u-navbar :title="title">
 			<template slot="right">
-				<view v-show="showlogo" >
+				<view v-show="showlogo" style="margin-left: 4px;">
 					<u-image width="200rpx" height="60rpx" src="/static/head/logo.png"></u-image>
 				</view>
 				<view class="sy-u-search">
@@ -11,7 +11,7 @@
 				<view v-show="!issy"  @click="$notMoreTap(tosearch,'notTap')">
 					<u-image width="50rpx" height="50rpx" src="/static/head/search.png"></u-image>
 				</view>
-				<view  @click="$notMoreTap(tousercenter,'notTap')">
+				<view style="margin-left: 4px;margin-right: 4px;"  @click="$notMoreTap(tousercenter,'notTap')">
 					<u-image width="50rpx" height="50rpx" src="/static/head/user.png"></u-image>
 				</view>
 			</template>

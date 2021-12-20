@@ -197,3 +197,27 @@ body.pages-resource-list uni-page-body {
 	background: transparent !important;
 }
 /* #endif */
+.jz-sy-list-section .space-between-right .u-text{
+	    justify-content: flex-end !important;
+}
+.jz-navbar .u-navbar__content__left{
+	display: none !important;
+}
+.jz-navbar .u-navbar__content__title{
+	display: none;
+}
+.jz-navbar .u-navbar__content__right{
+	width:100%;
+	padding: 0px !important;
+}
+.usercenter-top .u-navbar__content__left{
+	display: none !important;
+}
+.usercenter-top  .u-navbar__content__title{
+	color: #fff !important;
+	font-weight: 600;
+}
+.usercenter-top .u-navbar__content{
+	background-color: inherit !important;
+}
+

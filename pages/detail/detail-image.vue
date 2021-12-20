@@ -19,7 +19,7 @@
 	import detail from "./detail.js"
 	// import detailhead from "./detailhead.vue"
 	import nineSquared from "./nineSquared.vue"
-	import detailheadMp4 from "./detailheadMp41.nvue"
+	import detailheadMp4 from "./detailheadMp4.vue"
 	export default {
 		data() {
 			return {

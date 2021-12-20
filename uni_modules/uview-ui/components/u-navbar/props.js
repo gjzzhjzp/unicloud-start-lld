@@ -13,7 +13,7 @@ export default {
 		 // 是否固定在顶部
 		 fixed: {
 			 type: Boolean,
-			 default: uni.$u.props.navbar.fixed
+			 default:true
 		 },
 		 // 是否显示下边框
 		 border: {

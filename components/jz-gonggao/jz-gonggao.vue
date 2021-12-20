@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-modal v-model="showmodel" :title="gonggao_title" @confirm="confirm">
+		<u-modal :show="showmodel" :title="gonggao_title" @confirm="confirm" confirmColor="#7275D3">
 			<view class="slot-gonggao_content">
 				<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y" >
 					<view class="scroll-view-content" v-html="gonggao_content"></view>
@@ -32,6 +32,7 @@
 			},
 			confirm() {
 				uni.setStorageSync("gonggao_" + this.gonggao_number, true);
+				this.close();
 				this._gonggao();
 			}
 		}

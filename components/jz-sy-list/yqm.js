@@ -51,7 +51,7 @@ export default{
 			this.showmodel = true;
 			if(!this.yqm){
 				this.$refs.uToast.show({
-					title: '请输入邀请码',
+					message: '请输入邀请码',
 					type: 'warning'
 				});
 				return;
@@ -87,7 +87,7 @@ export default{
 					});
 				}else{
 					this.$refs.uToast.show({
-						title: '邀请码无效',
+						message: '邀请码无效',
 						type: 'error'
 					});
 				}

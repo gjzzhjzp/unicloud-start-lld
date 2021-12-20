@@ -1,14 +1,14 @@
 <template>
 	<view class="jz-question">
-		<u-form ref="uForm">
+		<u-form ref="uForm" labelPosition="top" labelWidth="auto">
 			<u-form-item required :label="item.title" v-for="(item,index) in list" label-position="top" :key="index">
-				<u-input v-model="item.answer" />
+				<u-input v-model="item.answer" border="bottom"/>
 			</u-form-item>
 			<u-form-item required label="相信国家，相信党，永远跟党走" label-position="top" :key="4">
-				<u-input v-model="answer" placeholder="请完整输入以上内容"/>
+				<u-input v-model="answer" placeholder="请完整输入以上内容" border="bottom"/>
 			</u-form-item>
 			<u-form-item required label="人民有信仰，民族有希望，国家有力量" label-position="top" :key="5">
-				<u-input v-model="answer2" placeholder="请完整输入以上内容"/>
+				<u-input v-model="answer2" placeholder="请完整输入以上内容" border="bottom"/>
 			</u-form-item>
 		</u-form>
 		<view class="jz-bottom">
@@ -44,7 +44,7 @@
 						this.list = res.data;
 					} else {
 						this.$refs.uToast.show({
-							title: res.msg,
+							message: res.msg,
 							type: 'error'
 						});
 					}
@@ -57,7 +57,7 @@
 				data.forEach((item,index) => {
 						if (!this.answer||!this.answer2) {
 							this.$refs.uToast.show({
-								title: "宝，请输入完整答案哦~",
+								message: "宝，请输入完整答案哦~",
 								type: 'error'
 							});
 							flag = false;
@@ -75,7 +75,7 @@
 				}else{
 					if(this.answer!="相信国家，相信党，永远跟党走"||this.answer2!="人民有信仰，民族有希望，国家有力量"){
 						this.$refs.uToast.show({
-							title: "答案错误",
+							message: "答案错误",
 							type: 'error'
 						});
 						return;
@@ -99,7 +99,7 @@
 					} else {
 						uni.setStorageSync("question_success1",false);
 						this.$refs.uToast.show({
-							title: res.msg,
+							message: res.msg,
 							type: 'error'
 						});
 					}

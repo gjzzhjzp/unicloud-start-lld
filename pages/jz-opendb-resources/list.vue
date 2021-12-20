@@ -2,7 +2,7 @@
 	<view class="container jz-opendb-resources-container">
 		<u-navbar :is-back="true" title="我的投稿"></u-navbar>
 		<view style="margin: 4px 0px;">
-			<u-alert-tips type="warning" description="向左滑动可编辑/删除投稿资源"></u-alert-tips>
+			<u-alert type="warning" description="向左滑动可编辑/删除投稿资源"></u-alert>
 		</view>
 		<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}"
 			collection="jz-opendb-resources" @load="loadSuccess" :page-size="10" where="user_id == $cloudEnv_uid"
@@ -12,7 +12,7 @@
 			<view v-else-if="data">
 				<u-swipe-action>
 					<u-swipe-action-item :show="item.show" :index="index" v-for="(item, index) in data" :key="item._id"
-						@click="click" @open="open" :options="options">
+						@click="click" :options="options" :name="index">
 						<view class="item u-border-bottom" @click="$notMoreTap(todetail,'notTap',item)">
 							<u-icon size="20" color="#18b566" v-if="item.article_status==1" name="checkmark"></u-icon>
 
@@ -106,14 +106,14 @@
 				this.list = data;
 				return data;
 			},
-			click(index, index1) {
-				debugger;
-				var id = this.list[index]._id;
-				if (index1 == 1) {
+			click(item) {
+				// debugger;
+				var id = this.list[item.name]._id;
+				if (item.index == 1) {
 					this.handleDelete(id);
 				} else {
 					this.handleItemClick(id);
-					this.$set(this.list[index], "show", false);
+					this.$set(this.list[item.name], "show", false);
 				}
 			},
 			handleDelete(id) {

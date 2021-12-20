@@ -83,7 +83,7 @@ export default {
 				var res = res.result;
 				if (res.state == "0000") {
 					this.$refs.uToast.show({
-						title: '已取消',
+						message: '已取消',
 						type: 'success'
 					});
 					this.islike = false;
@@ -113,7 +113,7 @@ export default {
 				var res = res.result;
 				if (res.state == "0000") {
 					this.$refs.uToast.show({
-						title: '收藏成功',
+						message: '收藏成功',
 						type: 'success'
 					});
 					this.islike = true;

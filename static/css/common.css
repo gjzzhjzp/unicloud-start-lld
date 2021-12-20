@@ -220,4 +220,19 @@ body.pages-resource-list uni-page-body {
 .usercenter-top .u-navbar__content{
 	background-color: inherit !important;
 }
+.detail-image-title .u-text:last-child{
+	justify-content: flex-end !important;
+}
+.jz-sy-list-section{
+	position: relative;
+}
+.jz-sy-list-section::before{
+	content: "";
+	height: 16px;
+	width: 4px;
+	background:#7275D3 ;
+	position: absolute;
+	top: 3px;
+	left: -6px;
+}
 

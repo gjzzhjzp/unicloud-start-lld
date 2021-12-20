@@ -1,14 +1,14 @@
 <template>
-	<view class="comment-container" @click.stop="replyResource()">
+	<view class="comment-container" >
 		<view class="comment-container-top">
 			<view>{{topleft}}</view>
 			<view class="comment-container-lb" @click.stop="toggleType()">
-				<u-icon size="40" name="/static/comment/liebiao.png"></u-icon>
+				<u-icon size="20" name="/static/comment/liebiao.png"></u-icon>
 				{{topright}}
 			</view>
 		</view>
 		<u-empty v-if="commentList.length==0" mode="data"></u-empty>
-		<view :class="['comment-container1','slot-gonggao_content',showsendpl?'':'nosendpl']">
+		<view @click.stop="replyResource()" :class="['comment-container1','slot-gonggao_content',showsendpl?'':'nosendpl']">
 			<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y">
 				<view class="comment" v-for="(res, index) in commentList" :key="res.id">
 					<view class="left">
@@ -30,7 +30,7 @@
 							<view class="all-reply" @tap="toAllReply(res)"
 								v-if="res.allchildren&&res.allchildren.length>3">
 								共{{ res.allchildren.length }}条回复
-								<u-icon class="more" name="arrow-right" :size="26"></u-icon>
+								<u-icon class="more" name="arrow-right" :size="13"></u-icon>
 							</view>
 						</view>
 						<view class="bottom">
@@ -39,21 +39,21 @@
 							<view class="bottom-right">
 								<view class="itemb">
 									<view class="like" :class="{ highlight: res.isLike }" @click.stop="getLike(index)">
-										<u-icon v-if="!res.isLike" name="/static/comment/like.png" :size="40"
+										<u-icon v-if="!res.isLike" name="/static/comment/like.png" :size="20"
 											color="#A0A0A0">
 										</u-icon>
-										<u-icon v-if="res.isLike" name="thumb-up-fill" :size="40"
+										<u-icon v-if="res.isLike" name="thumb-up-fill" :size="20"
 											color="rgb(114, 117, 211)"></u-icon>
 										<view class="num" v-show="res.like_count>0">{{ res.like_count }}</view>
 									</view>
 									<!-- <u-icon size="40" name="/static/comment/like.png"></u-icon> -->
 								</view>
 								<view class="itemb" @click.stop="replycomment(res)">
-									<u-icon size="40" name="/static/comment/reply.png">
+									<u-icon size="20" name="/static/comment/reply.png">
 									</u-icon>
 								</view>
 								<view class="itemb" @click.stop="openmore(res)">
-									<u-icon size="40" name="/static/comment/more.png"></u-icon>
+									<u-icon size="20" name="/static/comment/more.png"></u-icon>
 								</view>
 							</view>
 						</view>
@@ -61,7 +61,7 @@
 				</view>
 			</scroll-view>
 		</view>
-		<u-popup v-model="showreply" mode="bottom" border-radius="30" height="90%">
+		<u-popup :show="showreply" mode="bottom" border-radius="30" height="300">
 			<view class="reply-container">
 				<reply :res="currentData" :showsendpl="showsendpl" @reload="getComment" :zydata="zydata"
 					@close="closepopup"></reply>
@@ -185,9 +185,10 @@
 			},
 			// 发送评论
 			async sendComment() {
+				// debugger;
 				if (this.userInfo.forbiddenwords) {
 					this.$refs.uToast.show({
-						title: '你已被禁言，请联系管理员',
+						message: '你已被禁言，请联系管理员',
 						type: 'error'
 					});
 					return;
@@ -390,6 +391,9 @@
 	// 	position: fixed;
 	// 	bottom: 50px;
 	// }
+	.reply-container{
+		height: 90vh;
+	}
 	.slot-gonggao_content {
 		overflow: auto;
 	}
@@ -446,6 +450,7 @@
 		line-height: 72rpx;
 		margin: 0 16rpx;
 		color: #909399;
+		width: 40px;
 	}
 
 	.comment-container2 {

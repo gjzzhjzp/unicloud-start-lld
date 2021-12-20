@@ -1,11 +1,11 @@
 <template>
-	<view class="jz-container">
+	<view>
 		<u-navbar :is-back="true" :title="title"></u-navbar>
-		<view>
+		<view  class="jz-container">
 			<detailhead-mp4 :data="data" :pl-number="plNumber">
 				<template slot="content">
 					<div class="content">
-						<chunlei-video isBack autoplay ref="video" orientation class="video" :episode="11"
+						<chunlei-video autoplay ref="video" orientation class="video" :episode="11"
 							:index="index" color="#c93756" @playEpi="playEpi" :downloadBtn="true"
 							@clickDownload="clickDownload" :title="videoList[index-1].title"
 							:audio="videoList[index-1].audio" :poster="videoList[index-1].poster"
@@ -14,7 +14,7 @@
 							:danmuList="videoList[index-1].danmuList" :initialTime="videoList[index-1].initialTime">
 						</chunlei-video>
 					</div>
-					<u-popup v-model="showsenddanmu" mode="bottom">
+					<u-popup :show="showsenddanmu" mode="bottom">
 						<view class="comment-container2">
 							<view class="comment-input1">
 								<u-input v-model="danmuValue" height="60" type="text" :border="true"
@@ -31,12 +31,12 @@
 						<view class="opendanmu" v-if="showdanmu">
 							<view class="opendanmu_1" @click="opensendDanmu">点我发弹幕</view>
 							<view class="opendanmu_2" @click="closedanmu()">
-								<u-icon size="72" name="/static/comment/opendanmu.png"></u-icon>
+								<u-icon size="36" name="/static/comment/opendanmu.png"></u-icon>
 							</view>
 						</view>
 						<view class="closedanmu" v-else="!showdanmu">
 							<view class="closedanmu_1">
-								<u-icon size="72" @click="openDanmu()" name="/static/comment/closedanmu.png"></u-icon>
+								<u-icon size="36" @click="openDanmu()" name="/static/comment/closedanmu.png"></u-icon>
 							</view>
 						</view>
 					</view>
@@ -353,7 +353,7 @@
 
 	.danmubutton {
 		width: 300rpx;
-		margin-top: 4rpx;
+		margin-top: 8rpx;
 	}
 
 	.closedanmu {

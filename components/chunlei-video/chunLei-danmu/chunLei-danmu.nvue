@@ -3,25 +3,25 @@
 		<div class="danmu-row" :style="{ width: `${width}px` }">
 			<div :style="{ left:`${width}px`}" ref="move" :id="item._id" v-for="item in danmuList1" :key="item._id" class="moveDiv">
 				<image :src="item.avatar" class="img" v-if="item.avatar"></image>
-				<text :class="`${platform}-title`" :style="{ color:item.color?item.color:'#fff' }">{{item.text}}</text>
+				<text :class="`${platform}-title`" :style="{ fontSize:'14px',color:item.color?item.color:'#fff' }">{{item.text}}</text>
 			</div>
 		</div>
 		<div class="danmu-row" :style="{ width: `${width}px` }">
 			<div :style="{ left:`${width}px`}" ref="move" :id="item._id" v-for="item in danmuList2" :key="item._id" class="moveDiv">
 				<image :src="item.avatar" class="img" v-if="item.avatar"></image>
-				<text :class="`${platform}-title`" :style="{ color:item.color?item.color:'#fff' }">{{item.text}}</text>
+				<text :class="`${platform}-title`" :style="{  fontSize:'14px',color:item.color?item.color:'#fff' }">{{item.text}}</text>
 			</div>
 		</div>
 		<div class="danmu-row" :style="{ width: `${width}px` }">
 			<div :style="{ left:`${width}px`}" ref="move" :id="item._id" v-for="item in danmuList3" :key="item._id" class="moveDiv">
 				<image :src="item.avatar" class="img" v-if="item.avatar"></image>
-				<text :class="`${platform}-title`" :style="{ color:item.color?item.color:'#fff' }">{{item.text}}</text>
+				<text :class="`${platform}-title`" :style="{  fontSize:'14px',color:item.color?item.color:'#fff' }">{{item.text}}</text>
 			</div>
 		</div>
 		<div class="danmu-row" :style="{ width: `${width}px` }">
 			<div :style="{ left:`${width}px`}" ref="move" :id="item._id" v-for="item in danmuList4" :key="item._id" class="moveDiv">
 				<image :src="item.avatar" class="img" v-if="item.avatar"></image>
-				<text :class="`${platform}-title`" :style="{ color:item.color?item.color:'#fff' }">{{item.text}}</text>
+				<text :class="`${platform}-title`" :style="{  fontSize:'14px',color:item.color?item.color:'#fff' }">{{item.text}}</text>
 			</div>
 		</div>
 	</div>
@@ -88,7 +88,7 @@
 					styles: {
 						transform: `translate( ${distance}px, 0px)`,
 					},
-					duration: 20000, //ms
+					duration: 15000, //ms
 					timingFunction: 'ease',
 					delay: 0 //ms
 					}, () => {

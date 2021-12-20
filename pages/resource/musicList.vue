@@ -29,7 +29,6 @@
 				</view>
 			</view>
 		</view>
-
 		<template v-if="isEmpty">
 			<view style="margin-top: 100rpx;">
 				<u-empty text="数据为空" mode="list"></u-empty>
@@ -260,7 +259,7 @@
 				if (this.hasLogin) {
 					if (data.selected) {
 						this.$refs.uToast.show({
-							title: '已收藏',
+							message: '已收藏',
 							type: 'warning'
 						});
 						return;
@@ -303,7 +302,7 @@
 						var res = res.result;
 						if (res.state == "0000") {
 							this.$refs.uToast.show({
-								title: '收藏成功',
+								message: '收藏成功',
 								type: 'success'
 							});
 							this.$set(data, "like_count", ++data.like_count);
@@ -348,7 +347,7 @@
 						var res = res.result;
 						if (res.state == "0000") {
 							this.$refs.uToast.show({
-								title: '已取消',
+								message: '已取消',
 								type: 'success'
 							});
 							this.$set(this.data, "like_count", --this.data.like_count);

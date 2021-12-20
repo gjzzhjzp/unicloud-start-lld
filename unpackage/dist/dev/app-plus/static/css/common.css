@@ -197,3 +197,42 @@ body.pages-resource-list uni-page-body {
 	background: transparent !important;
 }
 /* #endif */
+.jz-sy-list-section .space-between-right .u-text{
+	    justify-content: flex-end !important;
+}
+.jz-navbar .u-navbar__content__left{
+	display: none !important;
+}
+.jz-navbar .u-navbar__content__title{
+	display: none;
+}
+.jz-navbar .u-navbar__content__right{
+	width:100%;
+	padding: 0px !important;
+}
+.usercenter-top .u-navbar__content__left{
+	display: none !important;
+}
+.usercenter-top  .u-navbar__content__title{
+	color: #fff !important;
+	font-weight: 600;
+}
+.usercenter-top .u-navbar__content{
+	background-color: inherit !important;
+}
+.detail-image-title .u-text:last-child{
+	justify-content: flex-end !important;
+}
+.jz-sy-list-section{
+	position: relative;
+}
+.jz-sy-list-section::before{
+	content: "";
+	height: 16px;
+	width: 4px;
+	background:#7275D3 ;
+	position: absolute;
+	top: 3px;
+	left: -6px;
+}
+

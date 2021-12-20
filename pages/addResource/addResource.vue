@@ -121,14 +121,14 @@
 					if (valid) {
 						if (this.avatar.length == 0) {
 							this.$refs.uToast.show({
-								title: "请选择封面图片",
+								message: "请选择封面图片",
 								type: 'warning'
 							});
 							return;
 						}
 						if (this.resources.length == 0) {
 							this.$refs.uToast.show({
-								title: "请选择资源",
+								message: "请选择资源",
 								type: 'warning'
 							});
 							return;
@@ -153,12 +153,12 @@
 					var res = res.result;
 					if (res.state == "0000") {
 						this.$refs.uToast.show({
-							title: res.msg,
+							message: res.msg,
 							type: 'success'
 						});
 					} else {
 						this.$refs.uToast.show({
-							title: res.msg,
+							message: res.msg,
 							type: 'error'
 						});
 					}

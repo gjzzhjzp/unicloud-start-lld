@@ -42,12 +42,12 @@
 							var res = res.result;
 							if (res.state == "0000") {
 								this.$refs.uToast.show({
-									title: res.msg,
+									message: res.msg,
 									type: 'success'
 								});
 							} else {
 								this.$refs.uToast.show({
-									title: res.msg,
+									message: res.msg,
 									type: 'error'
 								});
 							}

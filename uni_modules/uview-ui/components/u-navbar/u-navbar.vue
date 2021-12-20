@@ -1,5 +1,8 @@
 <template>
 	<view class="u-navbar">
+		  <view class="status_bar">
+		          <!-- 这里是状态栏 -->
+		      </view>
 		<view
 			class="u-navbar__placeholder"
 			v-if="fixed && placeholder"
@@ -99,7 +102,8 @@
 		methods: {
 			// 点击左侧区域
 			leftClick() {
-				this.$emit('leftClick')
+				this.$emit('leftClick');
+				uni.navigateBack();
 			},
 			// 点击右侧区域
 			rightClick() {
@@ -111,7 +115,10 @@
 
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
-
+ .status_bar {
+      height: var(--status-bar-height);
+      width: 100%;
+  }
 	.u-navbar {
 
 		&--fixed {

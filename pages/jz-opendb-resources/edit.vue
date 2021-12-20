@@ -3,13 +3,13 @@
 		<u-navbar :is-back="true" title="我的投稿"></u-navbar>
 		<view style="margin: 4px 0px;">
 			<!-- #ifdef H5 -->
-			<u-alert-tips type="warning" description="上传图片附件资源时多张上传请使用APP或QQ浏览器,
-	  		其他手机浏览器暂不支持多张同时上传,视频不能上传超过100M的视频,超过100M的视频走外链,上传图片视频等需要等待进度条上传完成提交才有效"></u-alert-tips>
+			<u-alert type="warning" description="上传图片附件资源时多张上传请使用APP或QQ浏览器,
+	  		其他手机浏览器暂不支持多张同时上传,视频不能上传超过100M的视频,超过100M的视频走外链,上传图片视频等需要等待进度条上传完成提交才有效"></u-alert>
 			<!-- #endif -->
 			<!-- #ifdef APP-PLUS -->
-			<u-alert-tips type="warning"
+			<u-alert type="warning"
 				description="注意:视频不能上传超过100M的视频,超过100M的走外链,上传图片视频等需要等待进度条上传完成提交才有效;请注意视频上传时网络不好会导致视频自动压缩">
-			</u-alert-tips>
+			</u-alert>
 			<!-- #endif -->
 		</view>
 		<uni-forms ref="form" :value="formData" validate-trigger="submit" err-show-type="toast">
@@ -50,7 +50,7 @@
 					<uni-file-picker file-mediatype="video" file-extname="mp4" :limit="1" return-type="array"
 						v-model="formData.resources">
 					</uni-file-picker>
-					<view class="resource-ts">提示：支持MP4格式(注意：网络不好视频会自动压缩)</view>
+					<view class="resource-ts">提示：支持MP4格式(注意：网络不好视频会自动压缩，请保持网络通畅)</view>
 				</template>
 				<!-- #ifdef H5 -->
 				<template v-else-if="formData.zy_gs==2">

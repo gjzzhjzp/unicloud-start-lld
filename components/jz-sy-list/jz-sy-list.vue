@@ -18,7 +18,7 @@
 							<view class="jz-sy-list-image">
 								<!-- <o-lazy-load threshold="300" height="200rpx" border-radius="10" img-mode="aspectFill"
 				               			:image="imageUrl(item)"></o-lazy-load> -->
-								<u-image width="100%" height="200rpx" radius="6" :src="imageUrl(item)">
+								<u-image width="100%" height="100" radius="6" :src="imageUrl(item)">
 								</u-image>
 							</view>
 							<view class="jz-sy-list-text">{{item.title}}</view>
@@ -29,7 +29,7 @@
 			<template v-if="isEmpty">
 				<u-empty text="数据为空" mode="list"></u-empty>
 			</template>
-			<u-modal v-model="showmodel" title="输入邀请码" :show-cancel-button="true" @confirm="confirm">
+			<u-modal :show="showmodel" title="输入邀请码" :show-cancel-button="true" @confirm="confirm">
 				<view class="slot-content" style="padding: 10px;">
 					<view style="margin-bottom: 8px;">
 						<u-alert-tips type="warning" description="个人中心>>我的邀请码中可申请邀请码"></u-alert-tips>
@@ -167,7 +167,7 @@
 						}
 					} else {
 						this.$refs.uToast.show({
-							title: res.msg,
+							message: res.msg,
 							type: 'error'
 						});
 					}

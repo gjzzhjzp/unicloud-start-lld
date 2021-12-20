@@ -3,11 +3,7 @@
 		<view class="original" v-if="isoriginal">
 			<image class="original-img" src="@/static/center/ori_back.png"></image>
 		</view>
-		<image :src="src" style="{
-				width: '64rpx',
-				height: '64rpx',
-				border-radius: '50%'
-			}" mode="aspectFill"></image>
+		<u--image  :src="src" width="32px" height="32px" shape="circle" @click="click"></u--image>
 	</view>
 </template>
 

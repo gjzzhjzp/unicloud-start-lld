@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-popup v-model="showPop" mode="bottom">
+		<u-popup :show="showPop" mode="bottom">
 			<view class="cascader-head">
 				<text class="cancel" @click="cancelSelect">取消</text>
 				<text class="title">请选择</text>

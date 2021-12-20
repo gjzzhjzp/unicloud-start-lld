@@ -79,7 +79,7 @@
 			searchList(){
 				if(!this.keyword){
 					this.$refs.uToast.show({
-						title: "宝，请输入内容哦~",
+						message: "宝，请输入内容哦~",
 						type: 'error'
 					});
 					return;

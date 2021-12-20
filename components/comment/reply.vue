@@ -2,14 +2,14 @@
 	<view class="wrap reply_wrap">
 		<view class="reply_head">
 			<view class="reply_head1">
-				<u-icon name="reload" :size="40" @click="reload()">
+				<u-icon name="reload" :size="20" @click="reload()">
 				</u-icon>
 			</view>
 			<view class="reply_head2">
 				共 {{commentList.length}} 条回复
 			</view>
 			<view class="reply_head3">
-				<u-icon name="close" :size="40" @click="close()">
+				<u-icon name="close" :size="20" @click="close()">
 				</u-icon>
 			</view>
 		</view>
@@ -36,18 +36,18 @@
 				<view class="bottom-right">
 					<view class="itemb">
 						<view class="like" :class="{ highlight: res.isLike }">
-							<u-icon v-if="!res.isLike" name="/static/comment/like.png" :size="40" @click="getLike()">
+							<u-icon v-if="!res.isLike" name="/static/comment/like.png" :size="20" @click="getLike()">
 							</u-icon>
-							<u-icon v-if="res.isLike" name="thumb-up-fill" color="rgb(114, 117, 211)" :size="40"
+							<u-icon v-if="res.isLike" name="thumb-up-fill" color="rgb(114, 117, 211)" :size="20"
 								@click="getLike()"></u-icon>
 							<view class="num" v-show="res.like_count>0">{{ res.like_count }}</view>
 						</view>
 					</view>
 					<view class="itemb" @click="replycomment(res)">
-						<u-icon size="40" name="/static/comment/reply.png"></u-icon>
+						<u-icon size="20" name="/static/comment/reply.png"></u-icon>
 					</view>
 					<view class="itemb" @click="openmore(res)">
-						<u-icon size="40" name="/static/comment/more.png"></u-icon>
+						<u-icon size="20" name="/static/comment/more.png"></u-icon>
 					</view>
 				</view>
 			</view>
@@ -95,20 +95,20 @@
 								<view class="bottom-right">
 									<view class="itemb">
 										<view class="like" :class="{ highlight: item.isLike }">
-											<u-icon v-if="!item.isLike" name="/static/comment/like.png" :size="40"
+											<u-icon v-if="!item.isLike" name="/static/comment/like.png" :size="20"
 												@click="getLike(index)">
 											</u-icon>
 											<u-icon v-if="item.isLike" name="thumb-up-fill" color="rgb(114, 117, 211)"
-												:size="40" @click="getLike(index)">
+												:size="20" @click="getLike(index)">
 											</u-icon>
 											<view class="num" v-show="item.like_count>0">{{ item.like_count }}</view>
 										</view>
 									</view>
 									<view class="itemb" @click="replycomment(item)">
-										<u-icon size="40" name="/static/comment/reply.png"></u-icon>
+										<u-icon size="20" name="/static/comment/reply.png"></u-icon>
 									</view>
 									<view class="itemb" @click="openmore(item)">
-										<u-icon size="40" name="/static/comment/more.png"></u-icon>
+										<u-icon size="20" name="/static/comment/more.png"></u-icon>
 									</view>
 								</view>
 							</view>
@@ -120,7 +120,7 @@
 		</view>
 		<view class="comment-container2" v-if="showsendpl">
 			<view class="comment-input1">
-				<u-input v-model="inputvalue" height="60" type="text" :border="true" :placeholder="placeholder" />
+				<u-input v-model="inputvalue" height="60" type="text"  :placeholder="placeholder" />
 			</view>
 			<text class="comment-input-button" @click="sendComment()">
 				发送
@@ -255,7 +255,7 @@
 			async sendComment() {
 				if (this.userInfo.forbiddenwords) {
 					this.$refs.uToast.show({
-						title: '你已被禁言，请联系管理员',
+						message: '你已被禁言，请联系管理员',
 						type: 'error'
 					});
 					return;

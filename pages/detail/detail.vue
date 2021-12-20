@@ -1,7 +1,7 @@
 <template>
-	<view class="jz-container">
+	<view >
 		<u-navbar :is-back="true" :title="title"></u-navbar>
-		<view>
+		<view class="jz-container">
 			<template v-if="!detaildata.aliyun_dz">
 				<template v-if="zy_gs=='0'">
 					<detail-image :data="detaildata"></detail-image>
@@ -26,7 +26,7 @@
 				</template>
 			</template>
 		</view>
-		<u-back-top :scroll-top="scrollTop" top="1000" mode="square" icon="arrow-up" tips="顶部"></u-back-top>
+		<u-back-top :scroll-top="scrollTop" top="1000" mode="square" icon="arrow-up"></u-back-top>
 	</view>
 </template>
 <script>

@@ -12,7 +12,7 @@ router.beforeEach((to, from, next) => {
 	console.log("from",from);
 	// debugger;
 	me.getConfig().then(()=>{
-		if(to.path.indexOf("login-page")!=-1||to.path.indexOf("u-full-screen")!=-1){
+		if(to.path.indexOf("login-page")!=-1||to.path.indexOf("u-full-screen")!=-1||to.path.indexOf("/question/")!=-1){
 			next();
 		}else{
 			me.checkUserStatus().then((flag)=>{

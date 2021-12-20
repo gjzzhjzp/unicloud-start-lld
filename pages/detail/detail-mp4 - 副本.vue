@@ -17,7 +17,7 @@
 					</view>
 				</template>
 				<!-- #ifndef MP-ALIPAY -->
-				<u-popup v-model="showsenddanmu" mode="bottom">
+				<u-popup :show="showsenddanmu" mode="bottom">
 					<view class="comment-container2">
 						<view class="comment-input1">
 							<u-input v-model="danmuValue" height="60" type="text" :border="true" placeholder="请输入友善的弹幕见证当下..." />

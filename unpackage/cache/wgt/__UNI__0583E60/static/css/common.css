@@ -58,12 +58,12 @@
 	left: -6px !important;
 	color: #7275D3 !important;
 }
-
+/* #ifdef H5 */
 .u-collapse-body {
 	overflow: auto !important;
 	/* height:auto !important */
 }
-
+/* #endif */
 .u-collapse-title {
 	padding: 0px 16px;
 	font-size: 20px;
@@ -102,9 +102,12 @@
 	background-color: #fff !important;
 }
 
+/* #ifdef H5 */
 body.pages-resource-list uni-page-body {
 	background-color: #fff !important;
 }
+/* #endif */
+
 
 .uni-error-message-text {
 	margin-left: 70px;
@@ -129,7 +132,9 @@ body.pages-resource-list uni-page-body {
 .jcbbgx .uni-list-item__icon-img::after,
 .systeminfo .uni-list-item__icon-img::after {
 	content: "";
+	/* #ifdef H5 */
 	display: block;
+	/* #endif */
 	height: 6px;
 	width: 6px;
 	color: red;
@@ -141,27 +146,32 @@ body.pages-resource-list uni-page-body {
 }
 
 .jz-opendb-resources-container .u-icon {
-	display: flex;
+	/* #ifdef H5 */
+					display: flex;
+					/* #endif */
+					flex-direction: row;
 }
-
+/* #ifdef H5 */
 .jz-banner .u-link,
 .jz-banner .u-link * {
 	width: 100%;
 	display: block;
 	height: 100%;
 }
-
+/* #endif */
+/* #ifdef H5 */
 .jz-banner .u-swiper-image,
 .jz-banner .u-swiper-image * {
 	width: 100%;
 	display: block;
 	height: 100%;
 }
-
+/* #endif */
+/* #ifdef H5 */
 .u-dropdown__content__mask {
 	display: none;
 }
-
+/* #endif */
 .comment-input1 {
 	width: 100%;
 	flex: 1;
@@ -178,12 +188,51 @@ body.pages-resource-list uni-page-body {
 	background: transparent !important;
 	color: #fff;
 }
-
+/* #ifdef H5 */
 .smallImage1 * {
 	height: 100% !important;
 	width: 100% !important;
 }
-
 .comment-container uni-image {
 	background: transparent !important;
 }
+/* #endif */
+.jz-sy-list-section .space-between-right .u-text{
+	    justify-content: flex-end !important;
+}
+.jz-navbar .u-navbar__content__left{
+	display: none !important;
+}
+.jz-navbar .u-navbar__content__title{
+	display: none;
+}
+.jz-navbar .u-navbar__content__right{
+	width:100%;
+	padding: 0px !important;
+}
+.usercenter-top .u-navbar__content__left{
+	display: none !important;
+}
+.usercenter-top  .u-navbar__content__title{
+	color: #fff !important;
+	font-weight: 600;
+}
+.usercenter-top .u-navbar__content{
+	background-color: inherit !important;
+}
+.detail-image-title .u-text:last-child{
+	justify-content: flex-end !important;
+}
+.jz-sy-list-section{
+	position: relative;
+}
+.jz-sy-list-section::before{
+	content: "";
+	height: 16px;
+	width: 4px;
+	background:#7275D3 ;
+	position: absolute;
+	top: 3px;
+	left: -6px;
+}
+

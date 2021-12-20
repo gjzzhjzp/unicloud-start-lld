@@ -1,8 +1,8 @@
 <template>
 	<view class="operator">
 		<u-action-sheet :list="list" @click="click" v-model="show"></u-action-sheet>
-		<u-modal v-model="showmodel" @confirm="confirm" :content="content" :show-cancel-button="true"></u-modal>
-		<u-modal v-model="showjubao" title="请输入举报原因" @confirm="confirmjubao" :show-cancel-button="true">
+		<u-modal :show="showmodel" @confirm="confirm" :content="content" :show-cancel-button="true"></u-modal>
+		<u-modal :show="showjubao" title="请输入举报原因" @confirm="confirmjubao" :show-cancel-button="true">
 			<view style="padding: 10px;">
 				<u-input v-model="jubaocontent" type="textarea" :border="true" />
 			</view>
@@ -48,14 +48,14 @@
 					_id: this.curcomment._id
 				}).remove();
 				this.$refs.uToast.show({
-					title: '已删除'
+					message: '已删除'
 				})
 				this.$emit("reload");
 			},
 			async confirmjubao(){
 				if(!this.jubaocontent){
 					this.$refs.uToast.show({
-						title: '请输入举报原因'
+						message: '请输入举报原因'
 					});
 					return;
 				}
@@ -65,7 +65,7 @@
 					jubao_content:this.jubaocontent
 				});
 				this.$refs.uToast.show({
-					title: '你的举报已提交，待管理员审核通过后会进行处理，谢谢你的反馈'
+					message: '你的举报已提交，待管理员审核通过后会进行处理，谢谢你的反馈'
 				});
 			}
 		}

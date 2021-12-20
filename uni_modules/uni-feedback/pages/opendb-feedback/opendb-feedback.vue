@@ -2,7 +2,7 @@
 	<view>
 		<u-navbar :is-back="true" title="意见反馈"></u-navbar>
 		<view style="margin: 4px 0px;">
-		<u-alert-tips type="warning" description="如果宝儿在使用过程中有什么问题,都可以在这里告诉我们哦"></u-alert-tips>
+		<u-alert type="warning" description="如果宝儿在使用过程中有什么问题,都可以在这里告诉我们哦"></u-alert>
 		</view>
 		<view class="jz-container">
 			<uni-forms ref="form" :value="formData" validate-trigger="submit" err-show-type="toast">

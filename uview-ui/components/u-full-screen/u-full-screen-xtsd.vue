@@ -1,5 +1,5 @@
 <template>
-	<u-modal v-model="show" :show-cancel-button="false" confirm-text="退出" title="提示" @cancel="cancel" @confirm="confirm">
+	<u-modal :show="show" :show-cancel-button="false" confirm-text="退出" title="提示" @cancel="cancel" @confirm="confirm">
 		<view class="u-update-content">
 			{{content}}
 		</view>

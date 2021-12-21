@@ -33,8 +33,11 @@
 	 * @property {String | Number} height 弹窗下拉内容的高度(内容超出将会滚动)（默认auto）
 	 * @example <o-dropdown-item title="标题"></o-dropdown-item>
 	 */
+	import uCellGroup from "../u-cell-group/u-cell-group.vue"
+	import uCellItem from "../u-cell-item/u-cell-item.vue"
 	export default {
 		name: 'o-dropdown-item',
+		components:{uCellGroup,uCellItem},
 		props: {
 			// 当前选中项的value值
 			value: {

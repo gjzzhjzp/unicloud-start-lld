@@ -229,6 +229,7 @@
 	.u-wrap {
 		background-color: #eee;
 		overflow: hidden;
+		width: 100%;
 	}
 
 	.u-lazy-item {

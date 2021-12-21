@@ -1,10 +1,14 @@
 <template>
 	<view class="er-item-list">
-		<view class="er-item-list-warter" v-for="(item, index) in list" :key="index" @click="$notMoreTap(toDetail,'notTap',item)">
-			<view class="er-item-list-warter1">
-				<o-lazy-load threshold="300" height="100" border-radius="10" img-mode="aspectFill"
-					:image="imageUrl(item)" :index="index"></o-lazy-load>
-				<view style="padding: 8px;">
+		<!-- <view class="er-item-list-warter">
+			<view class="er-item-list-warter1"> -->
+		<u-grid :border="false" @click="click" col="2">
+			<u-grid-item v-for="(item, index) in list" :key="index" @click="$notMoreTap(toDetail,'notTap',item)">
+				<view class="er-item-list-1" style="width: 100%;">
+					<o-lazy-load threshold="300" height="100" border-radius="10" img-mode="aspectFill"
+						:image="imageUrl(item)" :index="index"></o-lazy-load>
+				</view>
+				<view class="er-item-list-2">
 					<view class="er-item-list-title">
 						{{item.title}}
 					</view>
@@ -16,20 +20,24 @@
 							<u-avatar :size="25"
 								:src="(item.userinfo&&item.userinfo[0].avatar_file)?item.userinfo[0].avatar_file.url:''">
 							</u-avatar>
-							<text style="margin-left: 4px;">{{item.userinfo&&item.userinfo[0].nickname?item.userinfo[0].nickname:'佚名'}}</text>
-							
+							<text
+								style="margin-left: 4px;">{{item.userinfo&&item.userinfo[0].nickname?item.userinfo[0].nickname:'佚名'}}</text>
+
 						</view>
 						<view class="er-item-list-right">
 							<u-icon name="heart"></u-icon>{{item.like_count||0}}
 						</view>
 					</view>
 				</view>
-			</view>
-		</view>
-		<u-modal :show="showmodel" title="输入邀请码" :show-cancel-button="true" @confirm="confirm">
-			<view class="slot-content" style="padding: 10px;">
+			</u-grid-item>
+		</u-grid>
+		<!-- </view>
+		</view> -->
+		<u-modal :show="showmodel" title="输入邀请码" confirmColor="#7275D3" :show-cancel-button="true" @confirm="confirm"
+			@cancel="showmodel=false">
+			<view class="slot-content">
 				<view style="margin-bottom: 8px;">
-					<u-alert-tips type="warning" description="个人中心>>我的邀请码中可申请邀请码"></u-alert-tips>
+					<u-alert type="warning" description="个人中心>>我的邀请码中可申请邀请码"></u-alert>
 				</view>
 				<u-input v-model="yqm" type="text" :border="true" placeholder="请输入邀请码" />
 			</view>
@@ -89,16 +97,18 @@
 </script>
 
 <style lang="scss" scoped>
-	.original{
+	.original {
 		position: relative;
 	}
-	.original-img{
-		      width: 68rpx;
-		      height: 68rpx;
-		      position: absolute;
-		      top: -32rpx;
-		      left: -10rpx;
+
+	.original-img {
+		width: 68rpx;
+		height: 68rpx;
+		position: absolute;
+		top: -32rpx;
+		left: -10rpx;
 	}
+
 	.er-item-list-warter {
 		border-radius: 8px;
 		// margin: 10px;
@@ -188,5 +198,12 @@
 		box-shadow: 0px 0px 6px #d5d5d6;
 		border-radius: 10px;
 		margin: 10px;
+	}
+	.er-item-list-1,.er-item-list-2{
+		padding: 6px 8px;
+		width: 100%;
+		/* #ifndef APP-PLUS */
+		box-sizing: border-box;
+		/* #endif */
 	}
 </style>

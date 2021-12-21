@@ -236,4 +236,10 @@ body.pages-resource-list uni-page-body {
 	top: 3px;
 	left: -6px;
 }
+.wrap-list .search-row-col.selected .u-text__value--info{
+	    color: #767BCD !important;
+}
+.wrap-list .search-row-col.selected .u-icon__icon{
+	color: #767BCD !important;
+}
 

@@ -42,31 +42,67 @@
 					:style="[itemStyle(index)]"
 				>
 					<!-- 在nvue中，image图片的宽度默认为屏幕宽度，需要通过flex:1撑开，另外必须设置高度才能显示图片 -->
-					<image
-						class="u-swiper__wrapper__item__wrapper__image"
-						v-if="$u.test.image(getSource(item))"
-						:src="getSource(item)"
-						:mode="imgMode"
-						@tap="clickHandler(index)"
-						:style="{
-							height: $u.addUnit(height),
-							borderRadius: $u.addUnit(radius)
-						}"
-					></image>
-					<video
-						class="u-swiper__wrapper__item__wrapper__video"
-						v-if="$u.test.video(getSource(item))"
-						:id="`video-${index}`"
-						:enable-progress-gesture="false"
-						:src="getSource(item)"
-						:poster="getPoster(item)"
-						:title="showTitle && $u.test.object(item) && item.title ? item.title : ''"
-						:style="{
-							height: $u.addUnit(height)
-						}"
-						controls
-						@tap="clickHandler(index)"
-					></video>
+					<o-link v-if="item.click&&item.click.indexOf('http')!=-1" :href="item.click?item.click:'javascript:void(0)'"
+						style="width: 100%;">
+						<image
+							class="u-swiper__wrapper__item__wrapper__image"
+							v-if="$u.test.image(getSource(item))"
+							:src="getSource(item)"
+							:mode="imgMode"
+							@tap="clickHandler(index)"
+							:style="{
+								width:'100%',
+								height: $u.addUnit(height),
+								borderRadius: $u.addUnit(radius)
+							}"
+						></image>
+						<video
+							class="u-swiper__wrapper__item__wrapper__video"
+							v-if="$u.test.video(getSource(item))"
+							:id="`video-${index}`"
+							:enable-progress-gesture="false"
+							:src="getSource(item)"
+							:poster="getPoster(item)"
+							:title="showTitle && $u.test.object(item) && item.title ? item.title : ''"
+							:style="{
+								width:'100%',
+								height: $u.addUnit(height)
+							}"
+							controls
+							@tap="clickHandler(index)"
+						></video>
+					</o-link>
+					<view v-else @click="clickImage(item)" style="width: 100%;height: 100%;">
+						<image
+							class="u-swiper__wrapper__item__wrapper__image"
+							v-if="$u.test.image(getSource(item))"
+							:src="getSource(item)"
+							:mode="imgMode"
+							@tap="clickHandler(index)"
+							:style="{
+								width:'100%',
+								height: $u.addUnit(height),
+								borderRadius: $u.addUnit(radius)
+							}"
+						></image>
+						<video
+							class="u-swiper__wrapper__item__wrapper__video"
+							v-if="$u.test.video(getSource(item))"
+							:id="`video-${index}`"
+							:enable-progress-gesture="false"
+							:src="getSource(item)"
+							:poster="getPoster(item)"
+							:title="showTitle && $u.test.object(item) && item.title ? item.title : ''"
+							:style="{
+								width:'100%',
+								height: $u.addUnit(height)
+							}"
+							controls
+							@tap="clickHandler(index)"
+						></video>
+					</view>
+					
+					
 					<text
 						v-if="showTitle && $u.test.object(item) && item.title && $u.test.image(getSource(item))"
 						class="u-swiper__wrapper__item__wrapper__title u-line-1"

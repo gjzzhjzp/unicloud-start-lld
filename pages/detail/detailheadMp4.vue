@@ -215,25 +215,19 @@
 
 <style>
 	.showllsc {
-		/* #ifdef H5 */
 		display: flex;
-		/* #endif */
 		flex-direction: row;
 	}
 
 	.detail-open {
-		/* #ifdef H5 */
 		display: flex;
-		/* #endif */
 		flex-direction: row;
 		text-align: center;
 	}
 
 	.detailtabs {
 		border-bottom: 1px solid #ddd;
-		/* #ifdef H5 */
 		display: flex;
-		/* #endif */
 		flex-direction: row;
 	}
 
@@ -242,9 +236,7 @@
 	}
 
 	.detail-open {
-		/* #ifdef H5 */
 		display: flex;
-		/* #endif */
 		flex-direction: row;
 		margin: 10px 6px;
 		font-size: 1em;
@@ -252,9 +244,7 @@
 	}
 
 	.detail-image-bq {
-		/* #ifdef H5 */
 		display: flex;
-		/* #endif */
 		flex-direction: row;
 		flex-wrap: wrap;
 		margin-top: 6px;
@@ -265,9 +255,7 @@
 	}
 
 	.detail-image-sx3 {
-		/* #ifdef H5 */
 		display: flex;
-		/* #endif */
 		flex-direction: row;
 		color: #909399;
 		margin: 10px 6px;
@@ -276,9 +264,7 @@
 
 	.detail-image-sx31,
 	.detail-image-sx32 {
-		/* #ifdef H5 */
 		display: flex;
-		/* #endif */
 		flex-direction: row;
 	}
 
@@ -287,9 +273,7 @@
 	}
 
 	.detail-image-sc1 {
-		/* #ifdef H5 */
 		display: flex;
-		/* #endif */
 		flex-direction: row;
 
 	}
@@ -301,9 +285,7 @@
 	}
 
 	.detail-image-ly {
-		/* #ifdef H5 */
 		display: flex;
-		/* #endif */
 		flex-direction: row;
 		width: 100%;
 		font-size: 1em;
@@ -328,9 +310,7 @@
 	.detail-image-title {
 		margin-top: 10px;
 		margin-left: 6px;
-		/* #ifdef H5 */
 		display: flex;
-		/* #endif */
 		flex-direction: row;
 		justify-content: space-between;
 	}
@@ -340,9 +320,7 @@
 	}
 
 	.detail-image-sx {
-		/* #ifdef H5 */
 		display: flex;
-		/* #endif */
 		flex-direction: row;
 		justify-content: space-between;
 		margin-top: 10px;
@@ -351,9 +329,7 @@
 	}
 
 	.detail-image-jj {
-		/* #ifdef H5 */
 		display: flex;
-		/* #endif */
 		flex-direction: row;
 		margin-top: 10px;
 		margin-left: 6px;
@@ -366,16 +342,12 @@
 	}
 
 	.detail-image-sc {
-		/* #ifdef H5 */
 		display: flex;
-		/* #endif */
 		flex-direction: row;
 	}
 
 	.detail-image-sc .download-head {
-		/* #ifdef H5 */
 		display: flex;
-		/* #endif */
 		flex-direction: row;
 		text-decoration: none;
 		/* color: inherit; */

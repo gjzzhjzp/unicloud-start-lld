@@ -1,6 +1,6 @@
 <template>
 	<div class="jz-banner">
-		<u-swiper :list="bannerList" :height="height" :autoplay="true" indicator  indicatorMode="line" :circular="true">
+		<u-swiper :list="bannerList" :height="height" :autoplay="false" indicator  indicatorMode="line" :circular="true">
 			
 		</u-swiper>
 	</div>

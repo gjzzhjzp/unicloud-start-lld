@@ -35,7 +35,7 @@
 		<!-- <uni-popup ref="passdialog" type="dialog"> -->
 		<u-modal :show="showpassmodal" title="修改密码" :show-cancel-button="true" @confirm="setPassword">
 			<view style="padding-top: 8px;">
-				<u-alert-tips :show-icon="true" type="warning" title="修改密码后需重新登录" ></u-alert-tips>
+				<u-alert :show-icon="true" type="warning" title="修改密码后需重新登录" ></u-alert>
 			</view>
 			<view class="u-modal-form" style="padding: 10px;">
 				<u-form :model="passForm" ref="uForm" label-width="200">

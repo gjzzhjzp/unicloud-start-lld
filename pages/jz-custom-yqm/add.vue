@@ -2,7 +2,7 @@
 	<view class="uni-container uni-yqm">
 		<u-navbar :is-back="true" title="申请邀请码"></u-navbar>
 		<uni-forms ref="form" :value="formData" validate-trigger="submit" err-show-type="toast">
-			<u-alert-tips type="warning" :description="description"></u-alert-tips>
+			<u-alert type="warning" :description="description"></u-alert>
 			<view style="margin-top: 20px;">
 				<uni-forms-item name="user_name_type" label="申请个数:">
 					<view style="margin-top: 6px;">

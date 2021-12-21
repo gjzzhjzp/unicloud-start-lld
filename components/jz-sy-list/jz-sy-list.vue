@@ -1,12 +1,12 @@
 <template>
 	<view>
 		<view class="jz-sy-list-section">
-			<u-row justify="space-between" >
+			<u-row justify="space-between">
 				<u-col span="3">
 					<u--text size="15" :text="title" :bold="true"></u--text>
 				</u-col>
 				<u-col span="3" class="space-between-right" justify="flex-end">
-					<u--text size="15" type="info" text="查看更多>>" @click="$notMoreTap(tomore,'notTap')"></u--text>
+					<u--text size="12" type="info" text="查看更多>>" @click="$notMoreTap(tomore,'notTap')"></u--text>
 				</u-col>
 			</u-row>
 		</view>
@@ -29,12 +29,12 @@
 			<template v-if="isEmpty">
 				<u-empty text="数据为空" mode="list"></u-empty>
 			</template>
-			<u-modal :show="showmodel" title="输入邀请码" :show-cancel-button="true" @confirm="confirm">
-				<view class="slot-content" style="padding: 10px;">
+			<u-modal :show="showmodel" title="输入邀请码" confirmColor="#7275D3" :show-cancel-button="true" @confirm="confirm" @cancel="showmodel=false">
+				<view class="slot-content">
 					<view style="margin-bottom: 8px;">
-						<u-alert-tips type="warning" description="个人中心>>我的邀请码中可申请邀请码"></u-alert-tips>
+						<u-alert type="warning" description="个人中心>>我的邀请码中可申请邀请码"></u-alert>
 					</view>
-					<u-input v-model="yqm" type="text" :border="true" placeholder="请输入邀请码" />
+					<u-input v-model="yqm" type="text" placeholder="请输入邀请码" />
 				</view>
 			</u-modal>
 			<u-toast ref="uToast" />
@@ -180,19 +180,27 @@
 	.jz-sy-list-item {
 		width: 100%;
 	}
-	.jz-sy-list-image{
+
+	.jz-sy-list-image {
 		padding: 6px 4px;
-		
+		/* #ifndef APP-PLUS */
+		box-sizing: border-box;
+		/* #endif */
 	}
+
 	.jz-sy-list-text {
 		color: $u-type-primary;
 		padding: 6px;
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow: ellipsis;
+		/* #ifndef APP-PLUS */
+		box-sizing: border-box;
+		/* #endif */
 	}
 
 	.jz-sy-list-section {
 		margin: 14rpx 0px;
+		margin-left: 6px;
 	}
 </style>

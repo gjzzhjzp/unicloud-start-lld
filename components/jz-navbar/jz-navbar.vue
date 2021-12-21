@@ -2,6 +2,9 @@
 	<view class="jz-navbar">
 		<u-navbar :title="title">
 			<template slot="right">
+				<view class="jz-navbar-left" @click="toback()" v-if="isBack">
+					<u-icon size="20" name="arrow-left"></u-icon>
+				</view>
 				<view v-show="showlogo" style="margin-left: 4px;">
 					<u-image width="200rpx" height="60rpx" src="/static/head/logo.png"></u-image>
 				</view>
@@ -17,7 +20,6 @@
 			</template>
 		</u-navbar>
 	</view>
-	
 </template>
 <script>
 	export default{
@@ -63,10 +65,16 @@
 				uni.navigateTo({
 					url: "/pages/list/search/search"
 				})
+			},
+			toback(){
+				uni.navigateBack();
 			}
 		}
 	}
 </script>
 
 <style>
+	.jz-navbar-left{
+		margin-left: 6px;
+	}
 </style>

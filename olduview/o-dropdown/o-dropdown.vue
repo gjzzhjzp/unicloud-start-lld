@@ -6,7 +6,7 @@
 			'u-border-bottom': borderBottom
 		}">
 			<view class="o-dropdown__menu__item" v-for="(item, index) in menuList" :key="index" @tap.stop="menuClick(index)">
-				<view class="u-flex">
+				<view class="u-flex" style="display: flex;">
 					<text class="o-dropdown__menu__item__text" :style="{
 						color: item.disabled ? '#c0c4cc' : (index === current || highlightIndex == index) ? activeColor : inactiveColor,
 						fontSize: $u.addUnit(titleSize)
@@ -28,7 +28,7 @@
 			<view @tap.stop.prevent class="o-dropdown__content__popup" :style="[popupStyle]">
 				<slot></slot>
 			</view>
-			<view class="o-dropdown__content__mask"></view>
+			<!-- <view class="o-dropdown__content__mask"></view> -->
 		</view>
 	</view>
 </template>

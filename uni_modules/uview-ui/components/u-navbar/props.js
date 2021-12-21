@@ -3,7 +3,7 @@ export default {
 		 // 是否开启顶部安全区适配
 		 safeAreaInsetTop: {
 			 type: Boolean,
-			 default: uni.$u.props.navbar.safeAreaInsetTop
+			 default: true
 		 },
 		 // 固定在顶部时，是否生成一个等高元素，以防止塌陷
 		 placeholder: {
@@ -13,7 +13,7 @@ export default {
 		 // 是否固定在顶部
 		 fixed: {
 			 type: Boolean,
-			 default:uni.$u.props.navbar.fixed
+			 default:true
 		 },
 		 // 是否显示下边框
 		 border: {

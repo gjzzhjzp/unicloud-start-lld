@@ -1,5 +1,5 @@
 <template>
-	<view class="container">
+	<view class="container jz-search">
 		<u-navbar :is-back="true" back-icon-name="arrow-leftward" :back-icon-size="40">
 			<template slot="right">
 			<u-search border-color="#7275D3" bg-color="#fff" v-model="searchText" height="60" :placeholder="hotWorld"

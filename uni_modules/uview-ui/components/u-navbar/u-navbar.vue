@@ -1,8 +1,6 @@
 <template>
-	<view class="u-navbar">
-		  <view class="status_bar">
-		          <!-- 这里是状态栏 -->
-		      </view>
+	<view class="u-navbar" :style="{'margin-bottom': $u.addUnit($u.getPx(height) + $u.sys().statusBarHeight)}">
+		 
 		<view
 			class="u-navbar__placeholder"
 			v-if="fixed && placeholder"

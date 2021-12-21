@@ -37,6 +37,7 @@
 				// this.closeModal();
 			},
 			closeModal() {
+				this.show=false;
 				// #ifdef APP-PLUS  
 				plus.runtime.quit();
 				// #endif

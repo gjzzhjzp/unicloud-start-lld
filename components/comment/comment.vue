@@ -157,11 +157,11 @@
 			openmore(res) {
 				if (res.user_id[0]._id == this.userInfo._id) {
 					this.$refs.operator.list = [{
-						text: "删除"
+						name: "删除"
 					}];
 				} else {
 					this.$refs.operator.list = [{
-						text: "举报"
+						name: "举报"
 					}];
 				}
 				this.$refs.operator.curcomment = res;
@@ -399,18 +399,14 @@
 	}
 
 	.comment-container-top {
-		/* #ifdef H5 */
 		display: flex;
-		/* #endif */
 		flex-direction: row;
 		justify-content: space-between;
 		padding: 20rpx 20rpx;
 	}
 
 	.comment-container-lb {
-		/* #ifdef H5 */
 		display: flex;
-		/* #endif */
 		flex-direction: row;
 	}
 
@@ -429,18 +425,14 @@
 
 	/* #endif */
 	.bottom-right {
-		/* #ifdef H5 */
 		display: flex;
-		/* #endif */
 		flex-direction: row;
 
 		.itemb {
 			margin: 0 10rpx;
 
 			.like {
-				/* #ifdef H5 */
 				display: flex;
-				/* #endif */
 				flex-direction: row;
 			}
 		}
@@ -454,9 +446,7 @@
 	}
 
 	.comment-container2 {
-		/* #ifdef H5 */
 		display: flex;
-		/* #endif */
 		flex-direction: row;
 		position: fixed;
 		bottom: 0px;
@@ -468,9 +458,7 @@
 	}
 
 	.comment {
-		/* #ifdef H5 */
 		display: flex;
-		/* #endif */
 		flex-direction: row;
 		padding: 30rpx;
 
@@ -482,9 +470,7 @@
 			font-size: 30rpx;
 
 			.top {
-				/* #ifdef H5 */
 				display: flex;
-				/* #endif */
 				flex-direction: row;
 				justify-content: space-between;
 				align-items: center;
@@ -527,9 +513,7 @@
 				border-radius: 12rpx;
 
 				.item {
-					/* #ifdef H5 */
 					display: flex;
-					/* #endif */
 					flex-direction: row;
 					padding: 20rpx;
 					border-bottom: solid 2rpx $u-border-color;
@@ -541,9 +525,7 @@
 
 				.all-reply {
 					padding: 20rpx;
-					/* #ifdef H5 */
 					display: flex;
-					/* #endif */
 					flex-direction: row;
 					color: #5677fc;
 					align-items: center;
@@ -556,14 +538,11 @@
 
 			.bottom {
 				margin-top: 20rpx;
-				/* #ifdef H5 */
 				display: flex;
-				/* #endif */
 				flex-direction: row;
 				font-size: 28rpx;
 				color: #9a9a9a;
 				justify-content: space-between;
-
 				.reply {
 					color: #5677fc;
 					margin-left: 10rpx;

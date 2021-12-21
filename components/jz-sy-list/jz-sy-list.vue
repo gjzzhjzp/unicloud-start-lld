@@ -103,6 +103,11 @@
 			// this.where = 'article_status==1';
 			this.getList();
 		},
+		watch:{
+			ignore(){
+				this.getList();
+			}
+		},
 		methods: {
 			imageUrl(item) {
 				if (Array.isArray(item.avatar)) {
@@ -182,19 +187,21 @@
 	}
 
 	.jz-sy-list-image {
-		padding: 6px 4px;
+		// 
 		/* #ifndef APP-PLUS */
+		padding: 6px 4px;
 		box-sizing: border-box;
 		/* #endif */
 	}
 
 	.jz-sy-list-text {
 		color: $u-type-primary;
-		padding: 6px;
+		// 
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow: ellipsis;
 		/* #ifndef APP-PLUS */
+		padding: 6px;
 		box-sizing: border-box;
 		/* #endif */
 	}

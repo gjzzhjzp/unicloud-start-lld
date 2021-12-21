@@ -120,7 +120,7 @@
 		</view>
 		<view class="comment-container2" v-if="showsendpl">
 			<view class="comment-input1">
-				<u-input v-model="inputvalue" height="60" type="text"  :placeholder="placeholder" />
+				<u--input v-model="inputvalue" height="60" type="text"  :placeholder="placeholder" />
 			</view>
 			<text class="comment-input-button" @click="sendComment()">
 				发送
@@ -357,9 +357,7 @@
 
 <style lang="scss" scoped>
 	.flex1,.flex2 {
-		/* #ifdef H5 */
 		display: flex;
-		/* #endif */
 		flex-direction: row;
 		justify-content: space-between;
 		margin-top: 30rpx;
@@ -379,9 +377,7 @@
 	}
 
 	.comment-container2 {
-		/* #ifdef H5 */
 		display: flex;
-		/* #endif */
 		flex-direction: row;
 		position: fixed;
 		bottom: 0px;
@@ -393,32 +389,26 @@
 
 	.comment-input-button {
 		line-height: 36px;
-		margin: 0 16rpx;
+		margin: 0 24rpx;
 		color: #909399;
 	}
 
 	.bottom-right {
-		/* #ifdef H5 */
 		display: flex;
-		/* #endif */
 		flex-direction: row;
 
 		.itemb {
 			margin: 0 10rpx;
 
 			.like {
-				/* #ifdef H5 */
 				display: flex;
-				/* #endif */
 				flex-direction: row;
 			}
 		}
 	}
 
 	.reply_head {
-		/* #ifdef H5 */
 		display: flex;
-		/* #endif */
 		flex-direction: row;
 		justify-content: space-between;
 		padding: 30rpx;
@@ -434,17 +424,13 @@
 		background-color: #ffffff;
 
 		.top {
-			/* #ifdef H5 */
 			display: flex;
-			/* #endif */
 			flex-direction: row;
 			justify-content: space-between;
 		}
 
 		.left {
-			/* #ifdef H5 */
 			display: flex;
-			/* #endif */
 			flex-direction: row;
 
 			.heart-photo {
@@ -465,9 +451,7 @@
 					margin-bottom: 4rpx;
 				}
 				.content{
-					/* #ifdef H5 */
 					display: flex;
-					/* #endif */
 					flex-direction: row;
 				}
 
@@ -479,9 +463,7 @@
 		}
 
 		.right {
-			/* #ifdef H5 */
 			display: flex;
-			/* #endif */
 			flex-direction: row;
 			font-size: 20rpx;
 			align-items: center;

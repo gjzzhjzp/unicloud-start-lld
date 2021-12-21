@@ -22,7 +22,7 @@
 			</template>
 			<view class="u-search__content__icon">
 				<u-icon
-				    :size="22"
+				    :size="40"
 				    :name="searchIcon"
 				    :color="searchIconColor ? searchIconColor : color"
 				></u-icon>
@@ -55,7 +55,7 @@
 			>
 				<u-icon
 				    name="close"
-				    size="11"
+				    size="14"
 				    color="#ffffff"
 					customStyle="line-height: 12px"
 				></u-icon>

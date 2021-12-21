@@ -2,7 +2,7 @@ import checksh from "@/common/checksh.js";
 export default {
 	initconfig() {
 		console.log("initconfig");
-		var app_bbh="117";
+		var app_bbh="105";
 		//#ifdef APP-PLUS
 		app_bbh = plus.runtime.versionCode;
 		//#endif

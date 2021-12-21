@@ -18,6 +18,10 @@
 		},
 		onReady() {
 			this.show = true;
+			var config=getApp().globalData.systemconfig;
+			if(config["800023"]){
+				this.content=config["800023"];
+			}
 		},
 		methods: {
 			cancel() {
@@ -27,6 +31,7 @@
 				this.closeModal();
 			},
 			closeModal() {
+				this.show=false;
 				// #ifdef APP-PLUS  
 				plus.runtime.quit();  
 				// #endif

@@ -1,13 +1,13 @@
 <template>
 	<view class="operator">
-		<u-action-sheet :list="list" @click="click" v-model="show"></u-action-sheet>
-		<u-modal :show="showmodel" @confirm="confirm" :content="content" :show-cancel-button="true"></u-modal>
-		<u-modal :show="showjubao" title="请输入举报原因" @confirm="confirmjubao" :show-cancel-button="true">
+		<u-action-sheet :actions="list" @select="click" :show="show" cancelText="取消" @close="show=false"></u-action-sheet>
+		<u-modal title="提示" :show="showmodel" @confirm="confirm" @cancel="showmodel=false" :content="content" :show-cancel-button="true"></u-modal>
+		<u-modal :show="showjubao" title="请输入举报原因" @cancel="showjubao=false" @confirm="confirmjubao" :show-cancel-button="true">
 			<view style="padding: 10px;">
-				<u-input v-model="jubaocontent" type="textarea" :border="true" />
+				<u--textarea v-model="jubaocontent" placeholder="请输入内容" ></u--textarea>
 			</view>
 		</u-modal>
-		<u-toast ref="uToast" />
+		<u-toast ref="uToast"></u-toast>
 	</view>
 </template>
 
@@ -21,7 +21,7 @@
 				list: [],
 				show: false,
 				showmodel: false,
-				showjubao:false,
+				showjubao: false,
 				content: "",
 				curcomment: {}
 			}
@@ -33,40 +33,48 @@
 			close() {
 				this.show = false;
 			},
-			click(index) {
-				if (this.list[index].text == "删除") {
+			click(item) {
+				// debugger;
+				if (item.name == "删除") {
 					this.operator = "del";
 					this.content = "你确认删除该评论吗？";
 					this.showmodel = true;
 				} else {
 					this.operator = "jubao";
-					this.showjubao=true;
+					this.showjubao = true;
 				}
 			},
 			async confirm() {
+				// debugger;
 				await db.collection("opendb-news-comments").where({
 					_id: this.curcomment._id
 				}).remove();
 				this.$refs.uToast.show({
 					message: '已删除'
-				})
+				});
+				this.showmodel=false;
 				this.$emit("reload");
 			},
-			async confirmjubao(){
-				if(!this.jubaocontent){
-					this.$refs.uToast.show({
+			async confirmjubao() {
+				// debugger;
+				var that=this;
+				if (!that.jubaocontent) {
+					that.$refs.uToast.show({
+						type: 'default',
 						message: '请输入举报原因'
 					});
 					return;
 				}
 				await db.collection("opendb-news-jubaopl").add({
-					article_id: this.curcomment._id,
-					comment_id:this.curcomment._id,
-					jubao_content:this.jubaocontent
+					article_id: that.curcomment._id,
+					comment_id: that.curcomment._id,
+					jubao_content: that.jubaocontent
 				});
-				this.$refs.uToast.show({
+				that.$refs.uToast.show({
+					type: 'default',
 					message: '你的举报已提交，待管理员审核通过后会进行处理，谢谢你的反馈'
 				});
+				this.showjubao=false;
 			}
 		}
 	}

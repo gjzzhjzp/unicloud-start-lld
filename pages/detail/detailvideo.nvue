@@ -52,10 +52,12 @@
 	import chunleiVideo from '@/components/chunlei-video/chunlei-video.nvue'
 	import detailheadMp4 from "./detailheadMp41.nvue"
 	import detailvideo from "./detailvideo.js"
+	// import commentn from "@/components/commentn/comment.vue"
 	export default {
 		components: {
 			chunleiVideo,
 			detailheadMp4
+			// commentn
 		},
 		mixins: [detailvideo],
 		data() {

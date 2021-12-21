@@ -27,8 +27,11 @@
 			</view>
 			<uni-load-more :status="loading?'loading':(hasMore ? 'more' : 'noMore')"></uni-load-more>
 		</unicloud-db>
-		<uni-fab ref="fab" horizontal="right" vertical="bottom" :pop-menu="false"
-			@fabClick="$notMoreTap(fabClick,'notTap')" />
+		<template v-if="openAdd">
+			<uni-fab ref="fab" horizontal="right" vertical="bottom" :pop-menu="false"
+				@fabClick="$notMoreTap(fabClick,'notTap')" />
+		</template>
+		
 		<u-back-top :scroll-top="scrollTop" top="1000" mode="square" icon="arrow-up" tips="顶部"></u-back-top>
 	</view>
 </template>
@@ -36,6 +39,7 @@
 	export default {
 		data() {
 			return {
+				openAdd:false,
 				scrollTop: 0,
 				notTap: true, //一定要设置为true
 				loadMore: {
@@ -75,6 +79,15 @@
 		},
 		onShow() {
 			this.reload();
+		},
+		created(){
+			// debugger;
+			var config=getApp().globalData.systemconfig;
+			if(config["800022"]==1){
+				this.openAdd=true;
+			}else{
+				this.openAdd=false;
+			}
 		},
 		methods: {
 			reload() {

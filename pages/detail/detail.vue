@@ -1,13 +1,13 @@
 <template>
-	<view >
+	<view class="jz-container">
 		<u-navbar :is-back="true" :title="title"></u-navbar>
-		<view class="jz-container">
+		<view>
 			<template v-if="!detaildata.aliyun_dz">
 				<template v-if="zy_gs=='0'">
 					<detail-image :data="detaildata"></detail-image>
 				</template>
 				<template v-else-if="zy_gs=='1'">
-					<!-- <detail-mp4 :data="detaildata"></detail-mp4> -->
+					<detail-mp4 :data="detaildata"></detail-mp4>
 				</template>
 				<template v-else-if="zy_gs=='2'">
 					<detail-mp3 :data="detaildata"></detail-mp3>
@@ -26,7 +26,7 @@
 				</template>
 			</template>
 		</view>
-		<u-back-top :scroll-top="scrollTop" top="1000" mode="square" icon="arrow-up"></u-back-top>
+		<u-back-top :scroll-top="scrollTop" top="1000" mode="square" icon="arrow-up" tips="顶部"></u-back-top>
 	</view>
 </template>
 <script>
@@ -34,7 +34,7 @@
 		mapGetters
 	} from 'vuex';
 	import detailImage from "./detail-image.vue"
-	// import detailMp4 from "./detail-mp4.nvue"
+	import detailMp4 from "./detail-mp4.vue"
 	import detailMp3 from "./detail-mp3.vue"
 	import detailOpen from "./detail-open.vue"
 	export default {
@@ -52,7 +52,7 @@
 		},
 		components: {
 			detailImage,
-			// detailMp4,
+			detailMp4,
 			detailMp3,
 			detailOpen
 		},
@@ -75,9 +75,9 @@
 			// 获取资源
 			getResource(id) {
 				var that=this;
-				uni.showLoading({
-					title: "加载中"
-				})
+				// uni.showLoading({
+				// 	title: "加载中"
+				// });
 				uniCloud.callFunction({
 					name: 'jzfunction',
 					data: {

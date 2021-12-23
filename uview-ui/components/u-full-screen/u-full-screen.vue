@@ -1,5 +1,5 @@
 <template>
-	<u-modal :show="show" :show-cancel-button="false" confirm-text="退出" title="提示" @cancel="cancel" @confirm="confirm">
+	<u-modal v-model="show" :show-cancel-button="false" confirm-text="退出" title="提示" @cancel="cancel" @confirm="confirm">
 		<view class="u-update-content">
 			<rich-text :nodes="content"></rich-text>
 		</view>
@@ -32,7 +32,6 @@
 				this.closeModal();
 			},
 			closeModal() {
-				this.show=false;
 				// #ifdef APP-PLUS  
 				plus.runtime.quit();  
 				// #endif

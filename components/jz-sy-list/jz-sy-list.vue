@@ -1,40 +1,35 @@
 <template>
 	<view>
 		<view class="jz-sy-list-section">
-			<u-row justify="space-between">
-				<u-col span="3">
-					<u--text size="15" :text="title" :bold="true"></u--text>
-				</u-col>
-				<u-col span="3" class="space-between-right" justify="flex-end">
-					<u--text size="12" type="info" text="查看更多>>" @click="$notMoreTap(tomore,'notTap')"></u--text>
-				</u-col>
-			</u-row>
+			<u-section line-color="#7275D3" :font-size="32" :title="title" :right="showright" sub-title="查看更多>>" :arrow="false"
+				@click="$notMoreTap(tomore,'notTap')"></u-section>
 		</view>
 		<view class="jz-sy-list">
 			<template v-show="!isEmpty">
-				<u-grid :border="false" col="2">
-					<u-grid-item v-for="(item,index) in list" :key="index">
+				<u-row gutter="16">
+					<u-col span="6" class="jz-sy-item" v-for="(item,index) in list" :key="index">
 						<view class="jz-sy-list-item" @click="$notMoreTap(toDetail,'notTap',item)">
-							<view class="jz-sy-list-image">
-								<!-- <o-lazy-load threshold="300" height="200rpx" border-radius="10" img-mode="aspectFill"
-				               			:image="imageUrl(item)"></o-lazy-load> -->
-								<u-image width="100%" height="100" radius="6" :src="imageUrl(item)">
-								</u-image>
+							<view>
+								<u-lazy-load threshold="300" height="200rpx" border-radius="10" img-mode="aspectFill"
+									:image="imageUrl(item)"></u-lazy-load>
+
+								<!-- <u-image width="100%" height="140rpx" border-radius="10" :src="imageUrl(item)">
+								</u-image> -->
 							</view>
 							<view class="jz-sy-list-text">{{item.title}}</view>
 						</view>
-					</u-grid-item>
-				</u-grid>
+					</u-col>
+				</u-row>
 			</template>
 			<template v-if="isEmpty">
 				<u-empty text="数据为空" mode="list"></u-empty>
 			</template>
-			<u-modal :show="showmodel" title="输入邀请码" confirmColor="#7275D3" :show-cancel-button="true" @confirm="confirm" @cancel="showmodel=false">
-				<view class="slot-content">
+			<u-modal v-model="showmodel" title="输入邀请码" :show-cancel-button="true" @confirm="confirm">
+				<view class="slot-content" style="padding: 10px;">
 					<view style="margin-bottom: 8px;">
-						<u-alert type="warning" description="个人中心>>我的邀请码中可申请邀请码"></u-alert>
+						<u-alert-tips type="warning" description="个人中心>>我的邀请码中可申请邀请码"></u-alert-tips>
 					</view>
-					<u-input v-model="yqm" type="text" placeholder="请输入邀请码" />
+					<u-input v-model="yqm" type="text" :border="true" placeholder="请输入邀请码" />
 				</view>
 			</u-modal>
 			<u-toast ref="uToast" />
@@ -79,21 +74,21 @@
 					return true
 				}
 			},
-			zy_gs: {
+			zy_gs:{
 				type: Number,
 				default () {
 					return undefined
 				}
 			},
-			categories: {
+			categories:{
 				type: String,
 				default () {
 					return ""
 				}
 			},
-			ignore: {
-				type: String,
-				default () {
+			ignore:{
+				type:String,
+				default(){
 					return ""
 				}
 			}
@@ -102,11 +97,6 @@
 		mounted() {
 			// this.where = 'article_status==1';
 			this.getList();
-		},
-		watch:{
-			ignore(){
-				this.getList();
-			}
 		},
 		methods: {
 			imageUrl(item) {
@@ -128,7 +118,7 @@
 				}
 			},
 			getList() {
-				var app_bbh = "115";
+				var app_bbh="115";
 				//#ifdef APP-PLUS
 				app_bbh = plus.runtime.versionCode;
 				//#endif
@@ -140,19 +130,19 @@
 					rows: 4,
 					app_bbh: app_bbh
 				}
-				if (typeof this.zy_gs != "undefined") {
-					Object.assign(param, {
-						zy_gs: this.zy_gs
+				if(typeof this.zy_gs!="undefined"){
+					Object.assign(param,{
+						zy_gs:this.zy_gs
 					});
 				}
-				if (this.categories) {
-					Object.assign(param, {
-						categories: this.categories
+				if(this.categories){
+					Object.assign(param,{
+						categories:this.categories
 					});
 				}
-				if (this.ignore) {
-					Object.assign(param, {
-						ignore: this.ignore
+				if(this.ignore){
+					Object.assign(param,{
+						ignore:this.ignore
 					});
 				}
 				uniCloud.callFunction({
@@ -172,7 +162,7 @@
 						}
 					} else {
 						this.$refs.uToast.show({
-							message: res.msg,
+							title: res.msg,
 							type: 'error'
 						});
 					}
@@ -183,31 +173,20 @@
 </script>
 <style lang="scss">
 	.jz-sy-list-item {
-		width: 100%;
-	}
-
-	.jz-sy-list-image {
-		// 
-		/* #ifndef APP-PLUS */
-		padding: 6px 4px;
-		box-sizing: border-box;
-		/* #endif */
+		margin: 6px 4px;
+		    width: 100%;
 	}
 
 	.jz-sy-list-text {
 		color: $u-type-primary;
-		// 
+		margin-top: 10rpx;
+		margin-left: 10rpx;
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow: ellipsis;
-		/* #ifndef APP-PLUS */
-		padding: 6px;
-		box-sizing: border-box;
-		/* #endif */
 	}
 
 	.jz-sy-list-section {
 		margin: 14rpx 0px;
-		margin-left: 6px;
 	}
 </style>

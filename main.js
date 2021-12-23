@@ -2,13 +2,12 @@ import Vue from 'vue'
 import App from './App'
 import store from './store'
 import i18n from './lang/i18n'
-import uView from '@/uni_modules/uview-ui'
+import uView from "uview-ui";
 import notMoreTap from "@/common/notMoreTap.js";
 import {router,RouterMount} from './router/index.js'  //路径换成自己的
 Vue.use(router)
 // import { RouterMount } from 'uni-simple-router'
 Vue.use(uView);
-// uni.$u.config.unit = 'rpx';
 Vue.prototype.$notMoreTap = notMoreTap.notMoreTap;
 // 引入音频
 import ZAudio from '@/components/uniapp-zaudio/index.js'

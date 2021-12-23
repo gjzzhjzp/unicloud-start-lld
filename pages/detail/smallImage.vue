@@ -1,9 +1,9 @@
 <template>
 	<view class="smallImage">
 		<view class="smallImage1">
-			<!-- <o-lazy-load  v-if="data.url.indexOf('gif')==-1" @click="previewOpen(data)"
-			 threshold="300"  border-radius="10" :image="data.url" img-mode="aspectFill"></o-lazy-load>-->
-			<image :src="data.url"  @click="previewOpen(data)"  mode="aspectFill"></image>
+			<u-lazy-load  v-if="data.url.indexOf('gif')==-1" @click="previewOpen(data)"
+			 threshold="300"  border-radius="10" :image="data.url" img-mode="aspectFill"></u-lazy-load>
+			<image v-else :src="data.url"  @click="previewOpen(data)"  mode="aspectFill"></image>
 		</view>
 	</view>
 </template>

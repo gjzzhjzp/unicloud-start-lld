@@ -1,0 +1,37 @@
+<template>
+	<view>
+		<jdy-barrage ref="jdyBarrage1" :list="danmulist"></jdy-barrage>
+	</view>
+</template>
+
+<script>
+	import jdyBarrage from '@/components/jdy-barrage/jdy-barrage.vue'
+	export default {
+		data() {
+			return {
+				danmulist: []
+			}
+		},
+		mounted() {
+			// this.add();
+		},
+		created(){
+			const subNVue = uni.getCurrentSubNVue();
+			subNVue.hide();	
+			uni.$on('danmuinit', (data) => {  
+			    this.danmuList = data.danmuList;  
+			})  
+		},
+		components: {
+			jdyBarrage
+		},
+		methods: {
+			add() { //插入一条弹幕
+				// debugger;
+				this.$refs.jdyBarrage1.add({
+					item: '测试弹幕'
+				});
+			}
+		}
+	}
+</script>

@@ -1,12 +1,12 @@
 <template>
-	<u-modal :show="show" :show-cancel-button="true" cancel-text="退出" confirm-text="确定" title="提示" @cancel="cancel" @confirm="confirm">
+	<u-modal v-model="show" :show-cancel-button="true" cancel-text="退出" confirm-text="确定" title="提示" @cancel="cancel" @confirm="confirm">
 		<view class="u-update-content">
 			<view style="margin-bottom: 10px;">
 				此APP现为邀请制，请输入邀请码<br>
 				(注意：手动退出登录需要重新输入邀请码)
 			</view>
 			<view>
-				<u-input v-model="value" type="text" placeholder="请输入邀请码" border="surround" />
+				<u-input v-model="value" type="text" placeholder="请输入邀请码" :border="true" />
 			</view>
 		</view>
 		<u-toast ref="uToast" />
@@ -23,7 +23,6 @@
 			}
 		},
 		onReady() {
-			// debugger;
 			this.show = true;
 		},
 		methods: {
@@ -79,7 +78,6 @@
 				});
 			},
 			closeModal() {
-				this.show=false;
 				// #ifdef APP-PLUS  
 				plus.runtime.quit();  
 				// #endif

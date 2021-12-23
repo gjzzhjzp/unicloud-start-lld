@@ -6,8 +6,8 @@
 		<u-sticky>
 			<view v-if="tablist.length>1||(showdanmu&&showsendDanmu)" class="detailtabs" style="">
 				<view style="flex: 1;">
-					<u-tabs :font-size="16" lineWidth="40" lineColor="#7275D3" :list="tablist" :is-scroll="false"
-						:bar-width="100" :current="current" @change="changeTab">
+					<u-tabs :font-size="32" active-color="#7275D3" :list="tablist" :is-scroll="false" :bar-width="100"
+						:current="current" @change="changeTab">
 					</u-tabs>
 				</view>
 				<view style="background-color: #fff;" v-if="showdanmu&&showsendDanmu">
@@ -16,43 +16,35 @@
 			</view>
 		</u-sticky>
 		<view v-show="current==0">
-			<view class="detail-image-title" style="margin-top: 10px">
-				<u--text  size="18" :text="data.title"></u--text>
-				<u--text type="info" size="15" mode="date" :text="data.last_modify_date"></u--text>
-				<!-- <text class="title">
+			<view class="detail-image-title">
+				<view class="title">
 					{{data.title}}
-				</text> -->
-				<!-- <view class="time" style="text-align: right;color: #909399;width: 120rpx;">
-						<uni-dateformat class="last_modify_date" :date="data.last_modify_date" format="yyyy-MM-dd"
-							:threshold="[60000, 2592000000]" />
-					</view> -->
+				</view>
+				<view style="text-align: right;color: #909399;width: 120px;">
+					<uni-dateformat class="last_modify_date" :date="data.last_modify_date" format="yyyy-MM-dd"
+						:threshold="[60000, 2592000000]" />
+				</view>
 			</view>
 			<view class="detail-image-sx3">
 				<view class="showllsc" v-show="showllsc">
 					<view class="detail-image-sx31">
-						<u-icon name="eye" :size="15"></u-icon>
-						<u--text type="info" size="15" :text="'浏览量：'+(data.view_count||0)"></u--text>
-
+						<u-icon name="eye" :size="30"></u-icon>浏览量：{{data.view_count||0}}
 					</view>
 					<view class="detail-image-sx32">
-						<u-icon name="heart" :size="15"></u-icon>
-						<u--text type="info" size="15" :text="'收藏量：'+(data.like_count||0)"></u--text>
+						<u-icon name="heart" :size="30"></u-icon>收藏量：{{data.like_count||0}}
 					</view>
 				</view>
 				<view class="detail-image-sc">
-					<view class="detail-image-sc1" v-if="!islike" @click="toFavorite">
-						<u-icon :size="18" name="heart"></u-icon>
-						<u--text type="info" size="15" text="收藏"></u--text>
+					<view class="detail-image-sc1" v-show="!islike" @click="toFavorite">
+						<u-icon :size="30" name="heart"></u-icon> 收藏
 					</view>
-					<view class="detail-image-sc1" v-if="islike" @click="cancelFavorite">
-						<u-icon :size="18" name="heart-fill" color="red"></u-icon>
-						<u--text type="info" size="15" text="已收藏"></u--text>
+					<view class="detail-image-sc1" v-show="islike" @click="cancelFavorite">
+						<u-icon :size="30" name="heart-fill" color="red"></u-icon> 已收藏
 					</view>
 					<view class="detail-image-sc1" v-if="data.zy_gs=='1'&&showmp4Xz">
 						<template v-if="data.resources.length>0">
 							<a class="download-head" :download="data.title" :href="data.resources[0].url">
-								<u-icon :size="18" name="download"></u-icon>
-								<u--text type="info" size="15" text="下载"></u--text>
+								<u-icon :size="30" name="download"></u-icon> 下载
 							</a>
 						</template>
 					</view>
@@ -60,18 +52,12 @@
 			</view>
 			<view class="detail-image-sx">
 				<view class="detail-image-ly">
-					<view class="detail-image-ly1">
-						<u--text type="info" size="15" :text="'来源：'+(data?data.author:'')"></u--text>
-					</view>
-					<view class="detail-image-ly2">
-						<u--text type="info" size="15" :text="'投稿人：'+tgr"></u--text>
-					</view>
+					<view class="detail-image-ly1">来源：{{data.author}}</view>
+					<view class="detail-image-ly2">投稿人：{{tgr}}</view>
 				</view>
 			</view>
 			<view class="detail-image-jj">
-				<view class="detail-image-jj1">
-					<u--text type="info" size="15" text="简介："></u--text>
-				</view>
+				<view class="detail-image-jj1">简介：</view>
 				<view class="detail-image-jj2" v-html="data.excerpt||'无'"></view>
 			</view>
 			<view class="detail-open " style="" v-if="data.aliyun_dz&&data.aliyun_dz.indexOf('/jzmp4/')==-1">
@@ -172,12 +158,12 @@
 			}
 			this.showmp4Xz = t_800005 == '1' ? true : false;
 			this.showllsc = t_800011 == '1' ? true : false;
-
+			
 			// console.log("labels", this.labels);
 		},
-
+		
 		computed: {
-			labels() {
+			labels(){
 				var labels = this.data.labels;
 				if (labels) {
 					return labels.split("，")
@@ -206,8 +192,8 @@
 				// var tabs=this.$parent.tablist;
 				// console.log("tabs",tabs);
 			},
-			changeTab(item) {
-				this.current = item.index;
+			changeTab(index) {
+				this.current = index;
 			}
 		}
 	}
@@ -231,6 +217,10 @@
 		flex-direction: row;
 	}
 
+	.detail-image-jj1 {
+		width: 3.5em;
+	}
+
 	.detail-image-jj2 {
 		flex: 1;
 	}
@@ -249,11 +239,9 @@
 		flex-wrap: wrap;
 		margin-top: 6px;
 	}
-
-	.detail-image-bq1 {
-		margin: 6px;
-	}
-
+.detail-image-bq1{
+	margin: 6px;
+}
 	.detail-image-sx3 {
 		display: flex;
 		flex-direction: row;

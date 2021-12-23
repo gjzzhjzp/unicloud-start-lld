@@ -8,13 +8,13 @@
 			<view v-else-if="data">
 				<u-table>
 					<u-tr class="u-tr">
-						<u-th class="u-th" width="62%">邀请码</u-th>
-						<u-th class="u-th" width="8%">状态</u-th>
+						<u-th class="u-th" width="60%">邀请码</u-th>
+						<u-th class="u-th" width="10%">状态</u-th>
 						<u-th class="u-th" width="30%">时间</u-th>
 					</u-tr>
 					<u-tr v-for="(item, index) in data" class="u-tr">
 						<template v-if="item.value">
-							<u-td class="u-td u-td-flex" width="62%">
+							<u-td class="u-td u-td-flex" width="60%">
 								<view class="u-td1">
 									{{item.value}}
 								</view>
@@ -23,10 +23,10 @@
 									</u-button>
 								</view>
 							</u-td>
-							<u-td class="u-td" width="8%">
+							<u-td class="u-td" width="10%">
 								<view class="u-td3">
-									<u-icon size="18" v-if="item.status&&item.date==curdate" name="checkmark"></u-icon>
-									<u-icon size="18" v-else="!item.status" name="close"></u-icon>
+								<u-icon size="36" v-if="item.status&&item.date==curdate" name="checkmark"></u-icon>
+								<u-icon size="36" v-else="!item.status" name="close"></u-icon>
 								</view>
 							</u-td>
 							<u-td class="u-td" width="30%">
@@ -39,35 +39,23 @@
 			<uni-load-more :status="loading?'loading':(hasMore ? 'more' : 'noMore')"></uni-load-more>
 		</unicloud-db>
 		<view class="yqm-button">
-			<u-row customStyle="margin-bottom: 10px">
-				<u-col span="2">
-				</u-col>
-				<u-col span="8">
-					<view class="yqm-button1">
-						<view>
-							<u-button type="primary" size="normal" @click="$notMoreTap(fabClick,'notTap')">申请邀请码</u-button>
-						</view>
-						<view style="margin-left: 20px;">
-							<u-button type="warning" size="normal" @click="$notMoreTap(clearYqm,'notTap')">清除无效邀请码</u-button>
-						</view>
-					</view>
-				</u-col>
-				<u-col span="2">
-				</u-col>
-			</u-row>
-
-			
+			<view>
+				<u-button type="primary" size="medium" @click="$notMoreTap(fabClick,'notTap')">申请邀请码</u-button>
+			</view>
+			<view style="margin-left: 20px;">
+				<u-button type="warning" size="medium" @click="$notMoreTap(clearYqm,'notTap')">清除无效邀请码</u-button>
+			</view>
 		</view>
-
+		
 		<!-- <uni-fab ref="fab" horizontal="right" vertical="bottom" :pop-menu="false"
 			@fabClick="$notMoreTap(fabClick,'notTap')" /> -->
 		<u-toast ref="uToast" />
-		<u-modal :show="showadd" title="申请邀请码" :show-cancel-button="true" @confirm="confirmAdd" @cancel="showadd=false">
-			<view class="slot-content">
-				<u-alert type="warning" :description="description"></u-alert>
-				<view class="slot-content1" style="margin-top: 10px;">
-					<text style="margin-right: 20px;margin-top: 4px;">申请个数：</text>
-					<u-number-box v-model="number" :max="maxnumber" :min="1"></u-number-box>
+		<u-modal v-model="showadd" title="申请邀请码" :show-cancel-button="true" @confirm="confirmAdd">
+			<view class="slot-content" style="padding: 20px;">
+				<u-alert-tips type="warning" :description="description"></u-alert-tips>
+				<view style="margin-top: 10px;">
+					<text style="margin-right: 20px;">申请个数</text>
+					<u-number-box v-model="number" :max="maxnumber" :min="1" :size="32"></u-number-box>
 				</view>
 			</view>
 		</u-modal>
@@ -78,17 +66,7 @@
 	const db = uniCloud.database();
 	const dbCollectionName = 'jz-custom-yqm';
 	const uid = db.getCloudEnv('$cloudEnv_uid');
-	import uTable from "@/olduview/u-table/u-table.vue"
-	import uTd from "@/olduview/u-td/u-td.vue"
-	import uTh from "@/olduview/u-th/u-th.vue"
-	import uTr from "@/olduview/u-tr/u-tr.vue"
 	export default {
-		components:{
-			uTable,
-			uTd,
-			uTh,
-			uTr
-		},
 		data() {
 			return {
 				number: 1,
@@ -100,18 +78,18 @@
 					contentrefresh: '',
 					contentnomore: ''
 				},
-				curdate: "",
-				maxnumber: 5 //、每天申请的邀请码个数
+				curdate:"",
+				maxnumber:5//、每天申请的邀请码个数
 			}
 		},
-		created() {
-			this.curdate = this.getcurdate();
-			var config = getApp().globalData.systemconfig;
-			if (config["800008"]) {
-				this.maxnumber = parseInt(config["800008"]) || 5;
-			}
-			console.log("this.maxnumber", this.maxnumber);
-			this.description = "注意：邀请码用于查看加密资源详情，一天最多申请" + this.maxnumber + "个，每个邀请码用一次失效，且只能申请账号在申请当天使用，过期失效";
+		created(){
+			this.curdate=this.getcurdate();
+		var config=getApp().globalData.systemconfig;
+		if(config["800008"]){
+			this.maxnumber=parseInt(config["800008"])||5;
+		}
+		console.log("this.maxnumber",this.maxnumber);
+		this.description="注意：邀请码用于查看加密资源详情，一天最多申请"+this.maxnumber+"个，每个邀请码用一次失效，且只能申请账号在申请当天使用，过期失效";
 		},
 		onPullDownRefresh() {
 			this.$refs.udb.loadData({
@@ -124,10 +102,10 @@
 			this.$refs.udb.loadMore()
 		},
 		methods: {
-			getcurdate() {
+			getcurdate(){
 				//	初始化时间
 				var date = new Date();
-
+				
 				var year = date.getFullYear();
 				var month = parseInt(date.getMonth() + 1);
 				var day = date.getDate();
@@ -137,56 +115,56 @@
 				if (day < 10) {
 					day = '0' + day
 				}
-				return year + "-" + month + "-" + day;
-
+				return year+"-"+month+"-"+day;
+				
 			},
 			// 确认申请邀请码
 			async confirmAdd() {
-				var number = this.number;
-				var addvalues = [];
-				for (var i = 0; i < number; i++) {
-					var value = {
-						status: true,
-						date: this.curdate,
-						value: Math.random().toString(36).substr(2) + Math.random().toString(36).substr(2)
+				var number=this.number;
+				var addvalues=[];
+				for(var i=0;i<number;i++){
+					var value={
+						status:true,
+						date:this.curdate,
+						value:Math.random().toString(36).substr(2)+Math.random().toString(36).substr(2)
 					};
 					addvalues.push(value);
 				}
 				var yqmlist = await db.collection(dbCollectionName).where({
-					user_id: uid,
-					date: this.curdate
+					user_id:uid,
+					date:this.curdate
 				}).get();
 				// console.log("yqmlist",yqmlist);
-
-				if (yqmlist.result.data && yqmlist.result.data.length >= this.maxnumber) {
+				
+				if(yqmlist.result.data&&yqmlist.result.data.length>=this.maxnumber){
 					// debugger;
 					uni.showToast({
-						title: '今日邀请码申请已达上线',
-						icon: "none"
+					  title: '今日邀请码申请已达上线',
+					  icon:"none"
 					});
-				} else if (yqmlist.result.data && (this.number + yqmlist.result.data.length) > this.maxnumber) {
+				}else if(yqmlist.result.data&&(this.number+yqmlist.result.data.length)>this.maxnumber){
 					uni.showToast({
-						title: '今日已超出申请邀请码个数限制',
-						icon: "none"
+					  title: '今日已超出申请邀请码个数限制',
+					  icon:"none"
 					});
-				} else {
+				}
+				else{
 					return db.collection(dbCollectionName).add(addvalues).then((res) => {
-						uni.showToast({
-							title: '新增成功'
-						});
-						this.maxnumber = this.maxnumber - addvalues.length;
-						this.number = 1;
-						if (this.$refs.udb) {
-							this.$refs.udb.loadData({
-								clear: true
-							}, () => {});
-						}
-						this.showadd=false;
+					  uni.showToast({
+					    title: '新增成功'
+					  });
+					  this.maxnumber=this.maxnumber-addvalues.length;
+					  this.number=1;
+					  if (this.$refs.udb) {
+					  	this.$refs.udb.loadData({
+					  		clear: true
+					  	}, () => {});
+					  }
 					}).catch((err) => {
-						uni.showModal({
-							content: err.message || '请求服务失败',
-							showCancel: false
-						});
+					  uni.showModal({
+					    content: err.message || '请求服务失败',
+					    showCancel: false
+					  });
 					});
 				}
 			},
@@ -196,39 +174,39 @@
 					success: (res) => {
 						// #ifdef H5
 						this.$refs.uToast.show({
-							message: '复制成功',
+							title: '复制成功',
 							type: 'success'
 						})
 						// #endif
 					},
 					error: (e) => {
 						this.$refs.uToast.show({
-							message: '复制失败',
+							title: '复制失败',
 							type: 'error'
 						})
 					}
 				});
 			},
 			// 清除无效邀请码
-			async clearYqm() {
-				var that = this;
+			async clearYqm(){
+				var that=this;
 				uni.showModal({
 					title: '提示',
 					showCancel: false,
 					confirmText: "确定",
-					cancelText: "取消",
+					cancelText:"取消",
 					content: '只能清除往日的无效邀请码？是否清除？',
 					success: async function(res) {
 						if (res.confirm) {
-							var _date = that.curdate;
+							var _date=that.curdate;
 							var yqmlist = await db.collection(dbCollectionName).where({
-								user_id: uid,
-								date: db.command.neq(_date)
+								user_id:uid,
+								date:db.command.neq(_date)
 							}).remove();
-							console.log("yqmlist", yqmlist);
+							console.log("yqmlist",yqmlist);
 							uni.showToast({
-								title: '已清除',
-								icon: "none"
+							  title: '已清除',
+							  icon:"none"
 							});
 							if (that.$refs.udb) {
 								that.$refs.udb.loadData({
@@ -264,24 +242,15 @@
 </script>
 
 <style>
-	.slot-content1{
-		display: flex;
-	}
-	.yqm-button {
+	.yqm-button{
 		position: fixed;
-		bottom: 30px;
-		text-align: center;
-		width: 100%;
-		left: 0;
-
-		/* padding: 20px; */
+		    bottom: 30px;
+		    display: flex;
+		    width: 100%;
+		    left: 0;
+		    justify-content: space-between;
+		    padding: 20px;
 	}
-
-	.yqm-button1 {
-		display: flex;
-		justify-content: space-between;
-	}
-
 	.u-td-flex {
 		position: relative;
 		/* flex-direction: row;

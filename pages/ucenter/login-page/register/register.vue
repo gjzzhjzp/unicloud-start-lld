@@ -35,7 +35,7 @@
 					</u-button>
 				</uni-forms>
 			</view>
-			<u-modal :show="showmodel" :show-cancel-button="true" @confirm="confirmnc" width="85%">
+			<u-modal v-model="showmodel" :show-cancel-button="true" @confirm="confirmnc" width="85%">
 				<view class="slot-content">
 					<view style="text-indent: 2em;">
 						请确认微博主页地址【{{formData.weiboname}}】输入正确，并在自己微博发送一条【{{formData.weibocontent}}】的微博。</view>

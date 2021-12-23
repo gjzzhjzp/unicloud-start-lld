@@ -5,7 +5,7 @@
 			<u-search placeholder="输入关键字搜素" v-model="keyword" @search="searchList" @custom="searchList"></u-search>
 		</view>
 		<view style="margin-top: 20px;">
-			<o-section title="历史搜索" :right="false"></o-section>
+			<u-section title="历史搜索" :right="false"></u-section>
 			<view class="er-search-button">
 				<text class="er-search-minibutton" v-for="(item,index) in historyList" :key="index">
 					<u-button size="mini">{{item.title}}</u-button>
@@ -13,7 +13,7 @@
 			</view>
 		</view>
 		<view>
-			<o-section title="热门搜索" :right="false"></o-section>
+			<u-section title="热门搜索" :right="false"></u-section>
 			<view class="er-search-button">
 				<view class="er-search-minibutton" v-for="(item,index) in hotList" :key="index">
 					<u-button size="mini">{{item.title}}</u-button>
@@ -79,7 +79,7 @@
 			searchList(){
 				if(!this.keyword){
 					this.$refs.uToast.show({
-						message: "宝，请输入内容哦~",
+						title: "宝，请输入内容哦~",
 						type: 'error'
 					});
 					return;

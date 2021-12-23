@@ -1,51 +1,44 @@
 <template>
 	<view class="rili-detail">
-		<jz-navbar :issy="false" back-icon-name="arrow-leftward" :back-icon-size="40" :showlogo="false" :is-back="true">
+		<jz-navbar :issy="false" :showlogo="false" :isBack="true">
 			<view class="jz-navbar-title">纪念日详情</view>
 		</jz-navbar>
-		<a-collapse>
-			<a-collapse-item :length="jianlainri.length" :open="index==0?true:false" :title="item.rili_date"
-				v-for="(item, index) in jianlainri" :key="index">
-				<view class="rili-bottom">
-					<view class="two">
-						{{item.rili_title}}
-					</view>
+		<u-collapse>
+		<u-collapse-item :length="jianlainri.length" :open="index==0?true:false" :title="item.rili_date" v-for="(item, index) in jianlainri" :key="index" >
+			<view class="rili-bottom">
+				<view class="two">
+					{{item.rili_title}}
 				</view>
-				<view class="rili-images">
-					<view class="detail-image-item" v-for="(item,index) in item.rili_images" :key="index">
-						<o-lazy-load threshold="300" border-radius="20" :image="item.url" :index="index"></o-lazy-load>
-					</view>
+			</view>
+			<view class="rili-images">
+				<view class="detail-image-item" v-for="(item,index) in item.rili_images" :key="index">
+					<u-lazy-load threshold="300" border-radius="20" :image="item.url" :index="index"></u-lazy-load>
 				</view>
-				<view class="rili-content">
-					{{item.rili_content}}
-				</view>
-			</a-collapse-item>
-		</a-collapse>
+			</view>
+			<view class="rili-content">
+				{{item.rili_content}}
+			</view>
+		</u-collapse-item>
+		</u-collapse>
 	</view>
 </template>
 <script>
-	import aCollapse from "../../olduview/u-collapse/u-collapse.vue"
-	import aCollapseItem from "../../olduview/u-collapse-item/u-collapse-item.vue"
 	export default {
 		data() {
 			return {
 				jianlainri: [],
-				rq: ""
+				rq:""
 			}
 		},
-		mounted() {
-			this.rq = this.$Route.query.rq;
+		onLoad(e){
+			this.rq=e.rq;
 			this.getjilianri();
-		},
-		components: {
-			aCollapse,
-			aCollapseItem
 		},
 		methods: {
 			getjilianri() {
 				const db = uniCloud.database();
-				var rq = "";
-				if (!this.rq) {
+				var rq ="";
+				if(!this.rq){
 					var date = new Date();
 					var month = parseInt(date.getMonth() + 1);
 					var day = date.getDate();
@@ -55,20 +48,17 @@
 					if (day < 10) {
 						day = '0' + day
 					}
-					rq = month + "-" + day;
-				} else {
-					rq = this.rq;
+					 rq = month+"-"+day;
+				}else{
+					rq=this.rq;
 				}
 				if (rq) {
 					// debugger;
 					db.collection('opendb-news-rili').where({
 						"rili_date": new RegExp(rq, 'gi'),
 					}).get().then((res) => {
-						this.jianlainri.splice(0,this.jianlainri.length);
-						res.result.data.forEach((item)=>{
-							this.jianlainri.push(item);
-						})
-						
+						this.jianlainri = res.result.data;
+						console.log("this.jianlainri", this.jianlainri);
 					}).catch((err) => {
 						uni.showModal({
 							content: err.message || '请求服务失败',
@@ -82,13 +72,8 @@
 	}
 </script>
 <style lang="scss">
-	.jz-navbar-title{
-		    width: 80%;
-		    left: 10%;
-	}
 	.rili-bottom {
 		margin-top: 4px;
-
 		.one {
 			display: flex;
 			padding: 10px 30px;
@@ -97,7 +82,6 @@
 			justify-content: space-between;
 			border-bottom: 1px solid #8C92AC;
 		}
-
 		.two {
 			margin: 10px 20px;
 			color: #36c6e8;
@@ -118,17 +102,14 @@
 			border-radius: 4px;
 		}
 	}
-
 	.rili-images {
 		padding: 0px 10px;
 	}
-
-	.rili-content {
+	.rili-content{
 		padding: 10px;
 		color: #7F88D3;
 	}
-
-	.detail-image-item {
-		margin-bottom: 4px;
+	.detail-image-item{
+		    margin-bottom: 4px;
 	}
 </style>

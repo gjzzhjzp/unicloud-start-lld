@@ -1,5 +1,5 @@
 <template>
-	<u-modal :show="show" :show-cancel-button="false"  confirm-text="退出" title="提示" @cancel="cancel" @confirm="confirm">
+	<u-modal v-model="show" :show-cancel-button="false"  confirm-text="退出" title="提示" @cancel="cancel" @confirm="confirm">
 		<view class="u-update-content">
 			<view style="margin-bottom: 10px;">
 				您的账号已禁用，请联系管理员。
@@ -28,7 +28,6 @@
 				this.closeModal();
 			},
 			closeModal() {
-				this.show=false;
 				// #ifdef APP-PLUS  
 				plus.runtime.quit();  
 				// #endif

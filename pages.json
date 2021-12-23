@@ -1,26 +1,26 @@
 {
 	"pages": [{
 			"path": "pages/index/index",
-			"style":{
-				"enablePullDownRefresh":true
+			"style": {
+				"enablePullDownRefresh": true
 			}
 		}, {
 			"path": "pages/question/question",
 			"style": {
 				"navigationBarTitleText": "对暗号"
 			}
-		},{
+		}, {
 			"path": "pages/gechi/gechi",
 			"style": {
 				"navigationBarTitleText": "歌词滚动"
 			}
-		},{
+		}, {
 			"path": "pages/gechiAll/gechiAll",
 			"style": {
 				"navigationBarTitleText": "歌词"
 			}
-		},{
-			"path":"pages/system-info/system-info",
+		}, {
+			"path": "pages/system-info/system-info",
 			"style": {
 				"navigationBarTitleText": "系统消息"
 			}
@@ -29,22 +29,22 @@
 			"style": {
 				"navigationBarTitleText": "404"
 			}
-		},{
+		}, {
 			"path": "pages/disclaimers/disclaimers",
 			"style": {
 				"navigationBarTitleText": "免责声明"
 			}
-		},  {
+		}, {
 			"path": "pages/appbb/appbb",
 			"style": {
 				"navigationBarTitleText": "APP版本升级",
-				"enablePullDownRefresh":true
+				"enablePullDownRefresh": true
 			}
 		}, {
 			"path": "pages/resource/list",
 			"style": {
 				"navigationBarTitleText": "列表",
-				"enablePullDownRefresh":true
+				"enablePullDownRefresh": true
 			}
 		}, {
 			"path": "pages/addResource/addResource",
@@ -55,13 +55,22 @@
 			"path": "pages/detail/detail",
 			"style": {
 				"navigationBarTitleText": "详情",
-				"enablePullDownRefresh":true
-			}
-		}, {
-			"path": "pages/detail/detailvideo",
-			"style": {
-				"navigationBarTitleText": "视频详情",
-				"enablePullDownRefresh":true
+				"enablePullDownRefresh": true,
+				"app-plus": {
+					"subNVues": [{
+						"id": "videodanmu", // 唯一标识  
+						"path": "pages/detail/danmu", // 页面路径  
+						/*"type": "popup",  这里不需要*/
+						"style": {
+							"position": "absolute",
+							"dock": "top",
+							"width": "750rpx",
+							"height": "400rpx",
+							"top":"80px",
+							"background": "transparent"
+						}
+					}]
+				}
 			}
 		},
 		{
@@ -100,7 +109,7 @@
 			"style": {
 				"navigationBarTitleText": ""
 			}
-		},{
+		}, {
 			"path": "pages/ucenter/login-page/pwd-login/pwd-weibo",
 			"style": {
 				"navigationBarTitleText": ""
@@ -132,19 +141,19 @@
 			"path": "pages/jz-opendb-resources/list",
 			"style": {
 				"navigationBarTitleText": "列表",
-				"enablePullDownRefresh":true
+				"enablePullDownRefresh": true
 			}
 		}, {
 			"path": "pages/myfavorite/myfavorite",
 			"style": {
 				"navigationBarTitleText": "我的收藏",
-				"enablePullDownRefresh":true
+				"enablePullDownRefresh": true
 			}
 		}, {
 			"path": "pages/history/history",
 			"style": {
 				"navigationBarTitleText": "我的足迹",
-				"enablePullDownRefresh":true
+				"enablePullDownRefresh": true
 			}
 		}, {
 			"path": "pages/sort/sort",
@@ -165,13 +174,13 @@
 			"path": "pages/junzhe/junzhe",
 			"style": {
 				"navigationBarTitleText": "俊哲",
-				"enablePullDownRefresh":true
+				"enablePullDownRefresh": true
 			}
 		}, {
 			"path": "pages/shanzong/shanzong",
 			"style": {
 				"navigationBarTitleText": "山总",
-				"enablePullDownRefresh":true
+				"enablePullDownRefresh": true
 			}
 		}, {
 			"path": "pages/jz-custom-yqm/add",
@@ -187,7 +196,7 @@
 			"path": "pages/jz-custom-yqm/list",
 			"style": {
 				"navigationBarTitleText": "列表",
-				"enablePullDownRefresh":true
+				"enablePullDownRefresh": true
 			}
 		}, {
 			"path": "pages/jz-custom-yqm/detail",
@@ -245,7 +254,7 @@
 					"popGesture": "none" // 关闭IOS屏幕左边滑动关闭当前页面的功能
 				}
 			}
-		},{
+		}, {
 			"path": "uview-ui/components/u-full-screen/u-full-screen-shtg",
 			"style": {
 				"navigationStyle": "custom", // 取消本页面的导航栏
@@ -256,7 +265,7 @@
 					"popGesture": "none" // 关闭IOS屏幕左边滑动关闭当前页面的功能
 				}
 			}
-		},{
+		}, {
 			"path": "uview-ui/components/u-full-screen/u-full-screen-xtsd",
 			"style": {
 				"navigationStyle": "custom", // 取消本页面的导航栏
@@ -267,7 +276,7 @@
 					"popGesture": "none" // 关闭IOS屏幕左边滑动关闭当前页面的功能
 				}
 			}
-		},{
+		}, {
 			"path": "uview-ui/components/u-full-screen/u-full-screen-ztjy",
 			"style": {
 				"navigationStyle": "custom", // 取消本页面的导航栏
@@ -278,7 +287,7 @@
 					"popGesture": "none" // 关闭IOS屏幕左边滑动关闭当前页面的功能
 				}
 			}
-		},{
+		}, {
 			"path": "uview-ui/components/u-full-screen/u-full-screen-yqm",
 			"style": {
 				"navigationStyle": "custom", // 取消本页面的导航栏
@@ -340,7 +349,7 @@
 		}]
 	},
 	"easycom": {
-		"^o-(.*)": "@/olduview/o-$1/o-$1.vue"
+		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
 	},
 	"subPackages": [
 

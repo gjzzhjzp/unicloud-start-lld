@@ -163,7 +163,7 @@ export default{
 		async sendDanmu() {
 			if (this.userInfo.forbiddenwords) {
 				this.$refs.uToast.show({
-					message: '你已被禁言，请联系管理员',
+					title: '你已被禁言，请联系管理员',
 					type: 'error'
 				});
 				return;

@@ -1,41 +1,34 @@
 <template>
-	<view class="wrap wrap-list">
+	<view class="wrap">
 		<!-- <u-navbar :is-back="true" :title="title"></u-navbar> -->
 		<view class="search-container">
 			<!-- 搜索框 -->
 			<view class="search-container-bar">
 
 				<u-navbar :is-back="true" back-icon-name="arrow-leftward" :back-icon-size="40">
-					<template slot="right">
-						<view style="width: 120rpx;">
-							<o-dropdown>
-								<o-dropdown-item @change="changedropItem" v-model="dvalue" :title="dtitle"
-									:options="doptions"></o-dropdown-item>
-							</o-dropdown>
-						</view>
-						<u-search border-color="#7275D3" bg-color="#fff" v-model="keyword" height="60"
-							:placeholder="dplaceholder" @search="confirm" @custom="confirm" :show-action="true">
-						</u-search>
-					</template>
+					<view style="width: 120rpx;">
+						<u-dropdown>
+							<u-dropdown-item @change="changedropItem" v-model="dvalue" :title="dtitle"
+								:options="doptions"></u-dropdown-item>
+						</u-dropdown>
+					</view>
+					<u-search border-color="#7275D3" bg-color="#fff" v-model="keyword" height="60" :placeholder="dplaceholder"
+						@search="confirm" @custom="confirm" :show-action="true"></u-search>
 				</u-navbar>
 			</view>
 		</view>
-		<view class="wrap-list-tabs">
-			<u-tabs :activeStyle="{
-						color: '#7275D3'
-					}" line-width="0" :list="tabslist" :is-scroll="false" :current="currenttab" @change="changeTabs"></u-tabs>
+		<view>
+			<u-tabs active-color="#7275D3" bar-width="0" :list="tabslist" :is-scroll="false" :current="currenttab"
+				@change="changeTabs"></u-tabs>
 		</view>
 		<view class="search-row">
 			<view :class="['search-row-col',item.selected?'selected':'']" v-for="(item,index) in searchrows"
-				:key="index" @click="searchType(item)">
-				<u--text size="12" type="info" color="#909399" :text="item.name"></u--text>
-				<view>
-					<u-icon size="12" color="#909399" name="arrow-down-fill"></u-icon>
-				</view>
+				:key="index" @click="searchType(item)">{{item.name}}
+				<u-icon size="20" name="arrow-down-fill"></u-icon>
 			</view>
 		</view>
 		<view v-if="showTag" style="margin-left: 10px;">
-			<o-tag :text="tagname" mode="light" closeable :show="showTag" @close="closetagClick" />
+			<u-tag :text="tagname" mode="light" closeable :show="showTag" @close="closetagClick" />
 		</view>
 		<view v-if="currenttab!=2">
 			<item-list :list="flowList"></item-list>
@@ -75,7 +68,7 @@
 						value: 2,
 					}
 				],
-				dplaceholder: "请输入...",
+				dplaceholder:"请输入...",
 				tagname: "", ////tag标签
 				showTag: false,
 				keyword: "",
@@ -176,10 +169,10 @@
 				this.dvalue = value;
 				if (value == 1) {
 					this.dtitle = "资源";
-					this.dplaceholder = "请输入...";
+					this.dplaceholder="请输入...";
 				} else {
 					this.dtitle = "用户";
-					this.dplaceholder = "请输入用户名/昵称";
+					this.dplaceholder="请输入用户名/昵称";
 				}
 			},
 			closetagClick() {
@@ -204,14 +197,14 @@
 				this.type = item.type;
 				this.resetlist();
 			},
-			changeTabs(item) {
-				this.currenttab = item.index;
-				this.zy_gs = item.index;
+			changeTabs(index) {
+				this.currenttab = index;
+				this.zy_gs = index;
 				this.resetlist();
 			},
 			confirm() {
 				var value = this.keyword;
-				if (value && this.dvalue == 1) {
+				if (value&&this.dvalue==1) {
 					// debugger;
 					this.localSearchListManage(value);
 					this.searchLogDbAdd(value)
@@ -226,9 +219,9 @@
 				//#ifdef APP-PLUS
 				app_bbh = plus.runtime.versionCode;
 				//#endif
-				var url = "resource/getList";
-				if (this.dvalue == 2) {
-					url = "resource/getListByuser";
+				var url="resource/getList";
+				if(this.dvalue==2){
+					url="resource/getListByuser";
 				}
 				uniCloud.callFunction({
 					name: 'jzfunction',
@@ -307,9 +300,6 @@
 	.search-row-col {
 		margin: 0px 10px;
 		color: #BABBCD;
-		display: flex;
-		justify-content: center;
-		align-items: center;
 	}
 
 	.search-row-col.selected {

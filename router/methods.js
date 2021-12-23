@@ -2,7 +2,7 @@ import checksh from "@/common/checksh.js";
 export default {
 	initconfig() {
 		console.log("initconfig");
-		var app_bbh="105";
+		var app_bbh="117";
 		//#ifdef APP-PLUS
 		app_bbh = plus.runtime.versionCode;
 		//#endif
@@ -33,17 +33,22 @@ export default {
 		return new Promise(async (reslove) => {
 			// debugger;
 			const db = uniCloud.database();
-			const usersTable = db.collection('uni-id-users')
-			var userdata = await usersTable.where('_id==$env.uid').field("username,nickname,isbdwb,original,forbiddenwords,status,avatar,avatar_file,role,register_date,token").get();
-			console.log("userdata", userdata);
-			var userinf = userdata.result.data[0];
-			uni.setStorageSync("userInfo",userinf);
-			if (userinf.status == 1) { //禁用
-				uni.reLaunch({
-					url: "/uview-ui/components/u-full-screen/u-full-screen-ztjy"
-				})
-				reslove(false);
-			} else {
+			var userinfo = uni.getStorageSync("userInfo");
+			if(userinfo){
+				const usersTable = db.collection('uni-id-users')
+				var userdata = await usersTable.where('_id==$env.uid').field("username,nickname,isbdwb,original,forbiddenwords,status,avatar,avatar_file,role,register_date,token").get();
+				console.log("userdata", userdata);
+				var userinf = userdata.result.data[0];
+				uni.setStorageSync("userInfo",userinf);
+				if (userinf.status == 1) { //禁用
+					uni.reLaunch({
+						url: "/uview-ui/components/u-full-screen/u-full-screen-ztjy"
+					})
+					reslove(false);
+				} else {
+					reslove(true);
+				}
+			}else{
 				reslove(true);
 			}
 		});

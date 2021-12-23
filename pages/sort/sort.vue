@@ -19,12 +19,10 @@
 						</view>
 						<view class="item-container">
 							<view class="thumb-box" @click="$notMoreTap(toflbm,'notTap',item1,item)" v-for="(item1, index1) in item.children" :key="index1">
-								<!-- <image class="item-menu-image" style="height:50px;border-radius: 10rpx;" :src="imageUrl(item1)" mode="aspectFill"></image> -->
+								<!-- <image class="item-menu-image" :src="imageUrl(item1)" mode="aspectFill"></image> -->
 								<view class="item-menu-image">
-									<view style="width:100%;height:100%;margin: 0px 6px;">
-										<o-lazy-load  threshold="100" height="50px" border-radius="10" img-mode="aspectFill" :image="imageUrl(item1)"></o-lazy-load>
-										
-									</view>
+									<u-lazy-load  threshold="100" height="50px" border-radius="10" img-mode="aspectFill" :image="imageUrl(item1)"></u-lazy-load>
+									
 								</view>
 								<view class="item-menu-name">{{item1.name}}</view>
 							</view>
@@ -322,7 +320,7 @@
 		justify-content: center;
 		flex-direction: column;
 		margin-top: 20rpx;
-		// padding: 10rpx;
+		padding: 10rpx;
 	}
 
 	.item-menu-image {

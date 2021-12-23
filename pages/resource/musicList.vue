@@ -29,6 +29,7 @@
 				</view>
 			</view>
 		</view>
+
 		<template v-if="isEmpty">
 			<view style="margin-top: 100rpx;">
 				<u-empty text="数据为空" mode="list"></u-empty>
@@ -42,7 +43,7 @@
 				:data="curdata" :now="now">
 			</imt-audio>
 		</view>
-		<u-popup :show="showpopup" :mask="false" mode="bottom" height="80vh" @close="closepopup" close-icon-color="#fff">
+		<u-popup v-model="showpopup" close-icon="/static/head/down.png" :close-icon-size="40" :mask="false" mode="bottom" height="80vh" :closeable="true" close-icon-color="#fff">
 			<view>
 				<gechi :curdata="list[now]" width="100%">
 				</gechi>
@@ -142,11 +143,7 @@
 			console.log("this.list", this.list);
 		},
 		methods: {
-			closepopup(){
-				this.showpopup = false;
-			},
 			togechi() {
-				// debugger;
 				this.showpopup = true;
 				// var data=this.list[this.now];
 				// uni.navigateTo({
@@ -259,7 +256,7 @@
 				if (this.hasLogin) {
 					if (data.selected) {
 						this.$refs.uToast.show({
-							message: '已收藏',
+							title: '已收藏',
 							type: 'warning'
 						});
 						return;
@@ -302,7 +299,7 @@
 						var res = res.result;
 						if (res.state == "0000") {
 							this.$refs.uToast.show({
-								message: '收藏成功',
+								title: '收藏成功',
 								type: 'success'
 							});
 							this.$set(data, "like_count", ++data.like_count);
@@ -347,7 +344,7 @@
 						var res = res.result;
 						if (res.state == "0000") {
 							this.$refs.uToast.show({
-								message: '已取消',
+								title: '已取消',
 								type: 'success'
 							});
 							this.$set(this.data, "like_count", --this.data.like_count);

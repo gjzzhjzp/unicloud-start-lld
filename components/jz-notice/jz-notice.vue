@@ -1,7 +1,7 @@
 <template>
 	<view class="jz-notice">
 		<template v-if="list.length>0">
-		<u-notice-bar :direction="mode" :text="list"></u-notice-bar>
+		<u-notice-bar :mode="mode" :list="list"></u-notice-bar>
 		</template>
 	</view>
 </template>
@@ -23,7 +23,7 @@
 			mode:{
 				type:String,
 				default(){
-					return "column"
+					return "vertical"
 				}
 			}
 		},
@@ -37,17 +37,12 @@
 				var resultdata = await collection.where({
 					type:this.type
 				}).get();
+				// console.log("足迹",resultdata);
 				var rows=resultdata.result.data;
-				if(this.mode=="column"){
-					this.list.splice(0,this.list.length);
-					rows.forEach((item)=>{
-						this.list.push(item.content);
-					});
-				}else{
-					if(rows.length>0){
-						this.list=rows[0].content;
-					}
-				}
+				this.list.splice(0,this.list.length);
+				rows.forEach((item)=>{
+					this.list.push(item.content);
+				});
 			}
 		}
 	}

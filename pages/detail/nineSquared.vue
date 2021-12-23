@@ -1,11 +1,11 @@
 <template>
 	<view class="nineSquared">
-		<view @click="toggleType('grid')" v-show="listtype=='grid'" :style="iconstyle()" class="nineSquared_icon">
-			<u-icon size="18" name="/static/grid/list.png"></u-icon>
+		<view @click="toggleType('grid')" v-show="listtype=='grid'" style="display: flex;justify-content: flex-end;" class="nineSquared_icon">
+			<u-icon size="36" name="/static/grid/list.png"></u-icon>
 			<view style="color: #7275D3;margin-left: 4px;">列表</view>
 		</view>	
-		<view @click="toggleType('list')"  v-show="listtype=='list'" :style="iconstyle()" class="nineSquared_icon">
-			<u-icon size="18" name="/static/grid/grid.png"></u-icon>
+		<view @click="toggleType('list')"  v-show="listtype=='list'" style="display: flex;justify-content: flex-end;" class="nineSquared_icon">
+			<u-icon size="32" name="/static/grid/grid.png"></u-icon>
 			<view style="color: #7275D3;margin-left: 4px;">宫格</view>
 		</view>	
 		<template v-if="listtype=='grid'">
@@ -53,8 +53,8 @@
 	</template>
 	<template v-else>
 		<view style="margin: 10rpx;" v-for="(data,index) in list" :key="index">
-			<o-lazy-load  v-if="data.url.indexOf('gif')==-1" @click="preview(data)"
-			 threshold="300"  border-radius="10" :image="data.url" img-mode="widthFix"></o-lazy-load>
+			<u-lazy-load  v-if="data.url.indexOf('gif')==-1" @click="preview(data)"
+			 threshold="300"  border-radius="10" :image="data.url" img-mode="widthFix"></u-lazy-load>
 			<image v-else :src="data.url"  @click="preview(data)"  mode="widthFix"></image>
 		</view>
 		
@@ -86,24 +86,7 @@
 				}
 			}
 		},
-		computed: {
-			
-		},
 		methods: {
-			iconstyle() {
-				const style = {
-					display: "flex",
-					"justify-content": "flex-end",
-					"font-weight": 600,
-					position: "fixed",
-					right: "10px",
-					top: "16px",
-					"z-index": "9999"
-				}
-				// 状态栏高度，由于某些安卓和微信开发工具无法识别css的顶部状态栏变量，所以使用js获取的方式
-				style.top = uni.$u.addUnit(uni.$u.sys().statusBarHeight+16, 'px')
-				return style
-			},
 			toggleType(type){
 				if(type=="grid"){
 					this.listtype="list";
@@ -124,7 +107,10 @@
 
 <style>
 	.nineSquared_icon{
-		    
+		    position: fixed;
+		    right: 10px;
+		    top: 16px;
+		    z-index: 9999;
 	}
 	.nineSquared_3 .nine-img {
 		width: 33.33%;

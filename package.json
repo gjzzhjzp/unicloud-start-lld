@@ -82,6 +82,7 @@
 		}
 	},
 	"dependencies": {
+		"dplayer": "^1.26.0",
 		"uni-read-pages": "^1.0.5",
 		"uni-simple-router": "^2.0.8-beta.2"
 	}

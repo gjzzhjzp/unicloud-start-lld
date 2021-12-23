@@ -38,6 +38,12 @@
 			"description": "弹幕颜色",
 			"trim": "both"
 		},
+		"danmu_type":{
+			"bsonType": "string",
+			"title": "弹幕类型",
+			"description": "弹幕类型",
+			"trim": "both"
+		},
 		"danmu_text":{
 			"bsonType": "string",
 			"title": "弹幕内容",

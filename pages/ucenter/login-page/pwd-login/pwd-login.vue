@@ -27,7 +27,7 @@
 			</view>
 		</view>
 		<sevicecontent ref="sevicecontent" @confirm="confirmcontent"></sevicecontent>
-		<u-modal :show="showfindpass">
+		<u-modal v-model="showfindpass">
 			<view class="slot-content" style="padding: 10px;">
 				{{passcontent}}
 			</view>

@@ -2,7 +2,7 @@
 	<view class="wrap">
 		<u-navbar :is-back="true" title="我的足迹"></u-navbar>
 		<view>
-			<u-tabs  lineWidth="40" lineColor="#7275D3" :list="tabslist" :is-scroll="false" :current="currenttab"
+			<u-tabs active-color="#7275D3" bar-width="0" :list="tabslist" :is-scroll="false" :current="currenttab"
 				@change="changeTabs"></u-tabs>
 		</view>
 		<view v-if="currenttab!=2">
@@ -19,7 +19,7 @@
 		<view v-else>
 			<music-list :list="flowList"></music-list>
 		</view>
-		<u-loadmore v-show="currenttab!=2&&flowList.length!=0" :status="loadStatus" @loadmore="addRandomData"></u-loadmore>
+		<u-loadmore v-show="flowList.length!=0" :status="loadStatus" @loadmore="addRandomData"></u-loadmore>
 		<u-back-top :scroll-top="scrollTop" top="1000" mode="square" icon="arrow-up" tips="顶部"></u-back-top>
 		<view style="margin-top: 20px;text-align: center;" v-show="flowList.length==0">
 			<u-empty text="无历史记录" mode="history"></u-empty>
@@ -83,9 +83,10 @@
 			}
 		},
 		methods: {
-			changeTabs(item) {
-				this.currenttab = item.index;
-				this.zy_gs = item.index;
+			changeTabs(index) {
+				console.log("index", index);
+				this.currenttab = index;
+				this.zy_gs = index;
 				// this.reset=true;
 				this.param.page=1;
 				this.flowList.splice(0, this.flowList.length);

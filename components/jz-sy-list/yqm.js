@@ -34,15 +34,18 @@ export default{
 			if (item.is_encryption == 1) {
 				this.showmodel = true;
 			} else {
-				if(item.zy_gs==1){
-					uni.navigateTo({
-						url: "/pages/detail/detailvideo?id=" + item._id
-					});
-				}else{
+				// uni.navigateTo({
+				// 	url: "/pages/detail/index"
+				// });
+				// if(item.zy_gs==1){
+				// 	uni.navigateTo({
+				// 		url: "/pages/detail/detailvideo?id=" + item._id
+				// 	});
+				// }else{
 					uni.navigateTo({
 						url: "/pages/detail/detail?id=" + item._id
 					});
-				}
+				// }
 				
 			}
 		},
@@ -51,7 +54,7 @@ export default{
 			this.showmodel = true;
 			if(!this.yqm){
 				this.$refs.uToast.show({
-					message: '请输入邀请码',
+					title: '请输入邀请码',
 					type: 'warning'
 				});
 				return;
@@ -87,7 +90,7 @@ export default{
 					});
 				}else{
 					this.$refs.uToast.show({
-						message: '邀请码无效',
+						title: '邀请码无效',
 						type: 'error'
 					});
 				}

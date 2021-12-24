@@ -209,23 +209,23 @@ module.exports = class resourceService extends Service {
 					.end();
 			}
 			var app_bbh = data.app_bbh;
-			if (type == "tj") {
-				if (app_bbh) {
-					return {
-						"state": "0000",
-						"rows": resultdata.data,
-						"total": resultdata.data.length,
-						"msg": "查询成功"
-					};
-				} else {
-					return {
-						"state": "0000",
-						"rows": [resultdata.data[0]],
-						"total": resultdata.data.length,
-						"msg": "查询成功"
-					};
-				}
-			} else {
+			// if (type == "tj") {
+			// 	if (app_bbh) {
+			// 		return {
+			// 			"state": "0000",
+			// 			"rows": resultdata.data,
+			// 			"total": resultdata.data.length,
+			// 			"msg": "查询成功"
+			// 		};
+			// 	} else {
+			// 		return {
+			// 			"state": "0000",
+			// 			"rows": [resultdata.data[0]],
+			// 			"total": resultdata.data.length,
+			// 			"msg": "查询成功"
+			// 		};
+			// 	}
+			// } else {
 				if (app_bbh >= 113) {
 					return {
 						"state": "0000",
@@ -241,7 +241,7 @@ module.exports = class resourceService extends Service {
 						"msg": "查询成功"
 					};
 				}
-			}
+			// }
 		} catch (e) {
 			console.log("e", e);
 			return {

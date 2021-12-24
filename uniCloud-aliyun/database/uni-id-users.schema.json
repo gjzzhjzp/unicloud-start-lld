@@ -41,6 +41,25 @@
 			"description": "用户昵称",
 			"trim": "both"
 		},
+		"fanSx": {
+			"bsonType": "int",
+			"title": "粉丝属性",
+			"description": "粉丝属性：0 山总 1 海哲 2 俊味仙",
+			"defaultValue": 0,
+			"enum": [{
+					"value": 0,
+					"text": "山总"
+				},
+				{
+					"value": 1,
+					"text": "海哲"
+				},
+				{
+					"value": 2,
+					"text": "俊味仙"
+				}
+			]
+		},
 		"weiboname": {
 			"bsonType": "string",
 			"title": "微博昵称",

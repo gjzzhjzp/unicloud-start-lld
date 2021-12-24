@@ -4,9 +4,11 @@
 			<template slot="content">
 				<template v-if="data.aliyun_dz&&data.aliyun_dz.indexOf('/jzmp4/')!=-1">
 					<view class="detail-image-item">
-						<video id="myVideo" :danmu-btn="danmubtn" :enable-danmu="enabledanmu"
+						<div id="dplayer" ref="dplayer">
+						</div>
+						<!-- <video id="myVideo" :danmu-btn="danmubtn" :enable-danmu="enabledanmu"
 							:danmu-list="data.danmulist" autoplay :src="data.aliyun_dz" controls
-							@timeupdate="timeupdate"></video>
+							@timeupdate="timeupdate"></video> -->
 					</view>
 				</template>
 				<template v-else>
@@ -21,6 +23,9 @@
 							controls @timeupdate="timeupdate"></video> -->
 					</view>
 				</template>
+				<view style="margin-top: 6px;">
+					<u-alert-tips type="warning" description="注意:全屏需横屏时请启用手机的横屏模式"></u-alert-tips>
+				</view>
 				<!-- #ifndef MP-ALIPAY -->
 				<u-popup v-model="showsenddanmu" mode="bottom">
 					<view class="comment-container2">
@@ -130,10 +135,15 @@
 		},
 		methods: {
 			initDp(item) {
-				// debugger;
+				var url="";
+				if(item.aliyun_dz&&item.aliyun_dz.indexOf('/jzmp4/')!=-1){
+					url=item.aliyun_dz;
+				}else{
+					url= item.resources[0].url;
+				}
 				this.dp = new DPlayer({
 					container: document.getElementById('dplayer'),
-					autoplay: false,
+					autoplay: true,
 					theme: '#FADFA3',
 					loop: true,
 					lang: 'zh-cn',
@@ -143,21 +153,20 @@
 					volume: 0.7,
 					mutex: true,
 					video: {
-						url: item.resources[0].url,
-						// pic: 'dplayer.png',
-						// thumbnails: 'thumbnails.jpg',
+						url: url,
 						type: 'auto',
 					},
+					// 暂时不支持字幕
 					// subtitle: {
-					// 	url: 'dplayer.vtt',
-					// 	type: 'webvtt',
+					// 	url: 'http://47.108.224.146/jzzm/2020/20200501.ass',
+					// 	type: 'ass',
 					// 	fontSize: '25px',
 					// 	bottom: '10%',
 					// 	color: '#b7daff',
 					// },
 					danmaku: {
 						id: item._id,
-						api: 'http://127.0.0.1:57249/cloudfunctions/getdanmu1',
+						api: 'getdanmu',
 						maximum: 10000,
 						user: 'jzp',
 						bottom: '15%',

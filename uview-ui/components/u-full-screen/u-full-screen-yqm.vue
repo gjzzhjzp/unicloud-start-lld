@@ -1,5 +1,5 @@
 <template>
-	<u-modal v-model="show" :show-cancel-button="true" cancel-text="退出" confirm-text="确定" title="提示" @cancel="cancel" @confirm="confirm">
+	<u-modal v-model="show" :show-cancel-button="true" :cancel-text="cancelText" confirm-text="确定" title="提示" @cancel="cancel" @confirm="confirm">
 		<view class="u-update-content">
 			<view style="margin-bottom: 10px;">
 				此APP现为邀请制，请输入邀请码<br>
@@ -19,7 +19,8 @@
 		data() {
 			return {
 				show: false,
-				value:""
+				value:"",
+				cancelText:"退出"
 			}
 		},
 		onReady() {

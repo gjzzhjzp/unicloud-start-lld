@@ -21,6 +21,9 @@
 					<text class="link" @click="toRetrievePwd">{{$t('pwdLogin.forgetPassword')}}</text>
 					<text class="link" @click="toRegister">{{$t('pwdLogin.register')}}</text>
 				</view>
+				<!-- <view style="color:red">
+					注意：为防止忘记用户名密码，长时间不操作需要重新登录
+				</view> -->
 				<u-button class="send-btn" :disabled="!canLogin" type="primary" @click="pwdLogin">
 					{{$t('pwdLogin.login')}}
 				</u-button>
@@ -34,7 +37,6 @@
 		</u-modal>
 	</view>
 </template>
-
 <script>
 	import mixin from '../common/login-page.mixin.js';
 	import sevicecontent from "./sevicecontent.vue"

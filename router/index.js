@@ -11,8 +11,13 @@ router.beforeEach((to, from, next) => {
 	console.log("to",to);
 	console.log("from",from);
 	// debugger;
+	uni.showLoading({
+		title:"加载中",
+		icon:"none"
+	})
 	me.getConfig().then(()=>{
 		if(to.path.indexOf("login-page")!=-1||to.path.indexOf("u-full-screen")!=-1||to.path.indexOf("/question/")!=-1){
+			uni.hideLoading();
 			next();
 		}else{
 			me.checkUserStatus().then((flag)=>{
@@ -20,6 +25,7 @@ router.beforeEach((to, from, next) => {
 					me.initconfig();
 				}
 			});
+			uni.hideLoading();
 			next();
 		}
 	});

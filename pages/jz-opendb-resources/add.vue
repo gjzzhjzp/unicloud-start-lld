@@ -45,7 +45,7 @@
 					<template v-if="formData.zy_gs==0||formData.zy_gs==3">
 						<uni-file-picker file-mediatype="image" return-type="array" v-model="formData.resources">
 						</uni-file-picker>
-						<view class="resource-ts">提示：支持PNG,JPG图片格式</view>
+						<view class="resource-ts">提示：支持PNG,JPG图片格式(注意：部分手机不能多选上传图片，可联系申请后台上传)</view>
 					</template>
 					<template v-else-if="formData.zy_gs==1">
 						<uni-file-picker file-mediatype="video" file-extname="mp4" :limit="1" return-type="array"
@@ -88,7 +88,6 @@
 					<u-button type="primary" class="uni-button" @click="submit">提交</u-button>
 				</view>
 			</uni-forms>
-
 		</view>
 	</view>
 </template>

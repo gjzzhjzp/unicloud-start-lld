@@ -34,7 +34,7 @@
 			async getinfos() {
 				var res = await db.collection('jz-custom-systeminfo').where('user_id==$env.uid')
 				.field("comment,comment_date").get();
-				console.log("res",res);
+				// console.log("res",res);
 				if(res.result.data&&res.result.data.length>0){
 					this.infos=res.result.data;
 					var ids=[];

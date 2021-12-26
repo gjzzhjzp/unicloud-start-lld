@@ -95,7 +95,8 @@ export default {
 			time: 0, //定时器
 			interval: 1000, //长按事件
 			scale: 1 ,//缩放比例
-			showImageXz:true
+			showImageXz:true,
+			random:parseInt(1000000*Math.random())
 		};
 	},
 	created(){
@@ -187,14 +188,46 @@ export default {
 			//#endif
 
 			//#ifdef H5
-			//非同源图片将直接打开
-			var abtn = document.createElement('a');
-			abtn.href = src;
-			abtn.download = '';
-			abtn.target = '_blank';
-			abtn.click();
+			this.downloadIamgeH5(this.index, this.random+"_"+this.index);
+			// this.downloadImg(src);
+			// 非同源图片将直接打开
+			// var abtn = document.createElement('a');
+			// abtn.href = src;
+			// abtn.download = '';
+			// abtn.target = '_blank';
+			// abtn.click();
 			//#endif
 		},
+		downloadIamgeH5(index, name) {
+			// debugger;
+		    var image = new Image()
+		    // 解决跨域 Canvas 污染问题
+		    image.setAttribute('crossOrigin', 'anonymous')
+		    image.onload = function () {
+		        var canvas = document.createElement('canvas');
+		        canvas.width = image.width;
+		        canvas.height = image.height;
+		
+		        var context = canvas.getContext('2d');
+		        context.drawImage(image, 0, 0, image.width, image.height);
+		        var url = canvas.toDataURL('image/png');
+		
+		        // 生成一个a元素
+		        var a = document.createElement('a');
+		        // 创建一个单击事件
+		        var event = new MouseEvent('click');
+		
+		        // 将a的download属性设置为我们想要下载的图片名称，若name不存在则使用‘下载图片名称’作为默认名称
+		        a.download = name || '下载图片名称';
+		        // 将生成的URL设置为a.href属性
+		        a.href = url;
+		
+		        // 触发a的单击事件
+		        a.dispatchEvent(event);
+		    }
+		    image.src = document.querySelector("#image-"+index+" img").src;
+		},
+		
 
 		//下载并保存文件
 		downloadImg(src) {

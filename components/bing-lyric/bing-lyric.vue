@@ -394,7 +394,7 @@
 								ts = ts.toFixed(2)
 								let l = tl.splice(1,1000).join(']').trim()
 								if (l.length > 0){
-									lrcj.times.push(ts)
+									// lrcj.times.push(ts)
 									lrcj.lrcs.push(l)
 								}
 							}
@@ -402,7 +402,7 @@
 								// debugger;
 								let l = tl.splice(1,1000).join(']').trim()
 								if (l.length > 0){
-									lrcj.times.push(Number(t_).toFixed(2))
+									// lrcj.times.push(Number(t_).toFixed(2))
 									lrcj.lrcs.push(l)
 								}
 							}

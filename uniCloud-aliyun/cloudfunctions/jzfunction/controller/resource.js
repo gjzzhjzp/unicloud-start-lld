@@ -26,4 +26,10 @@ module.exports = class resourceController extends Controller {
 	async cancel_like(){
 		return await this.service.resource.cancel_like()
 	}
+	async getHistoryList(){
+		return await this.service.resource.getHistoryList()
+	}
+	async getMyfavoriteList(){
+		return await this.service.resource.getMyfavoriteList()
+	}
 }

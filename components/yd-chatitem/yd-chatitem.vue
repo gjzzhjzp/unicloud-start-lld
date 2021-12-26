@@ -51,7 +51,7 @@
 			},
 			icon: {
 				type: String,
-				default: "/static/center/manager.png"
+				default: "/static/center/system.png"
 			},
 			bubbleColor: {
 				type: String,

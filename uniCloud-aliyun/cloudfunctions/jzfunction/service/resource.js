@@ -97,6 +97,134 @@ module.exports = class resourceService extends Service {
 		}
 		return __token.role;
 	}
+	async getMyfavoriteList() {
+		var db = this.db;
+		var context = this.ctx;
+		var data = this.ctx.data;
+		var uid = data.uid;
+		var zy_gs = data.zy_gs;
+		var page = data.page;
+		var rows = data.rows || 16;
+		const collection = db.collection('opendb-news-favorite');
+		const collectionconfig = db.collection('jz-opendb-resources');
+
+		var collection_query = collection.aggregate().match({
+			user_id: uid,
+			zy_gs: zy_gs
+		}).sort({
+			"update_date": -1
+		}).skip((page - 1) * rows).limit(rows);
+		var resultdata = {};
+		if (zy_gs == 2) {
+			const dbCmd = db.command;
+			const $ = dbCmd.aggregate;
+			resultdata = await collection_query.lookup({
+					from: 'jz-opendb-resources',
+					let: {
+						article_id: '$article_id'
+					},
+					pipeline: $.pipeline()
+						.match(
+							dbCmd.expr($.eq(['$_id', '$$article_id']))
+						)
+						.lookup({
+							from: 'jz-custom-gechi',
+							let: {
+								resources_id: '$_id'
+							},
+							pipeline: $.pipeline()
+								.match(dbCmd.expr($.eq(['$resources_id', '$$resources_id'])))
+								.done(),
+							as: 'gechi'
+						})
+						.done(),
+					as: 'article_id',
+				})
+				.end();
+		} else {
+			resultdata = await collection_query.lookup({
+				from: 'jz-opendb-resources',
+				localField: 'article_id',
+				foreignField: '_id',
+				as: 'article_id',
+			}).end();
+		}
+
+		return {
+			"state": "0000",
+			"rows": resultdata.data,
+			"total": resultdata.data.length,
+			"msg": "查询成功"
+		};
+
+	}
+	async getHistoryList() {
+		var db = this.db;
+		var context = this.ctx;
+		var data = this.ctx.data;
+		var uid = data.uid;
+		var zy_gs = data.zy_gs;
+		var page = data.page;
+		var rows = data.rows || 16;
+		const collection = db.collection('opendb-news-history');
+		const collectionconfig = db.collection('jz-opendb-resources');
+		// var _resultdata = collection.where({
+
+		// }).field('article_title,update_date,article_id{_id,title,avatar,author,resources,is_off,article_status}')
+		// .orderBy('update_date','desc')
+		// .skip(skip).limit(this.param.rows).get();
+
+		var collection_query = collection.aggregate().match({
+			user_id: uid,
+			zy_gs: zy_gs
+		}).sort({
+			"update_date": -1
+		}).skip((page - 1) * rows).limit(rows);
+		var resultdata = {};
+		if (zy_gs == 2) {
+
+			const dbCmd = db.command;
+			const $ = dbCmd.aggregate;
+			resultdata = await collection_query.lookup({
+					from: 'jz-opendb-resources',
+					let: {
+						article_id: '$article_id'
+					},
+					pipeline: $.pipeline()
+						.match(
+							dbCmd.expr($.eq(['$_id', '$$article_id']))
+						)
+						.lookup({
+							from: 'jz-custom-gechi',
+							let: {
+								resources_id: '$_id'
+							},
+							pipeline: $.pipeline()
+								.match(dbCmd.expr($.eq(['$resources_id', '$$resources_id'])))
+								.done(),
+							as: 'gechi'
+						})
+						.done(),
+					as: 'article_id',
+				})
+				.end();
+		} else {
+			resultdata = await collection_query.lookup({
+				from: 'jz-opendb-resources',
+				localField: 'article_id',
+				foreignField: '_id',
+				as: 'article_id',
+			}).end();
+		}
+
+		return {
+			"state": "0000",
+			"rows": resultdata.data,
+			"total": resultdata.data.length,
+			"msg": "查询成功"
+		};
+
+	}
 	// 获取资源列表
 	async getList() {
 		try {
@@ -226,21 +354,21 @@ module.exports = class resourceService extends Service {
 			// 		};
 			// 	}
 			// } else {
-				if (app_bbh >= 113) {
-					return {
-						"state": "0000",
-						"rows": resultdata.data,
-						"total": resultdata.data.length,
-						"msg": "查询成功"
-					};
-				} else {
-					return {
-						"state": "0000",
-						"rows": [],
-						"total": 0,
-						"msg": "查询成功"
-					};
-				}
+			if (app_bbh >= 113) {
+				return {
+					"state": "0000",
+					"rows": resultdata.data,
+					"total": resultdata.data.length,
+					"msg": "查询成功"
+				};
+			} else {
+				return {
+					"state": "0000",
+					"rows": [],
+					"total": 0,
+					"msg": "查询成功"
+				};
+			}
 			// }
 		} catch (e) {
 			console.log("e", e);
@@ -397,14 +525,31 @@ module.exports = class resourceService extends Service {
 			var db = this.db;
 			var context = this.ctx;
 			var data = this.ctx.data;
+			var uid = data.uid;
 			const collection = db.collection('jz-opendb-resources').aggregate().match({
 				_id: data._id
 			});
+			const dbCmd = db.command;
+			const $ = dbCmd.aggregate;
 			var resultdata = await collection.lookup({
 					from: 'uni-id-users',
 					localField: 'user_id',
 					foreignField: '_id',
 					as: 'userinfo',
+				}).lookup({
+					from: 'opendb-news-favorite', ///获取当前用户是否收藏
+					let: {
+						article_id: '$_id'
+					},
+					pipeline: $.pipeline()
+						.match(
+							dbCmd.expr($.and([
+								$.eq(['$article_id', '$$article_id']),
+								$.eq(['$user_id', uid])
+							]))
+						)
+						.done(),
+					as: 'favorite',
 				})
 				.end();
 			if (resultdata.data && resultdata.data.length > 0) {

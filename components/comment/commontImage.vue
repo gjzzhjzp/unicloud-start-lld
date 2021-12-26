@@ -3,7 +3,7 @@
 		<view class="original" v-if="isoriginal">
 			<image class="original-img" src="@/static/center/ori_back.png"></image>
 		</view>
-		<image :src="src" mode="aspectFill"></image>
+		<image :src="imageUrl()" mode="aspectFill"></image>
 	</view>
 </template>
 
@@ -24,6 +24,15 @@
 				type: Boolean,
 				default () {
 					return false
+				}
+			}
+		},
+		methods:{
+			imageUrl(){
+				if(this.src){
+					return this.src;
+				}else{
+					return "/static/center/nologin.png";
 				}
 			}
 		}

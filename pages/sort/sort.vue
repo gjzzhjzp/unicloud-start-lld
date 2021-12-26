@@ -19,11 +19,13 @@
 						</view>
 						<view class="item-container">
 							<view class="thumb-box" @click="$notMoreTap(toflbm,'notTap',item1,item)" v-for="(item1, index1) in item.children" :key="index1">
-								<!-- <image class="item-menu-image" :src="imageUrl(item1)" mode="aspectFill"></image> -->
-								<view class="item-menu-image">
+								<u-image class="item-menu-image" loading-icon="/static/center/chang1.png"  height="50px" border-radius="10" :src="imageUrl(item1)" mode="aspectFill">
+				
+								</u-image>
+								<!-- <view class="item-menu-image">
 									<u-lazy-load  threshold="100" height="50px" border-radius="10" img-mode="aspectFill" :image="imageUrl(item1)"></u-lazy-load>
 									
-								</view>
+								</view> -->
 								<view class="item-menu-name">{{item1.name}}</view>
 							</view>
 						</view>
@@ -55,9 +57,6 @@
 			}
 		},
 		mixins: [gonggao],
-		onLoad() {
-			
-		},
 		onReady() {
 			this.getMenuItemTop()
 		},

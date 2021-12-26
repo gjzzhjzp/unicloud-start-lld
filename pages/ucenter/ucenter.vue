@@ -88,7 +88,7 @@
 							"thumb": "/static/center/yqm.png"
 						},
 						{
-							"title": "意见反馈",
+							"title": "联系我们",
 							"to": '/uni_modules/uni-feedback/pages/opendb-feedback/opendb-feedback',
 							"thumb": "/static/center/question.png"
 						},
@@ -98,14 +98,13 @@
 							"thumb": "/static/center/info.png",
 							"class": "systeminfo"
 						},
-						//#ifdef APP-PLUS
+						
 						{
 							"title": "检测版本更新",
 							"addclass": "jcbbgx",
 							"to": '/pages/appbb/appbb',
 							"thumb": "/static/center/appbb.png"
 						},
-						// #endif
 					]
 				],
 				listStyles: {
@@ -151,8 +150,9 @@
 		methods: {
 			// 检测版本
 			async checkBb() {
+				var app_bbh = getApp().globalData.app_bbh;
 				//#ifdef APP-PLUS
-				var app_bbh = plus.runtime.versionCode;
+				 app_bbh = plus.runtime.versionCode;
 				//#endif
 				const db = uniCloud.database();
 				const collection = db.collection('opendb-news-appbb');
@@ -328,7 +328,7 @@
 
 	.userInfo {
 		width: 750rpx;
-		background-image: url(/static/center/backcenter.jpg);
+		background-image: url(@/static/center/backcenter.jpg);
 		flex-direction: column;
 		align-items: center;
 		background-size: cover;

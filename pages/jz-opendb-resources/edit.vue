@@ -49,7 +49,7 @@
 					<uni-file-picker file-mediatype="video" file-extname="mp4" :limit="1" return-type="array"
 						v-model="formData.resources">
 					</uni-file-picker>
-					<view class="resource-ts">提示：支持MP4格式(注意：网络不好视频会自动压缩)</view>
+					<view class="resource-ts">提示：支持MP4格式，超过100M的视频可联系后台上传</view>
 				</template>
 				<!-- #ifdef H5 -->
 				<template v-else-if="formData.zy_gs==2">
@@ -88,6 +88,9 @@
 				</uni-data-checkbox>
 				<view class="resource-ts" v-show="formData.is_encryption==1">提示：勾选加密代表用户在本平台申请邀请码即可查看详情</view>
 			</uni-forms-item>
+			<view class="resource-ts">
+				提示：请等待附件资源上传完毕后再提交
+			</view>
 			<view class="uni-button-group">
 				<button type="primary" class="uni-button" @click="submit">提交</button>
 			</view>
@@ -176,9 +179,9 @@
 				}
 			}
 		},
-		onLoad(e) {
-			if (e.id) {
-				const id = e.id
+		created() {
+			if (this.$Route.query.id) {
+				const id = this.$Route.query.id;
 				this.formDataId = id
 				this.getDetail(id)
 			}

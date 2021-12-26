@@ -35,10 +35,10 @@
 					</view>
 				</view>
 				<view class="detail-image-sc">
-					<view class="detail-image-sc1" v-show="!islike" @click="toFavorite">
+					<view class="detail-image-sc1" v-show="!checkisLike" @click="toFavorite">
 						<u-icon :size="30" name="heart"></u-icon> 收藏
 					</view>
-					<view class="detail-image-sc1" v-show="islike" @click="cancelFavorite">
+					<view class="detail-image-sc1" v-show="checkisLike" @click="cancelFavorite">
 						<u-icon :size="30" name="heart-fill" color="red"></u-icon> 已收藏
 					</view>
 					<view class="detail-image-sc1" v-if="data.zy_gs=='1'&&showmp4Xz">
@@ -183,7 +183,17 @@
 					tjcategories = this.data.categorieszw.split(",")[0];
 				}
 				return tjcategories;
-			}
+			},
+			checkisLike() {
+				// debugger;
+				var islike=false;
+				if (this.islike||(this.data && this.data.favorite && this.data.favorite.length > 0)) {
+					islike = true;
+				} else {
+					islike = false;
+				}
+				return islike;
+			},
 		},
 		methods: {
 			changenumber(plNumber) {

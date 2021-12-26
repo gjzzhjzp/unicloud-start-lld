@@ -129,7 +129,8 @@
 			this.resetlist();
 			uni.stopPullDownRefresh();
 		},
-		onLoad(e) {
+		created() {
+			var e=this.$Route.query;
 			if (e.flmc && e.flbm) {
 				this.showTag = true;
 				this.tagname = e.flmc;
@@ -190,6 +191,7 @@
 				this.addRandomData();
 			},
 			searchType(item) {
+				// debugger;
 				this.searchrows.forEach((item1) => {
 					this.$set(item1, "selected", false);
 				});

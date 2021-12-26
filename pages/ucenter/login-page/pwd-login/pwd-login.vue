@@ -7,6 +7,9 @@
 					:background="{'background':'none'}">
 				</u-navbar>
 			</view>
+			<view class="login_back_logo">
+				<u-image width="100%" :src="'/static/login-index/login_back.png'" mode="widthFix"></u-image>
+			</view>
 			<view class="login-back-con">
 				<input class="input-box" :inputBorder="false" v-model="username" placeholder="请输入登录名" />
 				<input type="password" class="input-box" :inputBorder="false" v-model="password"
@@ -253,8 +256,8 @@
 	}
 
 	.login-back {
-		height: calc(100vh - 44px);
-		background-image: url(/static/center/login.png);
+		height: 100vh;
+		background: linear-gradient(rgb(119, 126, 206), rgb(255 255 255));
 		background-size: cover;
 		background-repeat: no-repeat;
 		background-position: center;
@@ -304,7 +307,9 @@
 
 	.login-back-con {
 		width: 80%;
-		margin: 290px auto 0px auto;
+		margin: 0 auto;
+		margin-top: 40px;
+		/* margin: 290px auto 0px auto; */
 	}
 
 	.login-back-con .u-btn {

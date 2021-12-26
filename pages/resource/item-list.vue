@@ -1,31 +1,42 @@
 <template>
 	<view class="er-item-list">
-		<view class="er-item-list-warter" v-for="(item, index) in list" :key="index" @click="$notMoreTap(toDetail,'notTap',item)">
-			<view class="er-item-list-warter1">
-				<u-lazy-load threshold="300" height="200" border-radius="10" img-mode="aspectFill"
-					:image="imageUrl(item)" :index="index"></u-lazy-load>
-				<view style="padding: 8px;">
-					<view class="er-item-list-title">
-						{{item.title}}
-					</view>
-					<view class="er-item-list-author" v-if="item.userinfo">
-						<view class="er-item-list-img">
-							<view class="original" v-if="item.userinfo&&item.userinfo[0].original">
-								<image class="original-img" src="@/static/center/ori_back.png"></image>
+		<u-grid :col="2" :border="false" >
+			<u-grid-item v-for="(item, index) in list" :custom-style="{'padding':0}" :key="index" @click="$notMoreTap(toDetail,'notTap',item)">
+				<view class="er-item-list-warter">
+					<view class="er-item-list-warter1">
+						<u-image :show-loading="true" loading-icon="/static/center/chang1.png"  height="100px" border-radius="10" :src="imageUrl(item)" mode="aspectFill">
+										
+						</u-image>
+						<!-- <u-lazy-load threshold="300" height="200" border-radius="10" img-mode="aspectFill"
+							:image="imageUrl(item)" :index="index"></u-lazy-load> -->
+						<view style="padding: 8px;">
+							<view class="er-item-list-title">
+								{{item.title}}
 							</view>
-							<u-avatar :size="50"
-								:src="(item.userinfo&&item.userinfo[0].avatar_file)?item.userinfo[0].avatar_file.url:''">
-							</u-avatar>
-							<text style="margin-left: 4px;">{{item.userinfo&&item.userinfo[0].nickname?item.userinfo[0].nickname:'佚名'}}</text>
-							
+							<view class="er-item-list-author" v-if="item.userinfo">
+								<view class="er-item-list-img">
+									<view class="original" v-if="item.userinfo&&item.userinfo[0].original">
+										<image class="original-img" src="@/static/center/ori_back.png"></image>
+									</view>
+									<u-avatar :size="50"
+										:src="(item.userinfo&&item.userinfo[0].avatar_file)?item.userinfo[0].avatar_file.url:''">
+									</u-avatar>
+									<text
+										style="margin-left: 4px;">{{item.userinfo&&item.userinfo[0].nickname?item.userinfo[0].nickname:'佚名'}}</text>
+
+								</view>
+								<view class="er-item-list-right">
+									<u-icon name="heart"></u-icon>{{item.like_count||0}}
+								</view>
+							</view>
 						</view>
-						<view class="er-item-list-right">
-							<u-icon name="heart"></u-icon>{{item.like_count||0}}
-						</view>
+
+
+
 					</view>
 				</view>
-			</view>
-		</view>
+			</u-grid-item>
+		</u-grid>
 		<u-modal v-model="showmodel" title="输入邀请码" :show-cancel-button="true" @confirm="confirm">
 			<view class="slot-content" style="padding: 10px;">
 				<view style="margin-bottom: 8px;">
@@ -89,22 +100,25 @@
 </script>
 
 <style lang="scss" scoped>
-	.original{
+	.original {
 		position: relative;
 	}
-	.original-img{
-		      width: 68rpx;
-		      height: 68rpx;
-		      position: absolute;
-		      top: -32rpx;
-		      left: -10rpx;
+
+	.original-img {
+		width: 68rpx;
+		height: 68rpx;
+		position: absolute;
+		top: -32rpx;
+		left: -10rpx;
 	}
+
 	.er-item-list-warter {
 		border-radius: 8px;
 		// margin: 10px;
 		background-color: #ffffff;
-		// padding: 8px;
+		padding: 8px;
 		position: relative;
+		width: 100%;
 	}
 
 	.u-close {
@@ -180,13 +194,14 @@
 	}
 
 	.er-item-list .er-item-list-warter {
-		width: 50%;
+		// width: 50%;
 		display: inline-block;
 	}
 
 	.er-item-list-warter1 {
+		width: 100%;
 		box-shadow: 0px 0px 6px #d5d5d6;
 		border-radius: 10px;
-		margin: 10px;
+		// padding: 10px;
 	}
 </style>

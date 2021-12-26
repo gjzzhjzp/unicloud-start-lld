@@ -31,16 +31,9 @@ export default {
 	// 检查用户状态，如果禁用限制访问
 	async checkUserStatus() {
 		return new Promise(async (reslove) => {
-			// debugger;
-			const db = uniCloud.database();
-			var userinfo = uni.getStorageSync("userInfo");
-			if(userinfo){
-				const usersTable = db.collection('uni-id-users')
-				var userdata = await usersTable.where('_id==$env.uid').field("username,nickname,isbdwb,original,forbiddenwords,status,avatar,avatar_file,role,register_date,token").get();
-				console.log("userdata", userdata);
-				var userinf = userdata.result.data[0];
-				uni.setStorageSync("userInfo",userinf);
-				if (userinf.status == 1) { //禁用
+			var userinf1=getApp().globalData.userinf;
+			if(userinf1){
+				if (userinf1.status == 1) { //禁用
 					uni.reLaunch({
 						url: "/uview-ui/components/u-full-screen/u-full-screen-ztjy"
 					})
@@ -49,49 +42,81 @@ export default {
 					reslove(true);
 				}
 			}else{
-				reslove(true);
+				const db = uniCloud.database();
+				var userinfo = uni.getStorageSync("userInfo");
+				if(userinfo){
+					const usersTable = db.collection('uni-id-users')
+					var userdata = await usersTable.where('_id==$env.uid').field("username,nickname,isbdwb,original,forbiddenwords,status,avatar,avatar_file,role,register_date,token").get();
+					console.log("userdata", userdata);
+					var userinf = userdata.result.data[0];
+					uni.setStorageSync("userInfo",userinf);
+					getApp().globalData.userinf=userinf;
+					setTimeout(()=>{
+						getApp().globalData.userinf=null;
+					},1000*60*30)
+					if (userinf.status == 1) { //禁用
+						uni.reLaunch({
+							url: "/uview-ui/components/u-full-screen/u-full-screen-ztjy"
+						})
+						reslove(false);
+					} else {
+						reslove(true);
+					}
+				}else{
+					reslove(true);
+				}
 			}
 		});
 	},
 	// 获取配置项和微博内容
 	getConfig() {
-		// debugger;
 		return new Promise((reslove) => {
-			uniCloud.callFunction({
-				name: 'jzfunction',
-				data: {
-					action: 'config/getConfig'
-				},
-			}).then((res) => {
-				var res = res.result;
-				var config = {};
-				var weiboyz = [];
-				if (res.state == "0000") {
-					var configdata = res.data.config;
-					var weiboyzdata = res.data.weiboyz;
-					if (configdata.data && configdata.data.length > 0) {
-						configdata.data.forEach((item) => {
-							config[item.config_bm] = item.config_val;
+		var config=getApp().globalData.systemconfig;
+		if(config){
+			reslove(config);
+		}else{
+			
+				uniCloud.callFunction({
+					name: 'jzfunction',
+					data: {
+						action: 'config/getConfig'
+					},
+				}).then((res) => {
+					var res = res.result;
+					var config = {};
+					var weiboyz = [];
+					if (res.state == "0000") {
+						var configdata = res.data.config;
+						var weiboyzdata = res.data.weiboyz;
+						if (configdata.data && configdata.data.length > 0) {
+							configdata.data.forEach((item) => {
+								config[item.config_bm] = item.config_val;
+							});
+						}
+						if (weiboyzdata.data && weiboyzdata.data.length > 0) {
+							weiboyzdata.data.forEach((item) => {
+								weiboyz.push(item.content);
+							});
+						}
+						console.log("configaaaaaaaaaaaaaaaaaaa",config);
+						getApp().globalData.systemconfig = config;
+						getApp().globalData.weiboyz = weiboyz;
+						// this.setfks(config);
+						setTimeout(()=>{
+							// 每隔10分钟请求一次，不要连续频繁请求
+							getApp().globalData.systemconfig=null;
+						},1000*60*30)
+						reslove(config);
+					} else {
+						uni.showToast({
+							title: res.msg,
+							icon: null
 						});
 					}
-					if (weiboyzdata.data && weiboyzdata.data.length > 0) {
-						weiboyzdata.data.forEach((item) => {
-							weiboyz.push(item.content);
-						});
-					}
-					console.log("configaaaaaaaaaaaaaaaaaaa",config);
-					getApp().globalData.systemconfig = config;
-					getApp().globalData.weiboyz = weiboyz;
-					// this.setfks(config);
-					reslove(config);
-				} else {
-					uni.showToast({
-						title: res.msg,
-						icon: null
-					});
-				}
+				});
+			}
 			});
-		});
+		
 	}
 	// setfks(config) {
 	// 	debugger;

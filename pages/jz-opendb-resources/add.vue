@@ -51,7 +51,7 @@
 						<uni-file-picker file-mediatype="video" file-extname="mp4" :limit="1" return-type="array"
 							v-model="formData.resources">
 						</uni-file-picker>
-						<view class="resource-ts">提示：支持MP4格式(注意：网络不好视频会自动压缩)</view>
+						<view class="resource-ts">提示：支持MP4格式，超过100M的视频可联系后台上传</view>
 					</template>
 					<!-- #ifdef H5 -->
 					<template v-else-if="formData.zy_gs==2">
@@ -84,6 +84,9 @@
 					</uni-data-checkbox>
 					<view class="resource-ts" v-show="formData.is_encryption==1">提示：勾选加密代表用户在本平台申请邀请码即可查看详情</view>
 				</uni-forms-item>
+				<view class="resource-ts">
+					提示：请等待附件资源上传完毕后再提交
+				</view>
 				<view class="uni-button-group">
 					<u-button type="primary" class="uni-button" @click="submit">提交</u-button>
 				</view>
@@ -144,7 +147,22 @@
 							"text": "已授权"
 						}
 					],
-					// #ifdef H5
+					
+					// "zy_gs_localdata": [{
+					// 	"value": 0,
+					// 	"text": "图片"
+					// }, {
+					// 	"value": 1,
+					// 	"text": "视频"
+					// }, {
+					// 	"value": 2,
+					// 	"text": "音乐"
+					// }, {
+					// 	"value": 3,
+					// 	"text": "文章"
+					// }],
+					
+					
 					"zy_gs_localdata": [{
 						"value": 0,
 						"text": "图片"
@@ -152,25 +170,10 @@
 						"value": 1,
 						"text": "视频"
 					}, {
-						"value": 2,
-						"text": "音乐"
-					}, {
 						"value": 3,
 						"text": "文章"
 					}],
-					// #endif 
-					// #ifdef APP-PLUS
-					"zy_gs_localdata": [{
-						"value": 0,
-						"text": "图片"
-					}, {
-						"value": 1,
-						"text": "视频"
-					}, {
-						"value": 3,
-						"text": "文章"
-					}],
-					// #endif 
+					
 					"is_encryption_localdata": [{
 							"value": 0,
 							"text": "不加密"

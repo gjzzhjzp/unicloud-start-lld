@@ -53,9 +53,11 @@
 			}
 		},
 		created() {
+			this.app_bbh=getApp().globalData.app_bbh;
+			this.app_bbmc=getApp().globalData.app_bb;
 			//#ifdef APP-PLUS
-			this.app_bbh=plus.runtime.versionCode;
-			this.app_bbmc=plus.runtime.version;
+			app_bbh=plus.runtime.versionCode;
+			app_bbmc=plus.runtime.version;
 			//#endif
 			this.checkBb();
 			var config=getApp().globalData.systemconfig;
@@ -83,8 +85,9 @@
 			saveImage() {
 				var src = this.zxbb.app_bbtp[0].url;
 				//#ifdef APP-PLUS
-				this.downloadImg(src);
+				
 				//#endif
+				this.downloadImg(src);
 			},
 			downloadImg(src) {
 				uni.downloadFile({

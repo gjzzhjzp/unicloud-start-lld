@@ -17,9 +17,11 @@
 			</u-waterfall> -->
 		</view>
 		<view v-else>
-			<music-list :list="flowList"></music-list>
+			<music-list :list="flowList" :loadStatus="loadStatus" @loadmore="addRandomData"></music-list>
 		</view>
-		<u-loadmore v-show="flowList.length!=0" :status="loadStatus" @loadmore="addRandomData"></u-loadmore>
+		<view v-if="currenttab!=2">
+			<u-loadmore v-show="flowList.length!=0" :status="loadStatus" @loadmore="addRandomData"></u-loadmore>
+		</view>
 		<u-back-top :scroll-top="scrollTop" top="1000" mode="square" icon="arrow-up" tips="顶部"></u-back-top>
 		<view style="margin-top: 20px;text-align: center;" v-show="flowList.length==0">
 			<u-empty text="无收藏" mode="favor"></u-empty>
@@ -64,7 +66,7 @@
 			musicList
 		},
 		mixins: [userinfo],
-		onLoad() {
+		mounted() {
 			this.addRandomData();
 		},
 		onPageScroll(e) {
@@ -96,48 +98,83 @@
 			},
 			async addRandomData() {
 				var that = this;
-				if (this.$refs.uWaterfall) {
-					this.$refs.uWaterfall.clear();
-				}
 				uni.showLoading({
 					title: '加载中...'
 				});
-				const db = uniCloud.database();
-				const uid = db.getCloudEnv('$cloudEnv_uid');
-				const collection = db.collection('opendb-news-favorite,jz-opendb-resources,uni-id-users');
-				var skip = (this.param.page - 1) * this.param.rows || 0;
-				var resultdata = await collection.where({
-						user_id: uid,
-						zy_gs: this.zy_gs
-					}).field(
-						'article_title,article_id,create_date{title,avatar,author,resources,is_off,article_status}')
-					.orderBy('create_date', 'desc')
-					.skip(skip).limit(this.param.rows).get();
-				var rows = resultdata.result.data;
-				if (rows.length < this.param.rows) {
-					this.loadStatus = 'nomore';
-				} else {
-					this.param.page++;
-					this.loadStatus = 'loadmore';
-				}
-				// console.log("rows111", rows);
-				rows.forEach((item) => {
-					var obj = item.article_id[0];
-					// debugger;
-					var roles = that.getuserrole();
-					if (roles.indexOf("Master") != -1 || roles.indexOf("AUDITOR") != -1) {
-						if (obj) {
-							delete obj.is_encryption;
-							that.flowList.push(obj);
+				var userInfo = uni.getStorageSync("userInfo");
+				uniCloud.callFunction({
+					name: 'jzfunction',
+					data: {
+						action: "resource/getMyfavoriteList",
+						data: {
+							uid: userInfo._id,
+							zy_gs: this.zy_gs,
+							page: this.param.page,
+							rows: this.param.rows
 						}
+					},
+				}).then((res) => {
+					var rows = res.result.rows;
+					if (rows.length < this.param.rows) {
+						this.loadStatus = 'nomore';
 					} else {
-						if (obj && obj.article_status == 1 && obj.is_off != 1) {
-							delete obj.is_encryption;
-							that.flowList.push(obj);
-						}
+						this.param.page++;
+						this.loadStatus = 'loadmore';
 					}
+					// console.log("rows111", rows);
+					rows.forEach((item) => {
+						var obj = item.article_id[0];
+						// debugger;
+						var roles = that.getuserrole();
+						if (roles && (roles.indexOf("Master") != -1 || roles.indexOf("AUDITOR") != -
+							1)) {
+							if (obj) {
+								delete obj.is_encryption;
+								that.flowList.push(obj);
+							}
+						} else {
+							if (obj && obj.article_status == 1 && obj.is_off != 1) {
+								delete obj.is_encryption;
+								that.flowList.push(obj);
+							}
+						}
+					});
+					this.flowList=this.AryDeleteMore(this.flowList);
+					console.log("this.flowListqqqqqqqqqqq",this.flowList);
+					uni.hideLoading();
 				});
-				uni.hideLoading();
+
+
+				// const db = uniCloud.database();
+				// const uid = db.getCloudEnv('$cloudEnv_uid');
+				// const collection = db.collection('opendb-news-favorite,jz-opendb-resources,uni-id-users');
+				// var skip = (this.param.page - 1) * this.param.rows || 0;
+				// var resultdata = await collection.where({
+				// 		user_id: uid,
+				// 		zy_gs: this.zy_gs
+				// 	}).field(
+				// 		'article_title,article_id,create_date{title,avatar,author,resources,is_off,article_status}')
+				// 	.orderBy('create_date', 'desc')
+				// 	.skip(skip).limit(this.param.rows).get();
+
+			},
+			// 资源数组去重
+			 AryDeleteMore(arr){
+				
+				 if (!Array.isArray(arr)) {
+				        console.log('type error!')
+				        return
+				    }
+				    var array = [];
+					var array_id=[];
+				    for (var i = 0; i < arr.length; i++) {
+				        if (array_id.indexOf(arr[i]._id) == -1) {
+				            array.push(arr[i]);
+							array_id.push(arr[i]._id);
+				        }
+				    }
+					// console.log("array",array);
+				    return array;
 			}
 		}
 	}

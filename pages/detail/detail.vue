@@ -78,12 +78,14 @@
 				// uni.showLoading({
 				// 	title: "加载中"
 				// });
+				var uid=this.userInfo._id;
 				uniCloud.callFunction({
 					name: 'jzfunction',
 					data: {
 						action: 'resource/getResource',
 						data: {
-							_id: id
+							_id: id,
+							uid:uid
 						}
 					},
 				}).then((res) => {

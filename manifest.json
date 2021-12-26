@@ -169,7 +169,7 @@
         "enable" : false
     },
     "h5" : {
-        "template" : "",
+        "template" : "template.h5.html",
         "sdkConfigs" : {
             "maps" : {
                 "qqmap" : {
@@ -178,7 +178,7 @@
             }
         },
         "router" : {
-            "base" : "/jzszd/"
+            "base" : "/jzszd2/"
         }
     },
     "_spaceID" : "",

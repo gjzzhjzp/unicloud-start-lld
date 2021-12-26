@@ -9,7 +9,9 @@
 			appVersion: {},
 			config: {},
 			$i18n: {},
-			$t: {}
+			$t: {},
+			app_bb:"1.1.9",
+			app_bbh:"119"
 		},
 		// mixins:[checksh],
 		onLaunch: function() {

@@ -5,9 +5,11 @@ import i18n from './lang/i18n'
 import uView from "uview-ui";
 import notMoreTap from "@/common/notMoreTap.js";
 import {router,RouterMount} from './router/index.js'  //路径换成自己的
+import storage from '@/common/utils/storage.js'
 Vue.use(router)
 // import { RouterMount } from 'uni-simple-router'
 Vue.use(uView);
+Vue.prototype.$storage = storage;
 Vue.prototype.$notMoreTap = notMoreTap.notMoreTap;
 // 引入音频
 import ZAudio from '@/components/uniapp-zaudio/index.js'

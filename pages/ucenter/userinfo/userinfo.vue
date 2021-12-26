@@ -83,7 +83,7 @@
 			}
 		},
 		mixins:[image,ucenter],
-		onLoad() {
+		created() {
 			this.univerifyStyle.authButton.title = this.$t('userinfo.bindPhoneNumber')
 			this.univerifyStyle.otherLoginButton.title = this.$t('userinfo.bindOtherLogin')
 			uni.setNavigationBarTitle({

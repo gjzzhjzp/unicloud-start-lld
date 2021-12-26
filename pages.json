@@ -55,7 +55,7 @@
 			"path": "pages/detail/detail",
 			"style": {
 				"navigationBarTitleText": "详情",
-				"enablePullDownRefresh": true,
+				"enablePullDownRefresh": false,
 				"app-plus": {
 					"subNVues": [{
 						"id": "videodanmu", // 唯一标识  

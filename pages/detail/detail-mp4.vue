@@ -6,26 +6,29 @@
 					<view class="detail-image-item">
 						<div id="dplayer" ref="dplayer">
 						</div>
-						<!-- <video id="myVideo" :danmu-btn="danmubtn" :enable-danmu="enabledanmu"
-							:danmu-list="data.danmulist" autoplay :src="data.aliyun_dz" controls
-							@timeupdate="timeupdate"></video> -->
+						<div v-if="videoDirection=='shu'" class="player-toggle shu" @click="toggleMp4('shu')">
+							<u-icon name="/static/center/shu.png"></u-icon>
+						</div>
+						<div v-else class="player-toggle heng" @click="toggleMp4('heng')">
+							<u-icon name="/static/center/heng.png"></u-icon>
+						</div>
 					</view>
 				</template>
 				<template v-else>
-					<!-- <view style="height: 300px;">
-						
-					</view> -->
 					<view class="detail-image-item" v-for="(item,index) in data.resources" :key="index">
 						<div id="dplayer" ref="dplayer">
 						</div>
-						<!-- item:{{item}} -->
-						<!-- <video id="myVideo"  autoplay :src="item.url"
-							controls @timeupdate="timeupdate"></video> -->
+						<div v-if="videoDirection=='shu'" class="player-toggle shu" @click="toggleMp4('shu')">
+							<u-icon name="/static/center/shu.png"></u-icon>
+						</div>
+						<div v-else class="player-toggle heng" @click="toggleMp4('heng')">
+							<u-icon name="/static/center/heng.png"></u-icon>
+						</div>
 					</view>
 				</template>
-				<view style="margin-top: 6px;">
+				<!-- <view style="margin-top: 6px;">
 					<u-alert-tips type="warning" description="注意:全屏需横屏时请启用手机的横屏模式"></u-alert-tips>
-				</view>
+				</view> -->
 				<!-- #ifndef MP-ALIPAY -->
 				<u-popup v-model="showsenddanmu" mode="bottom">
 					<view class="comment-container2">
@@ -84,7 +87,8 @@
 				showsenddanmu: false,
 				videoContext: null,
 				currentTime: "", ///当前播放时间
-				plNumber: 0
+				plNumber: 0,
+				videoDirection:"shu"
 			}
 		},
 		components: {
@@ -120,26 +124,38 @@
 			this.initImage();
 			// this.videoContext = uni.createVideoContext('myVideo');
 			this.$nextTick(() => {
-				if(this.data.resources&&this.data.resources.length>0){
-					this.initDp(this.data);
-				}
+				this.initDp(this.data);
 			})
 		},
 		watch: {
-			"data.resources"() {
-				this.initImage();
-				if(this.data.resources&&this.data.resources.length>0){
+			data: {
+				deep: true,
+				handler() {
+					this.initImage();
 					this.initDp(this.data);
 				}
 			}
 		},
 		methods: {
-			initDp(item) {
-				var url="";
-				if(item.aliyun_dz&&item.aliyun_dz.indexOf('/jzmp4/')!=-1){
-					url=item.aliyun_dz;
+			toggleMp4(){
+				// debugger;
+				this.videoDirection=this.videoDirection=="shu"?"heng":"shu";
+				if(this.videoDirection=="heng"){	
+					window.jQuery(".detail-image-item").addClass("heng");
 				}else{
-					url= item.resources[0].url;
+					window.jQuery(".detail-image-item").removeClass("heng");
+				}
+			},
+			initDp(item) {
+				// debugger;
+				var url = "";
+				if (item.aliyun_dz && item.aliyun_dz.indexOf('/jzmp4/') != -1) {
+					url = item.aliyun_dz;
+				} else {
+					url = item.resources[0].url;
+				}
+				if (!url) {
+					return;
 				}
 				this.dp = new DPlayer({
 					container: document.getElementById('dplayer'),
@@ -173,6 +189,15 @@
 						unlimited: true,
 					}
 				});
+				// this.dp.on("fullscreen", function(){
+				// 	window.jQuery(".detail-image-item").addClass("fullscren");
+				// })
+				this.dp.on("webfullscreen", function(){
+					window.jQuery(".detail-image-item").addClass("fullscren");
+				})
+				this.dp.on("webfullscreen_cancel", function(){
+					window.jQuery(".detail-image-item").removeClass("fullscren");
+				})
 			},
 			changenumber(plNumber) {
 				this.plNumber = plNumber;
@@ -231,6 +256,25 @@
 	}
 </script>
 <style>
+	.player-toggle {
+		display: none;
+		position: fixed;
+		top: 50%;
+		z-index: 1000000;
+		left: 10px;
+		height: 40px;
+		width: 40px;
+		margin-top: -15px;
+	}
+	.fullscren .player-toggle{
+		display: block;
+	}
+
+	.player-toggle * {
+		width: 100%;
+		height: 100%;
+	}
+
 	.detail-image-item {
 		position: relative;
 	}
@@ -307,13 +351,35 @@
 	}
 
 	.detail-image-item {
-		/* margin: 20rpx 0; */
-		width: 750rpx;
-		margin-left: -10px;
+		width: 100%;
+		height: 30vh;
+
+	}
+
+	.detail-image-item.fullscren.heng {
+		transform: rotate(90deg);
+		height: 100vw !important;
+		position: fixed;
+		    top: 0;
+		    bottom: 0px;
+		    left: 0px;
+		right: 0px;
+		z-index: 9999;
+		/* width: 100vh !important; */
+	}
+
+	.detail-image-item.fullscren.heng #dplayer {
+		width: 100vh !important;
+	}
+
+	#dplayer {
+		width: 100%;
+		height: 100%;
 	}
 
 	.detail-image-item video {
 		width: 100%;
+		height: 100%;
 		border-radius: 10px;
 	}
 </style>

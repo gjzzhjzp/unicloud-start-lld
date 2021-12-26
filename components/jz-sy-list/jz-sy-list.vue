@@ -10,11 +10,12 @@
 					<u-col span="6" class="jz-sy-item" v-for="(item,index) in list" :key="index">
 						<view class="jz-sy-list-item" @click="$notMoreTap(toDetail,'notTap',item)">
 							<view>
-								<u-lazy-load threshold="300" height="200rpx" border-radius="10" img-mode="aspectFill"
-									:image="imageUrl(item)"></u-lazy-load>
+								<!-- <image-storage :src="imageUrl(item)" height="100px" width="100%" :customStyle="{borderRadius:'6px'}" mode="aspectFill"></image-storage> -->
+								<!-- <u-lazy-load threshold="300" height="100px" border-radius="10" img-mode="aspectFill"
+									:image="imageUrl(item)"></u-lazy-load> -->
 
-								<!-- <u-image width="100%" height="140rpx" border-radius="10" :src="imageUrl(item)">
-								</u-image> -->
+								<u-image width="100%" height="100px" border-radius="10" :src="imageUrl(item)" loading-icon="/static/center/chang1.png">
+								</u-image>
 							</view>
 							<view class="jz-sy-list-text">{{item.title}}</view>
 						</view>
@@ -172,8 +173,11 @@
 	}
 </script>
 <style lang="scss">
+	.jz-sy-item{
+		    padding: 0px 6px !important;
+	}
 	.jz-sy-list-item {
-		margin: 6px 4px;
+		margin: 6px 0px;
 		    width: 100%;
 	}
 

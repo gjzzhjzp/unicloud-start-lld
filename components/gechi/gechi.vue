@@ -155,10 +155,10 @@
 		background-color: rgba(0,0,0,0.5);
 	}
 	.gechi-content-top{
-		padding:20rpx;
 		text-align: center;
 		height: 160rpx;
 		z-index: 99;
+		margin-top: 30px;
 		
 	}
 	.gechi-content-center{

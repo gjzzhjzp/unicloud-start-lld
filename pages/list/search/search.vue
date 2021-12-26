@@ -62,14 +62,14 @@
 			</view>
 		</view>
 		<!-- 搜索联想 -->
-		<view class="search-associative" v-if="associativeShow">
+		<!-- <view class="search-associative" v-if="associativeShow">
 			<uni-list>
 				<template v-for="(item,index) in associativeList">
 					<uni-list-item :key="item._id" :ellipsis="1" :title="item.title" @click="associativeClick(item)"
 						show-extra-icon clickable :extra-icon="{size:18,color:iconColor,type:'search'}" />
 				</template>
 			</uni-list>
-		</view>
+		</view> -->
 	</view>
 </template>
 
@@ -264,16 +264,16 @@ const searchLogDbName = 'opendb-search-log'; // 搜索记录数据库
 		},
 		watch: {
 			searchText: debounce(function(value) {
-				if (value) {
-					this.mallGoodsDb.where({
-						[associativeSearchField]: new RegExp(value, 'gi'),
-					}).field(associativeField).get().then(res => {
-						this.associativeList = res.result.data;
-					})
-				} else {
-					this.associativeList.length = 0;
-					getApp().globalData.searchText = '';
-				}
+				// if (value) {
+				// 	this.mallGoodsDb.where({
+				// 		[associativeSearchField]: new RegExp(value, 'gi'),
+				// 	}).field(associativeField).get().then(res => {
+				// 		this.associativeList = res.result.data;
+				// 	})
+				// } else {
+				// 	this.associativeList.length = 0;
+				// 	getApp().globalData.searchText = '';
+				// }
 			}, 100)
 		}
 	}

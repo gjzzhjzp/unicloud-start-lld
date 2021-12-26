@@ -15,10 +15,11 @@
 				</view>
 				<view v-show="showMusicxz" class="music-list-right-icon" @click="to_operate(item2,'download',index2)">
 					<!-- item2:{{item2.resources[0]}} -->
-					<a :download='item2.title' :href="item2.resources?item2.resources[0].url:''">
-						<u-image v-show="!item2.download" width="60rpx" height="60rpx" src="/static/music/download.png">
-						</u-image>
-					</a>
+					<!-- <a :download='item2.title' :href="item2.resources?item2.resources[0].url:''"> -->
+					<u-image @click="downloadfile(item2)" v-show="!item2.download"
+						width="60rpx" height="60rpx" src="/static/music/download.png">
+					</u-image>
+					<!-- </a> -->
 					<u-image v-show="item2.download" width="60rpx" height="60rpx" src="/static/music/download_sed.png">
 					</u-image>
 				</view>
@@ -38,12 +39,13 @@
 		<template v-else>
 			<u-loadmore :status="loadStatus" @loadmore="loadmoreList"></u-loadmore>
 		</template>
-		<view class="imt-audio"  v-if="list.length>0">
-			<imt-audio ref="imtaudio" @togechi="togechi" @play="play" @pause="pause" continue :src="(list[now]&&list[now].resources)?list[now].resources[0].url:''"
-				:data="curdata" :now="now">
+		<view class="imt-audio" v-if="list.length>0">
+			<imt-audio ref="imtaudio" @togechi="togechi" @play="play" @pause="pause" continue
+				:src="(list[now]&&list[now].resources)?list[now].resources[0].url:''" :data="curdata" :now="now">
 			</imt-audio>
 		</view>
-		<u-popup v-model="showpopup" close-icon="/static/head/down.png" :close-icon-size="40" :mask="false" mode="bottom" height="80vh" :closeable="true" close-icon-color="#fff">
+		<u-popup v-model="showpopup" close-icon="/static/head/down.png" :close-icon-size="40" :mask="false"
+			mode="bottom" height="80vh" :closeable="true" close-icon-color="#fff">
 			<view>
 				<gechi :curdata="list[now]" width="100%">
 				</gechi>
@@ -77,15 +79,17 @@
 		created() {
 			// debugger;
 			var config = getApp().globalData.systemconfig;
-			var t_800006 = config["800006"];
-			this.showMusicxz = t_800006 == '1' ? true : false;
+			if (config) {
+				var t_800006 = config["800006"];
+				this.showMusicxz = t_800006 == '1' ? true : false;
+			}
 		},
 		computed: {
 			curdata() {
 				var data = this.list[this.now];
 				console.log("data", data);
 				var avatarurl = "";
-				if(data){
+				if (data) {
 					if (Array.isArray(data.avatar)) {
 						avatarurl = data.avatar[0].url;
 					} else {
@@ -99,7 +103,7 @@
 						play: data.play
 					}
 				}
-				
+
 			},
 			...mapGetters({
 				userInfo: 'user/info',
@@ -143,6 +147,37 @@
 			console.log("this.list", this.list);
 		},
 		methods: {
+			downloadfile(item2) {
+				var url=item2.resources?item2.resources[0].url:'';
+				var title=item2.title;
+				if(!url){
+					return;
+				}
+				axios({
+				    method: 'get',
+				    url: url,
+				    // 必须显式指明响应类型是一个Blob对象，这样生成二进制的数据，才能通过window.URL.createObjectURL进行创建成功
+				    responseType: 'blob',
+				}).then((res) => {
+				    if (!res) {
+				        return
+				    }
+				    // 将lob对象转换为域名结合式的url
+				    let blobUrl = window.URL.createObjectURL(res.data)
+				    let link = document.createElement('a')
+				    document.body.appendChild(link)
+				    link.style.display = 'none'
+				    link.href = blobUrl
+				    // 设置a标签的下载属性，设置文件名及格式，后缀名最好让后端在数据格式中返回
+				    link.download = title+'.mp3'
+				    // 自触发click事件
+				    link.click()
+				    document.body.removeChild(link)
+				    window.URL.revokeObjectURL(blobUrl);
+					})
+
+			},
+
 			togechi() {
 				this.showpopup = true;
 				// var data=this.list[this.now];
@@ -151,6 +186,7 @@
 				// })
 			},
 			loadmoreList() {
+				console.log("-------------------------")
 				this.$emit("loadmore");
 			},
 			pause(index) {

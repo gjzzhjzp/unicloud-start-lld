@@ -12,7 +12,7 @@
 			<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y">
 				<view class="comment" v-for="(res, index) in commentList" :key="res.id">
 					<view class="left">
-						<commont-image :src="res.user_id[0].avatar_file.url"
+						<commont-image :src="(res.user_id[0]&&res.user_id[0].avatar_file)?res.user_id[0].avatar_file.url:''"
 							:isoriginal="!!(res.user_id[0].original==1)">
 						</commont-image>
 					</view>
@@ -147,6 +147,16 @@
 				}
 			}
 		},
+		watch:{
+			zydata:{
+				deep:true,
+				handler(){
+					if(this.zydata._id){
+						this.getComment();
+					}
+				}
+			}
+		},
 		methods: {
 			// 点击回复当前资源
 			replyResource() {
@@ -269,26 +279,44 @@
 						all_reply_comment_id: new RegExp(comment_id, 'gi')
 					})
 				}
+				console.log("param",param);
 				if (!param.article_id) {
 					uni.hideLoading();
 					return;
 				}
+				
+				// 获取统计数量
+				var rescount=await db.collection('opendb-news-comments').where(param).count();
+				console.log("count",rescount);
+				this.plNumber= rescount.result.total;
+				this.$emit("changenumber", this.plNumber);
+				 
 				var dbcomments = db.collection("opendb-news-comments,uni-id-users").where(param).field(
 					"article_id,user_id{nickname,avatar_file,original},reply_user_id{nickname,avatar_file},comment_content,like_count,comment_type,comment_date,reply_comment_id,comment_cj,all_reply_comment_id"
 				);
-				if (that.toptype == "zx") {
-					comments = await dbcomments.orderBy("comment_date", "desc").get();
-				} else {
-					comments = await dbcomments.orderBy("like_count", "desc").get();
+				var f_c=Math.ceil(this.plNumber/100);
+				var res_comment=[];
+				for(var i=0;i<f_c;i++){
+					if (that.toptype == "zx") {
+						comments = await dbcomments.orderBy("comment_date", "desc").skip(100*i).limit(100).get();
+					} else {
+						comments = await dbcomments.orderBy("like_count", "desc").skip(100*i).limit(100).get();
+					}
+					// var list = await this.db.collection("jz-opendb-danmu").where({
+					// 	resource_id: event.id
+					// }).skip(100*i).limit(100).get();
+					res_comment=res_comment.concat(comments.result.data)
 				}
+				
+				
 				// console.log("comments", comments);
-				if (comments.result && comments.result.data.length > 0) {
+				if (res_comment.length > 0) {
 
 					// 获取当前登录用户点赞的评论列表
 					// var like_pl = [];
 					if (!comment_id) {
-						this.plNumber = comments.result.data.length;
-						this.$emit("changenumber", this.plNumber);
+						// this.plNumber = comments.result.data.length;
+						// this.$emit("changenumber", this.plNumber);
 						var likepl = await db.collection("opendb-news-likepl").where({
 							article_id: that.zydata._id,
 							user_id: uid
@@ -301,14 +329,14 @@
 								}
 							})
 						}
-						comments.result.data.forEach((item2) => {
+						res_comment.forEach((item2) => {
 							if (this.like_pl.indexOf(item2._id) != -1) {
 								this.$set(item2, "isLike", true);
 							} else {
 								this.$set(item2, "isLike", false);
 							}
 						});
-						that.commentList = that.getTree(comments.result.data);
+						that.commentList = that.getTree(res_comment);
 						that.commentList.forEach((item2) => {
 							if (item2.children) {
 								if (!item2.allchildren) {
@@ -325,9 +353,9 @@
 							})
 						}
 					} else {
-						this.plNumber++;
-						this.$emit("changenumber", this.plNumber);
-						that._setcomment(that.commentList, comments.result.data[0], comment_id);
+						// this.plNumber++;
+						// this.$emit("changenumber", this.plNumber);
+						that._setcomment(that.commentList, res_comment[0], comment_id);
 						// console.log("that.commentList",that.commentList);
 						that.commentList.forEach((item2) => {
 							if (item2.children) {

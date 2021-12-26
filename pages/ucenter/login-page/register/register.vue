@@ -6,6 +6,9 @@
 					:background="{'background':'none'}">
 				</u-navbar>
 			</view>
+			<view class="login_back_logo">
+				<u-image width="100%" :src="'/static/login-index/login_back.png'" mode="widthFix"></u-image>
+			</view>
 			<view class="login-back-con">
 				<uni-forms ref="form" :value="formData" :rules="rules" validate-trigger="submit"
 					err-show-type="undertext" label-width="160px" label-position="right">
@@ -27,7 +30,7 @@
 							:placeholder="$t('register.passwordAgain')" type="password" v-model="formData.pwd2"
 							trim="both" />
 					</uni-forms-item>
-					<uni-forms-item label="微博主页地址" name="weiboname" v-model="formData.weiboname" required>
+					<uni-forms-item label="微博地址" name="weiboname" v-model="formData.weiboname" required>
 						<uni-easyinput :inputBorder="false" class="easyinput" placeholder="http://"
 							v-model="formData.weiboname" trim="both" />
 					</uni-forms-item>
@@ -76,11 +79,6 @@
 		onReady() {
 			this.$refs.form.setRules(this.rules);
 
-		},
-		onLoad() {
-			uni.setNavigationBarTitle({
-				title: this.$t('register.navigationBarTitle')
-			});
 		},
 		methods: {
 			goback() {
@@ -180,7 +178,7 @@
 	}
 
 	.er-register ::v-deep .uni-forms-item__label {
-		width: 100px !important;
+		width: 5em !important;
 	}
 
 	.usercenter-top {
@@ -202,16 +200,17 @@
 	}
 
 	.login-back {
-		height: calc(100vh - 44px);
-		background-image: url(/static/center/login.png);
+		height: 100vh;
+		background: linear-gradient(rgb(119, 126, 206), rgb(255 255 255));
 		background-size: cover;
 		background-repeat: no-repeat;
 		background-position: center;
 	}
 
 	.login-back-con {
-		width: 90%;
-		margin: 290px auto 0px auto;
+		width: 80%;
+		margin: 0 auto;
+		margin-top: 40px;
 	}
 
 	.login-back-con .u-btn {

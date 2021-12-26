@@ -1,6 +1,6 @@
 <template>
-	<view class="detail-image" :pl-number="plNumber">
-		<detailhead-mp4 :data="data">
+	<view class="detail-image" >
+		<detailhead-mp4 :data="data" :pl-number="plNumber">
 			<!-- <detailhead :data="data"></detailhead> -->
 			<template slot="content">
 				<view class="detail-image-item">

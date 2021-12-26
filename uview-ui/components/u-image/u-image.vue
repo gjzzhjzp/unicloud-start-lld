@@ -14,7 +14,7 @@
 			}"
 		></image>
 		<view
-			v-if="showLoading && loading"
+			v-if="showLoading&&loading"
 			class="u-image__loading"
 			:style="{
 				borderRadius: shape == 'circle' ? '50%' : $u.addUnit(borderRadius),
@@ -22,6 +22,7 @@
 			}"
 		>
 			<slot v-if="$slots.loading" name="loading" />
+			
 			<u-icon v-else :name="loadingIcon" :width="width" :height="height"></u-icon>
 		</view>
 		<view
@@ -239,7 +240,13 @@ export default {
 
 <style scoped lang="scss">
 @import '../../libs/css/style.components.scss';
-
+.u-image__loading .u-icon{
+	position: absolute;
+	    top: 0;
+	    left: 0;
+	    width: 100%;
+	    height: 100%;
+}
 .u-image {
 	position: relative;
 	transition: opacity 0.5s ease-in-out;

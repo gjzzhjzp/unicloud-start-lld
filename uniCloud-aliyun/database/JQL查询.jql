@@ -8,6 +8,15 @@
 // 数据库查询有最大返回条数限制，详见：https://uniapp.dcloud.net.cn/uniCloud/cf-database?id=limit
 // 详细JQL语法，请参考 https://uniapp.dcloud.net.cn/uniCloud/clientdb?id=jsquery
 
+db.collection('opendb-news-favorite').where({
+			user_id: "6173fc369ee65f00018fd5e6",
+			zy_gs: 2
+		}).get();
+db.collection('opendb-news-favorite').aggregate().match({
+			user_id: "6173fc369ee65f00018fd5e6",
+			zy_gs: 2
+		}).end();
+
 // 下面示例查询uni-id-users表的所有数据
 db.collection('jz-custom-question').where({
 	_id: "616e26e933b1aafcfc84855c"

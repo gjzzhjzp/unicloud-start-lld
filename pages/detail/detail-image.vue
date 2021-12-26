@@ -1,6 +1,6 @@
 <template>
-	<view class="detail-image" :pl-number="plNumber">
-		<detailhead-mp4 :data="data">
+	<view class="detail-image" >
+		<detailhead-mp4 :data="data" :pl-number="plNumber">
 			<template slot="content">
 				<view style="margin-top: 20rpx;">
 					<nine-squared :list="data.resources" @preview="previewOpen"></nine-squared>
@@ -51,6 +51,7 @@
 		methods: {
 			changenumber(plNumber){
 				this.plNumber=plNumber;
+				console.log("plNumber",this.plNumber);
 			},
 			initImage() {
 				this.imgs.splice(0, this.imgs.length);

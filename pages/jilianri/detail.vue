@@ -30,8 +30,8 @@
 				rq:""
 			}
 		},
-		onLoad(e){
-			this.rq=e.rq;
+		created(){
+			this.rq=this.$Route.query.rq;
 			this.getjilianri();
 		},
 		methods: {

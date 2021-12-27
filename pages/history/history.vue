@@ -96,7 +96,7 @@
 			async addRandomData() {
 				var that = this;
 				uni.showLoading({
-					title: '加载中...'
+					title: '加载中'
 				});
 				var userInfo = uni.getStorageSync("userInfo");
 				uniCloud.callFunction({

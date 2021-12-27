@@ -42,6 +42,9 @@ export default {
 					reslove(true);
 				}
 			}else{
+				uni.showLoading({
+					title:"加载中"
+				})
 				const db = uniCloud.database();
 				var userinfo = uni.getStorageSync("userInfo");
 				if(userinfo){
@@ -54,6 +57,7 @@ export default {
 					setTimeout(()=>{
 						getApp().globalData.userinf=null;
 					},1000*60*30)
+					uni.hideLoading()
 					if (userinf.status == 1) { //禁用
 						uni.reLaunch({
 							url: "/uview-ui/components/u-full-screen/u-full-screen-ztjy"
@@ -63,6 +67,7 @@ export default {
 						reslove(true);
 					}
 				}else{
+					uni.hideLoading()
 					reslove(true);
 				}
 			}
@@ -75,7 +80,9 @@ export default {
 		if(config){
 			reslove(config);
 		}else{
-			
+			uni.showLoading({
+				title:"加载中"
+			})
 				uniCloud.callFunction({
 					name: 'jzfunction',
 					data: {
@@ -98,7 +105,6 @@ export default {
 								weiboyz.push(item.content);
 							});
 						}
-						console.log("configaaaaaaaaaaaaaaaaaaa",config);
 						getApp().globalData.systemconfig = config;
 						getApp().globalData.weiboyz = weiboyz;
 						// this.setfks(config);
@@ -106,8 +112,10 @@ export default {
 							// 每隔10分钟请求一次，不要连续频繁请求
 							getApp().globalData.systemconfig=null;
 						},1000*60*30)
+						uni.hideLoading()
 						reslove(config);
 					} else {
+						uni.hideLoading()
 						uni.showToast({
 							title: res.msg,
 							icon: null

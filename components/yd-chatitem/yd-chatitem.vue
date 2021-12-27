@@ -1,7 +1,7 @@
 <template>
 	<view class="chatitem">
 		<view v-if="isLeft" class="leftitem" :style="{backgroundColor: bgColor}">
-			<image class="icon" :src="icon" :style="{height: iconSize, width: iconSize,marginTop:'20rpx'}"></image>
+			<image class="icon" :src="icon" :style="{height: iconSize, width: iconSize,marginTop:'20rpx',borderRadius:'6px'}"></image>
 			<view class="info">
 				<text class="nickname" :style="{fontSize: nameSize, color: nameColor}">{{ nickname }}</text>
 				<text class="message"
@@ -23,7 +23,7 @@
 					{{ message }}
 				</text>
 			</view>
-			<image class="icon" :src="icon" :style="{height: iconSize, width: iconSize,marginTop:'20rpx'}"></image>
+			<image class="icon" :src="icon" :style="{height: iconSize, width: iconSize,marginTop:'20rpx',borderRadius:'6px'}"></image>
 		</view>
 	</view>
 </template>

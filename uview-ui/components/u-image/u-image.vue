@@ -240,7 +240,7 @@ export default {
 
 <style scoped lang="scss">
 @import '../../libs/css/style.components.scss';
-.u-image__loading .u-icon{
+.u-image__loading .u-icon,.u-image__error .u-icon{
 	position: absolute;
 	    top: 0;
 	    left: 0;

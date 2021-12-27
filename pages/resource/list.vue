@@ -215,7 +215,7 @@
 			},
 			addRandomData() {
 				uni.showLoading({
-					title: '加载中...'
+					title: '加载中'
 				});
 				var app_bbh = "115";
 				//#ifdef APP-PLUS

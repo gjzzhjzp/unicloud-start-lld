@@ -39,7 +39,7 @@
 		<view class="page" v-if="imgs.length > 0">
 			<text class="text">{{ index + 1 }} / {{ imgs.length }}</text>
 		</view>
-		<view v-show="showImageXz" class="save" v-if="saveBtn" @click.stop.prevent="save"><text class="text">保存</text></view>
+		<!-- <view v-show="showImageXz" class="save" v-if="saveBtn" @click.stop.prevent="save"><text class="text">保存</text></view> -->
 		<!-- <view class="rotate" v-if="rotateBtn" @click.stop.prevent="rotate"><text class="text">旋转</text></view> -->
 		<view class="desc" v-if="descs.length > 0 && descs.length == imgs.length && descs[index].length > 0">{{ descs[index] }}</view>
 	</view>
@@ -138,10 +138,13 @@ export default {
 		},
 		// 处理长按事件
 		onLongPress(e) {
+			e.stopPropagation();
+			e.preventDefault();
 			var src = e.currentTarget.dataset.src;
 			var index = e.currentTarget.dataset.index;
 			var data = { src: src, index: index };
 			this.$emit('longPress', data);
+			console.log("长按");
 		},
 		//长按事件相关内容---------结束-------------------
 

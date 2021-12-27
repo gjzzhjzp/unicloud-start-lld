@@ -19,7 +19,7 @@
 						</view>
 						<view class="item-container">
 							<view class="thumb-box" @click="$notMoreTap(toflbm,'notTap',item1,item)" v-for="(item1, index1) in item.children" :key="index1">
-								<u-image class="item-menu-image" loading-icon="/static/center/chang1.png"  height="50px" border-radius="10" :src="imageUrl(item1)" mode="aspectFill">
+								<u-image class="item-menu-image" loading-icon="/static/center/chang1.png" error-icon="/static/center/error_chang.png"  height="50px" border-radius="10" :src="imageUrl(item1)" mode="aspectFill">
 				
 								</u-image>
 								<!-- <view class="item-menu-image">

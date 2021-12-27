@@ -4,8 +4,8 @@
 			<!-- <image-storage :src="data.url"  width="100%" :customStyle="{borderRadius:'6px'}" mode="aspectFill"></image-storage> -->
 			<!-- <u-lazy-load v-if="data.url.indexOf('gif')==-1" @click="previewOpen(data)" threshold="300"
 				border-radius="10" :image="data.url" img-mode="aspectFill"></u-lazy-load> -->
-			<image :src="data.url" :style="{'border-radius':'4px'}" @click="previewOpen(data)" @load="loadSuccess(index)" @error="errorImg(index)"
-				mode="aspectFill"></image>
+			<u-image :src="data.url" loading-icon="/static/center/zheng1.png" error-icon="/static/center/error_zheng.png" :border-radius="8" @click="previewOpen(data)" @load="loadSuccess(index)" @error="errorImg(index)"
+				mode="aspectFill"></u-image>
 		</view>
 		<view v-else class="smallImage1">
 			<image src="/static/center/zheng1.png"  :style="{'border-radius':'4px'}" mode="aspectFill"></image>

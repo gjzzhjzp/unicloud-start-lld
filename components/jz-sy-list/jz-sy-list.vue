@@ -13,8 +13,7 @@
 								<!-- <image-storage :src="imageUrl(item)" height="100px" width="100%" :customStyle="{borderRadius:'6px'}" mode="aspectFill"></image-storage> -->
 								<!-- <u-lazy-load threshold="300" height="100px" border-radius="10" img-mode="aspectFill"
 									:image="imageUrl(item)"></u-lazy-load> -->
-
-								<u-image width="100%" height="100px" border-radius="10" :src="imageUrl(item)" loading-icon="/static/center/chang1.png">
+								<u-image width="100%" height="100px" border-radius="10" :src="imageUrl(item)" loading-icon="/static/center/chang1.png" error-icon="/static/center/error_chang.png">
 								</u-image>
 							</view>
 							<view class="jz-sy-list-text">{{item.title}}</view>

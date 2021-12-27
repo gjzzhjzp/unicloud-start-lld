@@ -139,7 +139,7 @@
 		},
 		methods: {
 			toggleMp4(){
-				debugger;
+				// debugger;
 				var direction="";
 				if(this.videoDirection=="shu"){
 					this.videoDirection="heng";
@@ -208,14 +208,29 @@
 				this.dp.on("fullscreen", function(){
 					window.jQuery(".detail-image-item").addClass("fullscren");
 					
-					window.jQuery("#dplayer").append(`<div class="player-toggle heng" onclick="coverscreen"></div>`);
+					window.jQuery("#dplayer").append(`<div class="player-toggle heng"></div>`);
 				})
 				this.dp.on("fullscreen_cancel", function(){
 					window.jQuery(".detail-image-item").removeClass("fullscren");
 					window.jQuery("#dplayer .player-toggle").remove();
 				})
-				window.jQuery(".player-toggle").bind("click",function(){
-					alert(1)
+				window.jQuery("#dplayer").on("click",".player-toggle.heng",function(){
+					// debugger;
+					var pscreen = plus.webview.currentWebview().opener();
+					mui.fire(pscreen, 'changescreen', {
+						direction: "landscape-primary"
+					});
+					window.jQuery("#dplayer").append(`<div class="player-toggle shu"></div>`);
+					window.jQuery("#dplayer .player-toggle.heng").remove();
+				})
+				window.jQuery("#dplayer").on("click",".player-toggle.shu",function(){
+					
+					var pscreen = plus.webview.currentWebview().opener();
+					mui.fire(pscreen, 'changescreen', {
+						direction: "portrait-primary"
+					});
+					window.jQuery("#dplayer").append(`<div class="player-toggle heng"></div>`);
+					window.jQuery("#dplayer .player-toggle.shu").remove();
 				})
 			},
 			changenumber(plNumber) {

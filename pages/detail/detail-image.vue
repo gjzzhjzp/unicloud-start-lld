@@ -1,10 +1,10 @@
 <template>
-	<view class="detail-image" >
+	<view class="detail-image">
 		<detailhead-mp4 :data="data" :pl-number="plNumber">
 			<template slot="content">
 				<view style="margin-top: 20rpx;">
 					<nine-squared :list="data.resources" @preview="previewOpen"></nine-squared>
-					<kxj-previewImage ref="previewImage" :imgs="imgs"></kxj-previewImage>
+					<kxj-previewImage ref="previewImage" :imgs="imgs" @longPress="openlongan"></kxj-previewImage>
 				</view>
 				<!-- <detailhead :data="data"></detailhead> -->
 			</template>
@@ -12,6 +12,7 @@
 				<comment ref="comment" :zydata="data" @changenumber="changenumber"></comment>
 			</template>
 		</detailhead-mp4>
+		<u-action-sheet :list="list" v-model="showlongan" :cancel-btn="true" @click="saveImage"></u-action-sheet>
 		<u-toast ref="uToast" />
 	</view>
 </template>
@@ -23,8 +24,13 @@
 	export default {
 		data() {
 			return {
+				list: [ {
+					text: '保存图片'
+				}],
+				showlongan: false,
 				imgs: [],
-				plNumber:0
+				plNumber: 0,
+				currentSrc:""
 			}
 		},
 		components: {
@@ -49,9 +55,21 @@
 			}
 		},
 		methods: {
-			changenumber(plNumber){
-				this.plNumber=plNumber;
-				console.log("plNumber",this.plNumber);
+			saveImage(index){
+				console.log(index,this.currentSrc);
+				var pscreen = plus.webview.currentWebview().opener();
+				mui.fire(pscreen, 'saveImage', {
+					src: this.currentSrc
+				});
+			},
+			openlongan(data){
+				console.log("data",data);
+				this.currentSrc=data.src;
+				this.showlongan=true;
+			},
+			changenumber(plNumber) {
+				this.plNumber = plNumber;
+				console.log("plNumber", this.plNumber);
 			},
 			initImage() {
 				this.imgs.splice(0, this.imgs.length);

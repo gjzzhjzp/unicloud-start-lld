@@ -10,7 +10,7 @@ import me from "./methods.js"
 router.beforeEach((to, from, next) => {
 	console.log("to",to);
 	console.log("from",from);
-
+// next();
 	me.getConfig().then(()=>{
 		if(to.path.indexOf("login-page")!=-1||to.path.indexOf("u-full-screen")!=-1||to.path.indexOf("/question/")!=-1){
 			next();

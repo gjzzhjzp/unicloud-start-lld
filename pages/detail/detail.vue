@@ -71,6 +71,12 @@
 			this.getResource(this.id);
 			uni.stopPullDownRefresh();
 		},
+		onUnload(){
+			var pscreen = plus.webview.currentWebview().opener();
+			mui.fire(pscreen, 'changescreen', {
+				direction: "portrait-primary"
+			});
+		},
 		methods: {
 			// 获取资源
 			getResource(id) {

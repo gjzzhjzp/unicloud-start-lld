@@ -17,13 +17,14 @@
 				<template v-else>
 					<view class="detail-image-item" v-for="(item,index) in data.resources" :key="index">
 						<div id="dplayer" ref="dplayer">
+							<div v-if="videoDirection=='shu'" class="player-toggle shu" @click="toggleMp4('shu')">
+								<u-icon name="/static/center/shu.png"></u-icon>
+							</div>
+							<div v-else class="player-toggle heng" @click="toggleMp4('heng')">
+								<u-icon name="/static/center/heng.png"></u-icon>
+							</div>
 						</div>
-						<div v-if="videoDirection=='shu'" class="player-toggle shu" @click="toggleMp4('shu')">
-							<u-icon name="/static/center/shu.png"></u-icon>
-						</div>
-						<div v-else class="player-toggle heng" @click="toggleMp4('heng')">
-							<u-icon name="/static/center/heng.png"></u-icon>
-						</div>
+						
 					</view>
 				</template>
 				<!-- <view style="margin-top: 6px;">
@@ -138,13 +139,25 @@
 		},
 		methods: {
 			toggleMp4(){
-				// debugger;
-				this.videoDirection=this.videoDirection=="shu"?"heng":"shu";
-				if(this.videoDirection=="heng"){	
-					window.jQuery(".detail-image-item").addClass("heng");
+				debugger;
+				var direction="";
+				if(this.videoDirection=="shu"){
+					this.videoDirection="heng";
+					direction="landscape-primary";
 				}else{
-					window.jQuery(".detail-image-item").removeClass("heng");
+					this.videoDirection="shu";
+					direction="portrait-primary";
 				}
+				// this.videoDirection=this.videoDirection=="shu"?"heng":"shu";
+				var pscreen = plus.webview.currentWebview().opener();
+				mui.fire(pscreen, 'changescreen', {
+					direction: direction
+				});
+				// if(this.videoDirection=="heng"){	
+				// 	window.jQuery(".detail-image-item").addClass("heng");
+				// }else{
+				// 	window.jQuery(".detail-image-item").removeClass("heng");
+				// }
 			},
 			initDp(item) {
 				// debugger;
@@ -192,11 +205,17 @@
 				// this.dp.on("fullscreen", function(){
 				// 	window.jQuery(".detail-image-item").addClass("fullscren");
 				// })
-				this.dp.on("webfullscreen", function(){
+				this.dp.on("fullscreen", function(){
 					window.jQuery(".detail-image-item").addClass("fullscren");
+					
+					window.jQuery("#dplayer").append(`<div class="player-toggle heng" onclick="coverscreen"></div>`);
 				})
-				this.dp.on("webfullscreen_cancel", function(){
+				this.dp.on("fullscreen_cancel", function(){
 					window.jQuery(".detail-image-item").removeClass("fullscren");
+					window.jQuery("#dplayer .player-toggle").remove();
+				})
+				window.jQuery(".player-toggle").bind("click",function(){
+					alert(1)
 				})
 			},
 			changenumber(plNumber) {
@@ -254,26 +273,19 @@
 			},
 		}
 	}
+	// function coverscreen(){
+	// 	console.log(2)
+	// }
 </script>
 <style>
-	.player-toggle {
-		display: none;
-		position: fixed;
-		top: 50%;
-		z-index: 1000000;
-		left: 10px;
-		height: 40px;
-		width: 40px;
-		margin-top: -15px;
-	}
-	.fullscren .player-toggle{
-		display: block;
-	}
+	
+	
+	
 
-	.player-toggle * {
+	/* .player-toggle * {
 		width: 100%;
 		height: 100%;
-	}
+	} */
 
 	.detail-image-item {
 		position: relative;

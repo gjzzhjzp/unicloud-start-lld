@@ -167,7 +167,7 @@
 		data() {
 			return {
 				menuButtonInfo: menuButtonInfo,
-				statusBarHeight: systemInfo.statusBarHeight
+				statusBarHeight: systemInfo.statusBarHeight||30////默认40px的高度
 			};
 		},
 		computed: {

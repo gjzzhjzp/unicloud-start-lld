@@ -15,13 +15,13 @@
 				</view>
 			</view>
 		</u-sticky>
-		<view v-show="current==0">
-			<view class="detail-image-title">
-				<view class="title">
+		<view v-show="current==0"> 
+			<view class="detail-image-title" >
+				<view class="title" style="flex: 1;">
 					{{data.title}}
 				</view>
-				<view style="text-align: right;color: #909399;width: 120px;">
-					<uni-dateformat class="last_modify_date" :date="data.last_modify_date" format="yyyy-MM-dd"
+				<view style="text-align: right;color: #909399;width: 80px;">
+					<uni-dateformat class="publish_date" :date="data.publish_date" format="yyyy-MM-dd"
 						:threshold="[60000, 2592000000]" />
 				</view>
 			</view>
@@ -315,6 +315,8 @@
 
 	.detail-image-title .title {
 		font-size: 36rpx;
+		flex: 1;
+
 	}
 
 	.detail-image-sx {

@@ -151,15 +151,25 @@
 							"text": "已授权"
 						}
 					],
+					// "zy_gs_localdata": [{
+					// 	"value": 0,
+					// 	"text": "图片"
+					// }, {
+					// 	"value": 1,
+					// 	"text": "视频"
+					// }, {
+					// 	"value": 2,
+					// 	"text": "音乐"
+					// }, {
+					// 	"value": 3,
+					// 	"text": "文章"
+					// }],
 					"zy_gs_localdata": [{
 						"value": 0,
 						"text": "图片"
 					}, {
 						"value": 1,
 						"text": "视频"
-					}, {
-						"value": 2,
-						"text": "音乐"
 					}, {
 						"value": 3,
 						"text": "文章"

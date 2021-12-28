@@ -205,18 +205,24 @@
 				// this.dp.on("fullscreen", function(){
 				// 	window.jQuery(".detail-image-item").addClass("fullscren");
 				// })
+				var pscreen = plus.webview.currentWebview().opener();
 				this.dp.on("fullscreen", function(){
+					// debugger;
 					window.jQuery(".detail-image-item").addClass("fullscren");
 					
 					window.jQuery("#dplayer").append(`<div class="player-toggle heng"></div>`);
 				})
 				this.dp.on("fullscreen_cancel", function(){
+					// debugger;
 					window.jQuery(".detail-image-item").removeClass("fullscren");
 					window.jQuery("#dplayer .player-toggle").remove();
+					
+					mui.fire(pscreen, 'changescreen', {
+						direction: "portrait-primary"
+					});
 				})
 				window.jQuery("#dplayer").on("click",".player-toggle.heng",function(){
 					// debugger;
-					var pscreen = plus.webview.currentWebview().opener();
 					mui.fire(pscreen, 'changescreen', {
 						direction: "landscape-primary"
 					});
@@ -225,7 +231,6 @@
 				})
 				window.jQuery("#dplayer").on("click",".player-toggle.shu",function(){
 					
-					var pscreen = plus.webview.currentWebview().opener();
 					mui.fire(pscreen, 'changescreen', {
 						direction: "portrait-primary"
 					});
@@ -378,8 +383,10 @@
 	}
 
 	.detail-image-item {
-		width: 100%;
+		/* width: 100%; */
+		width: 100vw;
 		height: 30vh;
+		margin-left: -10px;
 
 	}
 

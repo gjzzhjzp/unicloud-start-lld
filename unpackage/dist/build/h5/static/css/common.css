@@ -250,21 +250,6 @@ body.pages-resource-list uni-page-body {
 	display: none !important;
 }
 
-/* .fullscren #dplayer>div {}
-
-.fullscren #dplayer>div.dplayer-video-wrap {
-	width: 100vh !important;
-	height: 100vw !important;
-	transform: rotate(90deg) !important;
-	position: fixed !important;
-	top: 161px !important;
-	bottom: 0px !important;
-	left: -161px !important;
-	right: 0px !important;
-	z-index: 9999 !important;
+.login_back_logo{
+	padding: 40px;
 }
-
-.fullscren #dplayer>div.dplayer-controller-mask {
-	width: 98px !important;
-	height: 100vh !important;
-} */

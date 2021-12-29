@@ -196,7 +196,7 @@ body.pages-resource-list uni-page-body {
 	color: #fff;
 }
 
-/* 
+
 .smallImage1 * {
 	height: 100% !important;
 	width: 100% !important;
@@ -246,4 +246,7 @@ body.pages-resource-list uni-page-body {
 
 .login_back_logo{
 	padding: 40px;
-} */
+} 
+.dplayer-comment-setting-box{
+	z-index: 999999;
+}

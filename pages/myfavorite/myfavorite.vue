@@ -141,6 +141,12 @@
 					this.flowList=this.AryDeleteMore(this.flowList);
 					console.log("this.flowListqqqqqqqqqqq",this.flowList);
 					uni.hideLoading();
+				}).catch((err)=>{
+					console.log("网络错误，请重试——err",err);
+					uni.showModal({
+					  content: err.message || '网络错误，请重试',
+					  showCancel: false
+					});
 				});
 
 

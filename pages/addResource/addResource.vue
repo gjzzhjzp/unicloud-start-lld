@@ -162,6 +162,12 @@
 							type: 'error'
 						});
 					}
+				}).catch((err)=>{
+					console.log("网络错误，请重试——err",err);
+					uni.showModal({
+					  content: err.message || '网络错误，请重试',
+					  showCancel: false
+					});
 				});
 			},
 			async deleteFile() {
@@ -172,6 +178,12 @@
 					},
 				}).then((res) => {
 					console.log("res", JSON.stringify(res));
+				}).catch((err)=>{
+					console.log("网络错误，请重试——err",err);
+					uni.showModal({
+					  content: err.message || '网络错误，请重试',
+					  showCancel: false
+					});
 				});
 			}
 		},

@@ -179,11 +179,20 @@
 			},
 
 			togechi() {
+				var that=this;
 				this.showpopup = true;
 				// var data=this.list[this.now];
 				// uni.navigateTo({
 				// 	url:"/pages/gechiAll/gechiAll?id="+data._id
 				// })
+				// 打开歌词,向父级窗口发送等待返回的消息,接收到消息否关闭该窗口
+				var pscreen = plus.webview.currentWebview().opener();
+				mui.fire(pscreen, 'waitclose', {
+					waitclose: true
+				});
+				window.addEventListener('allowclose', function(e) {
+					that.showpopup = true;
+				});
 			},
 			loadmoreList() {
 				console.log("-------------------------")
@@ -343,7 +352,13 @@
 							console.log("res", res.msg);
 						}
 						reslove();
+					}).catch((err)=>{
+					console.log("网络错误，请重试——err",err);
+					uni.showModal({
+					  content: err.message || '网络错误，请重试',
+					  showCancel: false
 					});
+				});
 				});
 			},
 			async cancelFavorite(data) {

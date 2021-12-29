@@ -87,7 +87,13 @@ export default{
 								url: "/pages/detail/detail?id=" + this.curItem._id
 							});
 						} 
+					}).catch((err)=>{
+					console.log("网络错误，请重试——err",err);
+					uni.showModal({
+					  content: err.message || '网络错误，请重试',
+					  showCancel: false
 					});
+				});
 				}else{
 					this.$refs.uToast.show({
 						title: '邀请码无效',

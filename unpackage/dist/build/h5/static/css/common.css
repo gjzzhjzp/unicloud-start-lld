@@ -196,7 +196,7 @@ body.pages-resource-list uni-page-body {
 	color: #fff;
 }
 
-/* #ifdef H5 */
+
 .smallImage1 * {
 	height: 100% !important;
 	width: 100% !important;
@@ -210,10 +210,6 @@ body.pages-resource-list uni-page-body {
 	display: none;
 	position: fixed;
 	top: 50%;
-	/* z-index: 1000000;
-		left: 10px;
-		height: 40px;
-		width: 40px; */
 	margin-top: -15px;
 }
 
@@ -244,12 +240,13 @@ body.pages-resource-list uni-page-body {
 	margin-left: 4px;
 }
 
-/* #endif */
-
 .dplayer-full-in-icon {
 	display: none !important;
 }
 
 .login_back_logo{
 	padding: 40px;
+} 
+.dplayer-comment-setting-box{
+	z-index: 999999;
 }

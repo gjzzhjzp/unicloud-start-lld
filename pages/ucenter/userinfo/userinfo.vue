@@ -254,7 +254,7 @@
 							});
 							setTimeout(()=>{
 								uni.navigateTo({
-									url:"/pages/ucenter/login-page/index/index"
+									url:"/pages/ucenter/login-page/pwd-login/pwd-login"
 								});
 							},2000);
 						}else{

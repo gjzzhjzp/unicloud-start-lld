@@ -109,7 +109,13 @@ export default{
 				} else {
 					console.log("res", res.msg);
 				}
-			});
+			}).catch((err)=>{
+					console.log("网络错误，请重试——err",err);
+					uni.showModal({
+					  content: err.message || '网络错误，请重试',
+					  showCancel: false
+					});
+				});
 		},
 		// 历史记录
 		async tohistory() {

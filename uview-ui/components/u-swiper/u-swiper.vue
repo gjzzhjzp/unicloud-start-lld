@@ -18,10 +18,10 @@
 					}">
 					<u-link v-if="item.url&&item.url.indexOf('http')!=-1" :href="item.url?item.url:'javascript:void(0)'"
 						style="width: 100%;">
-						<u-image width="100%" height="100%" border-radius="10"  loading-icon="/static/center/banner_ing.jpg" error-icon="/static/center/banner_error.jpg" class="u-swiper-image" :src="item[name]" mode="aspectFill"></u-image>
+						<u-image width="100%" height="100%" border-radius="10"  loading-icon="/static/center/banner_ing.png" error-icon="/static/center/banner_error.png" class="u-swiper-image" :src="item[name]" mode="aspectFill"></u-image>
 					</u-link>
 					<view v-else @click="clickImage(item)" style="width: 100%;height: 100%;">
-						<u-image width="100%" height="100%" border-radius="10"  loading-icon="/static/center/banner_ing.jpg" error-icon="/static/center/banner_error.jpg"  class="u-swiper-image" :src="item[name]" mode="aspectFill"></u-image>
+						<u-image width="100%" height="100%" border-radius="10"  loading-icon="/static/center/banner_ing.png" error-icon="/static/center/banner_error.png"  class="u-swiper-image" :src="item[name]" mode="aspectFill"></u-image>
 					</view>
 
 					<view v-if="title && item.title" class="u-swiper-title u-line-1" :style="[{

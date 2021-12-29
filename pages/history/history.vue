@@ -135,6 +135,12 @@
 					});
 					this.flowList=this.AryDeleteMore(this.flowList);
 					uni.hideLoading();
+				}).catch((err)=>{
+					console.log("网络错误，请重试——err",err);
+					uni.showModal({
+					  content: err.message || '网络错误，请重试',
+					  showCancel: false
+					});
 				});
 			},
 			// 资源数组去重

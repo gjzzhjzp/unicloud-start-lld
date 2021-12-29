@@ -1,30 +1,28 @@
 <template>
 	<view class="detail-image">
-		<div id="dplayer" ref="dplayer">
-		</div>
+		
 		<detailhead-mp4 :data="data" :pl-number="plNumber">
 			<template slot="content">
 				<template v-if="data.aliyun_dz&&data.aliyun_dz.indexOf('/jzmp4/')!=-1">
 					<view class="detail-image-item">
-						
-						<!-- <div v-if="videoDirection=='shu'" class="player-toggle shu" @click="toggleMp4('shu')">
+						<div v-if="videoDirection=='shu'" class="player-toggle shu" @click="toggleMp4('shu')">
 							<u-icon name="/static/center/shu.png"></u-icon>
 						</div>
 						<div v-else class="player-toggle heng" @click="toggleMp4('heng')">
 							<u-icon name="/static/center/heng.png"></u-icon>
-						</div> -->
+						</div>
 					</view>
 				</template>
 				<template v-else>
 					<view class="detail-image-item" v-for="(item,index) in data.resources" :key="index">
-						<!-- <div id="dplayer" ref="dplayer"> -->
-							<!-- <div v-if="videoDirection=='shu'" class="player-toggle shu" @click="toggleMp4('shu')">
-								<u-icon name="/static/center/shu.png"></u-icon>
-							</div>
-							<div v-else class="player-toggle heng" @click="toggleMp4('heng')">
-								<u-icon name="/static/center/heng.png"></u-icon>
-							</div> -->
-						<!-- </div> -->
+						 <div id="dplayer" ref="dplayer"> 
+						 </div> 
+						 <div v-if="videoDirection=='shu'" class="player-toggle shu" @click="toggleMp4('shu')">
+						 	<u-icon name="/static/center/shu.png"></u-icon>
+						 </div>
+						 <div v-else class="player-toggle heng" @click="toggleMp4('heng')">
+						 	<u-icon name="/static/center/heng.png"></u-icon>
+						 </div> 
 					</view>
 				</template>
 				<!-- #ifndef MP-ALIPAY -->
@@ -180,28 +178,23 @@
 						unlimited: true,
 					}
 				});
-				this.dp.on("danmaku_hide", function(){
-					console.log("danmaku_hide");
-				});
-				this.dp.on("danmaku_show", function(){
-					console.log("danmaku_show");
+				
+				this.dp.on("fullscreen", function(){
+					// debugger;
+					window.jQuery(".detail-image-item").addClass("fullscren");
+					
+					window.jQuery("#dplayer").append(`<div class="player-toggle heng"></div>`);
+				})
+				this.dp.on("fullscreen_cancel", function(){
+					// debugger;
+					window.jQuery(".detail-image-item").removeClass("fullscren");
+					window.jQuery("#dplayer .player-toggle").remove();
+					
+					// mui.fire(pscreen, 'changescreen', {
+					// 	direction: "portrait-primary"
+					// });
 				});
 				// var pscreen = plus.webview.currentWebview().opener();
-				// this.dp.on("fullscreen", function(){
-				// 	// debugger;
-				// 	window.jQuery(".detail-image-item").addClass("fullscren");
-					
-				// 	window.jQuery("#dplayer").append(`<div class="player-toggle heng"></div>`);
-				// })
-				// this.dp.on("fullscreen_cancel", function(){
-				// 	// debugger;
-				// 	window.jQuery(".detail-image-item").removeClass("fullscren");
-				// 	window.jQuery("#dplayer .player-toggle").remove();
-					
-				// 	mui.fire(pscreen, 'changescreen', {
-				// 		direction: "portrait-primary"
-				// 	});
-				// })
 				// window.jQuery("#dplayer").on("click",".player-toggle.heng",function(){
 				// 	// debugger;
 				// 	mui.fire(pscreen, 'changescreen', {
@@ -364,14 +357,14 @@
 	}
 
 	.detail-image-item {
-		width: 100%;
-		/* width: 100vw; */
+		/* width: 100%; */
+		width: 100vw;
 		height: 30vh;
-		/* margin-left: -10px; */
+		margin-left: -10px;
 
 	}
 
-	/* .detail-image-item.fullscren.heng {
+	 .detail-image-item.fullscren.heng {
 		transform: rotate(90deg);
 		height: 100vw !important;
 		position: fixed;
@@ -384,7 +377,7 @@
 
 	.detail-image-item.fullscren.heng #dplayer {
 		width: 100vh !important;
-	} */
+	} 
 
  #dplayer {
 		width: 100%;

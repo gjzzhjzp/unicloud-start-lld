@@ -10,8 +10,8 @@
 			config: {},
 			$i18n: {},
 			$t: {},
-			app_bb:"1.2.2",
-			app_bbh:"122"
+			app_bb:"1.2.3",
+			app_bbh:"123"
 		},
 		// mixins:[checksh],
 		onLaunch: function() {

@@ -1,5 +1,10 @@
 {
-	"pages": [
+	"pages": [{
+			"path": "pages/atext/atext",
+			"style": {
+				"enablePullDownRefresh": true
+			}
+		},
 		{
 			"path": "pages/index/index",
 			"style": {

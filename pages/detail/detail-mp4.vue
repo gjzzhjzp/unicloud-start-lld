@@ -1,35 +1,32 @@
 <template>
 	<view class="detail-image">
+		<div id="dplayer" ref="dplayer">
+		</div>
 		<detailhead-mp4 :data="data" :pl-number="plNumber">
 			<template slot="content">
 				<template v-if="data.aliyun_dz&&data.aliyun_dz.indexOf('/jzmp4/')!=-1">
 					<view class="detail-image-item">
-						<div id="dplayer" ref="dplayer">
-						</div>
-						<div v-if="videoDirection=='shu'" class="player-toggle shu" @click="toggleMp4('shu')">
+						
+						<!-- <div v-if="videoDirection=='shu'" class="player-toggle shu" @click="toggleMp4('shu')">
 							<u-icon name="/static/center/shu.png"></u-icon>
 						</div>
 						<div v-else class="player-toggle heng" @click="toggleMp4('heng')">
 							<u-icon name="/static/center/heng.png"></u-icon>
-						</div>
+						</div> -->
 					</view>
 				</template>
 				<template v-else>
 					<view class="detail-image-item" v-for="(item,index) in data.resources" :key="index">
-						<div id="dplayer" ref="dplayer">
-							<div v-if="videoDirection=='shu'" class="player-toggle shu" @click="toggleMp4('shu')">
+						<!-- <div id="dplayer" ref="dplayer"> -->
+							<!-- <div v-if="videoDirection=='shu'" class="player-toggle shu" @click="toggleMp4('shu')">
 								<u-icon name="/static/center/shu.png"></u-icon>
 							</div>
 							<div v-else class="player-toggle heng" @click="toggleMp4('heng')">
 								<u-icon name="/static/center/heng.png"></u-icon>
-							</div>
-						</div>
-						
+							</div> -->
+						<!-- </div> -->
 					</view>
 				</template>
-				<!-- <view style="margin-top: 6px;">
-					<u-alert-tips type="warning" description="注意:全屏需横屏时请启用手机的横屏模式"></u-alert-tips>
-				</view> -->
 				<!-- #ifndef MP-ALIPAY -->
 				<u-popup v-model="showsenddanmu" mode="bottom">
 					<view class="comment-container2">
@@ -44,21 +41,6 @@
 				</u-popup>
 				<!-- #endif -->
 			</template>
-			<!-- <template slot="danmubutton">
-				<view class="danmubutton">
-					<view class="opendanmu" v-show="showdanmu">
-						<view class="opendanmu_1" @click="opensendDanmu">点我发弹幕</view>
-						<view class="opendanmu_2" @click="closedanmu()">
-							<u-icon size="72" name="/static/comment/opendanmu.png"></u-icon>
-						</view>
-					</view>
-					<view class="closedanmu" v-show="!showdanmu">
-						<view class="closedanmu_1">
-							<u-icon size="72" @click="openDanmu()" name="/static/comment/closedanmu.png"></u-icon>
-						</view>
-					</view>
-				</view>
-			</template> -->
 			<template slot="comment">
 				<comment ref="comment" :zydata="data" @changenumber="changenumber"></comment>
 			</template>
@@ -148,16 +130,12 @@
 					this.videoDirection="shu";
 					direction="portrait-primary";
 				}
-				// this.videoDirection=this.videoDirection=="shu"?"heng":"shu";
-				var pscreen = plus.webview.currentWebview().opener();
-				mui.fire(pscreen, 'changescreen', {
-					direction: direction
-				});
-				// if(this.videoDirection=="heng"){	
-				// 	window.jQuery(".detail-image-item").addClass("heng");
-				// }else{
-				// 	window.jQuery(".detail-image-item").removeClass("heng");
-				// }
+				
+				// var pscreen = plus.webview.currentWebview().opener();
+				// mui.fire(pscreen, 'changescreen', {
+				// 	direction: direction
+				// });
+				
 			},
 			initDp(item) {
 				// debugger;
@@ -202,41 +180,44 @@
 						unlimited: true,
 					}
 				});
+				this.dp.on("danmaku_hide", function(){
+					console.log("danmaku_hide");
+				});
+				this.dp.on("danmaku_show", function(){
+					console.log("danmaku_show");
+				});
+				// var pscreen = plus.webview.currentWebview().opener();
 				// this.dp.on("fullscreen", function(){
+				// 	// debugger;
 				// 	window.jQuery(".detail-image-item").addClass("fullscren");
+					
+				// 	window.jQuery("#dplayer").append(`<div class="player-toggle heng"></div>`);
 				// })
-				var pscreen = plus.webview.currentWebview().opener();
-				this.dp.on("fullscreen", function(){
-					// debugger;
-					window.jQuery(".detail-image-item").addClass("fullscren");
+				// this.dp.on("fullscreen_cancel", function(){
+				// 	// debugger;
+				// 	window.jQuery(".detail-image-item").removeClass("fullscren");
+				// 	window.jQuery("#dplayer .player-toggle").remove();
 					
-					window.jQuery("#dplayer").append(`<div class="player-toggle heng"></div>`);
-				})
-				this.dp.on("fullscreen_cancel", function(){
-					// debugger;
-					window.jQuery(".detail-image-item").removeClass("fullscren");
-					window.jQuery("#dplayer .player-toggle").remove();
+				// 	mui.fire(pscreen, 'changescreen', {
+				// 		direction: "portrait-primary"
+				// 	});
+				// })
+				// window.jQuery("#dplayer").on("click",".player-toggle.heng",function(){
+				// 	// debugger;
+				// 	mui.fire(pscreen, 'changescreen', {
+				// 		direction: "landscape-primary"
+				// 	});
+				// 	window.jQuery("#dplayer").append(`<div class="player-toggle shu"></div>`);
+				// 	window.jQuery("#dplayer .player-toggle.heng").remove();
+				// })
+				// window.jQuery("#dplayer").on("click",".player-toggle.shu",function(){
 					
-					mui.fire(pscreen, 'changescreen', {
-						direction: "portrait-primary"
-					});
-				})
-				window.jQuery("#dplayer").on("click",".player-toggle.heng",function(){
-					// debugger;
-					mui.fire(pscreen, 'changescreen', {
-						direction: "landscape-primary"
-					});
-					window.jQuery("#dplayer").append(`<div class="player-toggle shu"></div>`);
-					window.jQuery("#dplayer .player-toggle.heng").remove();
-				})
-				window.jQuery("#dplayer").on("click",".player-toggle.shu",function(){
-					
-					mui.fire(pscreen, 'changescreen', {
-						direction: "portrait-primary"
-					});
-					window.jQuery("#dplayer").append(`<div class="player-toggle heng"></div>`);
-					window.jQuery("#dplayer .player-toggle.shu").remove();
-				})
+				// 	mui.fire(pscreen, 'changescreen', {
+				// 		direction: "portrait-primary"
+				// 	});
+				// 	window.jQuery("#dplayer").append(`<div class="player-toggle heng"></div>`);
+				// 	window.jQuery("#dplayer .player-toggle.shu").remove();
+				// })
 			},
 			changenumber(plNumber) {
 				this.plNumber = plNumber;
@@ -383,14 +364,14 @@
 	}
 
 	.detail-image-item {
-		/* width: 100%; */
-		width: 100vw;
+		width: 100%;
+		/* width: 100vw; */
 		height: 30vh;
-		margin-left: -10px;
+		/* margin-left: -10px; */
 
 	}
 
-	.detail-image-item.fullscren.heng {
+	/* .detail-image-item.fullscren.heng {
 		transform: rotate(90deg);
 		height: 100vw !important;
 		position: fixed;
@@ -399,21 +380,19 @@
 		    left: 0px;
 		right: 0px;
 		z-index: 9999;
-		/* width: 100vh !important; */
 	}
 
 	.detail-image-item.fullscren.heng #dplayer {
 		width: 100vh !important;
-	}
+	} */
 
-	#dplayer {
+ #dplayer {
 		width: 100%;
 		height: 100%;
 	}
-
 	.detail-image-item video {
 		width: 100%;
 		height: 100%;
 		border-radius: 10px;
-	}
+	} 
 </style>

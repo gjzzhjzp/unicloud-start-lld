@@ -81,9 +81,6 @@
 			// 获取资源
 			getResource(id) {
 				var that=this;
-				// uni.showLoading({
-				// 	title: "加载中"
-				// });
 				var uid=this.userInfo._id;
 				uniCloud.callFunction({
 					name: 'jzfunction',
@@ -107,6 +104,12 @@
 					} else {
 						console.log("res", res.msg);
 					}
+				}).catch((err)=>{
+					console.log("网络错误，请重试——err",err);
+					uni.showModal({
+					  content: err.message || '网络错误，请重试',
+					  showCancel: false
+					});
 				});
 			},
 			// 历史记录

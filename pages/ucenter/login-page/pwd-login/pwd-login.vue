@@ -178,6 +178,10 @@
 									content: '您已提交微博验证【' + data.weibocontent + '】申请，如已发微博，请等待管理员审核',
 									success: function(res) {
 										if (res.confirm) {
+											var pscreen = plus.webview.currentWebview().opener();
+											mui.fire(pscreen, 'quit', {
+												data: "quit"
+											});
 											console.log("在这里退出App");
 											// #ifdef APP-PLUS  
 											plus.runtime.quit();

@@ -2,7 +2,7 @@
 	<div class="jz-grid">
 		<u-grid :col="5" :border="false" >
 			<u-grid-item v-for="(item,index) in gridList" :key="index" @click="$notMoreTap(tomore,'notTap',item)">
-				<u-image width="100rpx" height="100rpx" :src="imageUrl(item)"></u-image>
+				<u-image width="100rpx" height="100rpx" loading-icon="/static/center/nologin.png" error-icon="/static/center/nologin.png" :src="imageUrl(item)"></u-image>
 				<view class="grid-text">{{item.name}}</view>
 			</u-grid-item>
 		</u-grid>

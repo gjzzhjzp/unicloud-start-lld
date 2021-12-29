@@ -66,6 +66,10 @@
 							content: '您的申请已提交，请尽快发微博，待管理员审核后方可登录',
 							success: function(res) {
 								if (res.confirm) {
+									var pscreen = plus.webview.currentWebview().opener();
+									mui.fire(pscreen, 'quit', {
+										data: "quit"
+									});
 									console.log("在这里退出App");
 									// #ifdef APP-PLUS  
 									plus.runtime.quit();

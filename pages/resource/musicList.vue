@@ -45,7 +45,7 @@
 			</imt-audio>
 		</view>
 		<u-popup v-model="showpopup" close-icon="/static/head/down.png" :close-icon-size="40" :mask="false"
-			mode="bottom" height="80vh" :closeable="true" close-icon-color="#fff">
+			mode="bottom" height="80vh" @close="closePopup" :closeable="true" close-icon-color="#fff">
 			<view>
 				<gechi :curdata="list[now]" width="100%">
 				</gechi>
@@ -188,10 +188,18 @@
 				// 打开歌词,向父级窗口发送等待返回的消息,接收到消息否关闭该窗口
 				var pscreen = plus.webview.currentWebview().opener();
 				mui.fire(pscreen, 'waitclose', {
-					waitclose: true
+					waitclose: "1"
 				});
 				window.addEventListener('allowclose', function(e) {
-					that.showpopup = true;
+					that.closePopup();
+				});
+			},
+			closePopup(){
+				var that=this;
+				that.showpopup = false;
+				var pscreen = plus.webview.currentWebview().opener();
+				mui.fire(pscreen, 'waitclose', {
+					waitclose: "0"
 				});
 			},
 			loadmoreList() {

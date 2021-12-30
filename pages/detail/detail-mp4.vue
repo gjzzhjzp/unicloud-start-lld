@@ -5,6 +5,8 @@
 			<template slot="content">
 				<template v-if="data.aliyun_dz&&data.aliyun_dz.indexOf('/jzmp4/')!=-1">
 					<view class="detail-image-item">
+						<div id="dplayer" ref="dplayer">
+						</div> 
 						<div v-if="videoDirection=='shu'" class="player-toggle shu" @click="toggleMp4('shu')">
 							<u-icon name="/static/center/shu.png"></u-icon>
 						</div>
@@ -194,23 +196,23 @@
 					// 	direction: "portrait-primary"
 					// });
 				});
-				// var pscreen = plus.webview.currentWebview().opener();
-				// window.jQuery("#dplayer").on("click",".player-toggle.heng",function(){
-				// 	// debugger;
-				// 	mui.fire(pscreen, 'changescreen', {
-				// 		direction: "landscape-primary"
-				// 	});
-				// 	window.jQuery("#dplayer").append(`<div class="player-toggle shu"></div>`);
-				// 	window.jQuery("#dplayer .player-toggle.heng").remove();
-				// })
-				// window.jQuery("#dplayer").on("click",".player-toggle.shu",function(){
+				var pscreen = plus.webview.currentWebview().opener();
+				window.jQuery("#dplayer").on("click",".player-toggle.heng",function(){
+					// debugger;
+					mui.fire(pscreen, 'changescreen', {
+						direction: "landscape-primary"
+					});
+					window.jQuery("#dplayer").append(`<div class="player-toggle shu"></div>`);
+					window.jQuery("#dplayer .player-toggle.heng").remove();
+				})
+				window.jQuery("#dplayer").on("click",".player-toggle.shu",function(){
 					
-				// 	mui.fire(pscreen, 'changescreen', {
-				// 		direction: "portrait-primary"
-				// 	});
-				// 	window.jQuery("#dplayer").append(`<div class="player-toggle heng"></div>`);
-				// 	window.jQuery("#dplayer .player-toggle.shu").remove();
-				// })
+					mui.fire(pscreen, 'changescreen', {
+						direction: "portrait-primary"
+					});
+					window.jQuery("#dplayer").append(`<div class="player-toggle heng"></div>`);
+					window.jQuery("#dplayer .player-toggle.shu").remove();
+				})
 			},
 			changenumber(plNumber) {
 				this.plNumber = plNumber;

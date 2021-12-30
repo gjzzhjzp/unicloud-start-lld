@@ -166,6 +166,7 @@
 						username: username
 					}).field("username,isbdwb,weiboname,weibocontent,nickname").get();
 					if (result.result.data && result.result.data.length > 0) {
+						uni.hideLoading();
 						var data = result.result.data[0];
 						if (data.isbdwb) {
 							reslove(true);

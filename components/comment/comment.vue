@@ -105,7 +105,8 @@
 				showpl: true,
 				showsendpl: true,
 				like_pl: [],
-				plNumber: 0 ///评论数
+				plNumber: 0, ///评论数
+				oldid:""
 			};
 		},
 
@@ -130,7 +131,10 @@
 				this.showsendpl = false;
 			}
 			if (this.showpl) {
+				if(this.zydata._id){
 				this.getComment();
+				this.oldid=this.zydata._id;
+				}
 			}
 		},
 		computed: {
@@ -151,8 +155,9 @@
 			zydata:{
 				deep:true,
 				handler(){
-					if(this.zydata._id){
+					if(this.zydata._id&&this.zydata._id!=this.oldid){
 						this.getComment();
+						this.oldid=this.zydata._id;
 					}
 				}
 			}
@@ -248,7 +253,7 @@
 					waitclose: "1"
 				});
 				window.addEventListener('allowclose', function(e) {
-					that.closePopup();
+					that.closepopup();
 				});
 			},
 			// 点赞

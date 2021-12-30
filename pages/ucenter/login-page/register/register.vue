@@ -14,7 +14,7 @@
 					err-show-type="undertext" label-width="160px" label-position="right">
 					<uni-forms-item label="登录名" name="username" required>
 						<uni-easyinput :inputBorder="false" class="easyinput"
-							:placeholder="$t('register.usernamePlaceholder')" v-model="formData.username" trim="both" />
+							placeholder="请输入登录名(不区分大小写)" v-model="formData.username" trim="both" />
 					</uni-forms-item>
 					<uni-forms-item label="昵称" name="nickname">
 						<uni-easyinput :inputBorder="false" class="easyinput"

@@ -71,7 +71,8 @@
 				videoContext: null,
 				currentTime: "", ///当前播放时间
 				plNumber: 0,
-				videoDirection:"shu"
+				videoDirection:"shu",
+				oldUrl:""
 			}
 		},
 		components: {
@@ -145,9 +146,10 @@
 				} else {
 					url = item.resources[0].url;
 				}
-				if (!url) {
+				if (!url||this.oldUrl==url) {
 					return;
 				}
+				this.oldUrl=url;
 				this.dp = new DPlayer({
 					container: document.getElementById('dplayer'),
 					autoplay: true,

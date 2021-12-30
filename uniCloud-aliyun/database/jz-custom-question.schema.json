@@ -14,7 +14,7 @@
 		"title": {
 			"bsonType": "string",
 			"description": "问题",
-			"maxLength": 20,
+			"maxLength": 100,
 			"title": "问题",
 			"trim": "both"
 		},

@@ -18,7 +18,7 @@
 		},
 		onLoad(e){
 			this.weibocontent=e.content;
-			this.content='您已提交微博验证【'+this.weibocontent+'】申请，如已发微博，请等待管理员审核。'
+			this.content='您已提交微博验证【'+this.weibocontent+'】申请，如已发微博，请等待管理员审核。若超过24小时未审核通过，请发送邮件到jzszd9192051129@163.com咨询。'
 		},
 		onReady() {
 			this.show = true;

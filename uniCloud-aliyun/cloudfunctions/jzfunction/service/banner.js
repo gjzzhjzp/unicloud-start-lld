@@ -7,7 +7,8 @@ module.exports = class bannerService extends Service {
 		try {
 			const bannernumdb = await this.db.collection("opendb-banner").
 			where({
-				type:event.type
+				type:event.type,
+				status:true
 			}).orderBy('sort', 'asc').limit(10).get();
 			return {
 				"state": "0000",

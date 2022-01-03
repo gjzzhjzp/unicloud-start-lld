@@ -176,10 +176,16 @@
 				// debugger;
 				var rq = "";
 				var day = this.clickSelected|| this.day;
+				var month="";
 				if (day.toString().length < 2) {
 					day = '0' + day
 				}
-				rq = this.month + "-" + day;
+				if (this.month.toString().length < 2) {
+					month = '0' + this.month
+				}else{
+					month =this.month
+				}
+				rq = month + "-" + day;
 				uni.navigateTo({
 					url: "/pages/jilianri/detail?rq=" + rq
 				});

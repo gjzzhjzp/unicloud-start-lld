@@ -16,7 +16,8 @@
 			<u-modal v-model="showmodel" :show-cancel-button="true" @confirm="confirmnc" width="85%">
 				<view class="slot-content">
 					<view style="text-indent: 2em;">请确认微博主页地址【{{weiboname}}】输入正确，并在自己微博发送一条【{{wbcontent}}】的微博。</view>
-					<view style="text-indent: 2em;">如你确认无误，请点击确认按钮申请，管理员在24h内审核微博通过后可重新进入本系统。</view>
+					<view style="text-indent: 2em;">如你确认无误，请点击确认按钮申请，待管理员审核微博通过后可重新进入本系统。</view>
+					<view style="text-indent: 2em;">注意请不要重复注册账号，加大管理组的审核工作量，多余的账号将会被锁定。</view>
 				</view>
 			</u-modal>
 		</view>

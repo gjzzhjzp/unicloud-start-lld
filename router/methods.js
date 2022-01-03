@@ -1,6 +1,7 @@
 import checksh from "@/common/checksh.js";
 export default {
 	initconfig() {
+		// debugger;
 		console.log("initconfig");
 		var app_bbh="117";
 		//#ifdef APP-PLUS

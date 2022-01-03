@@ -32,7 +32,11 @@
 		},
 		methods: {
 			async getinfos() {
-				var res = await db.collection('jz-custom-systeminfo').where('user_id==$env.uid')
+				var userInfo = uni.getStorageSync("userInfo");
+				var res = await db.collection('jz-custom-systeminfo').where({
+					user_id:userInfo._id,
+					type:1
+				})
 				.field("comment,comment_date").get();
 				// console.log("res",res);
 				if(res.result.data&&res.result.data.length>0){

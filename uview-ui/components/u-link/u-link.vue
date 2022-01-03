@@ -1,12 +1,12 @@
 <template>
-	<text class="u-link" @tap.stop="openLink" :style="{
+	<view class="u-link" @tap.stop="openLink" :style="{
 		color: color,
 		fontSize: fontSize + 'rpx',
 		borderBottom: underLine ? `1px solid ${lineColor ? lineColor : color}` : 'none',
 		paddingBottom: underLine ? '0rpx' : '0'
 	}">
 		<slot></slot>
-	</text>
+	</view>
 </template>
 
 <script>

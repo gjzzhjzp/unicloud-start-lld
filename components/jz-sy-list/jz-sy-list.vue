@@ -5,7 +5,7 @@
 				@click="$notMoreTap(tomore,'notTap')"></u-section>
 		</view>
 		<view class="jz-sy-list">
-			<template v-show="!isEmpty">
+			<template v-if="!isEmpty">
 				<u-row gutter="16">
 					<u-col span="6" class="jz-sy-item" v-for="(item,index) in list" :key="index">
 						<view class="jz-sy-list-item" @click="$notMoreTap(toDetail,'notTap',item)">
@@ -48,6 +48,12 @@
 			}
 		},
 		props: {
+			rows:{
+				type:Number,
+				default(){
+					return 4
+				}
+			},
 			// 类型，热门还是最新
 			type: {
 				type: String,
@@ -127,7 +133,7 @@
 					label: this.label,
 					zy_gs: [0, 1, 3],
 					page: 1,
-					rows: 4,
+					rows: this.rows||4,
 					app_bbh: app_bbh
 				}
 				if(typeof this.zy_gs!="undefined"){

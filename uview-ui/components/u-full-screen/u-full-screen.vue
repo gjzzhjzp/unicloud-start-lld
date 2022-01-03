@@ -19,7 +19,7 @@
 		},
 		onReady() {
 			this.show = true;
-			var config=getApp().globalData.config;
+			var config=getApp().globalData.systemconfig;
 			if(config["800009"]){
 				this.content=config["800009"];
 			}

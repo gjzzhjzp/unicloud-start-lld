@@ -10,16 +10,17 @@
 							<view class="original" v-if="isoriginal">
 								<image class="original-img" src="@/static/center/ori_back.png"></image>
 							</view>
+							<!-- avatar_file：{{avatar_file}} -->
 							<cloud-image @click="uploadAvatarImg" v-if="avatar_file" :src="avatar_file.url" width="50px"
 								height="50px"></cloud-image>
+
 							<uni-icons @click="uploadAvatarImg" v-else class="chooseAvatar" type="plusempty" size="30"
 								color="#dddddd"></uni-icons>
 						</view>
 					</view>
 				</template>
 			</uni-list-item>
-			<uni-list-item class="item" title="用户/登录名"
-				:rightText="userInfo.username||$t('userinfo.notSet')" >
+			<uni-list-item class="item" title="用户/登录名" :rightText="userInfo.username||$t('userinfo.notSet')">
 			</uni-list-item>
 			<uni-list-item class="item" @click="setNickname('')" :title="$t('userinfo.nickname')"
 				:rightText="userInfo.nickname||$t('userinfo.notSet')" link>
@@ -35,7 +36,7 @@
 		<!-- <uni-popup ref="passdialog" type="dialog"> -->
 		<u-modal v-model="showpassmodal" title="修改密码" :show-cancel-button="true" @confirm="setPassword">
 			<view style="padding-top: 8px;">
-				<u-alert-tips :show-icon="true" type="warning" title="修改密码后需重新登录" ></u-alert-tips>
+				<u-alert-tips :show-icon="true" type="warning" title="修改密码后需重新登录"></u-alert-tips>
 			</view>
 			<view class="u-modal-form" style="padding: 10px;">
 				<u-form :model="passForm" ref="uForm" label-width="200">
@@ -75,14 +76,14 @@
 					}
 				},
 				passForm: {
-					oldPassword:"",
+					oldPassword: "",
 					password: "",
 					rpassword: ""
 				},
 				showpassmodal: false
 			}
 		},
-		mixins:[image,ucenter],
+		mixins: [image, ucenter],
 		created() {
 			this.univerifyStyle.authButton.title = this.$t('userinfo.bindPhoneNumber')
 			this.univerifyStyle.otherLoginButton.title = this.$t('userinfo.bindOtherLogin')
@@ -102,8 +103,8 @@
 			}
 		},
 		methods: {
-			openpassmodel(){
-				this.showpassmodal=true;
+			openpassmodel() {
+				this.showpassmodal = true;
 			},
 			...mapMutations({
 				setUserInfo: 'user/login'
@@ -204,60 +205,62 @@
 				}
 			},
 			setPassword(pass) {
-				if(!this.passForm.oldPassword){
+				if (!this.passForm.oldPassword) {
 					uni.showToast({
 						title: "请输入旧密码",
 						icon: 'none'
 					});
-					this.showpassmodal=true;
+					this.showpassmodal = true;
 					return;
 				}
-				if(!this.passForm.password){
+				if (!this.passForm.password) {
 					uni.showToast({
 						title: "请输入新密码",
 						icon: 'none'
 					});
-					this.showpassmodal=true;
+					this.showpassmodal = true;
 					return;
 				}
-				if(!this.passForm.rpassword){
+				if (!this.passForm.rpassword) {
 					uni.showToast({
 						title: "请确认新密码",
 						icon: 'none'
 					});
-					this.showpassmodal=true;
+					this.showpassmodal = true;
 					return;
 				}
-				if(this.passForm.password!=this.passForm.rpassword){
+				if (this.passForm.password != this.passForm.rpassword) {
 					uni.showToast({
 						title: "两次输入密码不一致",
 						icon: 'none'
 					});
-					this.showpassmodal=true;
+					this.showpassmodal = true;
 					return;
 				}
 				uniCloud.callFunction({
-					name:'uni-id-cf',
-					data:{
-						action:'updatePwd',
-						params:{
-							oldPassword:this.passForm.oldPassword,
-							newPassword:this.passForm.password
+					name: 'uni-id-cf',
+					data: {
+						action: 'updatePwd',
+						params: {
+							oldPassword: this.passForm.oldPassword,
+							newPassword: this.passForm.password
 						},
 					},
-					success: ({result}) => {
+					success: ({
+						result
+					}) => {
 						// console.log("33333333333",result);
-						if(result.code === 0){
+						if (result.code === 0) {
 							uni.showToast({
 								title: "修改成功，请重新登录",
 								icon: 'none'
 							});
-							setTimeout(()=>{
+							setTimeout(() => {
 								uni.navigateTo({
-									url:"/pages/ucenter/login-page/pwd-login/pwd-login"
+									url: "/pages/ucenter/login-page/pwd-login/pwd-login"
 								});
-							},2000);
-						}else{
+							}, 2000);
+						} else {
 							uni.showModal({
 								content: result.msg,
 								showCancel: false
@@ -299,22 +302,23 @@
 					uni.hideLoading()
 				})
 			},
-			
+
 		}
 	}
 </script>
 <style lang="scss" scoped>
-	.original{
+	.original {
 		position: relative;
 	}
-	.original-img{
-		   width: 70px;
-		       height: 70px;
-		       position: absolute;
-		       top: -8px;
-		       left: -11px;
+
+	.original-img {
+		width: 70px;
+		height: 70px;
+		position: absolute;
+		top: -8px;
+		left: -11px;
 	}
-	
+
 	/* #ifndef APP-NVUE */
 	view {
 		display: flex;
@@ -337,5 +341,6 @@
 		width: 50px;
 		height: 50px;
 		line-height: 50px;
+		z-index: 99;
 	}
 </style>

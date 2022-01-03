@@ -32,8 +32,18 @@
 		},
 		"type": {
 			"bsonType": "int",
-			"title": "系统消息类型",
-			"description": "系统消息类型： 0 针对文章的回复  1 针对评论的回复"
+			"title": "消息类型",
+			"description": "消息类型： 0审核消息   1 系统消息",
+			"defaultValue": 0,
+			"enum": [{
+					"value": 0,
+					"text": "审核消息"
+				},
+				{
+					"value": 1,
+					"text": "系统消息"
+				}
+			]
 		},
 		"comment": {
 			"bsonType": "string",

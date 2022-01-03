@@ -38,6 +38,7 @@ export default{
 		},
 		// 检测微博审核是否通过
 		checkwbsftg(){
+			// debugger;
 			return new Promise(async (reslove)=>{
 				// debugger;
 				var username="";

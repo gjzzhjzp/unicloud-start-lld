@@ -37,7 +37,7 @@
             "prompt" : "template",
             "template" : {
                 "title" : "服务须知",
-                "message" : "<div style='line-height:26px;'>　　宝儿们，欢迎来到俊哲宇宙。此APP仅收集俊哲相关资源，方便宝儿们查阅浏览。不会收集记录任何个人信息，所需授权为APP最基础的授权。好啦，接下来宝儿们愉快的玩耍吧~~</div>",
+                "message" : "<div style='line-height:26px;'>　　宝儿们，欢迎来到俊哲宇宙。此APP不上架，不盈利，不会收集记录任何敏感信息。仅收集俊哲相关资源，方便宝儿们查阅浏览。好啦，接下来宝儿们愉快的玩耍吧~~</div>",
                 "buttonAccept" : "同意",
                 "buttonRefuse" : "暂不同意"
             }

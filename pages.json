@@ -11,6 +11,12 @@
 				"navigationBarTitleText": "对暗号"
 			}
 		}, {
+			"path": "pages/moretj/moretj",
+			"style": {
+				"navigationBarTitleText": "更多推荐",
+				"enablePullDownRefresh": true
+			}
+		},{
 			"path": "pages/gechi/gechi",
 			"style": {
 				"navigationBarTitleText": "歌词滚动"

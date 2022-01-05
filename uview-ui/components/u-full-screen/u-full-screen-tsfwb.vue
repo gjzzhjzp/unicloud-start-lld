@@ -28,7 +28,10 @@
 			if(config["800025"]){
 				yxdz=config["800025"];
 			}
-			this.content='您已提交微博验证【'+this.weibocontent+'】申请，如已发微博，请等待管理员审核。若超过'+this.time+'小时未审核通过，请带上APP登录名发送邮件到'+yxdz+'咨询。'
+			var userInfo=uni.getStorageSync("userInfo");
+			var username=userInfo.username;
+			var nickname=userInfo.nickname;
+			this.content='您好，'+nickname+'（'+username+'），您已提交微博验证【'+this.weibocontent+'】申请，如已发微博，请等待管理员审核。若超过'+this.time+'小时未审核通过，请带上APP登录名发送邮件到'+yxdz+'咨询。'
 		},
 		onReady() {
 			this.show = true;
@@ -52,7 +55,7 @@
 						}
 					}
 				}
-				console.log("isnewinfo",this.isnewinfo);
+				// console.log("isnewinfo",this.isnewinfo);
 			},
 			cancel() {
 				this.closeModal();

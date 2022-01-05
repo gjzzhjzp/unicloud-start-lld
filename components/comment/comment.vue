@@ -12,7 +12,8 @@
 			<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y">
 				<view class="comment" v-for="(res, index) in commentList" :key="res.id">
 					<view class="left">
-						<commont-image :src="(res.user_id[0]&&res.user_id[0].avatar_file)?res.user_id[0].avatar_file.url:''"
+						<commont-image
+							:src="(res.user_id[0]&&res.user_id[0].avatar_file)?res.user_id[0].avatar_file.url:''"
 							:isoriginal="!!(res.user_id[0].original==1)">
 						</commont-image>
 					</view>
@@ -106,7 +107,7 @@
 				showsendpl: true,
 				like_pl: [],
 				plNumber: 0, ///评论数
-				oldid:""
+				oldid: ""
 			};
 		},
 
@@ -131,9 +132,9 @@
 				this.showsendpl = false;
 			}
 			if (this.showpl) {
-				if(this.zydata._id){
-				this.getComment();
-				this.oldid=this.zydata._id;
+				if (this.zydata._id) {
+					this.getComment();
+					this.oldid = this.zydata._id;
 				}
 			}
 		},
@@ -151,13 +152,13 @@
 				}
 			}
 		},
-		watch:{
-			zydata:{
-				deep:true,
-				handler(){
-					if(this.zydata._id&&this.zydata._id!=this.oldid){
+		watch: {
+			zydata: {
+				deep: true,
+				handler() {
+					if (this.zydata._id && this.zydata._id != this.oldid) {
 						this.getComment();
-						this.oldid=this.zydata._id;
+						this.oldid = this.zydata._id;
 					}
 				}
 			}
@@ -196,7 +197,7 @@
 				this.getComment();
 			},
 			closepopup() {
-				var that=this;
+				var that = this;
 				that.showreply = false;
 				var pscreen = plus.webview.currentWebview().opener();
 				mui.fire(pscreen, 'waitclose', {
@@ -244,7 +245,7 @@
 			},
 			// 跳转到全部回复
 			toAllReply(item) {
-				var that=this;
+				var that = this;
 				this.currentData = item;
 				this.showreply = true;
 				//向父级窗口发送等待返回的消息,接收到消息否关闭该窗口
@@ -298,36 +299,36 @@
 						all_reply_comment_id: new RegExp(comment_id, 'gi')
 					})
 				}
-				console.log("param",param);
+				console.log("param", param);
 				if (!param.article_id) {
 					uni.hideLoading();
 					return;
 				}
-				
+
 				// 获取统计数量
-				var rescount=await db.collection('opendb-news-comments').where(param).count();
-				console.log("count",rescount);
-				this.plNumber= rescount.result.total;
+				var rescount = await db.collection('opendb-news-comments').where(param).count();
+				console.log("count", rescount);
+				this.plNumber = rescount.result.total;
 				this.$emit("changenumber", this.plNumber);
-				 
+
 				var dbcomments = db.collection("opendb-news-comments,uni-id-users").where(param).field(
 					"article_id,user_id{nickname,avatar_file,original},reply_user_id{nickname,avatar_file},comment_content,like_count,comment_type,comment_date,reply_comment_id,comment_cj,all_reply_comment_id"
 				);
-				var f_c=Math.ceil(this.plNumber/100);
-				var res_comment=[];
-				for(var i=0;i<f_c;i++){
+				var f_c = Math.ceil(this.plNumber / 100);
+				var res_comment = [];
+				for (var i = 0; i < f_c; i++) {
 					if (that.toptype == "zx") {
-						comments = await dbcomments.orderBy("comment_date", "desc").skip(100*i).limit(100).get();
+						comments = await dbcomments.orderBy("comment_date", "desc").skip(100 * i).limit(100).get();
 					} else {
-						comments = await dbcomments.orderBy("like_count", "desc").skip(100*i).limit(100).get();
+						comments = await dbcomments.orderBy("like_count", "desc").skip(100 * i).limit(100).get();
 					}
 					// var list = await this.db.collection("jz-opendb-danmu").where({
 					// 	resource_id: event.id
 					// }).skip(100*i).limit(100).get();
-					res_comment=res_comment.concat(comments.result.data)
+					res_comment = res_comment.concat(comments.result.data)
 				}
-				
-				
+
+
 				// console.log("comments", comments);
 				if (res_comment.length > 0) {
 
@@ -557,7 +558,7 @@
 					flex-direction: row;
 					padding: 20rpx;
 					border-bottom: solid 2rpx $u-border-color;
-
+					flex-flow: wrap;
 					.username {
 						color: #7275D3;
 					}

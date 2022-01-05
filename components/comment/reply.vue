@@ -76,7 +76,7 @@
 									<view class="user-info">
 										<view class="name">{{ item.user_id[0].nickname }}</view>
 										<view class="content" v-if="item.reply_comment_id[0]._id!=res._id">回复 <text
-												style="color: #7275D3;">@{{item.reply_user_id[0].nickname}}</text>：{{ item.comment_content }}
+												style="color: #7275D3;">@{{item.reply_user_id[0].nickname}}：</text>{{ item.comment_content }}
 										</view>
 										<view class="content" v-else>{{ item.comment_content }}</view>
 									</view>
@@ -453,6 +453,7 @@
 				.content{
 					display: flex;
 					flex-direction: row;
+					flex-wrap: wrap;
 				}
 
 				.date {

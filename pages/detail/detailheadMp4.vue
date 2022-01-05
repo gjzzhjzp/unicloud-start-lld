@@ -64,7 +64,7 @@
 				<view>
 					外链地址：
 				</view>
-				<view>
+				<view style="margin-top: 4px;">
 					<u-link :href="data.aliyun_dz" color="rgb(114, 117, 211)">点击跳转</u-link>
 				</view>
 			</view>

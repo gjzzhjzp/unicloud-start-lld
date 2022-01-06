@@ -60,6 +60,8 @@
 						</view>
 					</view>
 				</view>
+				<view style="height: 50px;">
+				</view>
 			</scroll-view>
 		</view>
 		<u-popup v-model="showreply" mode="bottom" border-radius="30" height="90%">
@@ -306,9 +308,14 @@
 				}
 
 				// 获取统计数量
-				var rescount = await db.collection('opendb-news-comments').where(param).count();
-				console.log("count", rescount);
-				this.plNumber = rescount.result.total;
+				if(!comment_id){
+					var rescount = await db.collection('opendb-news-comments').where(param).count();
+					console.log("count", rescount);
+					this.plNumber = rescount.result.total;
+					
+				}else{
+					this.plNumber++;
+				}
 				this.$emit("changenumber", this.plNumber);
 
 				var dbcomments = db.collection("opendb-news-comments,uni-id-users").where(param).field(
@@ -460,7 +467,7 @@
 
 	/* #ifdef H5 */
 	.slot-gonggao_content>uni-scroll-view {
-		max-height: calc(100vh - 920rpx);
+		max-height: calc(100vh - 820rpx);
 	}
 
 	.slot-gonggao_content.nosendpl>uni-scroll-view {

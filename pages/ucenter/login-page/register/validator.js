@@ -28,10 +28,10 @@ export default {
 	"weiboname": {
 		"rules": [{
 				required: true,
-				errorMessage: '请输入微博昵称',
+				errorMessage: '请输入微博主页链接地址',
 			}
 		],
-		"label": "微博昵称"
+		"label": "微博主页链接地址"
 	},
 	"password":{
 		"rules": [{

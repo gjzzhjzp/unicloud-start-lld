@@ -21,7 +21,7 @@
 				list: [],
 				show: false,
 				showmodel: false,
-				showjubao:false,
+				showjubao: false,
 				content: "",
 				curcomment: {}
 			}
@@ -40,10 +40,13 @@
 					this.showmodel = true;
 				} else {
 					this.operator = "jubao";
-					this.showjubao=true;
+					this.showjubao = true;
 				}
 			},
 			async confirm() {
+				await db.collection("opendb-news-comments").where({
+					all_reply_comment_id: new RegExp(this.curcomment._id, 'gi')
+				}).remove();
 				await db.collection("opendb-news-comments").where({
 					_id: this.curcomment._id
 				}).remove();
@@ -52,8 +55,8 @@
 				})
 				this.$emit("reload");
 			},
-			async confirmjubao(){
-				if(!this.jubaocontent){
+			async confirmjubao() {
+				if (!this.jubaocontent) {
 					this.$refs.uToast.show({
 						title: '请输入举报原因'
 					});
@@ -61,8 +64,8 @@
 				}
 				await db.collection("opendb-news-jubaopl").add({
 					article_id: this.curcomment._id,
-					comment_id:this.curcomment._id,
-					jubao_content:this.jubaocontent
+					comment_id: this.curcomment._id,
+					jubao_content: this.jubaocontent
 				});
 				this.$refs.uToast.show({
 					title: '你的举报已提交，待管理员审核通过后会进行处理，谢谢你的反馈'

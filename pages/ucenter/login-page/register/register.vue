@@ -65,7 +65,7 @@
 					"nickname": "",
 					'password': '',
 					'pwd2': '',
-					'weiboname': "", ////微博昵称
+					'weiboname': "", ////微博主页链接地址
 					"weibocontent": "山河不足重，重在遇知己"
 				},
 				rules,

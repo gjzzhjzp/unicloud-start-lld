@@ -92,7 +92,7 @@
 			confirmweibo() {
 				if (!this.weiboname) {
 					return uni.showToast({
-						title: "请输入微博昵称",
+						title: "请输入微博主页链接地址",
 						icon: 'none'
 					});
 				}

@@ -39,9 +39,13 @@ db.collection('jz-custom-fks').add({
 	"time": "22222222"
 });
 
-db.collection("jz-opendb-resources").where({
-	categories: null
-}).get();
+db.collection("jz-opendb-danmu").where({
+	resource_id: "61d4f532037cc30001a1f014"
+}).limit(500).get();
+
+db.collection("jz-opendb-danmu").where({
+	resource_id: "61d4f532037cc30001a1f014"
+}).remove();
 
 db.collection("jz-opendb-resources").where({
 	zy_gs: 1,

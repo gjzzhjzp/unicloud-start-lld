@@ -151,7 +151,9 @@
 							}
 							if (username) {
 								var _user = await db.collection("uni-id-users").where({
-									username: username
+									username: username,
+									status:0,
+									isbdwb:true
 								}).field("_id,username,nickname").get();
 								if (_user.result && _user.result.data && _user.result.data.length > 0) {
 									this.yqr_id = _user.result.data[0]._id;

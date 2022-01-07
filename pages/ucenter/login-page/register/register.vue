@@ -13,8 +13,8 @@
 				<uni-forms ref="form" :value="formData" :rules="rules" validate-trigger="submit"
 					err-show-type="undertext" label-width="160px" label-position="right">
 					<uni-forms-item label="登录名" name="username" required>
-						<uni-easyinput :inputBorder="false" class="easyinput"
-							placeholder="请输入登录名(不区分大小写)" v-model="formData.username" trim="both" />
+						<uni-easyinput :inputBorder="false" class="easyinput" placeholder="请输入登录名(不区分大小写)"
+							v-model="formData.username" trim="both" />
 					</uni-forms-item>
 					<uni-forms-item label="昵称" name="nickname">
 						<uni-easyinput :inputBorder="false" class="easyinput"
@@ -33,6 +33,10 @@
 					<uni-forms-item label="微博地址" name="weiboname" v-model="formData.weiboname" required>
 						<uni-easyinput :inputBorder="false" class="easyinput" placeholder="http://"
 							v-model="formData.weiboname" trim="both" />
+					</uni-forms-item>
+					<uni-forms-item v-if="sfxs_yqm" label="邀请码" name="yqm" v-model="formData.yqm" required>
+						<uni-easyinput :inputBorder="false" class="easyinput" placeholder="请输入邀请码"
+							v-model="formData.yqm" trim="both" />
 					</uni-forms-item>
 					<u-button class="send-btn" type="primary" @click="submit">注册并申请
 					</u-button>
@@ -54,9 +58,12 @@
 	import rules from './validator.js';
 	import mixin from '../common/login-page.mixin.js';
 	import sevicecontent from "../pwd-login/sevicecontent.vue"
+	const db = uniCloud.database();
 	export default {
 		mixins: [mixin],
-		components:{sevicecontent},
+		components: {
+			sevicecontent
+		},
 		data() {
 			return {
 				showmodel: false,
@@ -66,16 +73,32 @@
 					'password': '',
 					'pwd2': '',
 					'weiboname': "", ////微博主页链接地址
+					"yqm": "", //邀请码
 					"weibocontent": "山河不足重，重在遇知己"
 				},
 				rules,
-				agree: true
+				agree: true,
+				yqr_id: "", ////邀请人id
+				yqr_number: 3, ///默认3个邀请人数
+				yqrxz_number: 10000, ////邀请限制人数
+				sfxs_yqm: false ////是否显示邀请码注册
 			}
 		},
 		created() {
 			var weibonc = getApp().globalData.weiboyz;
 			var index = parseInt(Math.random() * weibonc.length);
 			this.$set(this.formData, "weibocontent", weibonc[index]);
+			var config = getApp().globalData.systemconfig;
+			var t_800027 = config["800027"]; //、邀请人数	
+			if (t_800027) {
+				this.yqr_number = t_800027 || 3;
+			}
+			if (config["800026"] == "2") {
+				this.sfxs_yqm = true
+			}
+			if (config["800028"]) {
+				this.yqrxz_number = config["800028"];
+			}
 		},
 		onReady() {
 			this.$refs.form.setRules(this.rules);
@@ -92,11 +115,84 @@
 				uni.showLoading({
 					mask: true
 				})
-				this.$refs.form.validate().then((res) => {
+				this.$refs.form.validate().then(async (res) => {
+						if (this.sfxs_yqm) {
+							// 检测当前是否超过邀请码注册的最大人数
+							var day1=new Date(new Date().toLocaleDateString()).getTime();
+							var day2=new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000-1;
+							var daycount=await db.collection('uni-id-users').where('register_date > '+day1+'&&register_date < '+day2+'').count()
+							console.log("daycount",daycount);
+							var _count=daycount.result.total;
+							if(_count>=this.yqrxz_number){
+								uni.showToast({
+									title: "已超过当天限制注册人数，请明天再试",
+									icon: "none",
+									duration:3000
+								});
+								uni.hideLoading();
+								return;
+							}
+							// console.log("yqrxz_number",this.yqrxz_number);
+							// return;
+							// 先查询邀请码是否存在对应的用户名
+							var yqm = this.formData.yqm.toLowerCase();
+							var _yqm = yqm.split("_");
+							var username = "";
+							if (_yqm.length == 2 && _yqm[1] == "51129") {
+								username = yqm.split("_")[0];
+							} else {
+								uni.showToast({
+									title: "邀请码无效",
+									icon: "none",
+									duration:3000
+								});
+								uni.hideLoading();
+								return;
+							}
+							if (username) {
+								var _user = await db.collection("uni-id-users").where({
+									username: username
+								}).field("_id,username,nickname").get();
+								if (_user.result && _user.result.data && _user.result.data.length > 0) {
+									this.yqr_id = _user.result.data[0]._id;
+									var yq_user = await db.collection("jz-custom-yhyqm").where({
+										yqr_id: this.yqr_id
+									}).get();
+									if (yq_user.result && yq_user.result.data && yq_user.result.data.length >= this
+										.yqr_number) {
+										uni.showToast({
+											title: "该邀请码已超过限制邀请人数",
+											icon: "none"
+										});
+										uni.hideLoading();
+										return;
+									}
+								} else {
+									uni.showToast({
+										title: "邀请码无效",
+										icon: "none",
+										duration:3000
+									});
+									uni.hideLoading();
+									return;
+								}
+								console.log("_user", _user, this.yqr_id);
+							} else {
+								uni.showToast({
+									title: "邀请码无效",
+									icon: "none",
+									duration:3000
+								});
+								uni.hideLoading();
+								return;
+							}
+						}
+
+						// return;
 						var agree_service = uni.getStorageSync("agree_service");
-						if(agree_service){
+						if (agree_service) {
 							this.showmodel = true;
-						}else{
+						} else {
 							this.$refs.sevicecontent.show();
 						}
 					}).catch((errors) => {
@@ -106,7 +202,8 @@
 						uni.hideLoading()
 					});
 			},
-			confirmcontent(){
+			confirmcontent() {
+
 				this.showmodel = true;
 			},
 			confirmnc() {
@@ -123,12 +220,19 @@
 						action: 'register',
 						params,
 					},
-					success: ({
+					success: async ({
 						result
 					}) => {
 						uni.hideLoading();
 						if (result.code === 0) {
 							uni.setStorageSync("userInfo", result.userInfo);
+							// 如果存在，用户正常注册，返回用户id,写入邀请表
+							if (this.sfxs_yqm) {
+								await db.collection("jz-custom-yhyqm").add({
+									yqr_id: this.yqr_id,
+									byqr_id: result.userInfo._id
+								});
+							}
 							uni.showModal({
 								title: '提示',
 								showCancel: false,

@@ -1,6 +1,6 @@
 <template>
 	<view class="u-wrap">
-		<jz-navbar :issy="false">
+		<jz-navbar :issy="false" ref="navbar">
 			<view class="jz-navbar-title">分类</view>
 		</jz-navbar>
 		<view class="u-menu-wrap">
@@ -62,6 +62,11 @@
 		},
 		created(){
 			this.getList();
+		},
+		onShow: function() {
+			if(this.$refs.navbar){
+				this.$refs.navbar.checknewinfo();
+			}
 		},
 		methods: {
 			imageUrl(item1){

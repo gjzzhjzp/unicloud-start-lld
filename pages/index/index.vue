@@ -1,6 +1,6 @@
 <template>
 	<view v-if="showindex">
-		<jz-navbar>
+		<jz-navbar ref="navbar">
 			<u-search :disabled="true" border-color="#7275D3" bg-color="#fff" height="60" placeholder=""
 				@focus="$notMoreTap(tosearch,'notTap')" @click="$notMoreTap(tosearch,'notTap')"
 				@search="$notMoreTap(tosearch,'notTap')" @custom="$notMoreTap(tosearch,'notTap')" :show-action="true">
@@ -40,6 +40,10 @@
 			var question_success1 = uni.getStorageSync("question_success1");
 			if (question_success1) {
 				this.showindex=true;
+			}
+			console.log("this.$refs.navbar",this.$refs.navbar);
+			if(this.$refs.navbar){
+				this.$refs.navbar.checknewinfo();
 			}
 		},
 		// 下拉刷新

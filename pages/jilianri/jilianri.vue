@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<jz-navbar :issy="false">
+		<jz-navbar :issy="false" ref="navbar">
 			<view class="jz-navbar-title">纪念日</view>
 		</jz-navbar>
 		<d-rili></d-rili>
@@ -18,7 +18,12 @@
 			return {
 				
 			}
-		}
+		},
+		onShow: function() {
+			if(this.$refs.navbar){
+				this.$refs.navbar.checknewinfo();
+			}
+		},
 	}
 </script>
 

@@ -33,6 +33,14 @@ export default {
 		],
 		"label": "微博主页链接地址"
 	},
+	"yqm": {
+		"rules": [{
+				required: true,
+				errorMessage: '请输入邀请码',
+			}
+		],
+		"label": "邀请码"
+	},
 	"password":{
 		"rules": [{
 				required: true,

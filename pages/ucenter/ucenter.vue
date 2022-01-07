@@ -145,6 +145,8 @@
 			//#ifdef APP-PLUS
 			this.checkBb();
 			//#endif
+		},
+		onShow(){
 			this.checknewinfo();
 		},
 		methods: {
@@ -165,6 +167,7 @@
 			},
 			// 检测时候有新的系统消息
 			async checknewinfo() {
+				this.isnewinfo = false;
 				var userInfo = uni.getStorageSync("userInfo");
 				var res = await db.collection('jz-custom-systeminfo').where({
 					user_id:userInfo._id,

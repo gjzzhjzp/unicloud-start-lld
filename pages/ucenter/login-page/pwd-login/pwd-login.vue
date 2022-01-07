@@ -22,7 +22,7 @@
 				<!-- <uni-agreements @setAgree="agree = $event"></uni-agreements> -->
 				<view class="auth-box">
 					<text class="link" @click="toRetrievePwd">{{$t('pwdLogin.forgetPassword')}}</text>
-					<text class="link" v-show="showRegister" @click="toRegister">{{$t('pwdLogin.register')}}</text>
+					<text class="link" v-show="showRegister" @click="toRegister">{{registerText}}</text>
 				</view>
 				<!-- <view style="color:red">
 					注意：为防止忘记用户名密码，长时间不操作需要重新登录
@@ -56,7 +56,8 @@
 				"agree": true,
 				"captchaBase64": "",
 				"captcha": "",
-				showRegister: true
+				showRegister: true,
+				registerText: "注册账号"
 			}
 		},
 		created() {
@@ -65,6 +66,11 @@
 				this.showRegister = false;
 			} else {
 				this.showRegister = true;
+				if (config["800026"] == "2") {
+					this.registerText="邀请码注册"
+				}else{
+					this.registerText="注册账号"
+				}
 			}
 		},
 		computed: {

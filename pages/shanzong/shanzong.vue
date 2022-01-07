@@ -1,6 +1,6 @@
 <template>
 	<view >
-		<jz-navbar :issy="false">
+		<jz-navbar :issy="false" ref="navbar">
 			<view class="jz-navbar-title">山总</view>
 		</jz-navbar>
 		<jz-notice :type="1"></jz-notice>
@@ -36,6 +36,11 @@
 			this.$refs.sylist4.getList();
 			this.$refs.sylist5.getList();
 			uni.stopPullDownRefresh()
+		},
+		onShow: function() {
+			if(this.$refs.navbar){
+				this.$refs.navbar.checknewinfo();
+			}
 		},
 	}
 </script>

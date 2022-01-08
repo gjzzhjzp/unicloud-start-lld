@@ -3,12 +3,13 @@
 		<u-navbar :is-back="true" title="系统消息"></u-navbar>
 		<view class="jz-container">
 			<view class="infos" v-for="(item,index) in infos" :key="index">
-				<yd-chatitem ref="chatitem" :message="item.comment" :leftTime="item.comment_date"></yd-chatitem>
+				<yd-chatitem ref="chatitem"  :message="item.comment" :leftTime="item.comment_date"></yd-chatitem>
 			</view>
 		</view>
 	</view>
 </template>
 <script>
+	//
 	import {
 		mapGetters,
 		mapMutations
@@ -18,7 +19,8 @@
 	export default {
 		data() {
 			return {
-				infos: []
+				infos: [],
+				message:"你的投稿视频【<span class='zyid' id='619ce4e1808fdd00017261d3'>蜀道难，难于上青天</span>】有宝子【】评论啦~~【啊啊啊啊啊啊啊这里是内容】"
 			}
 		},
 		mounted() {

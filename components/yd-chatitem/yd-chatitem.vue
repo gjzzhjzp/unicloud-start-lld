@@ -7,7 +7,9 @@
 				<text class="message"
 					:style="{backgroundColor: bubbleColor, fontSize: messageSize, color: messageColor}">
 					<view class="angle" :style="{borderRightColor: bubbleColor}"></view>
-					{{ message }}
+					<!-- {{ message }} -->
+					<view v-html="message">
+					</view>
 				</text>
 			</view>
 			<view class="time">
@@ -86,6 +88,18 @@
 			return {
 
 			};
+		},
+		mounted(){
+			$(".zyid").each(function(){
+				var that=this;
+				$(that).on("click",()=>{
+					var that=this;
+					var id=$(that).attr("id");
+					uni.navigateTo({
+						url:"/pages/detail/detail?id"+id
+					});
+				})
+			})
 		}
 	}
 </script>

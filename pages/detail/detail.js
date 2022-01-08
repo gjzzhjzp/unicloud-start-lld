@@ -70,8 +70,14 @@ export default {
 					user_id: db.getCloudEnv('$cloudEnv_uid'),
 					create_date: db.getCloudEnv('$cloudEnv_now')
 				});
-				this.add_like().then(() => {
-					reslove()
+				this.add_like().then(async () => {
+					var add_value = {
+						type: 1,
+						user_id:  this.data.user_id,
+						comment: "你的投稿作品【"+this.data.title+"】被宝子【"+this.userInfo.nickname+"】收藏啦~~"
+					}
+					await db.collection("jz-custom-systeminfo").add(add_value);
+					reslove();
 				});
 			});
 		},
@@ -110,11 +116,11 @@ export default {
 						console.log("res", res.msg);
 					}
 					reslove();
-				}).catch((err)=>{
-					console.log("网络错误，请重试——err",err);
+				}).catch((err) => {
+					console.log("网络错误，请重试——err", err);
 					uni.showModal({
-					  content: err.message || '网络错误，请重试',
-					  showCancel: false
+						content: err.message || '网络错误，请重试',
+						showCancel: false
 					});
 				});
 			});
@@ -146,11 +152,11 @@ export default {
 						console.log("res", res.msg);
 					}
 					reslove();
-				}).catch((err)=>{
-					console.log("网络错误，请重试——err",err);
+				}).catch((err) => {
+					console.log("网络错误，请重试——err", err);
 					uni.showModal({
-					  content: err.message || '网络错误，请重试',
-					  showCancel: false
+						content: err.message || '网络错误，请重试',
+						showCancel: false
 					});
 				});
 			});

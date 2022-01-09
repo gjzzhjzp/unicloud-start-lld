@@ -81,7 +81,8 @@
 				yqr_id: "", ////邀请人id
 				yqr_number: 3, ///默认3个邀请人数
 				yqrxz_number: 10000, ////邀请限制人数
-				sfxs_yqm: false ////是否显示邀请码注册
+				sfxs_yqm: false, ////是否显示邀请码注册
+				gd_yqm: "" ///固定邀请码
 			}
 		},
 		created() {
@@ -98,6 +99,9 @@
 			}
 			if (config["800028"]) {
 				this.yqrxz_number = config["800028"];
+			}
+			if (config["800029"]) {
+				this.gd_yqm = config["800029"];
 			}
 		},
 		onReady() {
@@ -117,76 +121,80 @@
 				})
 				this.$refs.form.validate().then(async (res) => {
 						if (this.sfxs_yqm) {
-							// 检测当前是否超过邀请码注册的最大人数
-							var day1=new Date(new Date().toLocaleDateString()).getTime();
-							var day2=new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000-1;
-							var daycount=await db.collection('uni-id-users').where('register_date > '+day1+'&&register_date < '+day2+'').count()
-							console.log("daycount",daycount);
-							var _count=daycount.result.total;
-							if(_count>=this.yqrxz_number){
-								uni.showToast({
-									title: "已超过当天限制注册人数，请明天再试",
-									icon: "none",
-									duration:3000
-								});
-								uni.hideLoading();
-								return;
-							}
-							// console.log("yqrxz_number",this.yqrxz_number);
-							// return;
-							// 先查询邀请码是否存在对应的用户名
-							var yqm = this.formData.yqm.toLowerCase();
-							var _yqm = yqm.split("_");
-							var username = "";
-							if (_yqm.length == 2 && _yqm[1] == "51129") {
-								username = yqm.split("_")[0];
-							} else {
-								uni.showToast({
-									title: "邀请码无效",
-									icon: "none",
-									duration:3000
-								});
-								uni.hideLoading();
-								return;
-							}
-							if (username) {
-								var _user = await db.collection("uni-id-users").where({
-									username: username,
-									status:0,
-									isbdwb:true
-								}).field("_id,username,nickname").get();
-								if (_user.result && _user.result.data && _user.result.data.length > 0) {
-									this.yqr_id = _user.result.data[0]._id;
-									var yq_user = await db.collection("jz-custom-yhyqm").where({
-										yqr_id: this.yqr_id
-									}).get();
-									if (yq_user.result && yq_user.result.data && yq_user.result.data.length >= this
-										.yqr_number) {
-										uni.showToast({
-											title: "该邀请码已超过限制邀请人数",
-											icon: "none"
-										});
-										uni.hideLoading();
-										return;
-									}
-								} else {
+							if (this.gd_yqm != this.formData.yqm) {
+								// debugger;
+								// 检测当前是否超过邀请码注册的最大人数
+								var day1 = new Date(new Date().toLocaleDateString()).getTime();
+								var day2 = new Date(new Date().toLocaleDateString()).getTime() + 24 * 60 * 60 *
+									1000 - 1;
+								var daycount = await db.collection('uni-id-users').where('register_date > ' +
+									day1 + '&&register_date < ' + day2 + '').count()
+								console.log("daycount", daycount);
+								var _count = daycount.result.total;
+								if (_count >= this.yqrxz_number) {
 									uni.showToast({
-										title: "邀请码无效",
+										title: "已超过当天限制注册人数，请明天再试",
 										icon: "none",
-										duration:3000
+										duration: 3000
 									});
 									uni.hideLoading();
 									return;
 								}
-								console.log("_user", _user, this.yqr_id);
-							} else {
-								uni.showToast({
-									title: "邀请码无效",
-									icon: "none",
-									duration:3000
-								});
-								uni.hideLoading();
-								return;
+								// console.log("yqrxz_number",this.yqrxz_number);
+								// return;
+								// 先查询邀请码是否存在对应的用户名
+								var yqm = this.formData.yqm.toLowerCase();
+								var _yqm = yqm.split("_");
+								var username = "";
+								if (_yqm.length == 2 && _yqm[1] == "51129") {
+									username = yqm.split("_")[0];
+								} else {
+									uni.showToast({
+										title: "邀请码无效",
+										icon: "none",
+										duration: 3000
+									});
+									uni.hideLoading();
+									return;
+								}
+								if (username) {
+									var _user = await db.collection("uni-id-users").where(
+									"username=='"+username+"'&&status!=1&&isbdwb==true"
+									).field("_id,username,nickname").get();
+									if (_user.result && _user.result.data && _user.result.data.length > 0) {
+										this.yqr_id = _user.result.data[0]._id;
+										var yq_user = await db.collection("jz-custom-yhyqm").where({
+											yqr_id: this.yqr_id
+										}).get();
+										if (yq_user.result && yq_user.result.data && yq_user.result.data.length >=
+											this
+											.yqr_number) {
+											uni.showToast({
+												title: "该邀请码已超过限制邀请人数",
+												icon: "none"
+											});
+											uni.hideLoading();
+											return;
+										}
+									} else {
+										uni.showToast({
+											title: "邀请码无效",
+											icon: "none",
+											duration: 3000
+										});
+										uni.hideLoading();
+										return;
+									}
+									console.log("_user", _user, this.yqr_id);
+								} else {
+									uni.showToast({
+										title: "邀请码无效",
+										icon: "none",
+										duration: 3000
+									});
+									uni.hideLoading();
+									return;
+								}
 							}
 						}
 
@@ -205,7 +213,6 @@
 					});
 			},
 			confirmcontent() {
-
 				this.showmodel = true;
 			},
 			confirmnc() {
@@ -219,7 +226,7 @@
 				uniCloud.callFunction({
 					name: 'uni-id-cf',
 					data: {
-						action: 'register',
+						action: 'register_new',
 						params,
 					},
 					success: async ({

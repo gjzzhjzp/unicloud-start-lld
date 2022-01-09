@@ -96,7 +96,7 @@
 					var that=this;
 					var id=$(that).attr("id");
 					uni.navigateTo({
-						url:"/pages/detail/detail?id"+id
+						url:"/pages/detail/detail?id="+id
 					});
 				})
 			})

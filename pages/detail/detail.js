@@ -74,7 +74,7 @@ export default {
 					var add_value = {
 						type: 1,
 						user_id:  this.data.user_id,
-						comment: "你的投稿作品【"+this.data.title+"】被宝子【"+this.userInfo.nickname+"】收藏啦~~"
+						comment: "你的投稿作品【<span class='zyid' id='"+this.data._id+"'>"+this.data.title+"</span>】被宝子【"+this.userInfo.nickname+"】收藏啦~~"
 					}
 					await db.collection("jz-custom-systeminfo").add(add_value);
 					reslove();

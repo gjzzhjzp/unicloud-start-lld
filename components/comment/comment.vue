@@ -227,10 +227,11 @@
 					reply_comment_id: this.relaydata.reply_comment_id || "0",
 					all_reply_comment_id: this.relaydata.all_reply_comment_id || "0",
 				});
+				
 				var add_value = {
 					type: 1,
 					user_id:  this.zydata.user_id,
-					comment: "你的投稿作品【"+this.zydata.title+"】有宝子【"+this.userInfo.nickname+"】评论啦~~【"+this.inputvalue+"】"
+					comment: "你的投稿作品【<span class='zyid' id='"+this.zydata._id+"'>"+this.zydata.title+"</span>】有宝子【"+this.userInfo.nickname+"】评论啦~~【"+this.inputvalue+"】"
 				}
 				await db.collection("jz-custom-systeminfo").add(add_value);
 				this.inputvalue = "";

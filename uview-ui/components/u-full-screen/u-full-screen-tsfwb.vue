@@ -49,7 +49,7 @@
 				if (res.result.data && res.result.data.length > 0) {
 					var infos = res.result.data;
 					if(infos&&infos.length>0){
-						this.isnewinfo=infos[0].comment;
+						this.isnewinfo=infos[infos.length-1].comment;
 						if(this.isnewinfo){
 							this.content+="<br>审核意见：【"+this.isnewinfo+"】";
 						}

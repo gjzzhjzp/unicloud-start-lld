@@ -5,12 +5,12 @@
     "versionName" : "1.1.7",
     "versionCode" : 116,
     "transformPx" : false,
-	"networkTimeout": {  
-	    "request": 60000,  
-	    "connectSocket": 60000,  
-	    "uploadFile": 60000,  
-	    "downloadFile": 60000  
-	},
+    "networkTimeout" : {
+        "request" : 60000,
+        "connectSocket" : 60000,
+        "uploadFile" : 60000,
+        "downloadFile" : 60000
+    },
     "app-plus" : {
         "locales" : {
             "en" : {
@@ -136,7 +136,7 @@
             },
             "splashscreen" : {
                 "iosStyle" : "common",
-                "androidStyle" : "default",
+                "androidStyle" : "common",
                 "android" : {
                     "hdpi" : "E:/俊哲宇宙/安卓启动图/res/drawable-hdpi/1__1.9.png",
                     "xhdpi" : "E:/俊哲宇宙/安卓启动图/res/drawable-xhdpi/1__1.9.png",

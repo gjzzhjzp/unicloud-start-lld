@@ -44,7 +44,7 @@ exports.main = async (event, context) => {
 	  用户就这样轻易地伪造了他人的uid传递给服务端，有一句话叫：前端从来的数据是不可信任的
 	  所以这里我们需要将uniID.checkToken返回的uid写入到params.uid
 	*/
-	let noCheckAction = ['register', 'checkToken', 'login', 'logout', 'sendSmsCode', 'createCaptcha',
+	let noCheckAction = ['register_new', 'checkToken', 'login', 'logout', 'sendSmsCode', 'createCaptcha',
 		'verifyCaptcha', 'refreshCaptcha', 'inviteLogin', 'loginByWeixin', 'loginByUniverify',
 		'loginByApple', 'loginBySms', 'resetPwdBySmsCode', 'registerAdmin'
 	]
@@ -105,7 +105,7 @@ exports.main = async (event, context) => {
 			if(res.userInfo&&res.userInfo.password){
 				delete res.userInfo.password
 			}
-			if (res.type == 'register') {
+			if (res.type == 'register_new') {
 				await registerSuccess(res.uid)
 			} else {
 				if (Object.keys(deviceInfo).length) {
@@ -196,7 +196,7 @@ exports.main = async (event, context) => {
 			})
 			// console.log(res);
 			break;
-		case 'register':
+		case 'register_new':
 			var {
 				username, password, nickname,weiboname,weibocontent
 			} = params

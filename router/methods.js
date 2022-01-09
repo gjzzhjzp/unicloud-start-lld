@@ -64,7 +64,12 @@ export default {
 							url: "/uview-ui/components/u-full-screen/u-full-screen-ztjy"
 						})
 						reslove(false);
-					} else {
+					}else if (!userinf.isbdwb) { //禁用
+						uni.reLaunch({
+							url: "/uview-ui/components/u-full-screen/u-full-screen-tsfwb"
+						})
+						reslove(false);
+					}  else {
 						reslove(true);
 					}
 				}else{

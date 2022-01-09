@@ -71,11 +71,14 @@
 		methods: {
 			// 检测版本
 			async checkBb() {
+				// debugger;
 				const db = uniCloud.database();
 				const collection = db.collection('opendb-news-appbb');
+				console.log("this.app_bbh",this.app_bbh,typeof this.app_bbh);
 				var resultdata = await collection.where({
-					app_bbh: db.command.gt(this.app_bbh)
+					app_bbh: db.command.gt(parseInt(this.app_bbh))
 				}).orderBy("app_bbh", "desc").get();
+				console.log("resultdata",resultdata);
 				if (resultdata.result.data && resultdata.result.data.length > 0) {
 					this.zxbb = resultdata.result.data[0];
 					this.ljbb=resultdata.result.data;
@@ -90,28 +93,34 @@
 				this.downloadImg(src);
 			},
 			downloadImg(src) {
-				uni.downloadFile({
-					url: src,
-					success: function(res) {
-						uni.saveImageToPhotosAlbum({
-							filePath: res.tempFilePath,
-							success: () => {
-								uni.showToast({
-									title: '已保存至相册',
-									duration: 1000
-								});
-							}
-						});
-					},
-					fail: function() {
-						uni.hideLoading();
-						uni.showToast({
-							title: '图片下载失败',
-							icon: 'none',
-							duration: 1000
-						});
-					}
+				// console.log("src",src);
+				var pscreen = plus.webview.currentWebview().opener();
+				mui.fire(pscreen, 'saveImage', {
+					src: src
 				});
+				
+				// uni.downloadFile({
+				// 	url: src,
+				// 	success: function(res) {
+				// 		uni.saveImageToPhotosAlbum({
+				// 			filePath: res.tempFilePath,
+				// 			success: () => {
+				// 				uni.showToast({
+				// 					title: '已保存至相册',
+				// 					duration: 1000
+				// 				});
+				// 			}
+				// 		});
+				// 	},
+				// 	fail: function() {
+				// 		uni.hideLoading();
+				// 		uni.showToast({
+				// 			title: '图片下载失败',
+				// 			icon: 'none',
+				// 			duration: 1000
+				// 		});
+				// 	}
+				// });
 			}
 		}
 	}

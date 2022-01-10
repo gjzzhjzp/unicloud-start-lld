@@ -13,7 +13,7 @@
 								<!-- <image-storage :src="imageUrl(item)" height="100px" width="100%" :customStyle="{borderRadius:'6px'}" mode="aspectFill"></image-storage> -->
 								<!-- <u-lazy-load threshold="300" height="100px" border-radius="10" img-mode="aspectFill"
 									:image="imageUrl(item)"></u-lazy-load> -->
-								<u-image width="100%" height="100px" border-radius="10" :src="imageUrl(item)"
+								<u-image width="100%" height="200rpx" border-radius="10" :src="imageUrl(item)"
 									loading-icon="/static/center/chang1.png"
 									error-icon="/static/center/error_chang.png">
 								</u-image>
@@ -231,7 +231,7 @@
 </script>
 <style lang="scss">
 	.jz-sy-item {
-		padding: 0px 6px !important;
+		padding: 0px 12rpx !important;
 	}
 
 	.jz-sy-list-item {

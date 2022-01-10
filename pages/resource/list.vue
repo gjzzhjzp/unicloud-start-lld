@@ -12,8 +12,8 @@
 								:options="doptions"></u-dropdown-item>
 						</u-dropdown>
 					</view>
-					<u-search border-color="#7275D3" bg-color="#fff" v-model="keyword" height="60" :placeholder="dplaceholder"
-						@search="confirm" @custom="confirm" :show-action="true"></u-search>
+					<u-search border-color="#7275D3" bg-color="#fff" v-model="keyword" height="60"
+						:placeholder="dplaceholder" @search="confirm" @custom="confirm" :show-action="true"></u-search>
 				</u-navbar>
 			</view>
 		</view>
@@ -68,7 +68,7 @@
 						value: 2,
 					}
 				],
-				dplaceholder:"请输入...",
+				dplaceholder: "请输入...",
 				tagname: "", ////tag标签
 				showTag: false,
 				keyword: "",
@@ -116,7 +116,8 @@
 				param: {
 					page: 1,
 					rows: 16
-				}
+				},
+				// curuser:""////当前用户
 			}
 		},
 		mixins: [search],
@@ -130,7 +131,7 @@
 			uni.stopPullDownRefresh();
 		},
 		created() {
-			var e=this.$Route.query;
+			var e = this.$Route.query;
 			if (e.flmc && e.flbm) {
 				this.showTag = true;
 				this.tagname = e.flmc;
@@ -152,6 +153,13 @@
 			if (!this.keyword) {
 				this.keyword = e.title || "";
 			}
+			// debugger;
+			if (!this.keyword && e.user) {
+				this.keyword = e.user || "";
+				this.dvalue = 2;
+				this.dtitle="用户";
+			}
+			
 			this.addRandomData();
 		},
 		onPageScroll(e) {
@@ -170,10 +178,10 @@
 				this.dvalue = value;
 				if (value == 1) {
 					this.dtitle = "资源";
-					this.dplaceholder="请输入...";
+					this.dplaceholder = "请输入...";
 				} else {
 					this.dtitle = "用户";
-					this.dplaceholder="请输入用户名/昵称";
+					this.dplaceholder = "请输入用户名/昵称";
 				}
 			},
 			closetagClick() {
@@ -206,7 +214,7 @@
 			},
 			confirm() {
 				var value = this.keyword;
-				if (value&&this.dvalue==1) {
+				if (value && this.dvalue == 1) {
 					// debugger;
 					this.localSearchListManage(value);
 					this.searchLogDbAdd(value)
@@ -221,9 +229,9 @@
 				//#ifdef APP-PLUS
 				app_bbh = plus.runtime.versionCode;
 				//#endif
-				var url="resource/getList";
-				if(this.dvalue==2){
-					url="resource/getListByuser";
+				var url = "resource/getList";
+				if (this.dvalue == 2) {
+					url = "resource/getListByuser";
 				}
 				uniCloud.callFunction({
 					name: 'jzfunction',
@@ -282,11 +290,11 @@
 						console.log("res.msg", res.msg);
 					}
 					uni.hideLoading();
-				}).catch((err)=>{
-					console.log("网络错误，请重试——err",err);
+				}).catch((err) => {
+					console.log("网络错误，请重试——err", err);
 					uni.showModal({
-					  content: err.message || '网络错误，请重试',
-					  showCancel: false
+						content: err.message || '网络错误，请重试',
+						showCancel: false
 					});
 				});
 			}

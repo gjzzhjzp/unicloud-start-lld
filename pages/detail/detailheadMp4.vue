@@ -15,12 +15,12 @@
 				</view>
 			</view>
 		</u-sticky>
-		<view v-show="current==0"> 
-			<view class="detail-image-title" >
+		<view v-show="current==0">
+			<view class="detail-image-title">
 				<view class="title" style="flex: 1;">
 					{{data.title}}
 				</view>
-				<view style="text-align: right;color: #909399;width: 80px;">
+				<view style="text-align: right;color: #909399;width: 160rpx;">
 					<uni-dateformat class="publish_date" :date="data.publish_date" format="yyyy-MM-dd"
 						:threshold="[60000, 2592000000]" />
 				</view>
@@ -53,7 +53,8 @@
 			<view class="detail-image-sx">
 				<view class="detail-image-ly">
 					<view class="detail-image-ly1">来源：{{data.author}}</view>
-					<view class="detail-image-ly2">投稿人：{{tgr}}</view>
+					<view class="detail-image-ly2">投稿人：<view @click="tgrHref()" style="color: rgb(114, 117, 211);">{{tgr}}</view>
+					</view>
 				</view>
 			</view>
 			<view class="detail-image-jj">
@@ -158,12 +159,10 @@
 			}
 			this.showmp4Xz = t_800005 == '1' ? true : false;
 			this.showllsc = t_800011 == '1' ? true : false;
-			
 			// console.log("labels", this.labels);
 		},
-		
 		computed: {
-			labels(){
+			labels() {
 				var labels = this.data.labels;
 				if (labels) {
 					return labels.split("，")
@@ -186,8 +185,8 @@
 			},
 			checkisLike() {
 				// debugger;
-				var islike=false;
-				if (this.islike||(this.data && this.data.favorite && this.data.favorite.length > 0)) {
+				var islike = false;
+				if (this.islike || (this.data && this.data.favorite && this.data.favorite.length > 0)) {
 					islike = true;
 				} else {
 					islike = false;
@@ -196,6 +195,16 @@
 			},
 		},
 		methods: {
+			tgrHref(){
+				if (this.data.userinfo && this.data.userinfo.length > 0) {
+					var tgr= this.data.userinfo[0].nickname;
+					if(tgr){
+						uni.navigateTo({
+							url:"/pages/resource/list?user="+tgr
+						});
+					}
+				}
+			},
 			changenumber(plNumber) {
 				this.$emit("changenumber", plNumber);
 				// debugger;
@@ -210,6 +219,14 @@
 </script>
 
 <style>
+	.detail-image-ly2 {
+		display: flex;
+	}
+
+	.detail-image-ly2 .u-link {
+		margin-top: 4px;
+	}
+
 	.showllsc {
 		display: flex;
 		flex-direction: row;
@@ -249,9 +266,11 @@
 		flex-wrap: wrap;
 		margin-top: 6px;
 	}
-.detail-image-bq1{
-	margin: 6px;
-}
+
+	.detail-image-bq1 {
+		margin: 6px;
+	}
+
 	.detail-image-sx3 {
 		display: flex;
 		flex-direction: row;

@@ -702,8 +702,8 @@
 	.wrapper-headcontent {
 		background-color: #7883D2;
 		width: 80%;
-		height: 150px;
-		margin-top: 50px;
+		height: 300rpx;
+		margin-top: 100rpx;
 		border-radius: 6px;
 		text-align: center;
 		padding-top: 10px;

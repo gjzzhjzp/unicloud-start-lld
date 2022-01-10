@@ -4,7 +4,7 @@
 			<u-grid-item v-for="(item, index) in list" :custom-style="{'padding':0}" :key="index" @click="$notMoreTap(toDetail,'notTap',item)">
 				<view class="er-item-list-warter">
 					<view class="er-item-list-warter1">
-						<u-image :show-loading="true" loading-icon="/static/center/chang1.png" error-icon="/static/center/error_chang.png"  height="100px" border-radius="10" :src="imageUrl(item)" mode="aspectFill">
+						<u-image :show-loading="true" loading-icon="/static/center/chang1.png" error-icon="/static/center/error_chang.png"  height="200rpx" border-radius="10" :src="imageUrl(item)" mode="aspectFill">
 										
 						</u-image>
 						<!-- <u-lazy-load threshold="300" height="200" border-radius="10" img-mode="aspectFill"
@@ -116,7 +116,7 @@
 		border-radius: 8px;
 		// margin: 10px;
 		background-color: #ffffff;
-		padding: 8px;
+		padding: 16rpx;
 		position: relative;
 		width: 100%;
 	}

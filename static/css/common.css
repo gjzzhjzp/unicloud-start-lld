@@ -16,11 +16,11 @@
 
 .search-container .u-search .u-action.u-action-active {
 	border: 1px solid;
-	border-radius: 20px;
+	border-radius: 40rpx;
 	color: #fff;
 	background: #7275D3;
-	padding: 10rpx 20rpx;
-	width: 60px;
+	padding: 20rpx 20rpx;
+	width: 120rpx;
 	line-height: 20px;
 }
 

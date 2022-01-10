@@ -50,7 +50,7 @@ export default {
 				var userinfo = uni.getStorageSync("userInfo");
 				if(userinfo){
 					const usersTable = db.collection('uni-id-users')
-					var userdata = await usersTable.where('_id==$env.uid').field("username,nickname,isbdwb,original,forbiddenwords,status,avatar,avatar_file,role,register_date,token").get();
+					var userdata = await usersTable.where('_id==$env.uid').field("username,weibocontent,nickname,isbdwb,original,forbiddenwords,status,avatar,avatar_file,role,register_date,token").get();
 					console.log("userdata", userdata);
 					var userinf = userdata.result.data[0];
 					uni.setStorageSync("userInfo",userinf);

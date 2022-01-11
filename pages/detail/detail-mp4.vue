@@ -153,7 +153,7 @@
 				this.dp = new DPlayer({
 					container: document.getElementById('dplayer'),
 					autoplay: true,
-					theme: '#FADFA3',
+					theme: '#7275D3',
 					loop: true,
 					lang: 'zh-cn',
 					screenshot: true,
@@ -165,14 +165,6 @@
 						url: url,
 						type: 'auto',
 					},
-					// 暂时不支持字幕
-					// subtitle: {
-					// 	url: 'http://47.108.224.146/jzzm/2020/20200501.ass',
-					// 	type: 'ass',
-					// 	fontSize: '25px',
-					// 	bottom: '10%',
-					// 	color: '#b7daff',
-					// },
 					danmaku: {
 						id: item._id,
 						api: 'getdanmu',
@@ -204,6 +196,7 @@
 					mui.fire(pscreen, 'changescreen', {
 						direction: "landscape-primary"
 					});
+					getApp().globalData.screen=1;
 					window.jQuery("#dplayer").append(`<div class="player-toggle shu"></div>`);
 					window.jQuery("#dplayer .player-toggle.heng").remove();
 				})
@@ -212,6 +205,7 @@
 					mui.fire(pscreen, 'changescreen', {
 						direction: "portrait-primary"
 					});
+					getApp().globalData.screen=0;
 					window.jQuery("#dplayer").append(`<div class="player-toggle heng"></div>`);
 					window.jQuery("#dplayer .player-toggle.shu").remove();
 				})

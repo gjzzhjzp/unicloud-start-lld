@@ -80,7 +80,23 @@
 				}
 			},
 			previewOpen(item) {
+				var that=this;
 				this.$refs.previewImage.open(item.url);
+				var pscreen = plus.webview.currentWebview().opener();
+				mui.fire(pscreen, 'waitclose', {
+					waitclose: "1"
+				});
+				window.addEventListener('allowclose', function(e) {
+					that.closePopup();
+				});
+			},
+			closePopup(){
+				var that=this;
+				this.$refs.previewImage.close();
+				var pscreen = plus.webview.currentWebview().opener();
+				mui.fire(pscreen, 'waitclose', {
+					waitclose: "0"
+				});
 			},
 		}
 	}

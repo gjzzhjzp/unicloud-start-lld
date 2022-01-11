@@ -106,7 +106,6 @@
 
 <style lang="scss" scoped>
 	
-
 	.chatitem {
 		background-color: #ededed;
 

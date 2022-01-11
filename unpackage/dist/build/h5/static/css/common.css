@@ -250,3 +250,6 @@ body.pages-resource-list uni-page-body {
 .dplayer-comment-setting-box{
 	z-index: 999999;
 }
+.chatitem .zyid{
+	text-decoration: underline;
+}

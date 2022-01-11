@@ -310,7 +310,7 @@ module.exports = class resourceService extends Service {
 					is_recommend: 1
 				});
 				collection_query = collection.aggregate().match(where).sort({
-					"publish_date": -1
+					"last_modify_date": -1
 				}).skip((page - 1) * rows).limit(rows);
 			}
 			var resultdata = {};
@@ -468,7 +468,7 @@ module.exports = class resourceService extends Service {
 					is_recommend: 1
 				});
 				collection_query = collection.aggregate().match(where).sort({
-					"publish_date": -1
+					"last_modify_date": -1
 				}).skip((page - 1) * rows).limit(rows);
 			}
 			var resultdata = {};

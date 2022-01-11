@@ -105,11 +105,12 @@
 			}
 		},
 		mounted() {
+			uni.setStorageSync("screen","0");
 			this.initImage();
 			// this.videoContext = uni.createVideoContext('myVideo');
 			this.$nextTick(() => {
 				this.initDp(this.data);
-			})
+			});
 		},
 		watch: {
 			data: {
@@ -174,7 +175,7 @@
 						unlimited: true,
 					}
 				});
-				
+				var pscreen = plus.webview.currentWebview().opener();
 				this.dp.on("fullscreen", function(){
 					// debugger;
 					window.jQuery(".detail-image-item").addClass("fullscren");
@@ -183,20 +184,26 @@
 				})
 				this.dp.on("fullscreen_cancel", function(){
 					// debugger;
-					window.jQuery(".detail-image-item").removeClass("fullscren");
-					window.jQuery("#dplayer .player-toggle").remove();
-					
-					// mui.fire(pscreen, 'changescreen', {
-					// 	direction: "portrait-primary"
-					// });
+					var screen=uni.getStorageSync("screen");
+					if(screen=="1"){
+						uni.setStorageSync("screen","0");
+						mui.fire(pscreen, 'changescreen', {
+							direction: "landscape-primary"
+						});
+					}else{
+						window.jQuery(".detail-image-item").removeClass("fullscren");
+						window.jQuery("#dplayer .player-toggle").remove();
+					}
 				});
-				var pscreen = plus.webview.currentWebview().opener();
+				
 				window.jQuery("#dplayer").on("click",".player-toggle.heng",function(){
 					// debugger;
+					
 					mui.fire(pscreen, 'changescreen', {
 						direction: "landscape-primary"
 					});
-					getApp().globalData.screen=1;
+					uni.setStorageSync("screen","1");
+					// getApp().globalData.screen="1";
 					window.jQuery("#dplayer").append(`<div class="player-toggle shu"></div>`);
 					window.jQuery("#dplayer .player-toggle.heng").remove();
 				})
@@ -205,7 +212,8 @@
 					mui.fire(pscreen, 'changescreen', {
 						direction: "portrait-primary"
 					});
-					getApp().globalData.screen=0;
+					uni.setStorageSync("screen","0");
+					// getApp().globalData.screen="0";
 					window.jQuery("#dplayer").append(`<div class="player-toggle heng"></div>`);
 					window.jQuery("#dplayer .player-toggle.shu").remove();
 				})

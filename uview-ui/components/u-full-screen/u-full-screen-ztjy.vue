@@ -28,6 +28,7 @@
 				this.closeModal();
 			},
 			closeModal() {
+				if(typeof plus!="undefined"){
 				var pscreen = plus.webview.currentWebview().opener();
 				mui.fire(pscreen, 'quit', {
 					data: "quit"
@@ -35,6 +36,7 @@
 				// #ifdef APP-PLUS  
 				plus.runtime.quit();  
 				// #endif
+				}
 			}
 		}
 	}

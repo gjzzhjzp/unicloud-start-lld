@@ -76,10 +76,12 @@
 			uni.stopPullDownRefresh();
 		},
 		onUnload(){
+			if(typeof plus!="undefined"){
 			var pscreen = plus.webview.currentWebview().opener();
 			mui.fire(pscreen, 'changescreen', {
 				direction: "portrait-primary"
 			});
+			}
 		},
 		methods: {
 			// 获取资源

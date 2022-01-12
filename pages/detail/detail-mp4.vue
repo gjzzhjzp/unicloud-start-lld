@@ -1,12 +1,12 @@
 <template>
 	<view class="detail-image">
-		
+
 		<detailhead-mp4 :data="data" :pl-number="plNumber">
 			<template slot="content">
 				<template v-if="data.aliyun_dz&&data.aliyun_dz.indexOf('/jzmp4/')!=-1">
 					<view class="detail-image-item">
 						<div id="dplayer" ref="dplayer">
-						</div> 
+						</div>
 						<div v-if="videoDirection=='shu'" class="player-toggle shu" @click="toggleMp4('shu')">
 							<u-icon name="/static/center/shu.png"></u-icon>
 						</div>
@@ -17,14 +17,14 @@
 				</template>
 				<template v-else>
 					<view class="detail-image-item" v-for="(item,index) in data.resources" :key="index">
-						 <div id="dplayer" ref="dplayer"> 
-						 </div> 
-						 <div v-if="videoDirection=='shu'" class="player-toggle shu" @click="toggleMp4('shu')">
-						 	<u-icon name="/static/center/shu.png"></u-icon>
-						 </div>
-						 <div v-else class="player-toggle heng" @click="toggleMp4('heng')">
-						 	<u-icon name="/static/center/heng.png"></u-icon>
-						 </div> 
+						<div id="dplayer" ref="dplayer">
+						</div>
+						<div v-if="videoDirection=='shu'" class="player-toggle shu" @click="toggleMp4('shu')">
+							<u-icon name="/static/center/shu.png"></u-icon>
+						</div>
+						<div v-else class="player-toggle heng" @click="toggleMp4('heng')">
+							<u-icon name="/static/center/heng.png"></u-icon>
+						</div>
 					</view>
 				</template>
 				<!-- #ifndef MP-ALIPAY -->
@@ -71,8 +71,8 @@
 				videoContext: null,
 				currentTime: "", ///当前播放时间
 				plNumber: 0,
-				videoDirection:"shu",
-				oldUrl:""
+				videoDirection: "shu",
+				oldUrl: ""
 			}
 		},
 		components: {
@@ -105,7 +105,7 @@
 			}
 		},
 		mounted() {
-			uni.setStorageSync("screen","0");
+			// uni.setStorageSync("screen", "0");
 			this.initImage();
 			// this.videoContext = uni.createVideoContext('myVideo');
 			this.$nextTick(() => {
@@ -122,22 +122,15 @@
 			}
 		},
 		methods: {
-			toggleMp4(){
-				// debugger;
-				var direction="";
-				if(this.videoDirection=="shu"){
-					this.videoDirection="heng";
-					direction="landscape-primary";
-				}else{
-					this.videoDirection="shu";
-					direction="portrait-primary";
+			toggleMp4() {
+				var direction = "";
+				if (this.videoDirection == "shu") {
+					this.videoDirection = "heng";
+					direction = "landscape-primary";
+				} else {
+					this.videoDirection = "shu";
+					direction = "portrait-primary";
 				}
-				
-				// var pscreen = plus.webview.currentWebview().opener();
-				// mui.fire(pscreen, 'changescreen', {
-				// 	direction: direction
-				// });
-				
 			},
 			initDp(item) {
 				// debugger;
@@ -147,10 +140,10 @@
 				} else {
 					url = item.resources[0].url;
 				}
-				if (!url||this.oldUrl==url) {
+				if (!url || this.oldUrl == url) {
 					return;
 				}
-				this.oldUrl=url;
+				this.oldUrl = url;
 				this.dp = new DPlayer({
 					container: document.getElementById('dplayer'),
 					autoplay: true,
@@ -175,48 +168,50 @@
 						unlimited: true,
 					}
 				});
-				var pscreen = plus.webview.currentWebview().opener();
-				this.dp.on("fullscreen", function(){
-					// debugger;
-					window.jQuery(".detail-image-item").addClass("fullscren");
-					
-					window.jQuery("#dplayer").append(`<div class="player-toggle heng"></div>`);
-				})
-				this.dp.on("fullscreen_cancel", function(){
-					// debugger;
-					var screen=uni.getStorageSync("screen");
-					if(screen=="1"){
-						uni.setStorageSync("screen","0");
+				if (typeof plus != "undefined") {
+					var pscreen = plus.webview.currentWebview().opener();
+
+					this.dp.on("fullscreen", function() {
+						// debugger;
+						window.jQuery(".detail-image-item").addClass("fullscren");
+
+						window.jQuery("#dplayer").append(`<div class="player-toggle heng"></div>`);
+					})
+					this.dp.on("fullscreen_cancel", function() {
+						// debugger;
+						// var screen = uni.getStorageSync("screen");
+						// if (screen == "1") {
+						// uni.setStorageSync("screen", "0");
+						mui.fire(pscreen, 'changescreen', {
+							direction: "portrait-primary"
+						});
+						// } else {
+						window.jQuery(".detail-image-item").removeClass("fullscren");
+						window.jQuery("#dplayer .player-toggle").remove();
+						// }
+					});
+
+					window.jQuery("#dplayer").on("click", ".player-toggle.heng", function() {
+						// debugger;
 						mui.fire(pscreen, 'changescreen', {
 							direction: "landscape-primary"
 						});
-					}else{
-						window.jQuery(".detail-image-item").removeClass("fullscren");
-						window.jQuery("#dplayer .player-toggle").remove();
-					}
-				});
-				
-				window.jQuery("#dplayer").on("click",".player-toggle.heng",function(){
-					// debugger;
-					
-					mui.fire(pscreen, 'changescreen', {
-						direction: "landscape-primary"
-					});
-					uni.setStorageSync("screen","1");
-					// getApp().globalData.screen="1";
-					window.jQuery("#dplayer").append(`<div class="player-toggle shu"></div>`);
-					window.jQuery("#dplayer .player-toggle.heng").remove();
-				})
-				window.jQuery("#dplayer").on("click",".player-toggle.shu",function(){
-					
-					mui.fire(pscreen, 'changescreen', {
-						direction: "portrait-primary"
-					});
-					uni.setStorageSync("screen","0");
-					// getApp().globalData.screen="0";
-					window.jQuery("#dplayer").append(`<div class="player-toggle heng"></div>`);
-					window.jQuery("#dplayer .player-toggle.shu").remove();
-				})
+						// uni.setStorageSync("screen", "1");
+						// getApp().globalData.screen="1";
+						window.jQuery("#dplayer").append(`<div class="player-toggle shu"></div>`);
+						window.jQuery("#dplayer .player-toggle.heng").remove();
+					})
+					window.jQuery("#dplayer").on("click", ".player-toggle.shu", function() {
+
+						mui.fire(pscreen, 'changescreen', {
+							direction: "portrait-primary"
+						});
+						// uni.setStorageSync("screen", "0");
+						// getApp().globalData.screen="0";
+						window.jQuery("#dplayer").append(`<div class="player-toggle heng"></div>`);
+						window.jQuery("#dplayer .player-toggle.shu").remove();
+					})
+				}
 			},
 			changenumber(plNumber) {
 				this.plNumber = plNumber;
@@ -278,10 +273,6 @@
 	// }
 </script>
 <style>
-	
-	
-	
-
 	/* .player-toggle * {
 		width: 100%;
 		height: 100%;
@@ -370,28 +361,29 @@
 
 	}
 
-	 .detail-image-item.fullscren.heng {
+	.detail-image-item.fullscren.heng {
 		transform: rotate(90deg);
 		height: 100vw !important;
 		position: fixed;
-		    top: 0;
-		    bottom: 0px;
-		    left: 0px;
+		top: 0;
+		bottom: 0px;
+		left: 0px;
 		right: 0px;
 		z-index: 9999;
 	}
 
 	.detail-image-item.fullscren.heng #dplayer {
 		width: 100vh !important;
-	} 
+	}
 
- #dplayer {
+	#dplayer {
 		width: 100%;
 		height: 100%;
 	}
+
 	.detail-image-item video {
 		width: 100%;
 		height: 100%;
 		border-radius: 10px;
-	} 
+	}
 </style>

@@ -201,10 +201,12 @@
 			closepopup() {
 				var that = this;
 				that.showreply = false;
+				if(typeof plus!="undefined"){
 				var pscreen = plus.webview.currentWebview().opener();
 				mui.fire(pscreen, 'waitclose', {
 					waitclose: "0"
 				});
+				}
 			},
 			// 发送评论
 			async sendComment() {
@@ -258,6 +260,7 @@
 				this.currentData = item;
 				this.showreply = true;
 				//向父级窗口发送等待返回的消息,接收到消息否关闭该窗口
+				if(typeof plus!="undefined"){
 				var pscreen = plus.webview.currentWebview().opener();
 				mui.fire(pscreen, 'waitclose', {
 					waitclose: "1"
@@ -265,6 +268,7 @@
 				window.addEventListener('allowclose', function(e) {
 					that.closepopup();
 				});
+				}
 			},
 			// 点赞
 			async getLike(index) {

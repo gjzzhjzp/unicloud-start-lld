@@ -6,6 +6,21 @@
 				"enablePullDownRefresh": true
 			}
 		}, {
+			"path": "pages/youxidetail/youxidetail",
+			"style": {
+				"navigationBarTitleText": "游戏详情"
+			}
+		}, {
+			"path": "pages/pc/pc",
+			"style": {
+				"navigationBarTitleText": "pc端"
+			}
+		},{
+			"path": "pages/youxi/youxi",
+			"style": {
+				"navigationBarTitleText": "游戏"
+			}
+		},  {
 			"path": "pages/question/question",
 			"style": {
 				"navigationBarTitleText": "对暗号"

@@ -94,10 +94,12 @@
 			},
 			downloadImg(src) {
 				// console.log("src",src);
-				var pscreen = plus.webview.currentWebview().opener();
-				mui.fire(pscreen, 'saveImage', {
-					src: src
-				});
+				if(typeof plus!="undefined"){
+					var pscreen = plus.webview.currentWebview().opener();
+					mui.fire(pscreen, 'saveImage', {
+						src: src
+					});
+				}
 				
 				// uni.downloadFile({
 				// 	url: src,

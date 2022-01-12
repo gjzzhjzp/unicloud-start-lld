@@ -22,7 +22,12 @@
 			<!-- <jz-sy-list ref="sylist4" title="夺笋" label="夺笋"></jz-sy-list> -->
 			<jz-tabbar></jz-tabbar>
 			<jz-gonggao ref="gonggao"></jz-gonggao>
-			
+			<drag-icon ref="drag"></drag-icon>
+		</view>
+	</view>
+	<view v-else>
+		<view class="b-image">
+			<u-image :src="startpng" mode="widthFix"></u-image>
 		</view>
 	</view>
 </template>
@@ -32,7 +37,8 @@
 		data() {
 			return {
 				notTap: true, //一定要设置为true
-				showindex:false
+				showindex: false,
+				startpng: "/static/start/start.png"
 			}
 		},
 		mixins: [gonggao],
@@ -41,8 +47,8 @@
 			if (question_success1) {
 				this.showindex=true;
 			}
-			console.log("this.$refs.navbar",this.$refs.navbar);
-			if(this.$refs.navbar){
+			console.log("this.$refs.navbar", this.$refs.navbar);
+			if (this.$refs.navbar) {
 				this.$refs.navbar.checknewinfo();
 			}
 		},
@@ -67,5 +73,14 @@
 <style>
 	.jz-sy-list {
 		padding: 10rpx 0px;
+	}
+
+	.b-image {
+		width: 100vw;
+		height: 100vh;
+		z-index: 9999999;
+		position: fixed;
+		top: 0;
+		bottom: 0;
 	}
 </style>

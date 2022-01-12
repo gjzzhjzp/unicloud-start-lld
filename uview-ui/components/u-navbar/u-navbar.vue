@@ -167,7 +167,7 @@
 		data() {
 			return {
 				menuButtonInfo: menuButtonInfo,
-				statusBarHeight: systemInfo.statusBarHeight||30////默认40px的高度
+				statusBarHeight: systemInfo.statusBarHeight
 			};
 		},
 		computed: {
@@ -222,7 +222,12 @@
 				// #endif
 			}
 		},
-		created() {},
+		created() {
+			// debugger;
+			if(typeof plus!="undefined"){
+				this.statusBarHeight=30;
+			}
+		},
 		methods: {
 			goBack() {
 				// debugger;

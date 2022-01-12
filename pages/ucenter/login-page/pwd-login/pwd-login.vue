@@ -191,6 +191,7 @@
 									content: '您已提交微博验证【' + data.weibocontent + '】申请，如已发微博，请等待管理员审核',
 									success: function(res) {
 										if (res.confirm) {
+											if(typeof plus!="undefined"){
 											var pscreen = plus.webview.currentWebview().opener();
 											mui.fire(pscreen, 'quit', {
 												data: "quit"
@@ -199,6 +200,7 @@
 											// #ifdef APP-PLUS  
 											plus.runtime.quit();
 											// #endif
+											}
 										}
 									}
 								});

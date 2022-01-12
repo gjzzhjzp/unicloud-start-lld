@@ -3,6 +3,7 @@ const {
 } = require('uni-cloud-router')
 module.exports = class configService extends Service {
 	async getConfig() {
+		console.log("ctx2222222222222",this.ctx);
 		// 获取配置项
 		const configdb = this.db.collection("jz-custom-config");
 		// 获取微博内容

@@ -24,13 +24,13 @@
 	export default {
 		data() {
 			return {
-				list: [ {
+				list: [{
 					text: '保存图片'
 				}],
 				showlongan: false,
 				imgs: [],
 				plNumber: 0,
-				currentSrc:""
+				currentSrc: ""
 			}
 		},
 		components: {
@@ -55,17 +55,19 @@
 			}
 		},
 		methods: {
-			saveImage(index){
-				console.log(index,this.currentSrc);
-				var pscreen = plus.webview.currentWebview().opener();
-				mui.fire(pscreen, 'saveImage', {
-					src: this.currentSrc
-				});
+			saveImage(index) {
+				console.log(index, this.currentSrc);
+				if (typeof plus != "undefined") {
+					var pscreen = plus.webview.currentWebview().opener();
+					mui.fire(pscreen, 'saveImage', {
+						src: this.currentSrc
+					});
+				}
 			},
-			openlongan(data){
-				console.log("data",data);
-				this.currentSrc=data.src;
-				this.showlongan=true;
+			openlongan(data) {
+				console.log("data", data);
+				this.currentSrc = data.src;
+				this.showlongan = true;
 			},
 			changenumber(plNumber) {
 				this.plNumber = plNumber;
@@ -80,23 +82,27 @@
 				}
 			},
 			previewOpen(item) {
-				var that=this;
+				var that = this;
 				this.$refs.previewImage.open(item.url);
-				var pscreen = plus.webview.currentWebview().opener();
-				mui.fire(pscreen, 'waitclose', {
-					waitclose: "1"
-				});
-				window.addEventListener('allowclose', function(e) {
-					that.closePopup();
-				});
+				if (typeof plus != "undefined") {
+					var pscreen = plus.webview.currentWebview().opener();
+					mui.fire(pscreen, 'waitclose', {
+						waitclose: "1"
+					});
+					window.addEventListener('allowclose', function(e) {
+						that.closePopup();
+					});
+				}
 			},
-			closePopup(){
-				var that=this;
+			closePopup() {
+				var that = this;
 				this.$refs.previewImage.close();
-				var pscreen = plus.webview.currentWebview().opener();
-				mui.fire(pscreen, 'waitclose', {
-					waitclose: "0"
-				});
+				if (typeof plus != "undefined") {
+					var pscreen = plus.webview.currentWebview().opener();
+					mui.fire(pscreen, 'waitclose', {
+						waitclose: "0"
+					});
+				}
 			},
 		}
 	}

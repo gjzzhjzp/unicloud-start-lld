@@ -133,9 +133,11 @@
 			},
 			getList() {
 				var app_bbh = "115";
-				//#ifdef APP-PLUS
-				app_bbh = plus.runtime.versionCode;
-				//#endif
+				if (typeof plus != "undefined") {
+					//#ifdef APP-PLUS
+					app_bbh = plus.runtime.versionCode;
+					//#endif
+				}
 				var param = {
 					type: this.type,
 					label: this.label,

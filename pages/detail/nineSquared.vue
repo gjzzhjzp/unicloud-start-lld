@@ -1,12 +1,12 @@
 <template>
 	<view class="nineSquared">
 		<view @click="toggleType('grid')" v-show="listtype=='grid'" style="display: flex;justify-content: flex-end;"
-			class="nineSquared_icon">
+			class="nineSquared_icon" :style="{'top':top+'px'}">
 			<u-icon size="36" name="/static/grid/list.png"></u-icon>
 			<view style="color: #7275D3;margin-left: 4px;">列表</view>
 		</view>
 		<view @click="toggleType('list')" v-show="listtype=='list'" style="display: flex;justify-content: flex-end;"
-			class="nineSquared_icon">
+			class="nineSquared_icon" :style="{'top':top+'px'}">
 			<u-icon size="32" name="/static/grid/grid.png"></u-icon>
 			<view style="color: #7275D3;margin-left: 4px;">宫格</view>
 		</view>
@@ -72,6 +72,7 @@
 		name: "nineSquared",
 		data() {
 			return {
+				top:16,
 				showmore: false,
 				listtype: "grid",
 				showNum: 0 ///允许显示的index
@@ -79,6 +80,11 @@
 		},
 		components: {
 			smallImage
+		},
+		created(){
+			if(typeof plus!="undefined"){
+							this.top=46;
+						}
 		},
 		props: {
 			list: {
@@ -114,7 +120,7 @@
 	.nineSquared_icon {
 		position: fixed;
 		right: 10px;
-		top: 46px;
+		/* top: 46px; */
 		z-index: 9999;
 	}
 

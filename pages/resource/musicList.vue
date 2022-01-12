@@ -186,6 +186,7 @@
 				// 	url:"/pages/gechiAll/gechiAll?id="+data._id
 				// })
 				// 打开歌词,向父级窗口发送等待返回的消息,接收到消息否关闭该窗口
+				if(typeof plus!="undefined"){
 				var pscreen = plus.webview.currentWebview().opener();
 				mui.fire(pscreen, 'waitclose', {
 					waitclose: "1"
@@ -193,14 +194,17 @@
 				window.addEventListener('allowclose', function(e) {
 					that.closePopup();
 				});
+				}
 			},
 			closePopup(){
 				var that=this;
 				that.showpopup = false;
+				if(typeof plus!="undefined"){
 				var pscreen = plus.webview.currentWebview().opener();
 				mui.fire(pscreen, 'waitclose', {
 					waitclose: "0"
 				});
+				}
 			},
 			loadmoreList() {
 				console.log("-------------------------")

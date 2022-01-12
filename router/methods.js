@@ -3,13 +3,13 @@ export default {
 	initconfig() {
 		// debugger;
 		console.log("initconfig");
-		var app_bbh="117";
+		var app_bbh = "117";
 		//#ifdef APP-PLUS
 		app_bbh = plus.runtime.versionCode;
 		//#endif
 		var yqm_success = uni.getStorageSync("yqm_success");
-		var config=getApp().globalData.systemconfig;
-		if (config["800014"] && config["800014"] == '1'&& app_bbh<config["800004"]) {
+		var config = getApp().globalData.systemconfig;
+		if (config["800014"] && config["800014"] == '1' && app_bbh < config["800004"]) {
 			uni.reLaunch({
 				url: "/uview-ui/components/u-full-screen/u-full-screen-xtsd"
 			})
@@ -32,8 +32,8 @@ export default {
 	// 检查用户状态，如果禁用限制访问
 	async checkUserStatus() {
 		return new Promise(async (reslove) => {
-			var userinf1=getApp().globalData.userinf;
-			if(userinf1){
+			var userinf1 = getApp().globalData.userinf;
+			if (userinf1) {
 				if (userinf1.status == 1) { //禁用
 					uni.reLaunch({
 						url: "/uview-ui/components/u-full-screen/u-full-screen-ztjy"
@@ -42,37 +42,39 @@ export default {
 				} else {
 					reslove(true);
 				}
-			}else{
+			} else {
 				uni.showLoading({
-					title:"加载中"
+					title: "加载中"
 				})
 				const db = uniCloud.database();
 				var userinfo = uni.getStorageSync("userInfo");
-				if(userinfo){
+				if (userinfo) {
 					const usersTable = db.collection('uni-id-users')
-					var userdata = await usersTable.where('_id==$env.uid').field("username,weibocontent,nickname,isbdwb,original,forbiddenwords,status,avatar,avatar_file,role,register_date,token").get();
+					var userdata = await usersTable.where('_id==$env.uid').field(
+						"username,weibocontent,nickname,isbdwb,original,forbiddenwords,status,avatar,avatar_file,role,register_date,token"
+						).get();
 					console.log("userdata", userdata);
 					var userinf = userdata.result.data[0];
-					uni.setStorageSync("userInfo",userinf);
-					getApp().globalData.userinf=userinf;
-					setTimeout(()=>{
-						getApp().globalData.userinf=null;
-					},1000*60*30)
+					uni.setStorageSync("userInfo", userinf);
+					getApp().globalData.userinf = userinf;
+					setTimeout(() => {
+						getApp().globalData.userinf = null;
+					}, 1000 * 60 * 30)
 					uni.hideLoading()
 					if (userinf.status == 1) { //禁用
 						uni.reLaunch({
 							url: "/uview-ui/components/u-full-screen/u-full-screen-ztjy"
 						})
 						reslove(false);
-					}else if (!userinf.isbdwb) { //禁用
+					} else if (!userinf.isbdwb) { //禁用
 						uni.reLaunch({
 							url: "/uview-ui/components/u-full-screen/u-full-screen-tsfwb"
 						})
 						reslove(false);
-					}  else {
+					} else {
 						reslove(true);
 					}
-				}else{
+				} else {
 					uni.hideLoading()
 					reslove(true);
 				}
@@ -82,13 +84,13 @@ export default {
 	// 获取配置项和微博内容
 	getConfig() {
 		return new Promise((reslove) => {
-		var config=getApp().globalData.systemconfig;
-		if(config){
-			reslove(config);
-		}else{
-			uni.showLoading({
-				title:"加载中"
-			})
+			var config = getApp().globalData.systemconfig;
+			if (config) {
+				reslove(config);
+			} else {
+				uni.showLoading({
+					title: "加载中"
+				})
 				uniCloud.callFunction({
 					name: 'jzfunction',
 					data: {
@@ -114,10 +116,10 @@ export default {
 						getApp().globalData.systemconfig = config;
 						getApp().globalData.weiboyz = weiboyz;
 						// this.setfks(config);
-						setTimeout(()=>{
+						setTimeout(() => {
 							// 每隔10分钟请求一次，不要连续频繁请求
-							getApp().globalData.systemconfig=null;
-						},1000*60*30)
+							getApp().globalData.systemconfig = null;
+						}, 1000 * 60 * 30)
 						uni.hideLoading()
 						reslove(config);
 					} else {
@@ -129,8 +131,8 @@ export default {
 					}
 				});
 			}
-			});
-		
+		});
+
 	}
 	// setfks(config) {
 	// 	debugger;

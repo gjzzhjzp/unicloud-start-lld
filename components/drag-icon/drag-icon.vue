@@ -1,5 +1,5 @@
 <template>
-	<view class="drag-icon" @click="toyouxi()">
+	<view class="drag-icon" @click="toyouxi()" v-show="showicon">
 		<div class="ys-float-btn" 
 			:style="{'width': itemWidth+'px','height': itemHeight+'px','left': left+'px','top': top+'px'}" ref="div"
 			@touchstart.prevent="(e) => {dragStart(e)}" @touchend.prevent="(e) => {dragEnd(e)}"
@@ -21,7 +21,8 @@
 				itemWidth: 40, // 图标的宽度
 				itemHeight: 40, // 图标的高度
 				time1:0,
-				time2:0
+				time2:0,
+				showicon:false
 			}
 		},
 		created() {
@@ -29,6 +30,12 @@
 			this.clientHeight = document.documentElement.clientHeight;
 			this.left = this.clientWidth - this.itemWidth - this.gapWidth;
 			this.top = this.clientHeight * 0.8;
+			var config = getApp().globalData.systemconfig;
+			if (config["800030"]=="1") {
+				this.showicon=true;
+			}else{
+				this.showicon=false;
+			}
 		},
 
 		methods: {

@@ -12,7 +12,11 @@ import me from "./methods.js"
 router.beforeEach((to, from, next) => {
 	console.log("to", to);
 	console.log("from", from);
-	if (navigator.userAgent && navigator.userAgent.indexOf('Mobile') === -1) { //pc端
+	// console.log("navigator.userAgent",navigator.userAgent);
+	// debugger;
+	// console.log("aaaaaaaa",uni.getSystemInfoSync());
+	var screenWidth=uni.getSystemInfoSync().screenWidth;
+	if (screenWidth>1200) { //pc端
 		if (to.path.indexOf("/pc/pc") != -1) {
 			next();
 		} else {

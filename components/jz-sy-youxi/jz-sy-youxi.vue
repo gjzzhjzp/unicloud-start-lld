@@ -16,7 +16,7 @@
 							</u-link> -->
 							<view @click="todetail(item)">
 								<u-image width="200rpx" height="200rpx" border-radius="20" :src="imageUrl(item)"
-									loading-icon="/static/center/chang1.png" error-icon="/static/center/error_chang.png">
+									loading-icon="/static/center/zheng.png" error-icon="/static/center/error_zheng.png">
 								</u-image>
 							</view>
 						</view>

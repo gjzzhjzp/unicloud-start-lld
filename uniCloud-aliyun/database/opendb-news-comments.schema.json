@@ -16,8 +16,8 @@
 		"article_id": {
 			"bsonType": "string",
 			"title": "文章ID",
-			"description": "文章ID，opendb-news-posts 表中的`_id`字段",
-			"foreignKey": "opendb-news-articles._id"
+			"description": "文章ID，jz-opendb-resources 表中的`_id`字段",
+			"foreignKey": "jz-opendb-resources._id"
 		},
 		"user_id": {
 			"bsonType": "string",

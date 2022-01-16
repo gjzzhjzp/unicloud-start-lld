@@ -1,6 +1,5 @@
 {
-	"pages": [
-		{
+	"pages": [{
 			"path": "pages/index/index",
 			"style": {
 				"enablePullDownRefresh": true
@@ -15,12 +14,12 @@
 			"style": {
 				"navigationBarTitleText": "pc端"
 			}
-		},{
+		}, {
 			"path": "pages/youxi/youxi",
 			"style": {
 				"navigationBarTitleText": "游戏"
 			}
-		},  {
+		}, {
 			"path": "pages/question/question",
 			"style": {
 				"navigationBarTitleText": "对暗号"
@@ -31,7 +30,13 @@
 				"navigationBarTitleText": "更多推荐",
 				"enablePullDownRefresh": true
 			}
-		},{
+		}, {
+			"path": "pages/gonggaolist/gonggaolist",
+			"style": {
+				"navigationBarTitleText": "系统公告",
+				"enablePullDownRefresh": true
+			}
+		}, {
 			"path": "pages/gechi/gechi",
 			"style": {
 				"navigationBarTitleText": "歌词滚动"
@@ -88,7 +93,7 @@
 							"dock": "top",
 							"width": "750rpx",
 							"height": "400rpx",
-							"top":"80px",
+							"top": "80px",
 							"background": "transparent"
 						}
 					}]
@@ -332,6 +337,26 @@
 					"popGesture": "none" // 关闭IOS屏幕左边滑动关闭当前页面的功能
 				}
 			}
+		}, {
+			"path": "pages/jz-opendb-taolun/add",
+			"style": {
+				"navigationBarTitleText": "新增"
+			}
+		}, {
+			"path": "pages/jz-opendb-taolun/edit",
+			"style": {
+				"navigationBarTitleText": "编辑"
+			}
+		}, {
+			"path": "pages/jz-opendb-taolun/list",
+			"style": {
+				"navigationBarTitleText": "列表"
+			}
+		}, {
+			"path": "pages/jz-opendb-taolun/detail/detail",
+			"style": {
+				"navigationBarTitleText": "详情"
+			}
 		}
 	],
 	"globalStyle": {
@@ -341,7 +366,7 @@
 		"navigationBarBackgroundColor": "#FFFFFF",
 		"backgroundColor": "#F8F8F8",
 		"enablePullDownRefresh": false,
-		"pageOrientation":"portrait"
+		"pageOrientation": "portrait"
 	},
 	"condition": {
 		"list": [

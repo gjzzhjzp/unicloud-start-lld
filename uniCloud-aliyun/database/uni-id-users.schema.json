@@ -66,6 +66,14 @@
 			"description": "微博昵称",
 			"trim": "both"
 		},
+		"resources": {
+			"bsonType": "array",
+			"fileMediaType": "all",
+			"arrayType": "file",
+			"multiple": "true",
+			"title": "验证资料",
+			"description": "验证资料"
+		},
 		"weibocontent": {
 			"bsonType": "string",
 			"title": "微博内容",
@@ -183,6 +191,13 @@
 			},
 			"permission": {
 				"write": false
+			}
+		},
+		"update_date": {
+			"bsonType": "timestamp",
+			"description": "更新时间",
+			"forceDefaultValue": {
+				"$env": "now"
 			}
 		},
 		"register_ip": {

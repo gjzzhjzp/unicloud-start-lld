@@ -208,6 +208,36 @@
 				}
 			]
 		},
+		"is_gonggao": {
+			"bsonType": "int",
+			"title": "公告",
+			"description": "是否公告：0 否 1 是",
+			"defaultValue": 0,
+			"enum": [{
+					"value": 0,
+					"text": "否"
+				},
+				{
+					"value": 1,
+					"text": "是"
+				}
+			]
+		},
+		"is_danmu": {
+			"bsonType": "int",
+			"title": "有弹幕",
+			"description": "是否有弹幕：0 无 1 有",
+			"defaultValue": 0,
+			"enum": [{
+					"value": 0,
+					"text": "无"
+				},
+				{
+					"value": 1,
+					"text": "有"
+				}
+			]
+		},
 		"is_off": {
 			"bsonType": "int",
 			"title": "是否下架",

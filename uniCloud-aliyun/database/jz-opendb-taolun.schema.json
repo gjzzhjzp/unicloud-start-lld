@@ -1,0 +1,151 @@
+{
+	"bsonType": "object",
+	"required": [
+		"author",
+		"title",
+		"avatar"
+	],
+	"permission": {
+		"read": "doc.state || auth.uid == doc.user_id || 'AUDITOR' in auth.role||'Master' in auth.role||'only_zylist' in auth.role",
+		"create": "auth.uid != null",
+		"update": "'AUDITOR' in auth.role||auth.uid == doc.user_id||'Master' in auth.role||'only_zylist' in auth.role",
+		"delete": "auth.uid == doc.user_id||'AUDITOR' in auth.role||'Master' in auth.role||'only_zylist' in auth.role"
+	},
+	"properties": {
+		"_id": {
+			"description": "存储文档 ID（用户 ID），系统自动生成"
+		},
+		"title": {
+			"bsonType": "string",
+			"title": "标题",
+			"description": "请输入标题",
+			"trim": "both"
+		},
+		"user_id": {
+			"forceDefaultValue": {
+				"$env": "uid"
+			},
+			"foreignKey": "uni-id-users._id",
+			"permission": {
+				"write": true
+			}
+		},
+		"categories": {
+			"bsonType": "int",
+			"title": "分类",
+			"description": "资源类型：0 闲聊 1 磕糖 2 分享 1 其他",
+			"defaultValue": 0,
+			"enum": [{
+					"value": 0,
+					"text": "闲聊"
+				},
+				{
+					"value": 1,
+					"text": "磕糖"
+				},
+				{
+					"value": 2,
+					"text": "分享"
+				},
+				{
+					"value": 3,
+					"text": "其他"
+				}
+			]
+		},
+		"article_status": {
+			"bsonType": "int",
+			"title": "文章状态",
+			"description": "文章状态：0 锁定 1 启用",
+			"defaultValue": 0,
+			"enum": [{
+					"value": 0,
+					"text": "锁定"
+				},
+				{
+					"value": 1,
+					"text": "启用"
+				}
+			]
+		},
+		"view_count": {
+			"bsonType": "int",
+			"title": "阅读数量",
+			"description": "阅读数量",
+			"permission": {
+				"write": false
+			}
+		},
+		"like_count": {
+			"bsonType": "int",
+			"description": "喜欢数、点赞数",
+			"permission": {
+				"write": false
+			}
+		},
+		"resources": {
+			"bsonType": "array",
+			"fileMediaType": "all",
+			"arrayType": "file",
+			"multiple": "true",
+			"title": "附件资源",
+			"description": "附件资源，图片，文章，视频，音乐等"
+		},
+		"publish_date": {
+			"bsonType": "timestamp",
+			"title": "发表时间",
+			"description": "发表时间",
+			"defaultValue": {
+				"$env": "now"
+			},
+			"permission": {
+				"write": false
+			}
+		},
+		"last_modify_date": {
+			"bsonType": "timestamp",
+			"title": "最后修改时间",
+			"description": "最后修改时间",
+			"defaultValue": {
+				"$env": "now"
+			}
+		},
+		"excerpt": {
+			"bsonType": "string",
+			"title": "详情",
+			"description": "请输入详情",
+			"label": "详情",
+			"trim": "both"
+		},
+		"is_recommend": {
+			"bsonType": "int",
+			"title": "是否推荐",
+			"description": "是否推荐：0 不推荐 1 推荐",
+			"defaultValue": 0,
+			"enum": [{
+					"value": 0,
+					"text": "不推荐"
+				},
+				{
+					"value": 1,
+					"text": "推荐"
+				}
+			]
+		},
+		"is_off": {
+			"bsonType": "int",
+			"title": "是否下架",
+			"description": "是否下架：0 不下架 1 下架",
+			"defaultValue": 0,
+			"enum": [{
+					"value": 0,
+					"text": "不下架"
+				},
+				{
+					"value": 1,
+					"text": "下架"
+				}
+			]
+		}
+	}
+}

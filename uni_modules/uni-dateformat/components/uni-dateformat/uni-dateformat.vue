@@ -51,12 +51,20 @@
 		},
 		computed: {
 			dateShow() {
-				this.refreshMark
-				return friendlyDate(this.date, {
-					locale: this.locale,
-					threshold: this.threshold,
-					format: this.format
-				})
+				// debugger;
+				this.refreshMark;
+				var nowdate=new Date().getTime();
+				var _date=nowdate-this.date;
+				// console.log("_date",_date);
+				if(!_date||_date<100000){
+					return "刚刚";
+				}else{
+					return friendlyDate(this.date, {
+						locale: this.locale,
+						threshold: this.threshold,
+						format: this.format
+					});
+				}
 			}
 		},
 		watch: {

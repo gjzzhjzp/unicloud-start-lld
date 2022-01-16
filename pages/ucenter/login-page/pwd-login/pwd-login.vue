@@ -38,6 +38,11 @@
 				{{passcontent}}
 			</view>
 		</u-modal>
+		<u-modal v-model="showshinfo" confirm-text="重新提交" @cancel="confimsh" @confirm="reconfirmsh" cancel-text="退出" :show-cancel-button="true">
+			<view v-html="shcontent" style="padding: 10px;">
+
+			</view>
+		</u-modal>
 	</view>
 </template>
 <script>
@@ -50,6 +55,7 @@
 		},
 		data() {
 			return {
+				showshinfo: false, ///显示审核消息
 				showfindpass: false,
 				"password": "",
 				"username": "",
@@ -57,21 +63,25 @@
 				"captchaBase64": "",
 				"captcha": "",
 				showRegister: true,
-				registerText: "注册账号"
+				registerText: "注册账号",
+				isnewinfo: "", ///新消息
+				shcontent: ""
 			}
 		},
 		created() {
 			var config = getApp().globalData.systemconfig;
-			if (config["800026"] == "1") {
-				this.showRegister = false;
-			} else {
-				this.showRegister = true;
-				if (config["800026"] == "2") {
-					this.registerText="邀请码注册"
-				}else{
-					this.registerText="注册账号"
-				}
-			}
+			// if (config["800026"] == "1") {
+			// 	this.showRegister = false;
+			// } else {
+			// 	this.showRegister = true;
+			// 	if (config["800026"] == "2") {
+			// 		this.registerText="邀请码注册"
+			// 	}else if (config["800026"] == "3") {
+			// 		this.registerText="注册账号"
+			// 	}else{
+			// 		this.registerText="注册账号"
+			// 	}
+			// }
 		},
 		computed: {
 			passcontent() {
@@ -118,14 +128,13 @@
 						params: {
 							"username": this.username,
 							"password": this.password,
+							"isbdwb": true,
 							"captcha": this.captcha
 						},
 					},
 					success: ({
 						result
 					}) => {
-						// console.log(result);
-
 						if (result.code === 0) {
 							uni.setStorageSync("userInfo", result.userInfo);
 							this.checkisbdwb(result.userInfo.username).then((flag) => {
@@ -171,6 +180,7 @@
 			},
 			// 检测时候绑定微博
 			checkisbdwb(username) {
+				var that = this;
 				return new Promise(async (reslove) => {
 					const db = uniCloud.database();
 					const collection = db.collection('uni-id-users');
@@ -184,26 +194,27 @@
 							reslove(true);
 						} else {
 							if (data.weiboname && data.weibocontent) {
-								uni.showModal({
-									title: '提示',
-									showCancel: false,
-									confirmText: "退出",
-									content: '您已提交微博验证【' + data.weibocontent + '】申请，如已发微博，请等待管理员审核',
-									success: function(res) {
-										if (res.confirm) {
-											if(typeof plus!="undefined"){
-											var pscreen = plus.webview.currentWebview().opener();
-											mui.fire(pscreen, 'quit', {
-												data: "quit"
-											});
-											console.log("在这里退出App");
-											// #ifdef APP-PLUS  
-											plus.runtime.quit();
-											// #endif
-											}
-										}
-									}
-								});
+								await that.checknewinfo(data);
+								// uni.showModal({
+								// 	title: '提示',
+								// 	showCancel: false,
+								// 	confirmText: "退出",
+								// 	content: '您已提交微博验证【' + data.weibocontent + '】申请，如已发微博，请等待管理员审核'+this.shcontent,
+								// 	success: function(res) {
+								// 		if (res.confirm) {
+								// 			if(typeof plus!="undefined"){
+								// 			var pscreen = plus.webview.currentWebview().opener();
+								// 			mui.fire(pscreen, 'quit', {
+								// 				data: "quit"
+								// 			});
+								// 			console.log("在这里退出App");
+								// 			// #ifdef APP-PLUS  
+								// 			plus.runtime.quit();
+								// 			// #endif
+								// 			}
+								// 		}
+								// 	}
+								// });
 							} else {
 								reslove(false);
 							}
@@ -214,6 +225,46 @@
 					console.log("result", result);
 				});
 
+			},
+			confimsh() {
+				if (typeof plus != "undefined") {
+					var pscreen = plus.webview.currentWebview().opener();
+					mui.fire(pscreen, 'quit', {
+						data: "quit"
+					});
+					console.log("在这里退出App");
+					// #ifdef APP-PLUS  
+					plus.runtime.quit();
+					// #endif
+				}
+			},
+			// 重新提交审核
+			reconfirmsh(){
+				uni.navigateTo({
+					url: "/pages/ucenter/login-page/pwd-login/pwd-weibo"
+				});
+			},
+			// 检测时候有新的系统消息
+			async checknewinfo(data) {
+				this.shcontent = '您已提交微博验证【' + data.weibocontent + '】申请，如已发微博，请等待管理员审核'
+				var userInfo = uni.getStorageSync("userInfo");
+				const db = uniCloud.database();
+				var res = await db.collection('jz-custom-systeminfo').where({
+					user_id: userInfo._id,
+					type: 0
+				}).field("comment").get();
+				if (res.result.data && res.result.data.length > 0) {
+					var infos = res.result.data;
+					if (infos && infos.length > 0) {
+						this.isnewinfo = infos[infos.length - 1].comment;
+						if (this.isnewinfo) {
+							this.shcontent += "<br>审核意见：【" + this.isnewinfo + "】";
+						
+						}
+					}
+				}
+				this.showshinfo=true;
+				// console.log("isnewinfo",this.isnewinfo);
 			},
 			createCaptcha() {
 				uniCloud.callFunction({

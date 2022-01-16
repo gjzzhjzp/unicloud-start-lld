@@ -1,5 +1,5 @@
 <template>
-	<u-modal v-model="show" confirm-text="退出" cancel-text="退出" :show-cancel-button="false" title="提示" @cancel="cancel"
+	<u-modal v-model="show" confirm-text="重新提交" cancel-text="退出" :show-cancel-button="true" title="提示" @cancel="cancel"
 		@confirm="confirm">
 		<view class="u-update-content">
 			<rich-text :nodes="content"></rich-text>
@@ -35,7 +35,8 @@
 			if(!this.weibocontent){
 				this.weibocontent=userInfo.weibocontent;
 			}
-			this.content='您好，'+nickname+'（'+username+'），您已提交微博验证【'+this.weibocontent+'】申请，如已发微博，请等待管理员审核。若超过'+this.time+'小时未审核通过，请带上APP登录名发送邮件到'+yxdz+'咨询。'
+			this.content='您好，'+nickname+'（'+username+'），您已提交微博验证【'+this.weibocontent+'】申请，如已发微博，请等待管理员审核。'
+		// 若超过'+this.time+'小时未审核通过，请带上APP登录名发送邮件到'+yxdz+'咨询。
 		},
 		onReady() {
 			this.show = true;
@@ -65,7 +66,10 @@
 				this.closeModal();
 			},
 			confirm() {
-				this.closeModal();
+				uni.navigateTo({
+					url: "/pages/ucenter/login-page/pwd-login/pwd-weibo"
+				});
+				// this.closeModal();
 			},
 			closeModal() {
 				if(typeof plus!="undefined"){

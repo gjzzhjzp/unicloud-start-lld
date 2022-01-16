@@ -78,6 +78,11 @@
 							"thumb": "/static/center/tg.png"
 						},
 						{
+							"title": "我的发帖",
+							"to": '/pages/jz-opendb-taolun/list',
+							"thumb": "/static/center/tg.png"
+						},
+						{
 							"title": "我的收藏",
 							"to": '/pages/myfavorite/myfavorite',
 							"thumb": "/static/center/sc.png"
@@ -98,7 +103,6 @@
 							"thumb": "/static/center/info.png",
 							"class": "systeminfo"
 						},
-						
 						{
 							"title": "检测版本更新",
 							"addclass": "jcbbgx",

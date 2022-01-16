@@ -1,15 +1,21 @@
 <template>
-	<view class="container">
-		<u-navbar :is-back="true" title="我的投稿"></u-navbar>
+	<view class="container jz-opendb-taolun-container">
+		<u-navbar :is-back="true" title="我的发帖"></u-navbar>
+		<view style="margin: 4px 0px;">
+			<u-alert-tips type="warning" description="向左滑动可编辑/删除资源"></u-alert-tips>
+		</view>
 		<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}"
-			collection="jz-opendb-resources" @load="loadSuccess"
-			field="categories,labels,author,title,article_status,comment_status,avatar,resources,zy_gs,excerpt,content">
+			collection="jz-opendb-taolun" @load="loadSuccess" :page-size="10"
+			where="user_id == $cloudEnv_uid" orderby="last_modify_date desc"
+			field="categories,title,article_status,comment_status,avatar,resources,excerpt">
 			<view v-if="error">{{error.message}}</view>
 			<view v-else-if="data">
-				<u-swipe-action :show="item.show" :index="index" v-for="(item, index) in list" :key="item._id"
+				<u-swipe-action :show="item.show" :index="index" v-for="(item, index) in data" :key="item._id"
 					@click="click" @open="open" :options="options">
-					<view class="item u-border-bottom" @click="todetail(item)">
-						<image mode="aspectFill" :src="item.images" />
+					<view class="item u-border-bottom" @click="$notMoreTap(todetail,'notTap',item)">
+						<u-icon size="40" color="#18b566" v-if="item.article_status==1" name="checkmark"></u-icon>
+						<u-icon size="40" v-else name="/static/lock.png"></u-icon>
+						<!-- <image mode="aspectFill" :src="item.images" /> -->
 						<view class="title-wrap">
 							<text class="title u-line-2">{{ item.title }}</text>
 						</view>
@@ -18,14 +24,19 @@
 			</view>
 			<uni-load-more :status="loading?'loading':(hasMore ? 'more' : 'noMore')"></uni-load-more>
 		</unicloud-db>
-		<uni-fab ref="fab" horizontal="right" vertical="bottom" :pop-menu="false" @fabClick="fabClick" />
+			<template v-if="openAdd">
+		<uni-fab ref="fab" horizontal="right" vertical="bottom" :pop-menu="false" @fabClick="$notMoreTap(fabClick,'notTap')" />
+		</template>
+		<u-back-top :scroll-top="scrollTop" top="1000" mode="square" icon="arrow-up" tips="顶部"></u-back-top>
 	</view>
 </template>
-
 <script>
 	export default {
 		data() {
 			return {
+				openAdd:false,
+				scrollTop:0,
+				notTap:true,//一定要设置为true
 				loadMore: {
 					contentdown: '',
 					contentrefresh: '',
@@ -55,13 +66,27 @@
 			})
 		},
 		onReachBottom() {
+			// debugger;
 			this.$refs.udb.loadMore()
 		},
+		onPageScroll(e) {
+				this.scrollTop = e.scrollTop;
+			},
 		onShow() {
 			this.reload();
 		},
+		created(){
+			// debugger;
+			var config=getApp().globalData.systemconfig;
+			if(config["800022"]==1){
+				this.openAdd=true;
+			}else{
+				this.openAdd=false;
+			}
+		},
 		methods: {
 			reload() {
+				// debugger;
 				if (this.$refs.udb) {
 					this.$refs.udb.loadData({
 						clear: true
@@ -70,13 +95,20 @@
 			},
 			todetail(item) {
 				uni.navigateTo({
-					url: "/pages/detail/detail?id=" + item._id
+					url: "/pages/jz-opendb-taolun/detail/detail?id=" + item._id
 				});
 			},
 			loadSuccess(data) {
-				console.log("loadSuccess", data);
 				data.forEach((item) => {
-					this.$set(item, "images", item.avatar.url);
+					var url="";
+					if(item.avatar){
+						if(Array.isArray(item.avatar)){
+							url=item.avatar[0].url;
+						}else{
+							url=item.avatar.url;
+						}
+					}
+					this.$set(item, "images", url);
 					this.$set(item, "show", false);
 				});
 				this.list = data;
@@ -149,8 +181,10 @@
 
 	.title {
 		text-align: left;
-		font-size: 28rpx;
+		font-size: 36rpx;
 		color: $u-content-color;
-		margin-top: 20rpx;
+	}
+	.u-icon{
+		margin: 0 6px;
 	}
 </style>

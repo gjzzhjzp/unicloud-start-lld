@@ -1,5 +1,5 @@
 <template>
-	<view class=" jz-container">
+	<view class=" jz-container jz-sy-youxi">
 		<view class="jz-sy-youxi-section">
 			<u-section line-color="#7275D3" :font-size="32" :title="title" :right="showright" sub-title="查看更多>>"
 				:arrow="false" @click="$notMoreTap(tomore,'notTap')"></u-section>
@@ -24,6 +24,22 @@
 					</view>
 				</u-col>
 			</u-row>
+			<u-modal v-model="showmodal" title="选择游戏模式" :show-confirm-button="false" :mask-close-able="true" :show-cancel-button="true">
+				<view style="margin: 30px 20px 20px 20px;">
+					<u-button >
+						<u-link :href="wudihref()" color="rgb(114, 117, 211)">
+							无敌跳跳版
+						</u-link>
+					</u-button>
+				</view>
+				<view style="margin: 20px;">
+				<u-button>
+					<u-link :href="putonghref()" color="rgb(114, 117, 211)">
+						普通版
+					</u-link>
+				</u-button>
+				</view>
+			</u-modal>
 			<u-toast ref="uToast" />
 		</view>
 	</view>
@@ -32,10 +48,12 @@
 	export default {
 		data() {
 			return {
+				showmodal: false,
 				notTap: true, //一定要设置为true
 				list: [],
 				where: "",
-				isEmpty: true
+				isEmpty: true,
+				curitem:{}
 			}
 		},
 		props: {
@@ -68,7 +86,7 @@
 			showright: {
 				type: Boolean,
 				default () {
-					return true
+					return false
 				}
 			},
 			zy_gs: {
@@ -94,10 +112,18 @@
 			this.getList();
 		},
 		methods: {
-			todetail(item){
-				uni.navigateTo({
-					url:"/pages/youxidetail/youxidetail?src="+item.path
-				})
+			todetail(item) {
+				this.showmodal=true;
+				this.curitem=item;
+				// uni.navigateTo({
+				// 	url: "/pages/youxidetail/youxidetail?src=" + item.path
+				// })
+			},
+			wudihref(){
+				return this.curitem.path+"?tiaotiao=1";
+			},
+			putonghref(){
+				return this.curitem.path+"?tiaotiao=0";
 			},
 			imageUrl(item) {
 				if (Array.isArray(item.icon)) {
@@ -107,17 +133,17 @@
 				}
 			},
 			async getList() {
-				var db=uniCloud.database();
-				var categories=await db.collection("opendb-news-categories").get({
-					getTree:{
-						startWith:"flbm=='300000'"////分类顶级编码
+				var db = uniCloud.database();
+				var categories = await db.collection("opendb-news-categories").get({
+					getTree: {
+						startWith: "flbm=='300000'" ////分类顶级编码
 					}
 				});
-				console.log("categories",categories);
-				if(categories.result&&categories.result.data.length>0){
-					this.list=categories.result.data[0].children;
+				console.log("categories", categories);
+				if (categories.result && categories.result.data.length > 0) {
+					this.list = categories.result.data[0].children;
 				}
-				console.log("this.list",this.list);
+				console.log("this.list", this.list);
 			},
 		}
 	}
@@ -126,15 +152,18 @@
 	.jz-sy-item {
 		padding: 0px 20rpx !important;
 	}
-.jz-sy-youxi{
-	margin-top: 20rpx;
-}
+
+	.jz-sy-youxi {
+		margin-top: 20rpx;
+	}
+
 	.jz-sy-youxi-item {
 		margin: 20rpx 0px;
 		width: 100%;
 		text-align: center;
 	}
-	.u-image{
+
+	.u-image {
 		margin: 0 auto;
 	}
 

@@ -1,40 +1,26 @@
 <template>
   <view class="container">
-    <unicloud-db ref="udb" v-slot:default="{data, loading, error, options}" :options="options" collection="jz-opendb-resources" field="categories,labels,author,title,article_status,comment_status,avatar,resources,zy_gs,excerpt,content" :where="queryWhere" :getone="true" :manual="true">
+    <unicloud-db ref="udb" v-slot:default="{data, loading, error, options}" :options="options" collection="jz-opendb-taolun" field="title,categories,categorieszw,article_status,resources,last_modify_date,excerpt,is_recommend,is_off" :where="queryWhere" :getone="true" :manual="true">
       <view v-if="error">{{error.message}}</view>
       <view v-else-if="loading">
         <uni-load-more :contentText="loadMore" status="loading"></uni-load-more>
       </view>
       <view v-else-if="data">
         <view>
-          <text>分类</text>
-          <text>{{data.categories}}</text>
-        </view>
-        <view>
-          <text>标签</text>
-          <text>{{data.labels}}</text>
-        </view>
-        <view>
-          <text>作者</text>
-          <text>{{data.author}}</text>
-        </view>
-        <view>
           <text>标题</text>
           <text>{{data.title}}</text>
         </view>
         <view>
+          <text>分类</text>
+          <text>{{data.categories}}</text>
+        </view>
+        <view>
+          <text>分类中文</text>
+          <text>{{data.categorieszw}}</text>
+        </view>
+        <view>
           <text>文章状态</text>
           <text>{{options.article_status_valuetotext[data.article_status]}}</text>
-        </view>
-        <view>
-          <text>开放评论</text>
-          <text>{{options.comment_status_valuetotext[data.comment_status]}}</text>
-        </view>
-        <view>
-          <text>封面大图</text>
-          <uni-file-picker v-if="data.avatar && data.avatar.fileType == 'image'" :value="data.avatar" :file-mediatype="data.avatar && data.avatar.fileType" return-type="object" readonly></uni-file-picker>
-          <uni-link v-else-if="data.avatar" :href="data.avatar.url" :text="data.avatar.url"></uni-link>
-          <text v-else></text>
         </view>
         <view>
           <text>附件资源</text>
@@ -44,16 +30,20 @@
           </template>
         </view>
         <view>
-          <text>资源格式</text>
-          <text>{{data.zy_gs}}</text>
-        </view>
-        <view>
-          <text>摘要</text>
-          <text>{{data.excerpt}}</text>
+          <text>最后修改时间</text>
+          <uni-dateformat :threshold="[0, 0]" :date="data.last_modify_date"></uni-dateformat>
         </view>
         <view>
           <text>内容</text>
-          <text>{{data.content}}</text>
+          <text>{{data.excerpt}}</text>
+        </view>
+        <view>
+          <text>是否推荐</text>
+          <text>{{options.is_recommend_valuetotext[data.is_recommend]}}</text>
+        </view>
+        <view>
+          <text>是否下架</text>
+          <text>{{options.is_off_valuetotext[data.is_off]}}</text>
         </view>
       </view>
     </unicloud-db>
@@ -66,7 +56,7 @@
 
 <script>
   // 由schema2code生成，包含校验规则和enum静态数据
-  import { enumConverter } from '../../js_sdk/validator/jz-opendb-resources.js';
+  import { enumConverter } from '../../js_sdk/validator/jz-opendb-taolun.js';
 
   export default {
     data() {

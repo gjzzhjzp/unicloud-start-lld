@@ -19,7 +19,7 @@
 	border-radius: 40rpx;
 	color: #fff;
 	background: #7275D3;
-	padding: 20rpx 20rpx;
+	padding: 10rpx 20rpx;
 	width: 120rpx;
 	line-height: 20px;
 }
@@ -252,4 +252,19 @@ body.pages-resource-list uni-page-body {
 }
 .chatitem .zyid{
 	text-decoration: underline;
+}
+.er-register .is-add{
+	    border-color: #c8c9e8 !important;
+}
+.er-register .icon-add{
+	background-color: #c8c9e8 !important;
+}
+.pwd-weibo .uni-forms-item__label{
+	width: 70px !important;
+}
+.jz-sy-youxi .u-link{
+	    display: inline-block;
+	    width: 100%;
+	    height: 100%;
+	    line-height: 40px !important;
 }

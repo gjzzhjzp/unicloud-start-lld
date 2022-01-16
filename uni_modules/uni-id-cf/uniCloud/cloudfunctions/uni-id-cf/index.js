@@ -198,7 +198,7 @@ exports.main = async (event, context) => {
 			break;
 		case 'register_new':
 			var {
-				username, password, nickname,weiboname,weibocontent
+				username, password, nickname,weiboname,weibocontent,resources
 			} = params
 			if (/^1\d{10}$/.test(username)) {
 				return {
@@ -218,6 +218,7 @@ exports.main = async (event, context) => {
 				nickname,
 				weiboname,
 				weibocontent,
+				resources,
 				inviteCode
 			});
 			if (res.code === 0) {

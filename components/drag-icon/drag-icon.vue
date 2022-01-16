@@ -31,6 +31,7 @@
 			this.left = this.clientWidth - this.itemWidth - this.gapWidth;
 			this.top = this.clientHeight * 0.8;
 			var config = getApp().globalData.systemconfig;
+			// debugger;
 			if (config["800030"]=="1") {
 				this.showicon=true;
 			}else{

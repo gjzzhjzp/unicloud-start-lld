@@ -100,6 +100,7 @@
 				topleft: "最新评论",
 				topright: "按时间",
 				commentList: [],
+				commentArray:[],
 				inputvalue: "",
 				showreply: false,
 				currentData: {},
@@ -158,6 +159,7 @@
 			zydata: {
 				deep: true,
 				handler() {
+					// debugger;
 					if (this.zydata._id && this.zydata._id != this.oldid) {
 						this.getComment();
 						this.oldid = this.zydata._id;
@@ -218,7 +220,7 @@
 					return;
 				}
 				const uid = db.getCloudEnv('$cloudEnv_uid');
-				await db.collection("opendb-news-comments").add({
+				var senddata={
 					article_id: this.zydata._id,
 					user_id: uid,
 					comment_content: this.inputvalue,
@@ -228,13 +230,26 @@
 					reply_user_id: this.relaydata.reply_user_id || "0",
 					reply_comment_id: this.relaydata.reply_comment_id || "0",
 					all_reply_comment_id: this.relaydata.all_reply_comment_id || "0",
-				});
+				}
+				// 评论层级为1，先插入静态数据,再去请求动态数据
+				// debugger;
+				console.log("this.relaydata.comment_cj",this.relaydata.comment_cj);
+				if(!this.relaydata.comment_cj||this.relaydata.comment_cj==1){
+					var _addsenddata=Object.assign(senddata,{
+						user_id:[this.userInfo]
+					});
+					console.log("_addsenddata",_addsenddata);
+					this.commentArray.unshift(_addsenddata);
+					this._dealcomment();
+				}
+				await db.collection("opendb-news-comments").add(senddata);
 				
 				var add_value = {
 					type: 1,
 					user_id:  this.zydata.user_id,
 					comment: "你的投稿作品【<span class='zyid' id='"+this.zydata._id+"'>"+this.zydata.title+"</span>】有宝子【"+this.userInfo.nickname+"】评论啦~~【"+this.inputvalue+"】"
 				}
+				
 				await db.collection("jz-custom-systeminfo").add(add_value);
 				this.inputvalue = "";
 				if (this.relaydata.comment_cj > 1) {
@@ -299,9 +314,9 @@
 			// 评论列表
 			async getComment(comment_id) {
 				// debugger;
-				uni.showLoading({
-					title: "加载中"
-				});
+				// uni.showLoading({
+				// 	title: "加载中"
+				// });
 				var that = this;
 				var comments = {};
 				var param = {
@@ -374,22 +389,24 @@
 								this.$set(item2, "isLike", false);
 							}
 						});
-						that.commentList = that.getTree(res_comment);
-						that.commentList.forEach((item2) => {
-							if (item2.children) {
-								if (!item2.allchildren) {
-									that.$set(item2, "allchildren", []);
-								}
-								that._dealChildren(item2, item2.children);
-							}
-						})
-						if (that.currentData._id) {
-							that.commentList.forEach((item) => {
-								if (item._id == that.currentData._id) {
-									that.currentData = item;
-								}
-							})
-						}
+						that.commentArray=res_comment;
+						that._dealcomment();
+						// that.commentList = that.getTree(res_comment);
+						// that.commentList.forEach((item2) => {
+						// 	if (item2.children) {
+						// 		if (!item2.allchildren) {
+						// 			that.$set(item2, "allchildren", []);
+						// 		}
+						// 		that._dealChildren(item2, item2.children);
+						// 	}
+						// });
+						// if (that.currentData._id) {
+						// 	that.commentList.forEach((item) => {
+						// 		if (item._id == that.currentData._id) {
+						// 			that.currentData = item;
+						// 		}
+						// 	})
+						// }
 					} else {
 						// this.plNumber++;
 						// this.$emit("changenumber", this.plNumber);
@@ -402,9 +419,29 @@
 							}
 						})
 					}
-					uni.hideLoading();
+					// uni.hideLoading();
 				} else {
-					uni.hideLoading();
+					// uni.hideLoading();
+				}
+			},
+			_dealcomment(){
+				console.log("this.commentArray",this.commentArray);
+				var that=this;
+				that.commentList = that.getTree(this.commentArray);
+				that.commentList.forEach((item2) => {
+					if (item2.children) {
+						if (!item2.allchildren) {
+							that.$set(item2, "allchildren", []);
+						}
+						that._dealChildren(item2, item2.children);
+					}
+				});
+				if (that.currentData._id) {
+					that.commentList.forEach((item) => {
+						if (item._id == that.currentData._id) {
+							that.currentData = item;
+						}
+					})
 				}
 			},
 			_setcomment(ary, data, comment_id) {

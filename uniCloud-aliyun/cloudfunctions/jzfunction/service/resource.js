@@ -312,6 +312,13 @@ module.exports = class resourceService extends Service {
 				collection_query = collection.aggregate().match(where).sort({
 					"last_modify_date": -1
 				}).skip((page - 1) * rows).limit(rows);
+			}else if (type == "gonggao") {
+				Object.assign(where, {
+					is_gonggao: 1
+				});
+				collection_query = collection.aggregate().match(where).sort({
+					"last_modify_date": -1
+				}).skip((page - 1) * rows).limit(rows);
 			}
 			var resultdata = {};
 			if (zy_gs == 2) {

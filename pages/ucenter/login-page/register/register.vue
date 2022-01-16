@@ -34,6 +34,15 @@
 						<uni-easyinput :inputBorder="false" class="easyinput" placeholder="http://"
 							v-model="formData.weiboname" trim="both" />
 					</uni-forms-item>
+					<uni-forms-item label="验证资料" name="resources" v-model="formData.resources" required>
+						<uni-file-picker file-mediatype="image" :limit="9" return-type="array"
+							v-model="formData.resources">
+						</uni-file-picker>
+						<view style="color: red;margin-top: 10px;">请等待图片上传完之后再提交</view>
+						<view style="color: red;margin-top: 10px;">
+							请尽可能多地提供你这边有关他俩的截图痕迹（氪金、相册、云盘、其他平台的~均可
+						</view>
+					</uni-forms-item>
 					<uni-forms-item v-if="sfxs_yqm" label="邀请码" name="yqm" v-model="formData.yqm" required>
 						<uni-easyinput :inputBorder="false" class="easyinput" placeholder="请输入邀请码"
 							v-model="formData.yqm" trim="both" />
@@ -45,7 +54,7 @@
 			<u-modal v-model="showmodel" :show-cancel-button="true" @confirm="confirmnc" width="85%">
 				<view class="slot-content">
 					<view style="text-indent: 2em;">
-						请确认微博主页地址【{{formData.weiboname}}】输入正确，并在自己微博发送一条【{{formData.weibocontent}}】的微博。</view>
+						请确认微博主页地址【{{formData.weiboname}}】输入正确，并在自己微博发送一条【{{formData.weibocontent}}】的微博（已发请忽略）。</view>
 					<view style="text-indent: 2em;">如你确认无误，请点击确认按钮申请，待管理员审核微博通过后可重新进入本系统。</view>
 					<view style="text-indent: 2em;">注意请不要重复注册账号，加大管理组的审核工作量，多余的账号将会被锁定。</view>
 				</view>
@@ -73,6 +82,7 @@
 					'password': '',
 					'pwd2': '',
 					'weiboname': "", ////微博主页链接地址
+					"resources":null,
 					"yqm": "", //邀请码
 					"weibocontent": "山河不足重，重在遇知己"
 				},

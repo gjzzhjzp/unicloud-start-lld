@@ -33,6 +33,21 @@ export default {
 		],
 		"label": "微博主页链接地址"
 	},
+	"resources": {
+	  "rules": [
+		  {
+		  		required: true,
+		  		errorMessage: '请上传验证资料',
+		  	},
+	    {
+	      "format": "array"
+	    },
+	    {
+	      "arrayType": "file"
+	    }
+	  ],
+	  "label": "验证资料"
+	},
 	"yqm": {
 		"rules": [{
 				required: true,

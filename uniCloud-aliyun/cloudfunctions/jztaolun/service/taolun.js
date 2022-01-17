@@ -102,53 +102,25 @@ module.exports = class resourceService extends Service {
 		var context = this.ctx;
 		var data = this.ctx.data;
 		var uid = data.uid;
-		var zy_gs = data.zy_gs;
 		var page = data.page;
 		var rows = data.rows || 16;
 		const collection = db.collection('opendb-news-favorite');
 		const collectionconfig = db.collection('jz-opendb-taolun');
 
 		var collection_query = collection.aggregate().match({
-			user_id: uid,
-			zy_gs: zy_gs
+			user_id: uid
 		}).sort({
 			"update_date": -1
 		}).skip((page - 1) * rows).limit(rows);
 		var resultdata = {};
-		if (zy_gs == 2) {
-			const dbCmd = db.command;
-			const $ = dbCmd.aggregate;
-			resultdata = await collection_query.lookup({
-					from: 'jz-opendb-taolun',
-					let: {
-						article_id: '$article_id'
-					},
-					pipeline: $.pipeline()
-						.match(
-							dbCmd.expr($.eq(['$_id', '$$article_id']))
-						)
-						.lookup({
-							from: 'jz-custom-gechi',
-							let: {
-								resources_id: '$_id'
-							},
-							pipeline: $.pipeline()
-								.match(dbCmd.expr($.eq(['$resources_id', '$$resources_id'])))
-								.done(),
-							as: 'gechi'
-						})
-						.done(),
-					as: 'article_id',
-				})
-				.end();
-		} else {
-			resultdata = await collection_query.lookup({
-				from: 'jz-opendb-taolun',
-				localField: 'article_id',
-				foreignField: '_id',
-				as: 'article_id',
-			}).end();
-		}
+
+		resultdata = await collection_query.lookup({
+			from: 'jz-opendb-taolun',
+			localField: 'article_id',
+			foreignField: '_id',
+			as: 'article_id',
+		}).end();
+
 
 		return {
 			"state": "0000",
@@ -163,7 +135,6 @@ module.exports = class resourceService extends Service {
 		var context = this.ctx;
 		var data = this.ctx.data;
 		var uid = data.uid;
-		var zy_gs = data.zy_gs;
 		var page = data.page;
 		var rows = data.rows || 16;
 		const collection = db.collection('opendb-news-history');
@@ -175,47 +146,19 @@ module.exports = class resourceService extends Service {
 		// .skip(skip).limit(this.param.rows).get();
 
 		var collection_query = collection.aggregate().match({
-			user_id: uid,
-			zy_gs: zy_gs
+			user_id: uid
 		}).sort({
 			"update_date": -1
 		}).skip((page - 1) * rows).limit(rows);
 		var resultdata = {};
-		if (zy_gs == 2) {
 
-			const dbCmd = db.command;
-			const $ = dbCmd.aggregate;
-			resultdata = await collection_query.lookup({
-					from: 'jz-opendb-taolun',
-					let: {
-						article_id: '$article_id'
-					},
-					pipeline: $.pipeline()
-						.match(
-							dbCmd.expr($.eq(['$_id', '$$article_id']))
-						)
-						.lookup({
-							from: 'jz-custom-gechi',
-							let: {
-								resources_id: '$_id'
-							},
-							pipeline: $.pipeline()
-								.match(dbCmd.expr($.eq(['$resources_id', '$$resources_id'])))
-								.done(),
-							as: 'gechi'
-						})
-						.done(),
-					as: 'article_id',
-				})
-				.end();
-		} else {
-			resultdata = await collection_query.lookup({
-				from: 'jz-opendb-taolun',
-				localField: 'article_id',
-				foreignField: '_id',
-				as: 'article_id',
-			}).end();
-		}
+		resultdata = await collection_query.lookup({
+			from: 'jz-opendb-taolun',
+			localField: 'article_id',
+			foreignField: '_id',
+			as: 'article_id',
+		}).end();
+
 
 		return {
 			"state": "0000",
@@ -235,15 +178,10 @@ module.exports = class resourceService extends Service {
 			var label = data.label; ///标签
 			var rows = data.rows || 10;
 			var page = data.page || 1;
-			var ignore = data.ignore;
-			var zy_gs = "";
 			// return ;
 			const collection = db.collection('jz-opendb-taolun');
 			const collectionconfig = db.collection('jz-custom-config');
-			var config_800001 = await collectionconfig.where({
-				config_bm: "800001"
-			}).get();
-			var config_800001_value = config_800001.data[0].config_val;
+
 			var where_obj = {
 				"article_status": 1,
 				"is_off": db.command.neq(1)
@@ -258,36 +196,10 @@ module.exports = class resourceService extends Service {
 					"categories": new RegExp(data.categories, 'gi')
 				});
 			}
-			if (config_800001_value == '0') { ///=1读取未授权资源，=0只读取授权资源
-				Object.assign(where_obj, {
-					is_grant: 1
-				});
-			}
-			if (typeof data.zy_gs != "object") {
-				zy_gs = parseInt(data.zy_gs) || 0;
-				Object.assign(where_obj, {
-					zy_gs: zy_gs
-				});
-			} else {
-				Object.assign(where_obj, {
-					zy_gs: db.command.neq(2)
-				});
-			}
-			if (ignore) {
-				Object.assign(where_obj, {
-					_id: db.command.neq(ignore)
-				});
-			}
 			var where = {}; ///查询条件
 			if (data.label) {
 				where = db.command.or([Object.assign({
-					"categorieszw": new RegExp(data.label, 'gi')
-				}, where_obj), Object.assign({
-					"labels": new RegExp(data.label, 'gi')
-				}, where_obj), Object.assign({
 					"title": new RegExp(data.label, 'gi')
-				}, where_obj), Object.assign({
-					"author": new RegExp(data.label, 'gi')
 				}, where_obj)]);
 			} else {
 				where = where_obj;
@@ -312,37 +224,16 @@ module.exports = class resourceService extends Service {
 				collection_query = collection.aggregate().match(where).sort({
 					"last_modify_date": -1
 				}).skip((page - 1) * rows).limit(rows);
-			}else if (type == "gonggao") {
-				Object.assign(where, {
-					is_gonggao: 1
-				});
-				collection_query = collection.aggregate().match(where).sort({
-					"last_modify_date": -1
-				}).skip((page - 1) * rows).limit(rows);
 			}
 			var resultdata = {};
-			if (zy_gs == 2) {
-				resultdata = await collection_query.lookup({
-						from: 'uni-id-users',
-						localField: 'user_id',
-						foreignField: '_id',
-						as: 'userinfo',
-					}).lookup({
-						from: 'jz-custom-gechi',
-						localField: '_id',
-						foreignField: 'resources_id',
-						as: 'gechi',
-					})
-					.end();
-			} else {
-				resultdata = await collection_query.lookup({
-						from: 'uni-id-users',
-						localField: 'user_id',
-						foreignField: '_id',
-						as: 'userinfo',
-					})
-					.end();
-			}
+
+			resultdata = await collection_query.lookup({
+					from: 'uni-id-users',
+					localField: 'user_id',
+					foreignField: '_id',
+					as: 'userinfo',
+				})
+				.end();
 			var app_bbh = data.app_bbh;
 			// if (type == "tj") {
 			// 	if (app_bbh) {

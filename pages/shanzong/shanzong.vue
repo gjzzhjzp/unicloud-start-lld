@@ -1,8 +1,9 @@
 <template>
 	<view >
-		<jz-navbar :issy="false" ref="navbar">
+		<!-- <jz-navbar :issy="false" ref="navbar">
 			<view class="jz-navbar-title">山总</view>
-		</jz-navbar>
+		</jz-navbar> -->
+		<u-navbar :is-back="true" title="山总"></u-navbar>
 		<jz-notice :type="1"></jz-notice>
 		<view class="jz-container">
 			<view>

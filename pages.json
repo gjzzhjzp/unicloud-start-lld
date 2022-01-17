@@ -357,6 +357,16 @@
 			"style": {
 				"navigationBarTitleText": "详情"
 			}
+		}, {
+			"path": "pages/guangchang/guangchang",
+			"style": {
+				"navigationBarTitleText": "广场"
+			}
+		}, {
+			"path": "pages/fabu/fabu",
+			"style": {
+				"navigationBarTitleText": "发布"
+			}
 		}
 	],
 	"globalStyle": {
@@ -385,15 +395,12 @@
 		}, {
 			"pagePath": "pages/sort/sort",
 			"text": "分类"
+		},  {
+			"pagePath": "pages/guangchang/guangchang",
+			"text": "广场"
 		}, {
-			"pagePath": "pages/jilianri/jilianri",
-			"text": "纪恋日"
-		}, {
-			"pagePath": "pages/junzhe/junzhe",
-			"text": "俊哲"
-		}, {
-			"pagePath": "pages/shanzong/shanzong",
-			"text": "山总"
+			"pagePath": "pages/ucenter/ucenter",
+			"text": "我的"
 		}]
 	},
 	"easycom": {

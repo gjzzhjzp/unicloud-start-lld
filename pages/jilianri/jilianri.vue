@@ -1,8 +1,9 @@
 <template>
 	<view>
-		<jz-navbar :issy="false" ref="navbar">
+		<!-- <jz-navbar :issy="false" ref="navbar">
 			<view class="jz-navbar-title">纪念日</view>
-		</jz-navbar>
+		</jz-navbar> -->
+		<u-navbar :is-back="true" title="纪念日"></u-navbar>
 		<d-rili></d-rili>
 		<jz-tabbar></jz-tabbar>
 		<jz-gonggao ref="gonggao"></jz-gonggao>

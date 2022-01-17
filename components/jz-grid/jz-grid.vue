@@ -50,39 +50,49 @@
 				this.current = e.detail.current;
 			},
 			imageUrl(item) {
-				if (Array.isArray(item.icon)) {
-					return item.icon[0].url;
-				} else {
-					return item.icon.url;
+				if(item.icon){
+					if (Array.isArray(item.icon)&&item.icon[0]) {
+						return item.icon[0].url;
+					} else {
+						return item.icon.url||"";
+					}
+				}else{
+					return "";
 				}
+				
 			},
 			tomore(item) {
-				uni.navigateTo({
-					url: '/pages/resource/list?title=' + item.name
-				});
+				if(item.path){
+					uni.navigateTo({
+						url:item.path
+					});
+					// uni.navigateTo({
+					// 	url: '/pages/resource/list?title=' + item.name
+					// });
+				}
 			},
 			async getList() {
 				var categories = await db.collection("opendb-news-categories").get({
 					getTree: {
-						startWith: "flbm=='200000'" ////分类顶级编码
+						startWith: "flbm=='400000'" ////分类顶级编码
 					}
 				});
 				console.log("categories", categories);
 				if (categories.result && categories.result.data.length > 0) {
+					// debugger;
 					this.gridList = categories.result.data[0].children;
-					this.one_list=this.gridList.splice(0,5);
-					this.two_list=this.gridList.splice(5);
+					console.log("this.gridList",this.gridList);
+					this.one_list=this.gridList.slice(0,5);
+					this.two_list=this.gridList.slice(5);
 				}
 			}
 		}
 	}
 </script>
-
 <style lang="scss">
 	.grid-text {
 		color: $u-type-primary;
 	}
-
 	// .grid-text {
 	// 		font-size: 28rpx;
 	// 		margin-top: 4rpx;

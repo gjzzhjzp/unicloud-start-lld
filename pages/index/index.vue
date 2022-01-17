@@ -18,7 +18,7 @@
 			<jz-sy-list ref="sylist4" type="tj" title="推荐内容" :showright="true" :rows="4"></jz-sy-list>
 			<jz-sy-list ref="sylist2" type="zx" title="最新内容"></jz-sy-list>
 			<jz-sy-list ref="sylist1" type="rm" title="热门内容"></jz-sy-list>
-			<jz-sy-list ref="sylist3" title="山河令" label="山河令"></jz-sy-list>
+			<!-- <jz-sy-list ref="sylist3" title="山河令" label="山河令"></jz-sy-list> -->
 			<!-- <jz-sy-list ref="sylist4" title="夺笋" label="夺笋"></jz-sy-list> -->
 			<jz-tabbar></jz-tabbar>
 			<jz-gonggao ref="gonggao"></jz-gonggao>
@@ -57,7 +57,7 @@
 			this.$refs.banner.getList();
 			this.$refs.sylist1.getList();
 			this.$refs.sylist2.getList();
-			this.$refs.sylist3.getList();
+			// this.$refs.sylist3.getList();
 			this.$refs.sylist4.getList();
 			uni.stopPullDownRefresh()
 		},

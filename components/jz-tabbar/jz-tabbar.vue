@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-tabbar v-model="current" :list="list" :height="100" active-color="#409eff" icon-size="44rpx"></u-tabbar>
+		<u-tabbar v-model="current" :mid-button="true" :list="list" :height="100" active-color="#409eff" icon-size="44rpx"></u-tabbar>
 	</view>
 </template>
 <script>
@@ -20,22 +20,28 @@
 						pagePath: "/pages/sort/sort"
 					},
 					{
-						iconPath: "/static/tabbar/3.png",
-						selectedIconPath: "/static/tabbar/3_sed.png",
-						text: '纪恋日',
-						pagePath: "/pages/jilianri/jilianri"
+						iconPath: "https://cdn.uviewui.com/uview/common/min_button.png",
+						selectedIconPath: "https://cdn.uviewui.com/uview/common/min_button_select.png",
+						text: '发布',
+						midButton: true,
+						customIcon: false,
+						pagePath: "/pages/fabu/fabu"
+						// iconPath: "/static/tabbar/3.png",
+						// selectedIconPath: "/static/tabbar/3_sed.png",
+						// text: '发布',
+						// pagePath: "/pages/fabu/fabu"
 					},
 					{
 						iconPath: "/static/tabbar/4.png",
 						selectedIconPath: "/static/tabbar/4_sed.png",
-						text: '俊哲',
-						pagePath: "/pages/junzhe/junzhe"
+						text: '广场',
+						pagePath: "/pages/guangchang/guangchang"
 					},
 					{
 						iconPath: "/static/tabbar/5.png",
 						selectedIconPath: "/static/tabbar/5_sed.png",
-						text: '山总',
-						pagePath: "/pages/shanzong/shanzong"
+						text: '我的',
+						pagePath: "/pages/ucenter/ucenter"
 					}
 				],
 				current: 0

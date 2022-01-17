@@ -1,6 +1,9 @@
 <template>
 	<view class="wrap">
-		<u-navbar :is-back="true" title="广场"></u-navbar>
+		<jz-navbar :issy="false" ref="navbar">
+			<view class="jz-navbar-title">广场</view>
+		</jz-navbar>
+		<!-- <u-navbar :is-back="true" title="广场"></u-navbar> -->
 		<view>
 			<u-tabs active-color="#7275D3" bar-width="0" :list="tabslist" :is-scroll="false" :current="currenttab"
 				@change="changeTabs"></u-tabs>
@@ -28,12 +31,16 @@
 			</template>
 		<!-- </template> -->
 		<u-back-top :scroll-top="scrollTop" top="1000" mode="square" icon="arrow-up" tips="顶部"></u-back-top>
+	<jz-tabbar></jz-tabbar>
+	<jz-gonggao ref="gonggao"></jz-gonggao>
 	</view>
 </template>
 <script>
 	import itemList from "./item-list.vue"
+	import gonggao from "@/common/gonggao.js"
 	// import search from "../list/search/search.js"
 	export default {
+		mixins: [gonggao],
 		data() {
 			return {
 				tagname: "", ////tag标签
@@ -47,19 +54,19 @@
 				title: "列表", ///列表
 				tabslist: [{
 					name: '全部',
-					type: "0"
+					type: ""
 				}, {
 					name: '闲聊',
-					type: "1"
+					type: "0"
 				}, {
 					name: '磕糖',
-					type: "2"
+					type: "1"
 				}, {
 					name: '分享',
-					type: "3"
+					type: "2"
 				}, {
 					name: '其他',
-					type: "4"
+					type: "3"
 				}],
 				currenttab: 0,
 				searchrows: [{
@@ -102,10 +109,7 @@
 			var e = this.$Route.query;
 			if (e.flmc && e.flbm) {
 				this.showTag = true;
-				this.tagname = e.flmc;
-				this.categories = e.flbm || "";
 			}
-			// this.categories = e.categories || "";
 			this.type = e.type || "zx";
 			if (e.type) {
 				this.searchrows.forEach((item) => {
@@ -177,7 +181,7 @@
 			},
 			changeTabs(index) {
 				this.currenttab = index;
-				this.zy_gs = index;
+				this.categories = this.tabslist[index].type;
 				this.resetlist();
 			},
 			confirm() {
@@ -190,6 +194,7 @@
 				this.resetlist();
 			},
 			addRandomData() {
+				// debugger;
 				uni.showLoading({
 					title: '加载中'
 				});

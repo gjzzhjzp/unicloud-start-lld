@@ -2,7 +2,7 @@
 	<view class="center">
 		<view class="userInfo" @click.capture="$notMoreTap(toUserInfo,'notTap')">
 			<view class="usercenter-top">
-				<u-navbar :is-back="true" title="个人中心" :border-bottom="false" title-color="#fff" back-icon-color="#fff"
+				<u-navbar :is-back="false" title="个人中心" :border-bottom="false" title-color="#fff" back-icon-color="#fff"
 					:background="{'background':'none'}">
 				</u-navbar>
 			</view>
@@ -30,6 +30,8 @@
 			<text class="bottom-back-text" v-if="hasLogin">{{$t('settings.logOut')}}</text>
 			<text class="bottom-back-text" v-else>{{$t('settings.login')}}</text>
 		</view>
+		<jz-tabbar></jz-tabbar>
+		<jz-gonggao ref="gonggao"></jz-gonggao>
 	</view>
 </template>
 
@@ -44,6 +46,7 @@
 	const uniShare = new UniShare()
 	const db = uniCloud.database();
 	import ucenter from "./ucenter.js"
+	import gonggao from "@/common/gonggao.js"
 	export default {
 		onBackPress({
 			from
@@ -55,7 +58,7 @@
 				return uniShare.isShow;
 			}
 		},
-		mixins: [ucenter],
+		mixins: [ucenter,gonggao],
 		data() {
 			return {
 				isbbgx: false, ///是否版本更新

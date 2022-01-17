@@ -72,7 +72,7 @@
 							that.$set(that.detaildata, key, res.rows[0][key]);
 						}
 						that.title = that.detaildata.title;
-						// that.tohistory();
+						that.tohistory();
 						uni.hideLoading()
 					} else {
 						console.log("res", res.msg);
@@ -86,32 +86,32 @@
 				});
 			},
 			// 历史记录
-			// async tohistory() {
-			// 	if (this.hasLogin) {
-			// 		const db = uniCloud.database()
-			// 		const uid = db.getCloudEnv('$cloudEnv_uid');
-			// 		const collection = db.collection('opendb-news-history');
-			// 		var rows = await collection.where({
-			// 			article_id: this.detaildata._id,
-			// 			user_id: db.getCloudEnv('$cloudEnv_uid')
-			// 		}).get();
-			// 		if (rows.result && rows.result.data.length > 0) {
-			// 			await collection.where({
-			// 				_id: rows.result.data[0]._id
-			// 			}).update({
-			// 				update_date: db.getCloudEnv('$cloudEnv_now')
-			// 			});
-			// 		} else {
-			// 			await collection.add({
-			// 				article_id: this.detaildata._id,
-			// 				article_title: this.detaildata.title,
-			// 				user_id: db.getCloudEnv('$cloudEnv_uid'),
-			// 				create_date: db.getCloudEnv('$cloudEnv_now'),
-			// 				zy_gs: this.detaildata.zy_gs
-			// 			});
-			// 		}
-			// 	}
-			// }
+			async tohistory() {
+				if (this.hasLogin) {
+					const db = uniCloud.database()
+					const uid = db.getCloudEnv('$cloudEnv_uid');
+					const collection = db.collection('opendb-news-historyTaolun');
+					var rows = await collection.where({
+						article_id: this.detaildata._id,
+						user_id: db.getCloudEnv('$cloudEnv_uid')
+					}).get();
+					if (rows.result && rows.result.data.length > 0) {
+						await collection.where({
+							_id: rows.result.data[0]._id
+						}).update({
+							update_date: db.getCloudEnv('$cloudEnv_now')
+						});
+					} else {
+						await collection.add({
+							article_id: this.detaildata._id,
+							article_title: this.detaildata.title,
+							user_id: db.getCloudEnv('$cloudEnv_uid'),
+							create_date: db.getCloudEnv('$cloudEnv_now'),
+							categories: this.detaildata.categories
+						});
+					}
+				}
+			}
 		}
 	}
 </script>

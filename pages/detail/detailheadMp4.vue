@@ -31,7 +31,7 @@
 						<u-icon name="eye" :size="30"></u-icon>浏览量：{{data.view_count||0}}
 					</view>
 					<view class="detail-image-sx32">
-						<u-icon name="heart" :size="30"></u-icon>收藏量：{{data.like_count||0}}
+						<u-icon name="heart" :size="30"></u-icon>收藏量：{{data.like_count>0?data.like_count:0}}
 					</view>
 				</view>
 				<view class="detail-image-sc">

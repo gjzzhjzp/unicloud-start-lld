@@ -1,44 +1,49 @@
 <template>
 	<view class="wrap">
 		<u-navbar :is-back="true" title="我的收藏"></u-navbar>
-		<view>
-			<u-tabs active-color="#7275D3" bar-width="0" :list="tabslist" :is-scroll="false" :current="currenttab"
-				@change="changeTabs"></u-tabs>
-		</view>
-		<view v-if="currenttab!=2">
-			<item-list :list="flowList"></item-list>
-			<!-- <u-waterfall v-model="flowList" ref="uWaterfall">
-				<template v-slot:left="{leftList}">
-					<item-list :list="leftList"></item-list>
-				</template>
-				<template v-slot:right="{rightList}">
-					<item-list :list="rightList"></item-list>
-				</template>
-			</u-waterfall> -->
+		<u-tabs active-color="#7275D3" bar-width="0" :list="wraptabslist" :is-scroll="false" :current="wrapcurrenttab"
+			@change="changeWrapTabs"></u-tabs>
+
+		<view v-if="wrapcurrenttab==0">
+			<view>
+				<u-tabs active-color="#7275D3" bar-width="0" :list="tabslist" :is-scroll="false" :current="currenttab"
+					@change="changeTabs"></u-tabs>
+			</view>
+			<view v-if="currenttab!=2">
+				<item-list :list="flowList"></item-list>
+			</view>
+			<view v-else>
+				<music-list :list="flowList" :loadStatus="loadStatus" @loadmore="addRandomData"></music-list>
+			</view>
+			<view v-if="currenttab!=2">
+				<u-loadmore v-show="flowList.length!=0" :status="loadStatus" @loadmore="addRandomData"></u-loadmore>
+			</view>
+			<view style="margin-top: 20px;text-align: center;" v-show="flowList.length==0">
+				<u-empty text="无收藏" mode="favor"></u-empty>
+			</view>
 		</view>
 		<view v-else>
-			<music-list :list="flowList" :loadStatus="loadStatus" @loadmore="addRandomData"></music-list>
-		</view>
-		<view v-if="currenttab!=2">
-			<u-loadmore v-show="flowList.length!=0" :status="loadStatus" @loadmore="addRandomData"></u-loadmore>
+			<gitem-list :list="gflowList"></gitem-list>
+			<u-loadmore v-show="gflowList.length!=0" :status="loadStatus" @loadmore="addgRandomData"></u-loadmore>
+			<view style="margin-top: 20px;text-align: center;" v-show="gflowList.length==0">
+				<u-empty text="无历史记录" mode="history"></u-empty>
+			</view>
 		</view>
 		<u-back-top :scroll-top="scrollTop" top="1000" mode="square" icon="arrow-up" tips="顶部"></u-back-top>
-		<view style="margin-top: 20px;text-align: center;" v-show="flowList.length==0">
-			<u-empty text="无收藏" mode="favor"></u-empty>
-		</view>
 	</view>
 </template>
 <script>
 	import itemList from "../resource/item-list.vue"
 	import musicList from "../resource/musicList.vue"
 	import userinfo from "../common/common/userinfo.js"
-
+import gitemList from "../guangchang/item-list.vue"
 	export default {
 		data() {
 			return {
 				scrollTop: 0,
 				loadStatus: 'loadmore',
 				flowList: [],
+				gflowList:[],
 				list: [],
 				tabslist: [{
 					name: '图片',
@@ -53,6 +58,14 @@
 					name: '文章',
 					type: "3"
 				}],
+				wraptabslist:[{
+					name: '作品',
+					type: "0"
+				}, {
+					name: '帖子',
+					type: "1"
+				}],
+				wrapcurrenttab:0,
 				currenttab: 0,
 				zy_gs: 0,
 				param: {
@@ -63,7 +76,8 @@
 		},
 		components: {
 			itemList,
-			musicList
+			musicList,
+			gitemList
 		},
 		mixins: [userinfo],
 		mounted() {
@@ -94,6 +108,17 @@
 				this.param.page = 1;
 				this.flowList.splice(0, this.flowList.length);
 				this.addRandomData();
+			},
+			changeWrapTabs(index){
+				this.wrapcurrenttab = index;
+				this.param.page = 1;
+				if(index==1){
+					this.gflowList.splice(0, this.gflowList.length);
+					this.addgRandomData();
+				}else{
+					this.flowList.splice(0, this.flowList.length);
+					this.addRandomData();
+				}
 			},
 			async addRandomData() {
 				var that = this;
@@ -126,7 +151,7 @@
 						// debugger;
 						var roles = that.getuserrole();
 						if (roles && (roles.indexOf("Master") != -1 || roles.indexOf("AUDITOR") != -
-							1)) {
+								1)) {
 							if (obj) {
 								delete obj.is_encryption;
 								that.flowList.push(obj);
@@ -138,14 +163,13 @@
 							}
 						}
 					});
-					this.flowList=this.AryDeleteMore(this.flowList);
-					console.log("this.flowListqqqqqqqqqqq",this.flowList);
+					this.flowList = this.AryDeleteMore(this.flowList);
 					uni.hideLoading();
-				}).catch((err)=>{
-					console.log("网络错误，请重试——err",err);
+				}).catch((err) => {
+					console.log("网络错误，请重试——err", err);
 					uni.showModal({
-					  content: err.message || '网络错误，请重试',
-					  showCancel: false
+						content: err.message || '网络错误，请重试',
+						showCancel: false
 					});
 				});
 
@@ -163,23 +187,72 @@
 				// 	.skip(skip).limit(this.param.rows).get();
 
 			},
+			async addgRandomData() {
+				var that = this;
+				uni.showLoading({
+					title: '加载中'
+				});
+				var userInfo = uni.getStorageSync("userInfo");
+				uniCloud.callFunction({
+					name: 'jztaolun',
+					data: {
+						action: "taolun/getMyfavoriteList",
+						data: {
+							uid: userInfo._id,
+							page: this.param.page,
+							rows: this.param.rows
+						}
+					},
+				}).then((res) => {
+					// debugger;
+					var rows = res.result.rows;
+					if (rows.length < this.param.rows) {
+						this.loadStatus = 'nomore';
+					} else {
+						this.param.page++;
+						this.loadStatus = 'loadmore';
+					}
+					rows.forEach((item) => {
+						// debugger;
+						var obj = item.article_id[0];
+						var roles = that.getuserrole();
+						if (roles && (roles.indexOf("Master") != -1 || roles.indexOf("AUDITOR") != -1)) {
+							if (obj) {
+								this.gflowList.push(obj);
+							}
+						} else {
+							if (obj && obj.article_status == 1 && obj.is_off != 1) {
+								this.gflowList.push(obj);
+							}
+						}
+					});
+					this.gflowList=this.AryDeleteMore(this.gflowList);
+					uni.hideLoading();
+				}).catch((err)=>{
+					console.log("网络错误，请重试——err",err);
+					uni.showModal({
+					  content: err.message || '网络错误，请重试',
+					  showCancel: false
+					});
+				});
+			},
 			// 资源数组去重
-			 AryDeleteMore(arr){
-				
-				 if (!Array.isArray(arr)) {
-				        console.log('type error!')
-				        return
-				    }
-				    var array = [];
-					var array_id=[];
-				    for (var i = 0; i < arr.length; i++) {
-				        if (array_id.indexOf(arr[i]._id) == -1) {
-				            array.push(arr[i]);
-							array_id.push(arr[i]._id);
-				        }
-				    }
-					// console.log("array",array);
-				    return array;
+			AryDeleteMore(arr) {
+
+				if (!Array.isArray(arr)) {
+					console.log('type error!')
+					return
+				}
+				var array = [];
+				var array_id = [];
+				for (var i = 0; i < arr.length; i++) {
+					if (array_id.indexOf(arr[i]._id) == -1) {
+						array.push(arr[i]);
+						array_id.push(arr[i]._id);
+					}
+				}
+				// console.log("array",array);
+				return array;
 			}
 		}
 	}

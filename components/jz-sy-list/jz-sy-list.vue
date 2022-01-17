@@ -173,44 +173,44 @@
 						this.list = res.rows;
 						if (this.list.length > 0) {
 							this.isEmpty = false;
-							if (this.type == "tj") {
-								this.list.unshift({
-									"_id": "61aee1840d111e00012bf162",
-									"article_status": 1,
-									"zy_gs": 1,
-									"publish_date": 1638850948344,
-									"last_modify_date": 1641298665437,
-									"is_grant": 0,
-									"is_encryption": 0,
-									"is_recommend": 0,
-									"author": "俊哲宇宙APP",
-									"title": "投稿教程",
-									"avatar": [{
-										"extname": "jpg",
-										"name": "zyimage1638850857812",
-										"url": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-3a72b088-8226-498e-a9cc-a695d0ed4ce7/c521d686-d0e7-4dae-8206-d6e80c4448c3.",
-										"path": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-3a72b088-8226-498e-a9cc-a695d0ed4ce7/c521d686-d0e7-4dae-8206-d6e80c4448c3."
-									}]
-								})
-								this.list.unshift({
-									"_id": "61ca6e97344587000187e9b2",
-									"article_status": 1,
-									"zy_gs": 0,
-									"publish_date": 1640656535652,
-									"last_modify_date": 1641298663223,
-									"is_grant": 1,
-									"is_encryption": 0,
-									"is_recommend": 0,
-									"author": "俊哲宇宙APP",
-									"title": "投稿规则（试用版）",
-									"avatar": [{
-										"extname": "jpg",
-										"name": "zyimage1640656499956",
-										"url": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-3a72b088-8226-498e-a9cc-a695d0ed4ce7/b80c8e52-08ae-4201-a8f1-fc9bc1f54e0e.",
-										"path": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-3a72b088-8226-498e-a9cc-a695d0ed4ce7/b80c8e52-08ae-4201-a8f1-fc9bc1f54e0e."
-									}]
-								})
-							}
+							// if (this.type == "tj") {
+							// 	this.list.unshift({
+							// 		"_id": "61aee1840d111e00012bf162",
+							// 		"article_status": 1,
+							// 		"zy_gs": 1,
+							// 		"publish_date": 1638850948344,
+							// 		"last_modify_date": 1641298665437,
+							// 		"is_grant": 0,
+							// 		"is_encryption": 0,
+							// 		"is_recommend": 0,
+							// 		"author": "俊哲宇宙APP",
+							// 		"title": "投稿教程",
+							// 		"avatar": [{
+							// 			"extname": "jpg",
+							// 			"name": "zyimage1638850857812",
+							// 			"url": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-3a72b088-8226-498e-a9cc-a695d0ed4ce7/c521d686-d0e7-4dae-8206-d6e80c4448c3.",
+							// 			"path": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-3a72b088-8226-498e-a9cc-a695d0ed4ce7/c521d686-d0e7-4dae-8206-d6e80c4448c3."
+							// 		}]
+							// 	})
+							// 	this.list.unshift({
+							// 		"_id": "61ca6e97344587000187e9b2",
+							// 		"article_status": 1,
+							// 		"zy_gs": 0,
+							// 		"publish_date": 1640656535652,
+							// 		"last_modify_date": 1641298663223,
+							// 		"is_grant": 1,
+							// 		"is_encryption": 0,
+							// 		"is_recommend": 0,
+							// 		"author": "俊哲宇宙APP",
+							// 		"title": "投稿规则（试用版）",
+							// 		"avatar": [{
+							// 			"extname": "jpg",
+							// 			"name": "zyimage1640656499956",
+							// 			"url": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-3a72b088-8226-498e-a9cc-a695d0ed4ce7/b80c8e52-08ae-4201-a8f1-fc9bc1f54e0e.",
+							// 			"path": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-3a72b088-8226-498e-a9cc-a695d0ed4ce7/b80c8e52-08ae-4201-a8f1-fc9bc1f54e0e."
+							// 		}]
+							// 	})
+							// }
 						} else {
 							this.isEmpty = true;
 						}

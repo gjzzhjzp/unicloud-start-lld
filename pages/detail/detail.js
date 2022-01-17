@@ -110,7 +110,7 @@ export default {
 							title: '已取消',
 							type: 'success'
 						});
-						this.islike = false;
+						this.$set(this,"islike",false);
 						this.$set(this.data, "like_count", --this.data.like_count);
 					} else {
 						console.log("res", res.msg);
@@ -146,7 +146,7 @@ export default {
 							title: '收藏成功',
 							type: 'success'
 						});
-						this.islike = true;
+						this.$set(this,"islike",true);
 						this.$set(this.data, "like_count", ++this.data.like_count);
 					} else {
 						console.log("res", res.msg);

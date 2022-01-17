@@ -15,7 +15,7 @@
 			<view>
 				<jz-grid></jz-grid>
 			</view>
-			<jz-sy-list ref="sylist4" type="tj" title="推荐内容" :showright="true" :rows="4"></jz-sy-list>
+			<jz-sy-list ref="sylist4" type="tj" title="推荐内容" :showright="true" :rows="6"></jz-sy-list>
 			<jz-sy-list ref="sylist2" type="zx" title="最新内容"></jz-sy-list>
 			<jz-sy-list ref="sylist1" type="rm" title="热门内容"></jz-sy-list>
 			<!-- <jz-sy-list ref="sylist3" title="山河令" label="山河令"></jz-sy-list> -->

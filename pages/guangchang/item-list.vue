@@ -9,14 +9,13 @@
 						</u-image> -->
 						<!-- <u-lazy-load threshold="300" height="200" border-radius="10" img-mode="aspectFill"
 							:image="imageUrl(item)" :index="index"></u-lazy-load> -->
-						<view style="padding: 8px;">
 							<view class="er-item-list-title">
 								{{item.title}}
 							</view>
 							<view class="er-item-list-content">
 								{{item.excerpt}}
 							</view>
-						</view>
+						<!-- </view> -->
 					</view>
 				</view>
 			</u-grid-item>
@@ -67,6 +66,11 @@
 					url = item.avatar.url;
 				}
 				return url;
+			},
+			toDetail(item) {
+				uni.navigateTo({
+					url: "/pages/jz-opendb-taolun/detail/detail?id=" + item._id
+				});
 			}
 		}
 	}
@@ -106,7 +110,8 @@
 	}
 
 	.er-item-list-title {
-		font-size: 30rpx;
+		font-size: 36rpx;
+		font-weight: 600;
 		margin-top: 5px;
 		color: $u-main-color;
 		white-space: nowrap;
@@ -173,8 +178,10 @@
 
 	.er-item-list-warter1 {
 		width: 100%;
-		box-shadow: 0px 0px 6px #d5d5d6;
+		border-bottom: 1px solid #d5d5d6;
+		// box-shadow: 0px 0px 6px #d5d5d6;
 		border-radius: 10px;
+		    padding-bottom: 10px;
 		// padding: 10px;
 	}
 </style>

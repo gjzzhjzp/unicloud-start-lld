@@ -104,7 +104,7 @@ module.exports = class resourceService extends Service {
 		var uid = data.uid;
 		var page = data.page;
 		var rows = data.rows || 16;
-		const collection = db.collection('opendb-news-favorite');
+		const collection = db.collection('opendb-news-favoriteTaolun');
 		const collectionconfig = db.collection('jz-opendb-taolun');
 
 		var collection_query = collection.aggregate().match({
@@ -137,14 +137,9 @@ module.exports = class resourceService extends Service {
 		var uid = data.uid;
 		var page = data.page;
 		var rows = data.rows || 16;
-		const collection = db.collection('opendb-news-history');
+		const collection = db.collection('opendb-news-historyTaolun');
 		const collectionconfig = db.collection('jz-opendb-taolun');
-		// var _resultdata = collection.where({
-
-		// }).field('article_title,update_date,article_id{_id,title,avatar,author,resources,is_off,article_status}')
-		// .orderBy('update_date','desc')
-		// .skip(skip).limit(this.param.rows).get();
-
+		
 		var collection_query = collection.aggregate().match({
 			user_id: uid
 		}).sort({
@@ -175,9 +170,9 @@ module.exports = class resourceService extends Service {
 			var context = this.ctx;
 			var data = this.ctx.data;
 			var type = data.type || "zx";
-			var label = data.label; ///标签
 			var rows = data.rows || 10;
 			var page = data.page || 1;
+				var categories = data.categories;
 			// return ;
 			const collection = db.collection('jz-opendb-taolun');
 			const collectionconfig = db.collection('jz-custom-config');
@@ -191,15 +186,11 @@ module.exports = class resourceService extends Service {
 			if (roles && (roles.indexOf("Master") != -1 || roles.indexOf("AUDITOR") != -1)) {
 				delete where_obj.is_off;
 			}
-			if (data.categories) {
-				Object.assign(where_obj, {
-					"categories": new RegExp(data.categories, 'gi')
-				});
-			}
 			var where = {}; ///查询条件
-			if (data.label) {
+			// console.log("categories",categories);
+			if (categories) {
 				where = db.command.or([Object.assign({
-					"title": new RegExp(data.label, 'gi')
+					"categories": parseInt(categories)
 				}, where_obj)]);
 			} else {
 				where = where_obj;
@@ -295,7 +286,7 @@ module.exports = class resourceService extends Service {
 					foreignField: '_id',
 					as: 'userinfo',
 				}).lookup({
-					from: 'opendb-news-favorite', ///获取当前用户是否收藏
+					from: 'opendb-news-favoriteTaolun', ///获取当前用户是否收藏
 					let: {
 						article_id: '$_id'
 					},

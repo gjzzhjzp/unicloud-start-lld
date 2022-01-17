@@ -1,7 +1,7 @@
 {
-    "name" : "俊哲宇宙",
+    "name" : "橘域网",
     "appid" : "__UNI__0583E60",
-    "description" : "俊哲宇宙",
+    "description" : "橘域网",
     "versionName" : "1.1.7",
     "versionCode" : 116,
     "transformPx" : false,
@@ -184,7 +184,7 @@
             }
         },
         "router" : {
-            "base" : "/jzszd1.2.5/"
+            "base" : "/jzszd2.0.1/"
         }
     },
     "_spaceID" : "",

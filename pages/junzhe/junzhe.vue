@@ -15,17 +15,17 @@
 		<jz-sy-list ref="sylist4" title="双人采访" label="双人采访"></jz-sy-list>
 		<jz-sy-list ref="sylist5" title="双人图片" label="双人图片"></jz-sy-list>
 		</view>
-		<jz-tabbar></jz-tabbar>
-		<jz-gonggao ref="gonggao"></jz-gonggao>
+		<!-- <jz-tabbar></jz-tabbar>
+		<jz-gonggao ref="gonggao"></jz-gonggao> -->
 	</view>
 </template>
 <script>
-	import gonggao from "@/common/gonggao.js"
+	// import gonggao from "@/common/gonggao.js"
 	export default {
 		data() {
 			return {}
 		},
-		mixins: [gonggao],
+		// mixins: [gonggao],
 		// 下拉刷新
 		onPullDownRefresh(){
 			this.$refs.banner.getList();

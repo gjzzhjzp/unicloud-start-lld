@@ -1,21 +1,48 @@
 <template>
 	<view class="er-item-list">
-		<u-grid :col="1" :border="false" >
-			<u-grid-item v-for="(item, index) in list" :custom-style="{'padding':0}" :key="index" @click="$notMoreTap(toDetail,'notTap',item)">
+		<u-grid :col="1" :border="false">
+			<u-grid-item v-for="(item, index) in list" bg-color="#F5F5F5" :custom-style="{'padding':0}" :key="index"
+				@click="$notMoreTap(toDetail,'notTap',item)">
 				<view class="er-item-list-warter">
-					<view class="er-item-list-warter1">
-						<!-- <u-image :show-loading="true" loading-icon="/static/center/chang1.png" error-icon="/static/center/error_chang.png"  height="200rpx" border-radius="10" :src="imageUrl(item)" mode="aspectFill">
-										
-						</u-image> -->
-						<!-- <u-lazy-load threshold="300" height="200" border-radius="10" img-mode="aspectFill"
-							:image="imageUrl(item)" :index="index"></u-lazy-load> -->
-							<view class="er-item-list-title">
-								{{item.title}}
+					<view class="er-item-list-warter2">
+						<view class="er-item-list-warter1">
+							<view class="er-item-list-img">
+								<view class="original" v-if="item.userinfo&&item.userinfo[0].original">
+									<image class="original-img" src="@/static/center/ori_back.png"></image>
+								</view>
+								<u-avatar :size="80"
+									:src="(item.userinfo&&item.userinfo[0].avatar_file)?item.userinfo[0].avatar_file.url:''">
+								</u-avatar>
+								<view class="original-title">
+									<text
+										style="color: #333333;font-size: 14px;">{{item.userinfo&&item.userinfo[0].nickname?item.userinfo[0].nickname:'佚名'}}</text>
+									<uni-dateformat class="publish_date" :date="item.publish_date"
+										format="yyyy-MM-dd hh:mm:ss" :threshold="[60000, 2592000000]" />
+								</view>
 							</view>
+							<view class="er-item-list-gz">
+								<u-button size="medium" shape="circle">关注</u-button>
+							</view>
+						</view>
+						<view>
 							<view class="er-item-list-content">
 								{{item.excerpt}}
 							</view>
-						<!-- </view> -->
+						</view>
+						<view class="er-item-list-operation">
+							<view class="er-item-list-icon">
+								<u-icon name="chat" size="50"></u-icon>
+								<text class="er-item-list-icon-text">99</text>
+							</view>
+							<view class="er-item-list-icon">
+								<u-icon name="thumb-up" size="50"></u-icon>
+								<text class="er-item-list-icon-text">99</text>
+							</view>
+							<view class="er-item-list-icon">
+							<u-icon name="heart" size="50"></u-icon>
+							<text class="er-item-list-icon-text">99</text>
+							</view>
+						</view>
 					</view>
 				</view>
 			</u-grid-item>
@@ -55,7 +82,7 @@
 			}
 		},
 		mounted() {
-			console.log("list", this.list);
+			console.log("list3333333333333333333", this.list);
 		},
 		methods: {
 			imageUrl(item) {
@@ -77,8 +104,39 @@
 </script>
 
 <style lang="scss" scoped>
+	.er-item-list-icon{
+		display: flex;
+	}
+	.er-item-list-icon-text{
+		line-height: 50rpx;
+		margin-left: 4px;
+	}
+	.er-item-list-operation {
+		display: flex;
+		justify-content: space-between;
+		padding: 10px;
+		background: #EFEFF7;
+		border-radius: 6px;
+		margin-top: 20px;
+	}
+
+	.er-item-list-content {
+		font-size: 14px;
+	}
+
+	.publish_date {
+		font-size: 10px;
+		color: #888888;
+	}
+
 	.original {
 		position: relative;
+	}
+
+	.original-title {
+		display: flex;
+		flex-direction: column;
+		margin-left: 10px;
 	}
 
 	.original-img {
@@ -92,10 +150,16 @@
 	.er-item-list-warter {
 		border-radius: 8px;
 		// margin: 10px;
-		background-color: #ffffff;
-		padding: 16rpx;
+		// background-color: #ffffff;
+		padding: 20rpx;
 		position: relative;
 		width: 100%;
+	}
+
+	.er-item-list-warter2 {
+		padding: 20rpx;
+		background-color: #fff;
+		border-radius: 8px;
 	}
 
 	.u-close {
@@ -178,10 +242,13 @@
 
 	.er-item-list-warter1 {
 		width: 100%;
-		border-bottom: 1px solid #d5d5d6;
+		// border-bottom: 1px solid #d5d5d6;
 		// box-shadow: 0px 0px 6px #d5d5d6;
 		border-radius: 10px;
-		    padding-bottom: 10px;
+		padding-bottom: 10px;
+		display: flex;
+		justify-content: space-between;
+		font-size: 14px;
 		// padding: 10px;
 	}
 </style>

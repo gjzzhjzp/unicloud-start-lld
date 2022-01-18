@@ -23,8 +23,9 @@
 		</view>
 		<view class="search-row">
 			<view :class="['search-row-col',item.selected?'selected':'']" v-for="(item,index) in searchrows"
-				:key="index" @click="searchType(item)">{{item.name}}
-				<u-icon size="20" name="arrow-down-fill"></u-icon>
+				:key="index" >
+				<u-button size="medium" @click="searchType(item)" shape="circle">{{item.name}}</u-button>
+				<!-- <u-icon size="20" name="arrow-down-fill"></u-icon> -->
 			</view>
 		</view>
 		<view v-if="showTag" style="margin-left: 10px;">

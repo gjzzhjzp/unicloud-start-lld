@@ -357,7 +357,7 @@
 		/* width: 100%; */
 		width: 100vw;
 		height: 30vh;
-		margin-left: -10px;
+		/* margin-left: -10px; */
 
 	}
 

@@ -1,29 +1,41 @@
 <template>
 	<view :class="['detailhead','detailhead'+data.zy_gs]">
-		<view class="detail-image-title">
-			<view class="title">
-				<commont-image
-					:src="(data.userinfo&&data.userinfo[0]&&data.userinfo[0].avatar_file)?data.userinfo[0].avatar_file.url:''"
-					:isoriginal="!!(data.userinfo&&data.userinfo[0].original==1)">
-				</commont-image>
-				<view @click="tgrHref()" style="color: rgb(114, 117, 211);margin-left: 10px;">{{tgr}}</view>
+		<view style="background-color: #fff;border-radius: 8px;padding: 10px;margin-top: 10px;">
+			<view class="detail-image-title">
+				<view class="title">
+					<commont-image
+						:src="(data.userinfo&&data.userinfo[0]&&data.userinfo[0].avatar_file)?data.userinfo[0].avatar_file.url:''"
+						:isoriginal="!!(data.userinfo&&data.userinfo[0].original==1)">
+					</commont-image>
+					<view class="original-title">
+						<view @click="tgrHref()" style="color: #333333;font-size: 14px;">{{tgr}}</view>
+						<uni-dateformat class="publish_date" :date="data.publish_date" format="yyyy-MM-dd"
+							:threshold="[60000, 2592000000]" />
+					</view>
+				</view>
+				<view class="er-item-list-gz">
+					<u-button size="medium" shape="circle">关注</u-button>
+				</view>
 			</view>
-			<view style="text-align: right;color: #909399;width: 160rpx;">
-				<uni-dateformat class="publish_date" :date="data.publish_date" format="yyyy-MM-dd"
-					:threshold="[60000, 2592000000]" />
+			<!-- <view class="detail-title">
+				{{data.title}}
+			</view> -->
+			<view class="detail-image-jj">
+				<view class="detail-image-jj2" v-html="data.excerpt||'无'"></view>
 			</view>
-		</view>
-		<view class="detail-title">
-			{{data.title}}
-		</view>
-		<view class="detail-image-jj">
-			<view class="detail-image-jj2" v-html="data.excerpt||'无'"></view>
-		</view>
-		<slot name="content">
+			<slot name="content">
 
-		</slot>
-		<u-gap height="10" bg-color="rgb(247 247 247)"></u-gap>
-		<view class="detail-image-sx3">
+			</slot>
+		</view>
+
+
+		<view class="detailhead-tabs">
+			<u-tabs :list="tablist" :is-scroll="false" active-color="#777BCE" :current="current" @change="changeTab"></u-tabs>
+			<view v-if="current==0">
+				<slot name="comment"></slot>
+			</view>
+		</view>
+		<!-- <view class="detail-image-sx3">
 			<view class="showllsc" v-show="showllsc">
 				<view class="detail-image-sx31">
 					<u-icon name="eye" :size="30"></u-icon>浏览量：{{data.view_count||0}}
@@ -40,8 +52,8 @@
 					<u-icon :size="30" name="heart-fill" color="red"></u-icon> 已收藏
 				</view>
 			</view>
-		</view>
-		<slot name="comment"></slot>
+		</view> -->
+
 		<u-toast ref="uToast" />
 	</view>
 </template>
@@ -50,15 +62,20 @@
 	import commontImage from "./commontImage.vue"
 	export default {
 		mixins: [detail],
-		components:{commontImage},
+		components: {
+			commontImage
+		},
 		data() {
 			return {
 				showmp4Xz: false,
-				// labels: [],
 				showllsc: true,
 				current: 0,
 				tablist: [{
-					name: '简介'
+					name: '评论'
+				}, {
+					name: '点赞'
+				}, {
+					name: '收藏'
 				}],
 				showpl: true,
 				showdanmu: true,
@@ -81,14 +98,11 @@
 		},
 		watch: {
 			plNumber() {
-				this.tablist.forEach((item) => {
-					if (item.name.indexOf('评论') != -1) {
-						item.name = "评论" + this.plNumber
-					}
-				})
-				// this.tablist.push({
-				// 	name: '评论'
-				// });
+				// this.tablist.forEach((item) => {
+				// 	if (item.name.indexOf('评论') != -1) {
+				// 		item.name = "评论" + this.plNumber
+				// 	}
+				// })
 			}
 		},
 		created() {
@@ -113,11 +127,11 @@
 			} else {
 				this.showsendDanmu = false;
 			}
-			if (this.showpl) {
-				this.tablist.push({
-					name: '评论'
-				});
-			}
+			// if (this.showpl) {
+			// 	this.tablist.push({
+			// 		name: '评论'
+			// 	});
+			// }
 			this.showmp4Xz = t_800005 == '1' ? true : false;
 			this.showllsc = t_800011 == '1' ? true : false;
 			// console.log("labels", this.labels);
@@ -180,6 +194,23 @@
 </script>
 
 <style>
+	.detailhead-tabs {
+		margin-top: 10px;
+		background-color: #fff;
+		border-radius: 8px;
+	}
+
+	.original-title {
+		display: flex;
+		flex-direction: column;
+		margin-left: 10px;
+	}
+
+	.publish_date {
+		font-size: 10px;
+		color: #888888;
+	}
+
 	.detail-image-ly2 {
 		display: flex;
 	}
@@ -204,11 +235,14 @@
 		display: flex;
 		flex-direction: row;
 	}
-	.detail-title{
+
+	.detail-title {
 		font-size: 50rpx;
 	}
+
 	.detail-image-jj2 {
-		font-size: 36rpx;
+		font-size: 28rpx;
+		line-height: 22px;
 	}
 
 	.detail-open {
@@ -312,7 +346,7 @@
 		margin-top: 10px;
 		margin-left: 6px;
 		font-size: 1em;
-		color: #909399;
+		color: #333;
 	}
 
 	.detailhead1 .detail-image-ly {

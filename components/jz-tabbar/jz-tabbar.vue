@@ -20,9 +20,9 @@
 						pagePath: "/pages/sort/sort"
 					},
 					{
-						iconPath: "https://cdn.uviewui.com/uview/common/min_button.png",
+						iconPath: "https://cdn.uviewui.com/uview/common/min_button_select.png",
 						selectedIconPath: "https://cdn.uviewui.com/uview/common/min_button_select.png",
-						text: '发布',
+						text: '',
 						midButton: true,
 						customIcon: false,
 						pagePath: "/pages/fabu/fabu"

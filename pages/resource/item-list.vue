@@ -115,7 +115,7 @@
 	.er-item-list-warter {
 		border-radius: 8px;
 		// margin: 10px;
-		background-color: #ffffff;
+		// background-color: #ffffff;
 		padding: 16rpx;
 		position: relative;
 		width: 100%;

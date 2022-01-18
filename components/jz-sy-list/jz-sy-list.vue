@@ -1,7 +1,7 @@
 <template>
-	<view>
+	<view class="jz-sy-list-wrap">
 		<view class="jz-sy-list-section">
-			<u-section line-color="#7275D3" :font-size="32" :title="title" :right="showright" sub-title="查看更多>>"
+			<u-section line-color="#7275D3" :show-line="false" :font-size="32" :title="title" :right="showright" sub-title="查看更多"
 				:arrow="false" @click="$notMoreTap(tomore,'notTap')"></u-section>
 		</view>
 		<view class="jz-sy-list">
@@ -232,6 +232,11 @@
 	}
 </script>
 <style lang="scss">
+	.jz-sy-list-wrap{
+		background-color: #fff;
+		padding: 10px;
+		border-bottom: 1px solid #F5F5F5;
+	}
 	.jz-sy-item {
 		padding: 0px 12rpx !important;
 	}

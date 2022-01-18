@@ -3,36 +3,46 @@
 		<jz-navbar :issy="false" ref="navbar">
 			<view class="jz-navbar-title">广场</view>
 		</jz-navbar>
-		<!-- <u-navbar :is-back="true" title="广场"></u-navbar> -->
-		<view>
-			<u-tabs active-color="#7275D3" bar-width="0" :list="tabslist" :is-scroll="false" :current="currenttab"
-				@change="changeTabs"></u-tabs>
+		<view style="padding: 0px 120rpx;background: #fff;">
+			<u-tabs active-color="#7275D3" bar-width="0" :font-size="36" :list="toptabs" :is-scroll="false" :current="topcurtab"
+				@change="changeTopTabs"></u-tabs>
 		</view>
-		<view class="search-row">
-			<view :class="['search-row-col',item.selected?'selected':'']" v-for="(item,index) in searchrows"
-				:key="index" @click="searchType(item)">{{item.name}}
-				<u-icon size="20" name="arrow-down-fill"></u-icon>
+		<view v-if="topcurtab==0">
+			<view>
+				<u-tabs active-color="#7275D3" bar-width="0" :list="tabslist" :is-scroll="false" :current="currenttab"
+					@change="changeTabs"></u-tabs>
+			</view>
+			<view class="search-row">
+				<view :class="['search-row-col',item.selected?'selected':'']" v-for="(item,index) in searchrows"
+					:key="index" @click="searchType(item)">
+					<u-button size="medium" shape="circle">{{item.name}}</u-button>
+			
+					<!-- <u-icon size="20" name="arrow-down-fill"></u-icon> -->
+				</view>
+			</view>
+			<view v-if="showTag" style="margin-left: 10px;">
+				<u-tag :text="tagname" mode="light" closeable :show="showTag" @close="closetagClick" />
+			</view>
+			<view>
+				<item-list :list="flowList"></item-list>
 			</view>
 		</view>
-		<view v-if="showTag" style="margin-left: 10px;">
-			<u-tag :text="tagname" mode="light" closeable :show="showTag" @close="closetagClick" />
+		<view v-if="topcurtab==1">
+			<view>
+				<item-list :list="flowList"></item-list>
+			</view>
 		</view>
-		<view >
-			<item-list :list="flowList"></item-list>
-		</view>
-		<!-- <template v-if="currenttab!=2"> -->
-			<template v-if="isEmpty">
-				<view style="margin-top: 100rpx;">
-					<u-empty text="数据为空" mode="list"></u-empty>
-				</view>
-			</template>
-			<template v-else>
-				<u-loadmore :status="loadStatus" @loadmore="loadmoreList"></u-loadmore>
-			</template>
-		<!-- </template> -->
+		<template v-if="isEmpty">
+			<view style="margin-top: 100rpx;">
+				<u-empty text="数据为空" mode="list"></u-empty>
+			</view>
+		</template>
+		<template v-else>
+			<u-loadmore :status="loadStatus" @loadmore="loadmoreList"></u-loadmore>
+		</template>
 		<u-back-top :scroll-top="scrollTop" top="1000" mode="square" icon="arrow-up" tips="顶部"></u-back-top>
-	<jz-tabbar></jz-tabbar>
-	<jz-gonggao ref="gonggao"></jz-gonggao>
+		<jz-tabbar></jz-tabbar>
+		<jz-gonggao ref="gonggao"></jz-gonggao>
 	</view>
 </template>
 <script>
@@ -68,6 +78,14 @@
 					name: '其他',
 					type: "3"
 				}],
+				toptabs: [{
+					name: '全部发帖',
+					type: "0"
+				}, {
+					name: '我的关注',
+					type: "1"
+				}],
+				topcurtab: "0",
 				currenttab: 0,
 				searchrows: [{
 						name: "最新内容",
@@ -129,9 +147,9 @@
 			if (!this.keyword && e.user) {
 				this.keyword = e.user || "";
 				this.dvalue = 2;
-				this.dtitle="用户";
+				this.dtitle = "用户";
 			}
-			
+
 			this.addRandomData();
 		},
 		onPageScroll(e) {
@@ -146,6 +164,9 @@
 			}
 		},
 		methods: {
+			changeTopTabs(index) {
+				this.topcurtab = index;
+			},
 			changedropItem(value) {
 				this.dvalue = value;
 				if (value == 1) {
@@ -264,6 +285,7 @@
 		padding: 8px 10px;
 		background: #fff;
 		display: flex;
+		margin-top: 10px;
 	}
 
 	.search-row .u-icon {

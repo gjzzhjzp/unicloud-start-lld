@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<u-navbar :is-back="true" title="更多推荐"></u-navbar>
-		<view class="jz-container">
+		<view class="">
 			<item-list ref="itemList" :list="list"></item-list>
 		</view>
 		<u-toast ref="uToast" />

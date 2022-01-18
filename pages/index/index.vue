@@ -8,7 +8,7 @@
 		</jz-navbar>
 		<jz-notice ref="notice" :type="2" mode="horizontal"></jz-notice>
 		<!-- <u-button @click="importExcel">导入</u-button> -->
-		<view class="jz-container">
+		<!-- <view class="jz-container"> -->
 			<view>
 				<jz-banner ref="banner"></jz-banner>
 			</view>
@@ -23,7 +23,7 @@
 			<jz-tabbar></jz-tabbar>
 			<jz-gonggao ref="gonggao"></jz-gonggao>
 			<drag-icon ref="drag"></drag-icon>
-		</view>
+		<!-- </view> -->
 	</view>
 	<view v-else>
 		<view class="b-image">

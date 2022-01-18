@@ -1,5 +1,5 @@
 <template>
-	<view class="jz-container">
+	<view class="">
 		<u-navbar :is-back="true" :title="title"></u-navbar>
 		<view>
 			<template v-if="!detaildata.aliyun_dz">

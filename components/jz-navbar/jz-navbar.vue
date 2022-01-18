@@ -8,9 +8,9 @@
 				<view class="sy-u-search">
 					<slot></slot>
 				</view>
-				<view v-show="!issy" style="margin: 10px;" @click="$notMoreTap(tosearch,'notTap')">
+				<!-- <view v-show="!issy" style="margin: 10px;" @click="$notMoreTap(tosearch,'notTap')">
 					<u-image width="50rpx" height="50rpx" src="/static/head/search.png"></u-image>
-				</view>
+				</view> -->
 				<view style="margin: 10px;" @click="$notMoreTap(tousercenter,'notTap')"
 					:class="[isnewinfo?'isnewinfo':'']">
 					<u-image width="50rpx" height="50rpx" src="/static/head/user.png"></u-image>

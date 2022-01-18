@@ -1,16 +1,22 @@
 <template>
 	<div class="jz-grid">
-		<swiper class="swiper" @change="change">
-			<swiper-item>
-				<u-grid :col="5" :border="false">
-					<u-grid-item v-for="(item,index) in one_list" :key="index"
-						@click="$notMoreTap(tomore,'notTap',item)">
-						<u-image width="100rpx" height="100rpx" loading-icon="/static/center/nologin.png"
-							error-icon="/static/center/nologin.png" :src="imageUrl(item)"></u-image>
-						<view class="grid-text">{{item.name}}</view>
-					</u-grid-item>
-				</u-grid>
-			</swiper-item>
+	<!-- 	<swiper class="swiper" @change="change">
+			<swiper-item> -->
+				<!-- <u-grid :col="5" :border="false">
+					<u-grid-item > -->
+						<view  class="jz-grid-col"  v-for="(item,index) in gridList" :key="index"
+							@click="$notMoreTap(tomore,'notTap',item)">
+							<view class="jz-grid-item">
+								<u-image width="100rpx" height="100rpx" loading-icon="/static/center/nologin.png"
+									error-icon="/static/center/nologin.png" :src="imageUrl(item)"></u-image>
+								<view class="grid-text">{{item.name}}</view>
+							</view>
+						</view>
+						
+						
+					<!-- </u-grid-item>
+				</u-grid> -->
+			<!-- </swiper-item>
 			<swiper-item v-if="gridList.length>5">
 				<u-grid :col="5" :border="false">
 					<u-grid-item v-for="(item,index) in two_list" :key="index"
@@ -27,7 +33,7 @@
 			</view>
 			<view class="indicator-dots-item" :class="[current == 1 ? 'indicator-dots-active' : '']">
 			</view>
-		</view>
+		</view> -->
 	</div>
 </template>
 <script>
@@ -92,6 +98,25 @@
 <style lang="scss">
 	.grid-text {
 		color: $u-type-primary;
+	}
+	.jz-grid-item{
+		        text-align: center;
+		        display: inline-block;
+		        margin: 10px 0px;
+		        display: flex;
+		        align-items: center;
+		        justify-content: center;
+		        flex-direction: column;
+	}
+	.jz-grid-col{
+		 width: 20%;
+		 display: inline-block;
+	}
+	.jz-grid {
+		padding: 0px 4px;
+		background-color: #fff;
+		    white-space: nowrap;
+		    overflow: auto;
 	}
 	// .grid-text {
 	// 		font-size: 28rpx;

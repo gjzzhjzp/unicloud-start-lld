@@ -4,7 +4,7 @@
 
 		</slot>
 		<u-sticky>
-			<view v-if="tablist.length>1||(showdanmu&&showsendDanmu)" class="detailtabs" style="">
+			<view v-if="tablist.length>1||(showdanmu&&showsendDanmu)" class="detailtabs" style="margin-top: 10px;">
 				<view style="flex: 1;">
 					<u-tabs :font-size="32" active-color="#7275D3" :list="tablist" :is-scroll="false" :bar-width="100"
 						:current="current" @change="changeTab">
@@ -16,65 +16,68 @@
 			</view>
 		</u-sticky>
 		<view v-show="current==0">
-			<view class="detail-image-title">
-				<view class="title" style="flex: 1;">
-					{{data.title}}
-				</view>
-				<view style="text-align: right;color: #909399;width: 160rpx;">
-					<uni-dateformat class="publish_date" :date="data.publish_date" format="yyyy-MM-dd"
-						:threshold="[60000, 2592000000]" />
-				</view>
-			</view>
-			<view class="detail-image-sx3">
-				<view class="showllsc" v-show="showllsc">
-					<view class="detail-image-sx31">
-						<u-icon name="eye" :size="30"></u-icon>浏览量：{{data.view_count||0}}
+			<view style="background-color: #fff;padding: 8px;">
+				<view class="detail-image-title">
+					<view class="title" style="flex: 1;">
+						{{data.title}}
 					</view>
-					<view class="detail-image-sx32">
-						<u-icon name="heart" :size="30"></u-icon>收藏量：{{data.like_count>0?data.like_count:0}}
+					<view style="text-align: right;color: #909399;width: 160rpx;">
+						<uni-dateformat class="publish_date" :date="data.publish_date" format="yyyy-MM-dd"
+							:threshold="[60000, 2592000000]" />
 					</view>
 				</view>
-				<view class="detail-image-sc">
-					<view class="detail-image-sc1" v-show="!checkisLike" @click="toFavorite">
-						<u-icon :size="30" name="heart"></u-icon> 收藏
+				<view class="detail-image-sx3">
+					<view class="showllsc" v-show="showllsc">
+						<view class="detail-image-sx31">
+							<u-icon name="eye" :size="30"></u-icon>浏览量：{{data.view_count||0}}
+						</view>
+						<view class="detail-image-sx32">
+							<u-icon name="heart" :size="30"></u-icon>收藏量：{{data.like_count>0?data.like_count:0}}
+						</view>
 					</view>
-					<view class="detail-image-sc1" v-show="checkisLike" @click="cancelFavorite">
-						<u-icon :size="30" name="heart-fill" color="red"></u-icon> 已收藏
-					</view>
-					<view class="detail-image-sc1" v-if="data.zy_gs=='1'&&showmp4Xz">
-						<template v-if="data.resources.length>0">
-							<a class="download-head" :download="data.title" :href="data.resources[0].url">
-								<u-icon :size="30" name="download"></u-icon> 下载
-							</a>
-						</template>
-					</view>
-				</view>
-			</view>
-			<view class="detail-image-sx">
-				<view class="detail-image-ly">
-					<view class="detail-image-ly1">来源：{{data.author}}</view>
-					<view class="detail-image-ly2">投稿人：<view @click="tgrHref()" style="color: rgb(114, 117, 211);">{{tgr}}</view>
+					<view class="detail-image-sc">
+						<view class="detail-image-sc1" v-show="!checkisLike" @click="toFavorite">
+							<u-icon :size="30" name="heart"></u-icon> 收藏
+						</view>
+						<view class="detail-image-sc1" v-show="checkisLike" @click="cancelFavorite">
+							<u-icon :size="30" name="heart-fill" color="red"></u-icon> 已收藏
+						</view>
+						<view class="detail-image-sc1" v-if="data.zy_gs=='1'&&showmp4Xz">
+							<template v-if="data.resources.length>0">
+								<a class="download-head" :download="data.title" :href="data.resources[0].url">
+									<u-icon :size="30" name="download"></u-icon> 下载
+								</a>
+							</template>
+						</view>
 					</view>
 				</view>
-			</view>
-			<view class="detail-image-jj">
-				<view class="detail-image-jj1">简介：</view>
-				<view class="detail-image-jj2" v-html="data.excerpt||'无'"></view>
-			</view>
-			<view class="detail-open " style="" v-if="data.aliyun_dz&&data.aliyun_dz.indexOf('/jzmp4/')==-1">
-				<view>
-					外链地址：
+				<view class="detail-image-sx">
+					<view class="detail-image-ly">
+						<view class="detail-image-ly1">来源：{{data.author}}</view>
+						<view class="detail-image-ly2">投稿人：<view @click="tgrHref()" style="color: rgb(114, 117, 211);">{{tgr}}</view>
+						</view>
+					</view>
 				</view>
-				<view style="margin-top: 4px;">
-					<u-link :href="data.aliyun_dz" color="rgb(114, 117, 211)">点击跳转</u-link>
+				<view class="detail-image-jj">
+					<view class="detail-image-jj1">简介：</view>
+					<view class="detail-image-jj2" v-html="data.excerpt||'无'"></view>
+				</view>
+				<view class="detail-open " style="" v-if="data.aliyun_dz&&data.aliyun_dz.indexOf('/jzmp4/')==-1">
+					<view>
+						外链地址：
+					</view>
+					<view style="margin-top: 4px;">
+						<u-link :href="data.aliyun_dz" color="rgb(114, 117, 211)">点击跳转</u-link>
+					</view>
+				</view>
+				<view class="detail-image-bq">
+					<view class="detail-image-bq1" v-for="(item,index) in labels" :key="index">
+						<u-tag :text="'# '+item" type="primary" shape="circle" />
+					</view>
 				</view>
 			</view>
-			<view class="detail-image-bq">
-				<view class="detail-image-bq1" v-for="(item,index) in labels" :key="index">
-					<u-tag :text="'# '+item" type="primary" shape="circle" />
-				</view>
-			</view>
-			<view style="margin-top: 40rpx;">
+			
+			<view style="margin-top: 20rpx;">
 				<jz-sy-list ref="sylist" :label="tjcategories" :ignore="data._id" title="推荐资源" :showright="false"
 					:zy_gs="data.zy_gs"></jz-sy-list>
 

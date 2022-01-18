@@ -126,12 +126,23 @@
 				"navigationStyle": "custom"
 				// "enablePullDownRefresh": true
 			}
-		}, {
+		},{
+			"path": "pages/ucenter/tacenter",
+			"style": {
+				"navigationStyle": "custom"
+				// "enablePullDownRefresh": true
+			}
+		},  {
 			"path": "pages/ucenter/userinfo/userinfo",
 			"style": {
 				"navigationBarTitleText": "个人资料"
 			}
 		}, {
+			"path": "pages/ucenter/userinfo/tauserinfo",
+			"style": {
+				"navigationBarTitleText": "TA的个人资料"
+			}
+		},{
 			"path": "pages/ucenter/userinfo/cropImage",
 			"style": {
 				"navigationStyle": "custom"
@@ -175,7 +186,13 @@
 				"navigationBarTitleText": "列表",
 				"enablePullDownRefresh": true
 			}
-		}, {
+		},{
+			"path": "pages/jz-opendb-resources/talist",
+			"style": {
+				"navigationBarTitleText": "TA的投稿",
+				"enablePullDownRefresh": true
+			}
+		},  {
 			"path": "pages/myfavorite/myfavorite",
 			"style": {
 				"navigationBarTitleText": "我的收藏",
@@ -354,6 +371,11 @@
 			}
 		}, {
 			"path": "pages/jz-opendb-taolun/list",
+			"style": {
+				"navigationBarTitleText": "列表"
+			}
+		},  {
+			"path": "pages/jz-opendb-taolun/talist",
 			"style": {
 				"navigationBarTitleText": "列表"
 			}

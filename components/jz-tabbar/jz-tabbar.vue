@@ -16,7 +16,7 @@
 					{
 						iconPath: "/static/tabbar/2.png",
 						selectedIconPath: "/static/tabbar/2_sed.png",
-						text: '分区',
+						text: '分类',
 						pagePath: "/pages/sort/sort"
 					},
 					{

@@ -28,12 +28,12 @@ export default {
 					create_date: db.getCloudEnv('$cloudEnv_now')
 				});
 				this.add_like().then(async () => {
-					// var add_value = {
-					// 	type: 1,
-					// 	user_id:  this.data.user_id,
-					// 	comment: "你的投稿作品【<span class='zyid' id='"+this.data._id+"'>"+this.data.title+"</span>】被宝子【"+this.userInfo.nickname+"】收藏啦~~"
-					// }
-					// await db.collection("jz-custom-systeminfo").add(add_value);
+					var add_value = {
+						type: 4,
+						user_id:  this.data.user_id,
+						comment: "你的帖子【<span class='ftid' id='"+this.data._id+"'>"+this.data.title+"</span>】被宝子【"+this.userInfo.nickname+"】收藏啦~~"
+					}
+					await db.collection("jz-custom-systeminfo").add(add_value);
 					reslove();
 				});
 			});

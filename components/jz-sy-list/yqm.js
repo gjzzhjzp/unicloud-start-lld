@@ -72,7 +72,7 @@ export default{
 					this.showmodel = false;
 					this.yqm="";
 					uniCloud.callFunction({
-						name: 'jzfunction',
+						name: 'jzyqm',
 						data: {
 							action: 'yqm/updateYqmZt',
 							data: {

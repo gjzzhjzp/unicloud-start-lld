@@ -48,7 +48,7 @@
 		methods: {
 			getQuestion() {
 				uniCloud.callFunction({
-					name: 'jzfunction',
+					name: 'jzcheckquestion',
 					data: {
 						action: 'checkquestion/getquestion'
 					},
@@ -105,7 +105,7 @@
 					title: '正在处理...'
 				});
 				uniCloud.callFunction({
-					name: 'jzfunction',
+					name: 'jzcheckquestion',
 					data: {
 						action: 'checkquestion/check',
 						data: dataid

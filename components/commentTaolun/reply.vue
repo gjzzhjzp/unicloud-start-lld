@@ -274,13 +274,13 @@
 					all_reply_comment_id: that.relaydata.all_reply_comment_id || that.comment
 						.all_reply_comment_id + "," + that.comment._id,
 				});
-				// var add_value = {
-				// 	type: 1,
-				// 	user_id: this.zydata.user_id,
-				// 	comment: "你的投稿作品【<span class='zyid' id='" + this.zydata._id + "'>" + this.zydata.title +
-				// 		"</span>】有宝子【" + this.userInfo.nickname + "】评论啦~~【" + this.inputvalue + "】"
-				// }
-				// await db.collection("jz-custom-systeminfo").add(add_value);
+				var add_value = {
+					type: 3,
+					user_id: this.zydata.user_id,
+					comment: "你的投稿作品【<span class='ftid' id='" + this.zydata._id + "'>" + this.zydata.title +
+						"</span>】有宝子【" + this.userInfo.nickname + "】评论啦~~【" + this.inputvalue + "】"
+				}
+				await db.collection("jz-custom-systeminfo").add(add_value);
 				that.inputvalue = "";
 				// this.getComment();
 				that.$emit("reload", that.relaydata.reply_comment_id || that.comment._id);

@@ -49,7 +49,7 @@
 						this.show = false;
 						this.value="";
 						uniCloud.callFunction({
-							name: 'jzfunction',
+							name: 'jzyqm',
 							data: {
 								action: 'yqm/updateYqmZt',
 								data: {

@@ -39,7 +39,7 @@
 		methods: {
 			totougao() {
 				uni.navigateTo({
-					url: "/pages/addResource/addResource"
+					url: "/pages/jz-opendb-resources/add"
 				});
 			},
 			tofatie() {

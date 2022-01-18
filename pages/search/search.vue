@@ -40,7 +40,7 @@
 			// 获取热门搜索列表
 			getHotList(){
 				uniCloud.callFunction({
-				  name: 'jzfunction', 
+				  name: 'jzsearch', 
 				  data: {
 				    action: 'search/getHotList'
 				  },
@@ -58,7 +58,7 @@
 			// 获取历史搜索列表
 			getHistoryList(){
 				uniCloud.callFunction({
-				  name: 'jzfunction', 
+				  name: 'jzsearch', 
 				  data: {
 				    action: 'search/getHistoryList'
 				  },
@@ -85,7 +85,7 @@
 					return;
 				}
 				uniCloud.callFunction({
-				  name: 'jzfunction', 
+				  name: 'jzsearch', 
 				  data: {
 				    action: 'search/addSerach',
 				    data: {

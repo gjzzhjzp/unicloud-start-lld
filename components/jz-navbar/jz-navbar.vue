@@ -60,7 +60,7 @@
 				var userInfo = uni.getStorageSync("userInfo");
 				var res = await db.collection('jz-custom-systeminfo').where({
 					user_id: userInfo._id,
-					type: 1
+					type: db.neq(0)
 				}).field("comment").get();
 				if (res.result.data && res.result.data.length > 0) {
 					var old_news = uni.getStorageSync("systeminfo_" + userInfo._id);

@@ -245,7 +245,7 @@
 				await db.collection("opendb-news-comments").add(senddata);
 				
 				var add_value = {
-					type: 1,
+					type: 3,
 					user_id:  this.zydata.user_id,
 					comment: "你的投稿作品【<span class='zyid' id='"+this.zydata._id+"'>"+this.zydata.title+"</span>】有宝子【"+this.userInfo.nickname+"】评论啦~~【"+this.inputvalue+"】"
 				}

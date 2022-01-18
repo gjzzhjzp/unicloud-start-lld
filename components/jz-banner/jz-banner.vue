@@ -41,7 +41,7 @@
 			// },
 			getList() {
 				uniCloud.callFunction({
-					name: 'jzfunction',
+					name: 'jzbanner',
 					data: {
 						action: 'banner/getList',
 						data:{

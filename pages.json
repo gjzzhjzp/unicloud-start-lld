@@ -51,6 +51,11 @@
 			"style": {
 				"navigationBarTitleText": "系统消息"
 			}
+		},{
+			"path": "pages/system-info/system-info-detail",
+			"style": {
+				"navigationBarTitleText": "消息详情"
+			}
 		}, {
 			"path": "pages/404/404",
 			"style": {

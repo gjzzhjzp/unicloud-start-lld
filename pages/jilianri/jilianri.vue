@@ -5,16 +5,16 @@
 		</jz-navbar> -->
 		<u-navbar :is-back="true" title="纪念日"></u-navbar>
 		<d-rili></d-rili>
-		<jz-tabbar></jz-tabbar>
-		<jz-gonggao ref="gonggao"></jz-gonggao>
+		<!-- <jz-tabbar></jz-tabbar> -->
+		<!-- <jz-gonggao ref="gonggao"></jz-gonggao> -->
 	</view>
 </template>
 
 <script>
-	import gonggao from "@/common/gonggao.js"
+	// import gonggao from "@/common/gonggao.js"
 	export default{
 		name:"jilianri",
-		mixins: [gonggao],
+		// mixins: [gonggao],
 		data(){
 			return {
 				

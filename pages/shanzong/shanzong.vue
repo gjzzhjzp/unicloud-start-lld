@@ -17,17 +17,17 @@
 			<jz-sy-list ref="sylist5" title="原创" label="原创"></jz-sy-list>
 			<jz-sy-list ref="sylist4" title="同人文" label="同人文"></jz-sy-list>
 		</view>
-		<jz-tabbar></jz-tabbar>
-		<jz-gonggao ref="gonggao"></jz-gonggao>
+		<!-- <jz-tabbar></jz-tabbar> -->
+		<!-- <jz-gonggao ref="gonggao"></jz-gonggao> -->
 	</view>
 </template>
 <script>
-	import gonggao from "@/common/gonggao.js"
+	// import gonggao from "@/common/gonggao.js"
 	export default {
 		data() {
 			return {}
 		},
-		mixins: [gonggao],
+		// mixins: [gonggao],
 		// 下拉刷新
 		onPullDownRefresh(){
 			this.$refs.banner.getList();

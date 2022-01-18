@@ -72,7 +72,7 @@ export default {
 				});
 				this.add_like().then(async () => {
 					var add_value = {
-						type: 1,
+						type: 4,
 						user_id:  this.data.user_id,
 						comment: "你的投稿作品【<span class='zyid' id='"+this.data._id+"'>"+this.data.title+"</span>】被宝子【"+this.userInfo.nickname+"】收藏啦~~"
 					}

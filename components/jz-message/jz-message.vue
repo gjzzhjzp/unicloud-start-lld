@@ -34,7 +34,7 @@
 				this.$refs.uForm.validate(valid => {
 					if (valid) {
 						uniCloud.callFunction({
-							name: 'jzfunction',
+							name: 'jzmessage',
 							data: {
 								action: 'message/addMessage'
 							},

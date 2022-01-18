@@ -92,7 +92,7 @@ export default {
 					title: "加载中"
 				})
 				uniCloud.callFunction({
-					name: 'jzfunction',
+					name: 'jzconfig',
 					data: {
 						action: 'config/getConfig'
 					},

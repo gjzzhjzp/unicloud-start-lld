@@ -32,7 +32,7 @@
 		"type": {
 			"bsonType": "int",
 			"title": "消息类型",
-			"description": "消息类型： 0审核消息   1 系统消息",
+			"description": "消息类型： 0审核消息   1 系统消息 2 点赞消息 3 评论消息 4 收藏消息",
 			"defaultValue": 0,
 			"enum": [{
 					"value": 0,
@@ -41,6 +41,18 @@
 				{
 					"value": 1,
 					"text": "系统消息"
+				},
+				{
+					"value": 2,
+					"text": "点赞消息"
+				},
+				{
+					"value": 3,
+					"text": "评论消息"
+				},
+				{
+					"value": 4,
+					"text": "收藏消息"
 				}
 			]
 		},

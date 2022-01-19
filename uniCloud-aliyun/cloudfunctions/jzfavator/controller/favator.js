@@ -1,32 +1,32 @@
 const {
 	Controller
 } = require('uni-cloud-router')
-module.exports = class likeController extends Controller {
+module.exports = class favatorController extends Controller {
 	// like_count，收藏项字段（以前命名的，为了不防止冲突，依然保留）
 	// like_count1，喜欢项字段
 	
 	// 获取资源收藏项
 	async getMyFavatorList(){
-		return await this.service.like.getMyFavatorList()
+		return await this.service.favator.getMyFavatorList()
 	}
 	// 获取讨论收藏项
 	async getMyFavatorTaolunList(){
-		return await this.service.like.getMyFavatorTaolunList()
+		return await this.service.favator.getMyFavatorTaolunList()
 	}
 	// 添加资源收藏项
-	async add_like(){
-		return await this.service.like.add_like()
+	async add_favator(){
+		return await this.service.favator.add_favator()
 	}
 	// 取消资源收藏项
-	async cancel_like(){
-		return await this.service.like.cancel_like()
+	async cancel_favator(){
+		return await this.service.favator.cancel_favator()
 	}
 	// 添加讨论收藏项
-	async add_likeTaolun(){
-		return await this.service.like.add_likeTaolun()
+	async add_favatorTaolun(){
+		return await this.service.favator.add_favatorTaolun()
 	}
 	// 取消讨论收藏项
-	async cancel_likeTaolun(){
-		return await this.service.like.cancel_likeTaolun()
+	async cancel_favatorTaolun(){
+		return await this.service.favator.cancel_favatorTaolun()
 	}
 }

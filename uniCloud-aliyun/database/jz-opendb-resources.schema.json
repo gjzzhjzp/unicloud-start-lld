@@ -79,12 +79,18 @@
 		},
 		"like_count": {
 			"bsonType": "int",
+			"description": "收藏数",
+			"permission": {
+				"write": false
+			}
+		},
+		"like_count1": {
+			"bsonType": "int",
 			"description": "喜欢数、点赞数",
 			"permission": {
 				"write": false
 			}
 		},
-		
 		"avatar": {
 			"bsonType": "array",
 						"fileMediaType": "image",

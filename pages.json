@@ -198,6 +198,12 @@
 				"navigationBarTitleText": "我的收藏",
 				"enablePullDownRefresh": true
 			}
+		},  {
+			"path": "pages/mylike/mylike",
+			"style": {
+				"navigationBarTitleText": "我的喜欢",
+				"enablePullDownRefresh": true
+			}
 		}, {
 			"path": "pages/history/history",
 			"style": {

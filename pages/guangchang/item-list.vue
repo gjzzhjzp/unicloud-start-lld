@@ -29,7 +29,8 @@
 								{{item.excerpt}}
 							</view>
 						</view>
-						<view class="er-item-list-operation">
+						<operation :item="item"></operation>
+						<!-- <view class="er-item-list-operation">
 							<view class="er-item-list-icon">
 								<u-icon name="chat" size="50"></u-icon>
 								<text class="er-item-list-icon-text">99</text>
@@ -42,7 +43,7 @@
 							<u-icon name="heart" size="50"></u-icon>
 							<text class="er-item-list-icon-text">99</text>
 							</view>
-						</view>
+						</view> -->
 					</view>
 				</view>
 			</u-grid-item>
@@ -51,12 +52,14 @@
 	</view>
 </template>
 <script>
+	import operation from "./operation.vue"
 	export default {
 		data() {
 			return {
 				notTap: true, //一定要设置为true
 			}
 		},
+		components:{operation},
 		props: {
 			list: {
 				type: Array,
@@ -104,22 +107,6 @@
 </script>
 
 <style lang="scss" scoped>
-	.er-item-list-icon{
-		display: flex;
-	}
-	.er-item-list-icon-text{
-		line-height: 50rpx;
-		margin-left: 4px;
-	}
-	.er-item-list-operation {
-		display: flex;
-		justify-content: space-between;
-		padding: 10px;
-		background: #EFEFF7;
-		border-radius: 6px;
-		margin-top: 20px;
-	}
-
 	.er-item-list-content {
 		font-size: 14px;
 	}
@@ -149,8 +136,6 @@
 
 	.er-item-list-warter {
 		border-radius: 8px;
-		// margin: 10px;
-		// background-color: #ffffff;
 		padding: 20rpx;
 		position: relative;
 		width: 100%;

@@ -1,8 +1,6 @@
 <script>
 	import initApp from '@/common/appInit.js';
 	import openApp from '@/common/openApp.js';
-	
-
 	export default {
 		globalData: {
 			searchText: '',

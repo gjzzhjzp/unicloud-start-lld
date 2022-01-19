@@ -91,6 +91,11 @@
 							"thumb": "/static/center/sc.png"
 						},
 						{
+							"title": "我的点赞",
+							"to": '/pages/mylike/mylike',
+							"thumb": "/static/center/sc.png"
+						},
+						{
 							"title": "我的邀请码",
 							"to": '/pages/jz-custom-yqm/list',
 							"thumb": "/static/center/yqm.png"

@@ -3,7 +3,7 @@
 		<u-navbar :is-back="true" title="TA的投稿"></u-navbar>
 		<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}"
 			collection="jz-opendb-resources" @load="loadSuccess" :page-size	="10"
-			where="user_id == $cloudEnv_uid && article_status==1" orderby="last_modify_date desc"
+			:where="where" orderby="last_modify_date desc"
 			field="categories,labels,author,title,article_status,comment_status,avatar,resources,zy_gs,excerpt,content">
 			<view v-if="error">{{error.message}}</view>
 			<view v-else-if="data">
@@ -13,10 +13,6 @@
 						<text class="title u-line-2">{{ item.title }}</text>
 					</view>
 				</view>
-				<!-- <u-swipe-action :show="item.show" :index="index" v-for="(item, index) in data" :key="item._id"
-					@click="click" @open="open" :options="options">
-					
-				</u-swipe-action> -->
 			</view>
 			<uni-load-more :status="loading?'loading':(hasMore ? 'more' : 'noMore')"></uni-load-more>
 		</unicloud-db>
@@ -24,6 +20,7 @@
 	</view>
 </template>
 <script>
+	const db=uniCloud.database();
 	export default {
 		data() {
 			return {
@@ -35,20 +32,19 @@
 					contentrefresh: '',
 					contentnomore: ''
 				},
-				options: [{
-						text: '编辑',
-						style: {
-							backgroundColor: '#7275D3'
-						}
-					},
-					{
-						text: '删除',
-						style: {
-							backgroundColor: '#dd524d'
-						}
-					}
-				],
-				list: []
+				list: [],
+				where:{},
+				curuserinfo: {}, ////当前用户
+			}
+		},
+		created(){
+			// this.getUserinfo();
+			// debugger;
+			var _id = this.$Route.query.id;
+			this.where={
+				user_id:_id,
+				article_status:1,
+				is_off:db.command.neq(1)
 			}
 		},
 		onPullDownRefresh() {
@@ -59,25 +55,27 @@
 			})
 		},
 		onReachBottom() {
-			// debugger;
 			this.$refs.udb.loadMore()
 		},
 		onPageScroll(e) {
 				this.scrollTop = e.scrollTop;
 			},
 		onShow() {
-			this.reload();
-		},
-		created(){
-			// debugger;
-			var config=getApp().globalData.systemconfig;
-			if(config["800022"]==1){
-				this.openAdd=true;
-			}else{
-				this.openAdd=false;
-			}
+			// this.reload();
 		},
 		methods: {
+			///获取用户信息
+			async getUserinfo() {
+				var _id = this.$Route.query.id;
+				const usersTable = db.collection('uni-id-users')
+				var userdata = await usersTable.where({
+					_id: _id
+				}).field(
+					"username,weiboname,resources,weibocontent,nickname,isbdwb,original,forbiddenwords,status,avatar,avatar_file,role,register_date,token"
+				).get();
+				var userinf = userdata.result.data[0];
+				this.curuserinfo = userinf;
+			},
 			reload() {
 				// debugger;
 				if (this.$refs.udb) {
@@ -106,59 +104,15 @@
 				});
 				this.list = data;
 				return data;
-			},
-			click(index, index1) {
-				var id = this.list[index]._id;
-				if (index1 == 1) {
-					this.handleDelete(id);
-				} else {
-					this.handleItemClick(id);
-					this.$set(this.list[index], "show", false);
-				}
-			},
-			handleDelete(id) {
-				this.$refs.udb.remove(id, {
-					success: (res) => {
-						// 删除数据成功后跳转到list页面
-						uni.navigateTo({
-			 			url: './list'
-						})
-					}
-				})
-			},
-			// 如果打开一个的时候，不需要关闭其他，则无需实现本方法
-			open(index) {
-				// 先将正在被操作的swipeAction标记为打开状态，否则由于props的特性限制，
-				// 原本为'false'，再次设置为'false'会无效
-				this.list[index].show = true;
-				this.list.map((val, idx) => {
-					if (index != idx) this.list[idx].show = false;
-				})
-			},
-			handleItemClick(id) {
-				uni.navigateTo({
-					url: './edit?id=' + id
-				})
-			},
-			fabClick() {
-				// 打开新增页面
-				uni.navigateTo({
-					url: './add',
-					events: {
-						// 监听新增数据成功后, 刷新当前页面数据
-						refreshData: () => {
-							this.$refs.udb.loadData({
-								clear: true
-							})
-						}
-					}
-				})
 			}
 		}
 	}
 </script>
 
 <style>
+	.jz-opendb-resources-container{
+		background-color: #fff;
+	}
 	.item {
 		display: flex;
 		padding: 20rpx;

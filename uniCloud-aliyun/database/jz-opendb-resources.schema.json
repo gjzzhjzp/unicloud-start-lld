@@ -77,6 +77,10 @@
 				"write": false
 			}
 		},
+		"pl_count": {
+			"bsonType": "int",
+			"description": "评论数"
+		},
 		"like_count": {
 			"bsonType": "int",
 			"description": "收藏数",

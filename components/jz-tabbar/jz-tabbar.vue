@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-tabbar v-model="current" :mid-button="true" :list="list" :height="100" active-color="#409eff" icon-size="44rpx"></u-tabbar>
+		<u-tabbar v-model="current" :mid-button="true" :list="list" :height="110" active-color="#777BCE" icon-size="50rpx"></u-tabbar>
 	</view>
 </template>
 <script>
@@ -20,8 +20,8 @@
 						pagePath: "/pages/sort/sort"
 					},
 					{
-						iconPath: "https://cdn.uviewui.com/uview/common/min_button_select.png",
-						selectedIconPath: "https://cdn.uviewui.com/uview/common/min_button_select.png",
+						iconPath: "/static/newpage/center.png",
+						selectedIconPath: "/static/newpage/center.png",
 						text: '',
 						midButton: true,
 						customIcon: false,

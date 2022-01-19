@@ -291,8 +291,8 @@ body.pages-resource-list uni-page-body {
 .er-item-list-gz .u-size-medium,.search-row .u-size-medium{
 	padding: 0px 20px !important;
 	color: #777BCE;
-	height: 32px !important;
-	line-height: 32px !important;
+	height: 28px !important;
+	line-height: 28px !important;
 }
 .search-row-col.selected .u-btn--default{
 	    color: #777BCE;
@@ -304,4 +304,10 @@ body.pages-resource-list uni-page-body {
 }
 .er-item-list-warter1{
 	background-color: #fff !important;
+}
+.jz-fabu-tab .u-tab-item{
+	width: 50% !important;
+}
+.jz-fabu-tab .u-tabs{
+	    padding: 0px 50px;
 }

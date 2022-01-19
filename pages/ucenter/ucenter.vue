@@ -19,11 +19,18 @@
 				<text class="uer-name" v-else>{{$t('mine.notLogged')}}</text>
 			</view>
 		</view>
+		<view class="center-grid">
+			<u-grid :col="4">
+				<u-grid-item v-for="(item,index) in topgridList" :key="index">
+					<u-icon :name="item.thumb" :size="46"></u-icon>
+					<view class="grid-text" style="margin-top: 4px;">{{item.title}}</view>
+				</u-grid-item>
+			</u-grid>
+		</view>
 		<uni-list class="center-list" v-for="(sublist , index) in ucenterList" :key="index">
 			<uni-list-item v-for="(item,i) in sublist" :title="item.title" link :key="i"
 				:class="[isbbgx?item.addclass:'',isnewinfo?item.class:'']" :clickable="true" :to="item.to"
 				@click="$notMoreTap(ucenterListClick,'notTap',item)" :thumb="item.thumb">
-
 			</uni-list-item>
 		</uni-list>
 		<view class="bottom-back" @click="clickLogout">
@@ -58,23 +65,40 @@
 				return uniShare.isShow;
 			}
 		},
-		mixins: [ucenter,gonggao],
+		mixins: [ucenter, gonggao],
 		data() {
 			return {
 				isbbgx: false, ///是否版本更新
 				isnewinfo: false, ///是否有新的系统消息
 				notTap: true, //一定要设置为true
+				topgridList: [{
+						"title": "浏览足迹",
+						"to": '/pages/history/history',
+						"thumb": "/static/center/llzj.png"
+					}, {
+						"title": "我的收藏",
+						"to": '/pages/myfavorite/myfavorite',
+						"thumb": "/static/center/sc.png"
+					},
+					{
+						"title": "我的点赞",
+						"to": '/pages/mylike/mylike',
+						"thumb": "/static/newpage/like.png"
+					},
+					{
+						"title": "我的消息",
+						"to": '/pages/system-info/system-info',
+						"thumb": "/static/center/info.png",
+						"class": "systeminfo"
+					}
+				],
 				ucenterList: [
 					[{
 							"title": this.$t('mine.userinfo'),
 							"to": '/pages/ucenter/userinfo/userinfo',
 							"thumb": "/static/center/user.png"
 						},
-						{
-							"title": "浏览足迹",
-							"to": '/pages/history/history',
-							"thumb": "/static/center/llzj.png"
-						},
+
 						{
 							"title": "我的投稿",
 							"to": '/pages/jz-opendb-resources/list',
@@ -83,18 +107,9 @@
 						{
 							"title": "我的发帖",
 							"to": '/pages/jz-opendb-taolun/list',
-							"thumb": "/static/center/tg.png"
+							"thumb": "/static/newpage/tiezi.png"
 						},
-						{
-							"title": "我的收藏",
-							"to": '/pages/myfavorite/myfavorite',
-							"thumb": "/static/center/sc.png"
-						},
-						{
-							"title": "我的点赞",
-							"to": '/pages/mylike/mylike',
-							"thumb": "/static/center/sc.png"
-						},
+
 						{
 							"title": "我的邀请码",
 							"to": '/pages/jz-custom-yqm/list',
@@ -104,12 +119,6 @@
 							"title": "联系我们",
 							"to": '/uni_modules/uni-feedback/pages/opendb-feedback/opendb-feedback',
 							"thumb": "/static/center/question.png"
-						},
-						{
-							"title": "我的消息",
-							"to": '/pages/system-info/system-info',
-							"thumb": "/static/center/info.png",
-							"class": "systeminfo"
 						},
 						{
 							"title": "检测版本更新",
@@ -158,7 +167,7 @@
 			this.checkBb();
 			//#endif
 		},
-		onShow(){
+		onShow() {
 			this.checknewinfo();
 		},
 		methods: {
@@ -166,7 +175,7 @@
 			async checkBb() {
 				var app_bbh = getApp().globalData.app_bbh;
 				//#ifdef APP-PLUS
-				 app_bbh = plus.runtime.versionCode;
+				app_bbh = plus.runtime.versionCode;
 				//#endif
 				const db = uniCloud.database();
 				const collection = db.collection('opendb-news-appbb');
@@ -182,20 +191,20 @@
 				this.isnewinfo = false;
 				var userInfo = uni.getStorageSync("userInfo");
 				var res = await db.collection('jz-custom-systeminfo').where({
-					user_id:userInfo._id,
-					type:db.command.neq(0)
+					user_id: userInfo._id,
+					type: db.command.neq(0)
 				}).field("comment").get();
 				if (res.result.data && res.result.data.length > 0) {
-					var old_news=uni.getStorageSync("systeminfo_"+this.userInfo._id);
+					var old_news = uni.getStorageSync("systeminfo_" + this.userInfo._id);
 					var infos = res.result.data;
 					var ids = [];
 					infos.forEach((item) => {
-						if(old_news.indexOf(item._id)==-1){
-							this.isnewinfo=true;
+						if (old_news.indexOf(item._id) == -1) {
+							this.isnewinfo = true;
 							return;
 						}
 					});
-					console.log("this.isnewinfo",this.isnewinfo);
+					console.log("this.isnewinfo", this.isnewinfo);
 				}
 			},
 			goback() {

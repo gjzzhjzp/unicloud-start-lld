@@ -167,6 +167,9 @@
 </script>
 
 <style>
+	.jz-opendb-resources-container{
+		background-color: #fff;
+	}
 	.item {
 		display: flex;
 		padding: 20rpx;

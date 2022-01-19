@@ -1,24 +1,28 @@
 <template>
 	<view class="er-item-list-operation">
-		<view class="er-item-list-icon" @click="topl()">
+		<view class="er-item-list-icon" @click.stop="topl()">
 			<u-icon name="chat" size="50"></u-icon>
 			<text class="er-item-list-icon-text">99</text>
 		</view>
-		<view class="er-item-list-icon" @click="tolike()">
+		<view class="er-item-list-icon" @click.stop="tolike()">
 			<u-icon v-show="!islike" name="thumb-up" size="50"></u-icon>
-			<u-icon v-show="islike" name="thumb-up-fill" size="50"></u-icon>
-			<text class="er-item-list-icon-text">99</text>
+			<u-icon v-show="islike" color="#777BCE" name="thumb-up-fill" size="50"></u-icon>
+			<text class="er-item-list-icon-text">{{data.like_count1||0}}</text>
 		</view>
-		<view class="er-item-list-icon" @click="tofavator()">
+		<view class="er-item-list-icon" @click.stop="tofavator()">
 			<u-icon v-show="!isfavator" name="heart" size="50"></u-icon>
-			<u-icon v-show="isfavator" name="heart-fill" size="50"></u-icon>
-			<text class="er-item-list-icon-text">99</text>
+			<u-icon v-show="isfavator" color="#777BCE" name="heart-fill" size="50"></u-icon>
+			<text class="er-item-list-icon-text">{{data.like_count||0}}</text>
 		</view>
-		<u-toast ref="uToast" />
+		<!-- <u-toast ref="uToast" /> -->
 	</view>
 </template>
 
 <script>
+	import {
+		mapGetters,
+		mapMutations
+	} from 'vuex';
 	const db = uniCloud.database();
 	const uid = db.getCloudEnv('$cloudEnv_uid');
 	const collection = db.collection('opendb-news-favoriteTaolun');
@@ -38,15 +42,21 @@
 				}
 			}
 		},
+		computed:{
+			...mapGetters({
+				userInfo: 'user/info',
+				hasLogin: 'user/hasLogin'
+			})
+		},
 		methods: {
 			topl() {
 				this.$emit("topl", this.data);
 			},
-			tolike() {
+			async tolike() {
 				await this.tolikeTaolun();
 				this.$emit("tolike", this.data);
 			},
-			tofavator() {
+			async tofavator() {
 				await this.toFavorite();
 				this.$emit("tofavator", this.data);
 			},
@@ -92,14 +102,14 @@
 							action: 'like/cancel_likeTaolun',
 							data: {
 								_id: this.data._id,
-								like_count: this.data.like_count || 0
+								like_count1: this.data.like_count1 || 0
 							}
 						},
 					}).then((res) => {
 						var res = res.result;
 						if (res.state == "0000") {
 							this.$set(this, "islike", false);
-							this.$set(this.data, "like_count", --this.data.like_count);
+							this.$set(this.data, "like_count1", --this.data.like_count1);
 						} else {
 							console.log("res", res.msg);
 						}
@@ -115,8 +125,8 @@
 			},
 			add_like_taolun() {
 				return new Promise((reslove) => {
-					if (!this.data.like_count) {
-						this.data.like_count = 0;
+					if (!this.data.like_count1) {
+						this.data.like_count1 = 0;
 					}
 					uniCloud.callFunction({
 						name: 'jzlike',
@@ -124,14 +134,14 @@
 							action: 'like/add_likeTaolun',
 							data: {
 								_id: this.data._id,
-								like_count: this.data.like_count || 0
+								like_count1: this.data.like_count1 || 0
 							}
 						},
 					}).then((res) => {
 						var res = res.result;
 						if (res.state == "0000") {
 							this.$set(this, "islike", true);
-							this.$set(this.data, "like_count", ++this.data.like_count);
+							this.$set(this.data, "like_count1", ++this.data.like_count1);
 						} else {
 							console.log("res", res.msg);
 						}
@@ -145,7 +155,6 @@
 					});
 				});
 			},
-			,
 			async toFavorite() {
 				// debugger;
 				return new Promise(async (reslove) => {
@@ -183,23 +192,23 @@
 			cancel_Favorite() {
 				return new Promise((reslove) => {
 					uniCloud.callFunction({
-						name: 'jztaolun',
+						name: 'jzfavator',
 						data: {
-							action: 'taolun/cancel_like',
+							action: 'favator/cancel_favatorTaolun',
 							data: {
 								_id: this.data._id,
-								like_count: this.data.favator_count || 0
+								like_count: this.data.like_count || 0
 							}
 						},
 					}).then((res) => {
 						var res = res.result;
 						if (res.state == "0000") {
-							this.$refs.uToast.show({
-								title: '已取消',
-								type: 'success'
-							});
+							// this.$refs.uToast.show({
+							// 	title: '已取消',
+							// 	type: 'success'
+							// });
 							this.$set(this, "isfavator", false);
-							this.$set(this.data, "favator_count", --this.data.favator_count);
+							this.$set(this.data, "like_count", --this.data.like_count);
 						} else {
 							console.log("res", res.msg);
 						}
@@ -219,9 +228,9 @@
 						this.data.like_count = 0;
 					}
 					uniCloud.callFunction({
-						name: 'jztaolun',
+						name: 'jzfavator',
 						data: {
-							action: 'taolun/add_like',
+							action: 'favator/add_favatorTaolun',
 							data: {
 								_id: this.data._id,
 								like_count: this.data.like_count || 0
@@ -230,12 +239,12 @@
 					}).then((res) => {
 						var res = res.result;
 						if (res.state == "0000") {
-							this.$refs.uToast.show({
-								title: '收藏成功',
-								type: 'success'
-							});
+							// this.$refs.uToast.show({
+							// 	title: '收藏成功',
+							// 	type: 'success'
+							// });
 							this.$set(this, "isfavator", true);
-							this.$set(this.data, "favator_count", ++this.data.favator_count);
+							this.$set(this.data, "like_count", ++this.data.like_count);
 						} else {
 							console.log("res", res.msg);
 						}

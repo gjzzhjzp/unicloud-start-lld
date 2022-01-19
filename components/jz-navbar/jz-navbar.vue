@@ -13,7 +13,7 @@
 				</view> -->
 				<view style="margin: 10px;" @click="$notMoreTap(tousercenter,'notTap')"
 					:class="[isnewinfo?'isnewinfo':'']">
-					<u-image width="50rpx" height="50rpx" src="/static/head/user.png"></u-image>
+					<u-image width="50rpx" height="50rpx" src="/static/newpage/notice.png"></u-image>
 				</view>
 			</template>
 		</u-navbar>

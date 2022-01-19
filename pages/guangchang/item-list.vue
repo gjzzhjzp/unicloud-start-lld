@@ -2,7 +2,7 @@
 	<view class="er-item-list">
 		<u-grid :col="1" :border="false">
 			<u-grid-item v-for="(item, index) in list" bg-color="#F5F5F5" :custom-style="{'padding':0}" :key="index"
-				@click="$notMoreTap(toDetail,'notTap',item)">
+				>
 				<view class="er-item-list-warter">
 					<view class="er-item-list-warter2">
 						<view class="er-item-list-warter1">
@@ -24,26 +24,12 @@
 								<u-button size="medium" shape="circle">关注</u-button>
 							</view>
 						</view>
-						<view>
+						<view @click="$notMoreTap(toDetail,'notTap',item)">
 							<view class="er-item-list-content">
 								{{item.excerpt}}
 							</view>
 						</view>
-						<operation :item="item"></operation>
-						<!-- <view class="er-item-list-operation">
-							<view class="er-item-list-icon">
-								<u-icon name="chat" size="50"></u-icon>
-								<text class="er-item-list-icon-text">99</text>
-							</view>
-							<view class="er-item-list-icon">
-								<u-icon name="thumb-up" size="50"></u-icon>
-								<text class="er-item-list-icon-text">99</text>
-							</view>
-							<view class="er-item-list-icon">
-							<u-icon name="heart" size="50"></u-icon>
-							<text class="er-item-list-icon-text">99</text>
-							</view>
-						</view> -->
+						<operation :data="item" @topl="toDetail"></operation>
 					</view>
 				</view>
 			</u-grid-item>
@@ -136,7 +122,7 @@
 
 	.er-item-list-warter {
 		border-radius: 8px;
-		padding: 20rpx;
+		padding: 10rpx 20rpx;
 		position: relative;
 		width: 100%;
 	}

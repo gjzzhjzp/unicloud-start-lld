@@ -2,7 +2,6 @@
 	"bsonType": "object",
 	"required": [
 		"author",
-		"title",
 		"avatar"
 	],
 	"permission": {
@@ -14,12 +13,6 @@
 	"properties": {
 		"_id": {
 			"description": "存储文档 ID（用户 ID），系统自动生成"
-		},
-		"title": {
-			"bsonType": "string",
-			"title": "标题",
-			"description": "请输入标题",
-			"trim": "both"
 		},
 		"user_id": {
 			"forceDefaultValue": {
@@ -75,6 +68,10 @@
 			"permission": {
 				"write": false
 			}
+		},
+		"pl_count": {
+			"bsonType": "int",
+			"description": "评论数"
 		},
 		"like_count": {
 			"bsonType": "int",

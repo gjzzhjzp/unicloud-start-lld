@@ -493,6 +493,9 @@
 	// 	position: fixed;
 	// 	bottom: 50px;
 	// }
+	.comment-container{
+		background-color: #fff;
+	}
 	.slot-gonggao_content {
 		overflow: auto;
 	}
@@ -550,7 +553,7 @@
 		bottom: 0px;
 		width: 100%;
 		background-color: #fff;
-		margin-left: -10px;
+		// margin-left: -10px;
 		padding: 10px;
 		border-top: 1px solid #ddd;
 	}

@@ -400,6 +400,11 @@
 			"style": {
 				"navigationBarTitleText": "发布"
 			}
+		}, {
+			"path": "pages/fabusuccess/fabusuccess",
+			"style": {
+				"navigationBarTitleText": "发布成功"
+			}
 		}
 	],
 	"globalStyle": {

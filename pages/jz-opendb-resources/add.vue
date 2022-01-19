@@ -1,14 +1,8 @@
 <template>
 	<view class="jz-resources-add">
-		<u-navbar :is-back="true" title="我要投稿"></u-navbar>
+		<u-navbar v-if="showtitle" :is-back="true" title="我要投稿"></u-navbar>
 		<view style="margin: 4px 0px;">
-			<!-- #ifdef H5 -->
-			<u-alert-tips type="warning" description="注意:视频不能上传超过100M的视频,超过100M的视频走外链,上传图片视频等需要等待进度条上传完成提交才有效"></u-alert-tips>
-			<!-- #endif -->
-			<!-- #ifdef APP-PLUS -->
-			<u-alert-tips type="warning" description="注意:视频不能上传超过100M的视频,超过100M的走外链,上传图片视频等需要等待进度条上传完成提交才有效;请注意视频上传时网络不好会导致视频自动压缩">
-			</u-alert-tips>
-			<!-- #endif -->
+			<u-alert-tips type="warning" description="注意:视频不能上传超过100M的视频,超过100M的视频走外链,上传图片视频等需要等待进度条上传完成提交才有效"></u-alert-tips>			
 		</view>
 		<view class="jz-container">
 			<uni-forms ref="form" :value="formData" validate-trigger="submit" err-show-type="toast">
@@ -191,6 +185,14 @@
 		},
 		onReady() {
 			this.$refs.form.setRules(this.rules)
+		},
+		props:{
+			showtitle:{
+				type:Boolean,
+				default(){
+					return true
+				}
+			}
 		},
 		methods: {
 			setAvatarFile(avatar_file) {

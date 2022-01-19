@@ -238,7 +238,7 @@
 						}
 					},
 				}).then((res) => {
-					// console.log("getList", res.result);
+					console.log("getList22222222222222222", res.result);
 					var res = res.result;
 					if (this.reset) {
 						this.flowList.splice(0, this.flowList.length);
@@ -285,7 +285,7 @@
 		padding: 8px 10px;
 		background: #fff;
 		display: flex;
-		margin-top: 10px;
+		margin-top: 5px;
 	}
 
 	.search-row .u-icon {

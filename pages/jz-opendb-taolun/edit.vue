@@ -2,9 +2,7 @@
 	<view class="uni-container">
 		<u-navbar :is-back="true" title="我的发帖"></u-navbar>
 		<uni-forms ref="form" :value="formData" validate-trigger="submit" err-show-type="toast">
-			<uni-forms-item name="title" label="标题" required>
-				<uni-easyinput placeholder="请输入标题" v-model="formData.title" trim="both"></uni-easyinput>
-			</uni-forms-item>
+		
 			<uni-forms-item name="categories" label="分类">
 				<uni-easyinput placeholder="分类" v-model="formData.categories" trim="both"></uni-easyinput>
 			</uni-forms-item>
@@ -15,8 +13,11 @@
 				<uni-file-picker file-mediatype="image" :limit="9" return-type="array" v-model="formData.resources">
 				</uni-file-picker>
 			</uni-forms-item>
+			<view class="resource-ts">
+				提示：请等待附件资源上传完毕后再提交
+			</view>
 			<view class="uni-button-group">
-				<button type="primary" class="uni-button" @click="submit">提交</button>
+				<u-button type="primary" class="uni-button" @click="submit">提交</u-button>
 			</view>
 		</uni-forms>
 	</view>
@@ -43,7 +44,6 @@
 	export default {
 		data() {
 			let formData = {
-				"title": "",
 				"categories": 0,
 				"article_status": 0,
 				"resources": [],
@@ -172,7 +172,7 @@
 					mask: true
 				})
 				db.collection(dbCollectionName).doc(id).field(
-					"title,categories,categorieszw,article_status,resources,last_modify_date,excerpt,is_recommend,is_off"
+					"categories,categorieszw,article_status,resources,last_modify_date,excerpt,is_recommend,is_off"
 				).get().then((res) => {
 					const data = res.result.data[0]
 					if (data) {
@@ -192,6 +192,10 @@
 </script>
 
 <style>
+	.resource-ts {
+		color: red;
+		margin-top: 6px;
+	}
 	.uni-container {
 		padding: 15px;
 	}

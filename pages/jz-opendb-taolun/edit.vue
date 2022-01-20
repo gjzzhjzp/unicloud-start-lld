@@ -2,14 +2,13 @@
 	<view class="uni-container">
 		<u-navbar :is-back="true" title="我的发帖"></u-navbar>
 		<uni-forms ref="form" :value="formData" validate-trigger="submit" err-show-type="toast">
-		
-			<uni-forms-item name="categories" label="分类">
+			<uni-forms-item required name="categories" label="分类">
 				<uni-easyinput placeholder="分类" v-model="formData.categories" trim="both"></uni-easyinput>
 			</uni-forms-item>
-			<uni-forms-item name="excerpt" label="详情">
+			<uni-forms-item required name="excerpt" label="详情">
 				<uni-easyinput placeholder="请输入详情" type="textarea" :maxlength="200" v-model="formData.excerpt" trim="both"></uni-easyinput>
 			</uni-forms-item>
-			<uni-forms-item name="resources" label="图片">
+			<uni-forms-item required name="resources" label="图片">
 				<uni-file-picker file-mediatype="image" :limit="9" return-type="array" v-model="formData.resources">
 				</uni-file-picker>
 			</uni-forms-item>

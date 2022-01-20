@@ -21,7 +21,7 @@
 		</view>
 		<view class="center-grid">
 			<u-grid :col="4">
-				<u-grid-item v-for="(item,index) in topgridList" :key="index">
+				<u-grid-item v-for="(item,index) in topgridList" :key="index" @click="togridDetail(item)">
 					<u-icon :name="item.thumb" :size="46"></u-icon>
 					<view class="grid-text" style="margin-top: 4px;">{{item.title}}</view>
 				</u-grid-item>
@@ -88,6 +88,12 @@
 					{
 						"title": "我的消息",
 						"to": '/pages/system-info/system-info',
+						"thumb": "/static/center/info.png",
+						"class": "systeminfo"
+					},
+					{
+						"title": "我的关注",
+						"to": '/pages/guanzhu/guanzhu',
 						"thumb": "/static/center/info.png",
 						"class": "systeminfo"
 					}
@@ -171,6 +177,11 @@
 			this.checknewinfo();
 		},
 		methods: {
+			togridDetail(item){
+				uni.navigateTo({
+					url: item.to
+				});
+			},
 			// 检测版本
 			async checkBb() {
 				var app_bbh = getApp().globalData.app_bbh;

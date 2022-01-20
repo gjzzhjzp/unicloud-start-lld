@@ -171,13 +171,13 @@
 				if (typeof plus != "undefined") {
 					var pscreen = plus.webview.currentWebview().opener();
 
-					this.dp.on("fullscreen", function() {
+					this.dp.on("webfullscreen", function() {
 						// debugger;
 						window.jQuery(".detail-image-item").addClass("fullscren");
 
 						window.jQuery("#dplayer").append(`<div class="player-toggle heng"></div>`);
 					})
-					this.dp.on("fullscreen_cancel", function() {
+					this.dp.on("webfullscreen_cancel", function() {
 						// debugger;
 						// var screen = uni.getStorageSync("screen");
 						// if (screen == "1") {

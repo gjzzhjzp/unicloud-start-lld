@@ -20,8 +20,8 @@
 										format="yyyy-MM-dd hh:mm:ss" :threshold="[60000, 2592000000]" />
 								</view>
 							</view>
-							<view class="er-item-list-gz">
-								<u-button size="medium" shape="circle">关注</u-button>
+							<view class="er-item-list-gz" v-if="!item.gz_sed">
+								<u-button size="medium" shape="circle" @click="guanzhu(item)">关注</u-button>
 							</view>
 						</view>
 						<view @click="$notMoreTap(toDetail,'notTap',item)">
@@ -38,6 +38,7 @@
 	</view>
 </template>
 <script>
+	const db=uniCloud.database();
 	import operation from "./operation.vue"
 	export default {
 		data() {
@@ -70,10 +71,18 @@
 				});
 			}
 		},
-		mounted() {
-			console.log("list3333333333333333333", this.list);
-		},
 		methods: {
+			async guanzhu(item){
+				var userinfo=item.userinfo?item.userinfo[0]:"";
+				if(userinfo){
+					await db.collection("opendb-news-guanzhu").add({
+						user_id:db.getCloudEnv('$cloudEnv_uid'),
+						buser_id:userinfo._id,
+						guanzhu_date:db.getCloudEnv('$cloudEnv_now')
+					});
+					this.$set(item,"gz_sed",true);
+				}
+			},
 			imageUrl(item) {
 				var url = "";
 				if (Array.isArray(item.avatar)) {

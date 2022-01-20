@@ -2,14 +2,13 @@
 	<view class="uni-container">
 		<u-navbar v-if="showtitle" :is-back="true" title="我要发帖"></u-navbar>
 		<uni-forms ref="form" :value="formData" validate-trigger="submit" err-show-type="toast">
-			
-			<uni-forms-item name="categories" label="分类">
+			<uni-forms-item required name="categories" label="分类">
 			  <uni-data-checkbox v-model="formData.categories" :localdata="formOptions.categories_localdata"></uni-data-checkbox>
 			</uni-forms-item>
-			<uni-forms-item name="excerpt" label="详情">
+			<uni-forms-item required name="excerpt" label="详情">
 				<uni-easyinput placeholder="请输入详情" type="textarea" v-model="formData.excerpt" trim="both"></uni-easyinput>
 			</uni-forms-item>
-			<uni-forms-item name="resources" label="图片">
+			<uni-forms-item required name="resources" label="图片">
 				<uni-file-picker file-mediatype="image" :limit="9" return-type="array" :maxlength="200" v-model="formData.resources">
 				</uni-file-picker>
 			</uni-forms-item>

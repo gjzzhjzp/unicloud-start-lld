@@ -1,23 +1,22 @@
 <template>
-	<view class="er-item-list-operation">
+	<view class="er-item-list-operation" :style="{'background':background}">
 		<view class="er-item-list-icon" @click.stop="topl()">
 			<u-icon name="chat" size="50"></u-icon>
-			<text class="er-item-list-icon-text">99</text>
+			<text class="er-item-list-icon-text">{{showtext?'评论':99}}</text>
 		</view>
 		<view class="er-item-list-icon" @click.stop="tolike()">
 			<u-icon v-show="!islike" name="thumb-up" size="50"></u-icon>
 			<u-icon v-show="islike" color="#777BCE" name="thumb-up-fill" size="50"></u-icon>
-			<text class="er-item-list-icon-text">{{data.like_count1||0}}</text>
+			<text class="er-item-list-icon-text">{{showtext?'点赞':data.like_count1||0}}</text>
 		</view>
 		<view class="er-item-list-icon" @click.stop="tofavator()">
 			<u-icon v-show="!isfavator" name="heart" size="50"></u-icon>
 			<u-icon v-show="isfavator" color="#777BCE" name="heart-fill" size="50"></u-icon>
-			<text class="er-item-list-icon-text">{{data.like_count||0}}</text>
+			<text class="er-item-list-icon-text">{{showtext?'收藏':data.like_count||0}}</text>
 		</view>
 		<!-- <u-toast ref="uToast" /> -->
 	</view>
 </template>
-
 <script>
 	import {
 		mapGetters,
@@ -40,6 +39,18 @@
 				default () {
 					return {}
 				}
+			},
+			showtext:{
+				type:Boolean,
+				default(){
+					return false
+				}
+			},
+			background:{
+				type:String,
+				default(){
+					return ""
+				}
 			}
 		},
 		computed:{
@@ -47,6 +58,24 @@
 				userInfo: 'user/info',
 				hasLogin: 'user/hasLogin'
 			})
+		},
+		watch:{
+			data(){
+				// debugger;
+				if(this.data.like&&this.data.like.length>0){
+					this.$set(this,"islike",true)
+				}else{
+					this.$set(this,"islike",false)
+				}
+				if(this.data.favorite&&this.data.favorite.length>0){
+					this.$set(this,"isfavator",true)
+				}else{
+					this.$set(this,"isfavator",false)
+				}
+			}
+		},
+		created(){
+			
 		},
 		methods: {
 			topl() {
@@ -266,7 +295,7 @@
 	.er-item-list-operation {
 		display: flex;
 		justify-content: space-between;
-		padding: 10px;
+		padding: 10px 40px;
 		background: #EFEFF7;
 		border-radius: 6px;
 		margin-top: 20px;

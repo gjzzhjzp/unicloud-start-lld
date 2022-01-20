@@ -1,6 +1,6 @@
 <template>
 	<view class="wrap">
-		<u-navbar :is-back="true" title="我的喜欢"></u-navbar>
+		<u-navbar :is-back="true" title="我的点赞"></u-navbar>
 		<u-tabs active-color="#7275D3" bar-width="0" :list="wraptabslist" :is-scroll="false" :current="wrapcurrenttab"
 			@change="changeWrapTabs"></u-tabs>
 
@@ -23,7 +23,7 @@
 			</view> -->
 		</view>
 		<view v-else>
-			<gitem-list :list="gflowList"></gitem-list>
+			<gitem-list :showoperation="false" :list="gflowList"></gitem-list>
 			<u-loadmore v-show="gflowList.length!=0" :status="loadStatus" @loadmore="addgRandomData"></u-loadmore>
 			<view style="margin-top: 20px;text-align: center;" v-show="gflowList.length==0">
 				<u-empty text="无喜欢" mode="favor"></u-empty>
@@ -148,6 +148,7 @@
 					// console.log("rows111", rows);
 					rows.forEach((item) => {
 						var obj = item.article_id[0];
+						
 						// debugger;
 						var roles = that.getuserrole();
 						if (roles && (roles.indexOf("Master") != -1 || roles.indexOf("AUDITOR") != -
@@ -201,6 +202,7 @@
 					rows.forEach((item) => {
 						// debugger;
 						var obj = item.article_id[0];
+						obj.userinfo=item.userinfo;
 						var roles = that.getuserrole();
 						if (roles && (roles.indexOf("Master") != -1 || roles.indexOf("AUDITOR") != -
 							1)) {

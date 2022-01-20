@@ -1,6 +1,6 @@
 <template>
 	<view class="detail-image">
-		<detailhead-mp4 :data="data" :pl-number="plNumber">
+		<detailhead-mp4 :data="data" :pl-number="plNumber" @topl="topl">
 			<template slot="content">
 				<view style="margin-top: 20rpx;">
 					<nine-squared :list="data.resources" @preview="previewOpen"></nine-squared>
@@ -56,6 +56,9 @@
 			}
 		},
 		methods: {
+			topl(){
+				this.$refs.comment.openpl=true;
+			},
 			saveImage(index) {
 				console.log(index, this.currentSrc);
 				if (typeof plus != "undefined") {

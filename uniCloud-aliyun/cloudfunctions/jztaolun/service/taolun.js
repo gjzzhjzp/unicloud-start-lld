@@ -119,6 +119,11 @@ module.exports = class resourceService extends Service {
 			localField: 'article_id',
 			foreignField: '_id',
 			as: 'article_id',
+		}).lookup({
+			from: 'uni-id-users',
+			localField: 'user_id',
+			foreignField: '_id',
+			as: 'userinfo',
 		}).end();
 
 
@@ -139,7 +144,6 @@ module.exports = class resourceService extends Service {
 		var rows = data.rows || 16;
 		const collection = db.collection('opendb-news-historyTaolun');
 		const collectionconfig = db.collection('jz-opendb-taolun');
-		
 		var collection_query = collection.aggregate().match({
 			user_id: uid
 		}).sort({
@@ -152,6 +156,11 @@ module.exports = class resourceService extends Service {
 			localField: 'article_id',
 			foreignField: '_id',
 			as: 'article_id',
+		}).lookup({
+			from: 'uni-id-users',
+			localField: 'user_id',
+			foreignField: '_id',
+			as: 'userinfo',
 		}).end();
 
 
@@ -172,7 +181,7 @@ module.exports = class resourceService extends Service {
 			var type = data.type || "zx";
 			var rows = data.rows || 10;
 			var page = data.page || 1;
-				var categories = data.categories;
+			var categories = data.categories;
 			// return ;
 			const collection = db.collection('jz-opendb-taolun');
 			const collectionconfig = db.collection('jz-custom-config');
@@ -216,12 +225,56 @@ module.exports = class resourceService extends Service {
 				}).skip((page - 1) * rows).limit(rows);
 			}
 			var resultdata = {};
-
+			var uid = data.uid;
+			const dbCmd = db.command;
+			const $ = dbCmd.aggregate;
 			resultdata = await collection_query.lookup({
 					from: 'uni-id-users',
 					localField: 'user_id',
 					foreignField: '_id',
 					as: 'userinfo',
+				}).lookup({
+					from: 'opendb-news-favoriteTaolun', ///获取当前用户是否收藏
+					let: {
+						article_id: '$_id'
+					},
+					pipeline: $.pipeline()
+						.match(
+							dbCmd.expr($.and([
+								$.eq(['$article_id', '$$article_id']),
+								$.eq(['$user_id', uid])
+							]))
+						)
+						.done(),
+					as: 'favorite',
+				}).lookup({
+					from: 'opendb-news-likeTaolun', ///获取当前用户是否收藏
+					let: {
+						article_id: '$_id'
+					},
+					pipeline: $.pipeline()
+						.match(
+							dbCmd.expr($.and([
+								$.eq(['$article_id', '$$article_id']),
+								$.eq(['$user_id', uid])
+							]))
+						)
+						.done(),
+					as: 'like',
+				}).lookup({
+					from: 'opendb-news-guanzhu', ///获取当前用户是否收藏
+					let: {
+						user_id: '$user_id'
+					},
+					pipeline: $.pipeline()
+						.match(
+							dbCmd.expr($.and([
+								$.eq(['$buser_id', '$$user_id']),
+								$.eq(['$user_id', uid])
+							]))
+						)
+						.done(),
+					as: 'guanzhu',
 				})
 				.end();
 			var app_bbh = data.app_bbh;
@@ -280,6 +333,20 @@ module.exports = class resourceService extends Service {
 						)
 						.done(),
 					as: 'favorite',
+				}).lookup({
+					from: 'opendb-news-likeTaolun', ///获取当前用户是否收藏
+					let: {
+						article_id: '$_id'
+					},
+					pipeline: $.pipeline()
+						.match(
+							dbCmd.expr($.and([
+								$.eq(['$article_id', '$$article_id']),
+								$.eq(['$user_id', uid])
+							]))
+						)
+						.done(),
+					as: 'like',
 				})
 				.end();
 			if (resultdata.data && resultdata.data.length > 0) {

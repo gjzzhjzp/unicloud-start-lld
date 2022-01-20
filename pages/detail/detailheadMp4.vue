@@ -200,11 +200,18 @@
 		methods: {
 			tgrHref(){
 				if (this.data.userinfo && this.data.userinfo.length > 0) {
-					var tgr= this.data.userinfo[0].nickname;
-					if(tgr){
-						uni.navigateTo({
-							url:"/pages/resource/list?user="+tgr
-						});
+					var id= this.data.userinfo[0]._id;
+					if(id){
+						var userinfo=uni.getStorageSync("userInfo");
+						if(userinfo._id==id){
+							uni.navigateTo({
+								url:"/pages/ucenter/ucenter"
+							});
+						}else{
+							uni.navigateTo({
+								url:"/pages/ucenter/tacenter?id="+id
+							});
+						}
 					}
 				}
 			},

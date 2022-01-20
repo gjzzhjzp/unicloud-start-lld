@@ -146,6 +146,7 @@
 						this.param.page++;
 						this.loadStatus = 'loadmore';
 					}
+					
 					rows.forEach((item) => {
 						// debugger;
 						var obj = item.article_id[0];
@@ -195,9 +196,11 @@
 						this.param.page++;
 						this.loadStatus = 'loadmore';
 					}
+					console.log("rows2222222222222222222",rows);
 					rows.forEach((item) => {
 						// debugger;
 						var obj = item.article_id[0];
+						obj.userinfo=item.userinfo;
 						var roles = that.getuserrole();
 						if (roles && (roles.indexOf("Master") != -1 || roles.indexOf("AUDITOR") != -1)) {
 							if (obj) {

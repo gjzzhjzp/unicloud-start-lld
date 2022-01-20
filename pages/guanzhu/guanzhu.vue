@@ -5,15 +5,15 @@
 			<u-alert-tips type="warning" description="向左滑动可管理关注列表"></u-alert-tips>
 		</view>
 		<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}"
-			collection="opendb-news-guanzhu,uni-id-users" @load="loadSuccess" :page-size	="10"
+			collection="opendb-news-guanzhu,uni-id-users" @load="loadSuccess" :page-size="10"
 			where="user_id == $cloudEnv_uid" orderby="guanzhu_date desc"
-			field="user_id,buser_id{nickname,username,avatar}">
+			field="guanzhu_date,buser_id{nickname,username,avatar_file}">
 			<view v-if="error">{{error.message}}</view>
 			<view v-else-if="data">
 				<u-swipe-action :show="item.show" :index="index" v-for="(item, index) in data" :key="item._id"
 					@click="click" @open="open" :options="options">
 					<view class="item u-border-bottom" @click="$notMoreTap(todetail,'notTap',item)">
-						<image mode="aspectFill" :src="item.images" />
+						<image mode="aspectFill" :src="item.buser_id[0].avatar_file?item.buser_id[0].avatar_file.url:''" />
 						<view class="title-wrap">
 							<text class="title u-line-2">{{ item.buser_id[0].nickname||item.buser_id[0].username }}</text>
 						</view>
@@ -78,16 +78,17 @@
 				});
 			},
 			loadSuccess(data) {
+				console.log("aaaaaaaaaaaaaaaaa",data);
 				data.forEach((item) => {
-					var url="";
-					if(item.avatar){
-						if(Array.isArray(item.avatar)){
-							url=item.avatar[0].url;
-						}else{
-							url=item.avatar.url;
-						}
-					}
-					this.$set(item, "images", url);
+					// var url="";
+					// if(item.avatar){
+					// 	if(Array.isArray(item.avatar)){
+					// 		url=item.avatar[0].url;
+					// 	}else{
+					// 		url=item.avatar.url;
+					// 	}
+					// }
+					// this.$set(item, "images", url);
 					this.$set(item, "show", false);
 				});
 				this.list = data;
@@ -99,11 +100,12 @@
 			},
 			handleDelete(id) {
 				this.$refs.udb.remove(id, {
+					confirmContent:"是否取关该用户？",
 					success: (res) => {
 						// 删除数据成功后跳转到list页面
-						uni.navigateTo({
-			 			url: './list'
-						})
+						// uni.navigateTo({
+			 		// 	url: './list'
+						// })
 					}
 				})
 			},

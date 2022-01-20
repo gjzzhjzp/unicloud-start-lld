@@ -71,6 +71,7 @@
 		},
 		"pl_count": {
 			"bsonType": "int",
+			"title": "评论数",
 			"description": "评论数"
 		},
 		"like_count": {

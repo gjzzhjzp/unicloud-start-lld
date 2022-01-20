@@ -20,8 +20,8 @@
 						pagePath: "/pages/sort/sort"
 					},
 					{
-						iconPath: "/static/newpage/center.png",
-						selectedIconPath: "/static/newpage/center.png",
+						iconPath: "/static/newpage/add.png",
+						selectedIconPath: "/static/newpage/add.png",
 						text: '',
 						midButton: true,
 						customIcon: false,

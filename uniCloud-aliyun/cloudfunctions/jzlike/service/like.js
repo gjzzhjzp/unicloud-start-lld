@@ -163,7 +163,12 @@ module.exports = class likeService extends Service {
 				localField: 'article_id',
 				foreignField: '_id',
 				as: 'article_id',
-			}).end();
+			}).lookup({
+			from: 'uni-id-users',
+			localField: 'user_id',
+			foreignField: '_id',
+			as: 'userinfo',
+		}).end();
 		}
 		return {
 			"state": "0000",
@@ -192,6 +197,11 @@ module.exports = class likeService extends Service {
 			localField: 'article_id',
 			foreignField: '_id',
 			as: 'article_id',
+		}).lookup({
+			from: 'uni-id-users',
+			localField: 'user_id',
+			foreignField: '_id',
+			as: 'userinfo',
 		}).end();
 		return {
 			"state": "0000",

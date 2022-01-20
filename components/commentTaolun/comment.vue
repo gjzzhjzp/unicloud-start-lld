@@ -70,14 +70,16 @@
 					@close="closepopup"></reply>
 			</view>
 		</u-popup>
-		<view class="comment-container2" v-show="showsendpl">
-			<view class="comment-input1">
-				<u-input v-model="inputvalue" height="60" type="text" :border="true" :placeholder="placeholder" />
+		<u-popup v-model="openpl" mode="bottom" border-radius="10" height="50px" :mask="false">
+			<view class="comment-container2" v-show="showsendpl">
+				<view class="comment-input1">
+					<u-input v-model="inputvalue" height="60" type="text" :border="true" :placeholder="placeholder" />
+				</view>
+				<text class="comment-input-button" @click.stop="sendComment()">
+					发送
+				</text>
 			</view>
-			<text class="comment-input-button" @click.stop="sendComment()">
-				发送
-			</text>
-		</view>
+		</u-popup>
 		<operator ref="operator" @reload="getComment"></operator>
 		<u-toast ref="uToast" />
 	</view>
@@ -95,12 +97,13 @@
 	export default {
 		data() {
 			return {
+				openpl: false,
 				scrollTop: 0,
 				toptype: "zx",
 				topleft: "最新评论",
 				topright: "按时间",
 				commentList: [],
-				commentArray:[],
+				commentArray: [],
 				inputvalue: "",
 				showreply: false,
 				currentData: {},
@@ -203,11 +206,11 @@
 			closepopup() {
 				var that = this;
 				that.showreply = false;
-				if(typeof plus!="undefined"){
-				var pscreen = plus.webview.currentWebview().opener();
-				mui.fire(pscreen, 'waitclose', {
-					waitclose: "0"
-				});
+				if (typeof plus != "undefined") {
+					var pscreen = plus.webview.currentWebview().opener();
+					mui.fire(pscreen, 'waitclose', {
+						waitclose: "0"
+					});
 				}
 			},
 			// 发送评论
@@ -220,7 +223,7 @@
 					return;
 				}
 				const uid = db.getCloudEnv('$cloudEnv_uid');
-				var senddata={
+				var senddata = {
 					article_id: this.zydata._id,
 					user_id: uid,
 					comment_content: this.inputvalue,
@@ -233,23 +236,24 @@
 				}
 				// 评论层级为1，先插入静态数据,再去请求动态数据
 				// debugger;
-				console.log("this.relaydata.comment_cj",this.relaydata.comment_cj);
-				if(!this.relaydata.comment_cj||this.relaydata.comment_cj==1){
-					var _addsenddata=Object.assign(senddata,{
-						user_id:[this.userInfo]
+				console.log("this.relaydata.comment_cj", this.relaydata.comment_cj);
+				if (!this.relaydata.comment_cj || this.relaydata.comment_cj == 1) {
+					var _addsenddata = Object.assign(senddata, {
+						user_id: [this.userInfo]
 					});
-					console.log("_addsenddata",_addsenddata);
+					console.log("_addsenddata", _addsenddata);
 					this.commentArray.unshift(_addsenddata);
 					this._dealcomment();
 				}
 				await db.collection("opendb-news-commentsTaolun").add(senddata);
-				
+
 				var add_value = {
 					type: 3,
-					user_id:  this.zydata.user_id,
-					comment: "你的帖子【<span class='ftid' id='"+this.zydata._id+"'>"+this.zydata.title+"</span>】有宝子【"+this.userInfo.nickname+"】评论啦~~【"+this.inputvalue+"】"
+					user_id: this.zydata.user_id,
+					comment: "你的帖子【<span class='ftid' id='" + this.zydata._id + "'>" + this.zydata.title +
+						"</span>】有宝子【" + this.userInfo.nickname + "】评论啦~~【" + this.inputvalue + "】"
 				}
-				
+
 				await db.collection("jz-custom-systeminfo").add(add_value);
 				this.inputvalue = "";
 				if (this.relaydata.comment_cj > 1) {
@@ -275,14 +279,14 @@
 				this.currentData = item;
 				this.showreply = true;
 				//向父级窗口发送等待返回的消息,接收到消息否关闭该窗口
-				if(typeof plus!="undefined"){
-				var pscreen = plus.webview.currentWebview().opener();
-				mui.fire(pscreen, 'waitclose', {
-					waitclose: "1"
-				});
-				window.addEventListener('allowclose', function(e) {
-					that.closepopup();
-				});
+				if (typeof plus != "undefined") {
+					var pscreen = plus.webview.currentWebview().opener();
+					mui.fire(pscreen, 'waitclose', {
+						waitclose: "1"
+					});
+					window.addEventListener('allowclose', function(e) {
+						that.closepopup();
+					});
 				}
 			},
 			// 点赞
@@ -334,12 +338,12 @@
 				}
 
 				// 获取统计数量
-				if(!comment_id){
+				if (!comment_id) {
 					var rescount = await db.collection('opendb-news-commentsTaolun').where(param).count();
 					console.log("count", rescount);
 					this.plNumber = rescount.result.total;
-					
-				}else{
+
+				} else {
 					this.plNumber++;
 				}
 				this.$emit("changenumber", this.plNumber);
@@ -389,11 +393,11 @@
 								this.$set(item2, "isLike", false);
 							}
 						});
-						that.commentArray=res_comment;
+						that.commentArray = res_comment;
 						that._dealcomment();
-						
+
 					} else {
-						
+
 						that._setcomment(that.commentList, res_comment[0], comment_id);
 						that.commentList.forEach((item2) => {
 							if (item2.children) {
@@ -407,9 +411,9 @@
 					// uni.hideLoading();
 				}
 			},
-			_dealcomment(){
-				console.log("this.commentArray",this.commentArray);
-				var that=this;
+			_dealcomment() {
+				console.log("this.commentArray", this.commentArray);
+				var that = this;
 				that.commentList = that.getTree(this.commentArray);
 				that.commentList.forEach((item2) => {
 					if (item2.children) {
@@ -529,12 +533,12 @@
 	.comment-container2 {
 		display: flex;
 		flex-direction: row;
-		position: fixed;
+		justify-content: center;
+		align-items: center;
 		bottom: 0px;
 		width: 100%;
 		background-color: #fff;
-		margin-left: -10px;
-		padding: 10px;
+		padding: 6px 10px;
 		border-top: 1px solid #ddd;
 	}
 
@@ -597,6 +601,7 @@
 					padding: 20rpx;
 					border-bottom: solid 2rpx $u-border-color;
 					flex-flow: wrap;
+
 					.username {
 						color: #7275D3;
 					}

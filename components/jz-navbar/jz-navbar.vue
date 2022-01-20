@@ -77,7 +77,7 @@
 			},
 			tousercenter() {
 				uni.navigateTo({
-					url: "/pages/ucenter/ucenter"
+					url: "/pages/system-info/system-info"
 				})
 			},
 			tosearch() {

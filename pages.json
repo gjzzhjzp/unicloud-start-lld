@@ -5,6 +5,11 @@
 				"enablePullDownRefresh": true
 			}
 		}, {
+			"path": "pages/guanzhu/guanzhu",
+			"style": {
+				"navigationBarTitleText": "关注列表"
+			}
+		},{
 			"path": "pages/youxidetail/youxidetail",
 			"style": {
 				"navigationBarTitleText": "游戏详情"

@@ -24,9 +24,6 @@
 			"bsonType": "string",
 			"title": "被关注人ID",
 			"description": "被关注人ID，参考`uni-id-users` 表",
-			"forceDefaultValue": {
-				"$env": "uid"
-			},
 			"foreignKey": "uni-id-users._id"
 		},
 		"guanzhu_date": {

@@ -109,7 +109,7 @@
 				zy_gs: "0", ////资源格式
 				param: {
 					page: 1,
-					rows: 16
+					rows: 8
 				},
 				// curuser:""////当前用户
 			}
@@ -224,6 +224,8 @@
 				app_bbh = plus.runtime.versionCode;
 				//#endif
 				var url = "taolun/getList";
+				var userinfo=uni.getStorageSync("userInfo");
+				var uid = userinfo._id;
 				uniCloud.callFunction({
 					name: 'jztaolun',
 					data: {
@@ -234,6 +236,7 @@
 							type: this.type || "zx",
 							page: this.param.page,
 							rows: this.param.rows,
+							uid:uid,
 							app_bbh: app_bbh
 						}
 					},
@@ -248,7 +251,6 @@
 						this.list.forEach((item1, index) => {
 							let item = JSON.parse(JSON.stringify(item1));
 							this.flowList.push(item);
-
 						});
 						if (this.list.length < this.param.rows) {
 							this.loadStatus = 'nomore';

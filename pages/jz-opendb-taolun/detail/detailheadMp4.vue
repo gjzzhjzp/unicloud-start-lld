@@ -27,43 +27,38 @@
 
 			</slot>
 		</view>
-
-
 		<view class="detailhead-tabs">
-			<u-tabs :list="tablist" :is-scroll="false" active-color="#777BCE" :current="current" @change="changeTab"></u-tabs>
-			<view v-if="current==0">
+			<u-tabs :list="tablist" :is-scroll="false" active-color="#777BCE" :current="current" @change="changeTab">
+			</u-tabs>
+			<view v-show="current==0">
 				<slot name="comment"></slot>
 			</view>
+			<view v-show="current==1">
+				<likelist :data="data"></likelist>
+			</view>
+			<view v-show="current==2">
+				<favatorlist :data="data"></favatorlist>
+			</view>
 		</view>
-		<!-- <view class="detail-image-sx3">
-			<view class="showllsc" v-show="showllsc">
-				<view class="detail-image-sx31">
-					<u-icon name="eye" :size="30"></u-icon>浏览量：{{data.view_count||0}}
-				</view>
-				<view class="detail-image-sx32">
-					<u-icon name="heart" :size="30"></u-icon>收藏量：{{data.like_count>0?data.like_count:0}}
-				</view>
-			</view>
-			<view class="detail-image-sc">
-				<view class="detail-image-sc1" v-show="!checkisLike" @click="toFavorite">
-					<u-icon :size="30" name="heart"></u-icon> 收藏
-				</view>
-				<view class="detail-image-sc1" v-show="checkisLike" @click="cancelFavorite">
-					<u-icon :size="30" name="heart-fill" color="red"></u-icon> 已收藏
-				</view>
-			</view>
-		</view> -->
-
+		<view class="detailhead-operation">
+			<operation ref="operation" @topl="topl" :data="data" :showtext="true" background="#fff"></operation>
+		</view>
 		<u-toast ref="uToast" />
 	</view>
 </template>
 <script>
 	import detail from "./detail.js"
 	import commontImage from "./commontImage.vue"
+	import likelist from "./likelist.vue"
+	import favatorlist from "./favatorlist.vue"
+	import operation from "../../guangchang/operation.vue"
 	export default {
 		mixins: [detail],
 		components: {
-			commontImage
+			commontImage,
+			likelist,
+			favatorlist,
+			operation
 		},
 		data() {
 			return {
@@ -97,6 +92,19 @@
 			}
 		},
 		watch: {
+			data: {
+				deep: true,
+				handler(data) {
+					console.log("11111111111111", data);
+					this.tablist = [{
+						name: '评论'+(data.pl_count||'')
+					}, {
+						name: '点赞'+(data.like_count1||'')
+					}, {
+						name: '收藏'+(data.like_count||'')
+					}];
+				}
+			},
 			plNumber() {
 				// this.tablist.forEach((item) => {
 				// 	if (item.name.indexOf('评论') != -1) {
@@ -170,6 +178,9 @@
 			},
 		},
 		methods: {
+			topl(data) {
+				this.$emit("topl", data);
+			},
 			tgrHref() {
 				if (this.data.userinfo && this.data.userinfo.length > 0) {
 					var tgr = this.data.userinfo[0].nickname;
@@ -194,6 +205,12 @@
 </script>
 
 <style>
+	.detailhead-operation{
+		    position: fixed;
+		    bottom: 0px;
+		    width: 100%;
+		    margin-left: -10px;
+	}
 	.detailhead-tabs {
 		margin-top: 10px;
 		background-color: #fff;

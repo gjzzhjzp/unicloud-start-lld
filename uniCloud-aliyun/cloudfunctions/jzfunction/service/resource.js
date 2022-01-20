@@ -216,7 +216,6 @@ module.exports = class resourceService extends Service {
 				as: 'article_id',
 			}).end();
 		}
-
 		return {
 			"state": "0000",
 			"rows": resultdata.data,

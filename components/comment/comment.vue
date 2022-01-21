@@ -471,8 +471,10 @@
 					map[item._id] = item;
 				});
 				data.forEach(item => {
-					if (item.reply_comment_id[0] && item.reply_comment_id[0]._id) {
-						let parent = map[item.reply_comment_id[0]._id];
+					var reply_comment_id=item.reply_comment_id||(item.reply_comment_id[0] && item.reply_comment_id[0]._id);
+					if (reply_comment_id) {
+					// if (item.reply_comment_id[0] && item.reply_comment_id[0]._id) {
+						let parent = map[reply_comment_id];
 						if (parent) {
 							(parent.children || (parent.children = [])).push(item);
 						} else {

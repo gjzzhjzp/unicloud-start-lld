@@ -1,7 +1,7 @@
 <template>
 	<view class="system-info">
 		<u-navbar :is-back="true" title="我的消息"></u-navbar>
-		<view class="jz-container">
+		<view class="">
 			<uni-list class="center-list" v-for="(sublist , index) in ucenterList" :key="index">
 				<uni-list-item v-for="(item,i) in sublist" :title="item.title" link :key="i"
 					:class="[isnewinfo?item.class:'']" :clickable="true" :to="item.to"

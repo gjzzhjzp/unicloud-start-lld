@@ -59,9 +59,14 @@
 				hasLogin: 'user/hasLogin'
 			})
 		},
-		watch:{
-			data(){
-				// debugger;
+		created(){
+			
+		},
+		mounted(){
+			this.initdata();
+		},
+		methods: {
+			initdata(){
 				if(this.data.like&&this.data.like.length>0){
 					this.$set(this,"islike",true)
 				}else{
@@ -72,12 +77,7 @@
 				}else{
 					this.$set(this,"isfavator",false)
 				}
-			}
-		},
-		created(){
-			
-		},
-		methods: {
+			},
 			topl() {
 				this.$emit("topl", this.data);
 			},

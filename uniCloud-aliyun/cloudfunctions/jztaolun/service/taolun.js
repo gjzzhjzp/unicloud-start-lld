@@ -201,8 +201,9 @@ module.exports = class resourceService extends Service {
 					"categories": parseInt(categories)
 				}, where_obj)]);
 			} else {
-				where = where_obj;
+				where = Object.assign(where_obj,{is_recommend:0});
 			}
+			// console.log("whereaaaaaaaaaaaaaaaaaaaaaaaa",where);
 			var collection_query = null;
 			if (type == "zx") {
 				collection_query = collection.aggregate().match(where).sort({
@@ -210,7 +211,7 @@ module.exports = class resourceService extends Service {
 				}).skip((page - 1) * rows).limit(rows);
 			} else if (type == "rm") {
 				collection_query = collection.aggregate().match(where).sort({
-					"view_count": -1
+					"like_count1": -1
 				}).skip((page - 1) * rows).limit(rows);
 			} else if (type == "sc") {
 				collection_query = collection.aggregate().match(where).sort({
@@ -279,6 +280,16 @@ module.exports = class resourceService extends Service {
 				.end();
 			var app_bbh = data.app_bbh;
 			if (app_bbh >= 113) {
+				// 获取置顶帖子
+				if(type=="zx"){
+					var tjdata=await collection.where({
+						is_recommend:1
+					}).limit(1).get()
+					console.log("tjdata",tjdata);
+					if(tjdata.data&&tjdata.data.length>0){
+						resultdata.data.unshift(tjdata.data[0]);
+					}
+				}
 				return {
 					"state": "0000",
 					"rows": resultdata.data,
@@ -324,16 +335,25 @@ module.exports = class resourceService extends Service {
 			if (roles && (roles.indexOf("Master") != -1 || roles.indexOf("AUDITOR") != -1)) {
 				delete where_obj.is_off;
 			}
-			// 获取关注人列表
-			var resgz=collectiongz.where({
+			// 获取关注人发帖列表
+			var resgz=await collectiongz.where({
 				user_id:uid
-			}).field("buser_id").get();
-			if(resgz.result&&resgz.result.data.length>0){
-				resgz.result.data.forEach((item)=>{
+			}).get();
+			console.log("resgz",resgz);
+			if(resgz&&resgz.data.length>0){
+				resgz.data.forEach((item)=>{
 					gzlistwhere.push(Object.assign({
 						user_id:item.buser_id
 					},where_obj));
 				});
+			}
+			if(gzlistwhere&&gzlistwhere.length==0){
+				return {
+					"state": "0000",
+					"rows": [],
+					"total": 0,
+					"msg": "查询成功"
+				};
 			}
 			var where = db.command.or(gzlistwhere); ///查询条件
 			

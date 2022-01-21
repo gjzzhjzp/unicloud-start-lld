@@ -113,10 +113,10 @@
 				showsendpl: true,
 				like_pl: [],
 				plNumber: 0, ///评论数
-				oldid: ""
+				oldid: "",
+				pl_count:0////评论数
 			};
 		},
-
 		components: {
 			reply,
 			operator,
@@ -166,6 +166,7 @@
 					if (this.zydata._id && this.zydata._id != this.oldid) {
 						this.getComment();
 						this.oldid = this.zydata._id;
+						this.pl_count= this.zydata.pl_count||0
 					}
 				}
 			}
@@ -215,6 +216,7 @@
 			},
 			// 发送评论
 			async sendComment() {
+				// debugger;
 				if (this.userInfo.forbiddenwords) {
 					this.$refs.uToast.show({
 						title: '你已被禁言，请联系管理员',
@@ -235,16 +237,23 @@
 					all_reply_comment_id: this.relaydata.all_reply_comment_id || "0",
 				}
 				// 评论层级为1，先插入静态数据,再去请求动态数据
+				debugger;
+				// 增加评论数
 				// debugger;
-				console.log("this.relaydata.comment_cj", this.relaydata.comment_cj);
+				db.collection("jz-opendb-taolun").where({
+					_id:this.zydata._id
+				}).update({
+					pl_count:this.zydata.pl_count?++this.zydata.pl_count:1
+				});
 				if (!this.relaydata.comment_cj || this.relaydata.comment_cj == 1) {
 					var _addsenddata = Object.assign(senddata, {
 						user_id: [this.userInfo]
 					});
-					console.log("_addsenddata", _addsenddata);
+					////临时新增评论
 					this.commentArray.unshift(_addsenddata);
 					this._dealcomment();
 				}
+				this.inputvalue = "";
 				await db.collection("opendb-news-commentsTaolun").add(senddata);
 
 				var add_value = {
@@ -253,9 +262,8 @@
 					comment: "你的帖子【<span class='ftid' id='" + this.zydata._id + "'>" + this.zydata.title +
 						"</span>】有宝子【" + this.userInfo.nickname + "】评论啦~~【" + this.inputvalue + "】"
 				}
-
 				await db.collection("jz-custom-systeminfo").add(add_value);
-				this.inputvalue = "";
+				
 				if (this.relaydata.comment_cj > 1) {
 					this.getComment(this.relaydata.reply_comment_id);
 				} else {
@@ -264,6 +272,7 @@
 			},
 			// 回复
 			replycomment(item) {
+				this.openpl=true;
 				this.placeholder = "回复 @" + item.user_id[0].nickname + ":";
 				this.relaydata = {
 					comment_cj: item.comment_cj + 1,
@@ -331,7 +340,6 @@
 						all_reply_comment_id: new RegExp(comment_id, 'gi')
 					})
 				}
-				console.log("param", param);
 				if (!param.article_id) {
 					uni.hideLoading();
 					return;
@@ -340,7 +348,7 @@
 				// 获取统计数量
 				if (!comment_id) {
 					var rescount = await db.collection('opendb-news-commentsTaolun').where(param).count();
-					console.log("count", rescount);
+					
 					this.plNumber = rescount.result.total;
 
 				} else {
@@ -351,6 +359,7 @@
 				var dbcomments = db.collection("opendb-news-commentsTaolun,uni-id-users").where(param).field(
 					"article_id,user_id{nickname,avatar_file,original},reply_user_id{nickname,avatar_file},comment_content,like_count,comment_type,comment_date,reply_comment_id,comment_cj,all_reply_comment_id"
 				);
+				
 				var f_c = Math.ceil(this.plNumber / 100);
 				var res_comment = [];
 				for (var i = 0; i < f_c; i++) {
@@ -359,16 +368,11 @@
 					} else {
 						comments = await dbcomments.orderBy("like_count", "desc").skip(100 * i).limit(100).get();
 					}
-					// var list = await this.db.collection("jz-opendb-danmu").where({
-					// 	resource_id: event.id
-					// }).skip(100*i).limit(100).get();
 					res_comment = res_comment.concat(comments.result.data)
 				}
 
-
-				// console.log("comments", comments);
 				if (res_comment.length > 0) {
-
+// debugger;
 					// 获取当前登录用户点赞的评论列表
 					// var like_pl = [];
 					if (!comment_id) {
@@ -412,7 +416,6 @@
 				}
 			},
 			_dealcomment() {
-				console.log("this.commentArray", this.commentArray);
 				var that = this;
 				that.commentList = that.getTree(this.commentArray);
 				that.commentList.forEach((item2) => {
@@ -452,14 +455,16 @@
 				});
 			},
 			getTree(data) {
+				// debugger;
 				let result = [];
 				let map = {};
 				data.forEach(item => {
 					map[item._id] = item;
 				});
 				data.forEach(item => {
-					if (item.reply_comment_id[0] && item.reply_comment_id[0]._id) {
-						let parent = map[item.reply_comment_id[0]._id];
+					var reply_comment_id=item.reply_comment_id||(item.reply_comment_id[0] && item.reply_comment_id[0]._id);
+					if (reply_comment_id) {
+						let parent = map[reply_comment_id];
 						if (parent) {
 							(parent.children || (parent.children = [])).push(item);
 						} else {

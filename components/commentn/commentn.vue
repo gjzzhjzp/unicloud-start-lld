@@ -1,5 +1,5 @@
 <template>
-	<view class="comment-container" >
+	<view class="comment-container commentn" >
 		<view class="comment-container-top">
 			<view>{{topleft}}</view>
 			<view class="comment-container-lb" @click.stop="toggleType()">
@@ -72,7 +72,7 @@
 				<u--input v-model="inputvalue" height="60" type="text" border="surround" :placeholder="placeholder" />
 			</view>
 			<text class="comment-input-button" @click.stop="sendComment()">
-				发送
+				发送1aaa
 			</text>
 		</view>
 		<operator ref="operator" @reload="getComment"></operator>
@@ -185,7 +185,7 @@
 			},
 			// 发送评论
 			async sendComment() {
-				// debugger;
+				debugger;
 				if (this.userInfo.forbiddenwords) {
 					this.$refs.uToast.show({
 						message: '你已被禁言，请联系管理员',
@@ -205,6 +205,8 @@
 					reply_comment_id: this.relaydata.reply_comment_id || "0",
 					all_reply_comment_id: this.relaydata.all_reply_comment_id || "0",
 				});
+				// 增加资源评论数
+				console.log("zydata11111111111111111",this.zydata);
 				this.inputvalue = "";
 				if (this.relaydata.comment_cj > 1) {
 					this.getComment(this.relaydata.reply_comment_id);
@@ -369,8 +371,10 @@
 					map[item._id] = item;
 				});
 				data.forEach(item => {
-					if (item.reply_comment_id[0] && item.reply_comment_id[0]._id) {
-						let parent = map[item.reply_comment_id[0]._id];
+					var reply_comment_id=item.reply_comment_id||(item.reply_comment_id[0] && item.reply_comment_id[0]._id);
+					if (reply_comment_id) {
+					// if (item.reply_comment_id[0] && item.reply_comment_id[0]._id) {
+						let parent = map[reply_comment_id];
 						if (parent) {
 							(parent.children || (parent.children = [])).push(item);
 						} else {

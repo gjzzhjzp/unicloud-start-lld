@@ -4,9 +4,14 @@
 			<u-grid-item v-for="(item, index) in list" bg-color="#F5F5F5" :custom-style="{'padding':0}" :key="index">
 				<view class="er-item-list-warter">
 					<view class="er-item-list-warter2">
+						<view class="er-item-list-zd" v-if="item.is_recommend==1">
+							<view style="display: flex;align-items: center;justify-content: center;">
+								<u-icon name="arrow-upward"></u-icon>置顶
+							</view>
+						</view>
 						<view class="er-item-list-warter1">
 							<view class="er-item-list-img" @click="toperson(item)">
-								
+
 								<view class="original" v-if="item.userinfo&&item.userinfo[0].original">
 									<image class="original-img" src="@/static/center/ori_back.png"></image>
 								</view>
@@ -56,15 +61,15 @@
 					return []
 				}
 			},
-			showoperation:{
-				type:Boolean,
-				default(){
+			showoperation: {
+				type: Boolean,
+				default () {
 					return true
 				}
 			},
-			isgz:{
-				type:Boolean,
-				default(){
+			isgz: {
+				type: Boolean,
+				default () {
 					return false
 				}
 			}
@@ -86,19 +91,19 @@
 			}
 		},
 		methods: {
-			showguanzhu(item){
-				if(this.isgz){
+			showguanzhu(item) {
+				if (this.isgz) {
 					return false;
-				}else{
-					if(item.gz_sed){
+				} else {
+					if (item.gz_sed) {
 						return false;
-					}else{
+					} else {
 						var userinfo = uni.getStorageSync("userInfo");
-						if(userinfo._id==item.user_id){
+						if (userinfo._id == item.user_id) {
 							return false;
-						}else if(item.guanzhu&&item.guanzhu.length>0){
+						} else if (item.guanzhu && item.guanzhu.length > 0) {
 							return false;
-						}else{
+						} else {
 							return true;
 						}
 					}
@@ -156,6 +161,13 @@
 </script>
 
 <style lang="scss" scoped>
+	.er-item-list-zd {
+		width: 100%;
+		display: flex;
+		flex-direction: row-reverse;
+		color: red;
+	}
+
 	.er-item-list-content {
 		font-size: 14px;
 	}

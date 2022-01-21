@@ -1,12 +1,12 @@
 <template>
 	<view class="system-info">
 		<u-navbar :is-back="true" title="系统消息"></u-navbar>
-		<view class="jz-container">
+		<view class="">
 			<scroll-view id="scroll-Y" :scroll-top="scrollTop" scroll-y="true" class="scroll-Y">
 				<!-- :style="{'visibility': showinfo?'':'hidden'}" -->
 				<view class="all-system-info" id="all-system-info">
 					<view class="infos" v-for="(item,index) in infos" :key="index">
-						<yd-chatitem ref="chatitem" :message="item.comment" :leftTime="item.comment_date"></yd-chatitem>
+						<yd-chatitem class="infos-chatitem" ref="chatitem" :message="item.comment" :leftTime="item.comment_date"></yd-chatitem>
 					</view>
 				</view>
 			</scroll-view>
@@ -47,7 +47,7 @@
 			...mapGetters({
 				userInfo: 'user/info',
 				hasLogin: 'user/hasLogin'
-			});
+			})
 		},
 		methods: {
 			async getinfos() {
@@ -55,10 +55,8 @@
 				var userInfo = uni.getStorageSync("userInfo");
 				var res = await db.collection('jz-custom-systeminfo').where({
 						user_id: userInfo._id,
-						type: this.infotype||1
-					})
-					.field("comment,comment_date").orderBy("comment_date desc").get();
-				// console.log("res",res);
+						type: parseInt(this.infotype)||1
+					}).field("comment,comment_date").orderBy("comment_date desc").get();
 				if (res.result.data && res.result.data.length > 0) {
 					this.infos = res.result.data;
 					var ids = [];
@@ -72,8 +70,9 @@
 	}
 </script>
 <style>
-	.infos {
-		margin-top: 20rpx;
+	.infos-chatitem {
+		padding: 6px;
+		background-color: #fff;
 	}
 	.scroll-Y{
 		height: calc(100vh - 88px);

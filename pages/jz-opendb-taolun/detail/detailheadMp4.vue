@@ -35,9 +35,11 @@
 			</view>
 			<view v-show="current==1">
 				<likelist :data="data"></likelist>
+				<view style="height: 50px;"></view>
 			</view>
 			<view v-show="current==2">
 				<favatorlist :data="data"></favatorlist>
+				<view style="height: 50px;"></view>
 			</view>
 		</view>
 		<view class="detailhead-operation">
@@ -95,7 +97,6 @@
 			data: {
 				deep: true,
 				handler(data) {
-					console.log("11111111111111", data);
 					this.tablist = [{
 						name: '评论'+(data.pl_count||'')
 					}, {

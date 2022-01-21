@@ -101,7 +101,6 @@
 			async getList() {
 				var article_id = this.data._id;
 				if (article_id) {
-					console.log("article_id", article_id);
 					var res = await db.collection("opendb-news-favoriteTaolun,uni-id-users").
 					where({
 						article_id: article_id

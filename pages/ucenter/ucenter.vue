@@ -20,7 +20,7 @@
 			</view>
 		</view>
 		<view class="center-grid">
-			<u-grid :col="4">
+			<u-grid :col="5" :border="false">
 				<u-grid-item v-for="(item,index) in topgridList" :key="index" @click="togridDetail(item)">
 					<u-icon :name="item.thumb" :size="46"></u-icon>
 					<view class="grid-text" style="margin-top: 4px;">{{item.title}}</view>

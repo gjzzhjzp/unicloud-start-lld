@@ -75,7 +75,7 @@ db.collection("jz-opendb-resources").where({
 	"is_off": 1
 });
 // 全部删除
-db.collection("jz-custom-yqm").where({
+db.collection("opendb-news-commentsTaolun").where({
 	_id: db.command.neq(null)
 }).remove()
 

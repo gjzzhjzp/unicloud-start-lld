@@ -53,7 +53,7 @@
 				this.$refs.uToast.show({
 					title: '已删除'
 				})
-				this.$emit("reload");
+				this.$emit("reload",this.curcomment._id);
 			},
 			async confirmjubao() {
 				if (!this.jubaocontent) {

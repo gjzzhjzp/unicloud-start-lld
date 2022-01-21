@@ -101,13 +101,11 @@
 			async getList() {
 				var article_id = this.data._id;
 				if (article_id) {
-					console.log("article_id", article_id);
 					var res = await db.collection("opendb-news-likeTaolun,uni-id-users").
 					where({
 						article_id: article_id
 					}).field("user_id{username,nickname,avatar_file,original},create_date").orderBy("create_date desc")
 					.get();
-					console.log("res啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊", res);
 					if (res.result && res.result.data) {
 						this.list = res.result.data;
 					}

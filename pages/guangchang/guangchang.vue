@@ -14,8 +14,8 @@
 			</view>
 			<view class="search-row">
 				<view :class="['search-row-col',item.selected?'selected':'']" v-for="(item,index) in searchrows"
-					:key="index" @click="searchType(item)">
-					<u-button size="medium" shape="circle">{{item.name}}</u-button>
+					:key="index" >
+					<u-button size="medium" shape="circle" @click="searchType(item)">{{item.name}}</u-button>
 			
 					<!-- <u-icon size="20" name="arrow-down-fill"></u-icon> -->
 				</view>
@@ -171,6 +171,7 @@
 		methods: {
 			changeTopTabs(index) {
 				this.topcurtab = index;
+				this.resetlist();
 			},
 			changedropItem(value) {
 				this.dvalue = value;
@@ -214,6 +215,7 @@
 				this.resetlist();
 			},
 			changeTabs(index) {
+				// debugger;
 				this.currenttab = index;
 				this.categories = this.tabslist[index].type;
 				this.resetlist();

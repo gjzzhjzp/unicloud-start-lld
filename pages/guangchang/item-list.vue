@@ -61,6 +61,12 @@
 				default(){
 					return true
 				}
+			},
+			isgz:{
+				type:Boolean,
+				default(){
+					return false
+				}
 			}
 		},
 		watch: {
@@ -81,16 +87,20 @@
 		},
 		methods: {
 			showguanzhu(item){
-				if(item.gz_sed){
+				if(this.isgz){
 					return false;
 				}else{
-					var userinfo = uni.getStorageSync("userInfo");
-					if(userinfo._id==item.user_id){
-						return false;
-					}else if(item.guanzhu&&item.guanzhu.length>0){
+					if(item.gz_sed){
 						return false;
 					}else{
-						return true;
+						var userinfo = uni.getStorageSync("userInfo");
+						if(userinfo._id==item.user_id){
+							return false;
+						}else if(item.guanzhu&&item.guanzhu.length>0){
+							return false;
+						}else{
+							return true;
+						}
 					}
 				}
 				// !item.gz_sed

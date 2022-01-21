@@ -38,7 +38,7 @@
 					[{
 							"title": "点赞消息",
 							"to": '/pages/system-info/system-info-detail?type=2',
-							"thumb": "/static/center/user.png",
+							"thumb": "/static/newpage/like.png",
 							"type":2
 						},
 						{
@@ -50,13 +50,19 @@
 						{
 							"title": "收藏消息",
 							"to": '/pages/system-info/system-info-detail?type=4',
-							"thumb": "/static/center/user.png",
+							"thumb": "/static/center/sc.png",
 							"type":4
+						},
+						{
+							"title": "关注消息",
+							"to": '/pages/system-info/system-info-detail?type=5',
+							"thumb": "/static/center/info.png",
+							"type":5
 						},
 						{
 							"title": "系统消息",
 							"to": '/pages/system-info/system-info-detail?type=1',
-							"thumb": "/static/center/user.png",
+							"thumb": "/static/center/question.png",
 							"type":1
 						}
 					]

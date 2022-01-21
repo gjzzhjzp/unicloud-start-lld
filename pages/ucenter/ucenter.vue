@@ -85,7 +85,7 @@
 						"to": '/pages/mylike/mylike',
 						"thumb": "/static/newpage/like.png"
 					},
-					
+
 					{
 						"title": "我的关注",
 						"to": '/pages/guanzhu/guanzhu',
@@ -110,12 +110,12 @@
 							"to": '/pages/jz-opendb-taolun/list',
 							"thumb": "/static/newpage/tiezi.png"
 						},
-{
-						"title": "我的消息",
-						"to": '/pages/system-info/system-info',
-						"thumb": "/static/center/info.png",
-						"class": "systeminfo"
-					},
+						{
+							"title": "我的消息",
+							"to": '/pages/system-info/system-info',
+							"thumb": "/static/center/info.png",
+							"class": "systeminfo"
+						},
 						{
 							"title": "我的邀请码",
 							"to": '/pages/jz-custom-yqm/list',
@@ -177,7 +177,7 @@
 			this.checknewinfo();
 		},
 		methods: {
-			togridDetail(item){
+			togridDetail(item) {
 				uni.navigateTo({
 					url: item.to
 				});

@@ -398,7 +398,8 @@
 		}, {
 			"path": "pages/guangchang/guangchang",
 			"style": {
-				"navigationBarTitleText": "广场"
+				"navigationBarTitleText": "广场",
+				"enablePullDownRefresh": true
 			}
 		}, {
 			"path": "pages/fabu/fabu",

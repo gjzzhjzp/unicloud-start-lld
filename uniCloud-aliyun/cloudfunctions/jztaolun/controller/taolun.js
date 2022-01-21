@@ -5,6 +5,9 @@ module.exports = class taolunController extends Controller {
 	async getList() {
 		return await this.service.taolun.getList()
 	}
+	async getgzList() {
+		return await this.service.taolun.getgzList()
+	}
 	async getResource() {
 		return await this.service.taolun.getResource()
 	}

@@ -105,7 +105,7 @@ module.exports = class resourceService extends Service {
 		var page = data.page;
 		var rows = data.rows || 16;
 		const collection = db.collection('opendb-news-favoriteTaolun');
-		const collectionconfig = db.collection('jz-opendb-taolun');
+		// const collectionconfig = db.collection('jz-opendb-taolun');
 
 		var collection_query = collection.aggregate().match({
 			user_id: uid
@@ -143,7 +143,7 @@ module.exports = class resourceService extends Service {
 		var page = data.page;
 		var rows = data.rows || 16;
 		const collection = db.collection('opendb-news-historyTaolun');
-		const collectionconfig = db.collection('jz-opendb-taolun');
+		// const collectionconfig = db.collection('jz-opendb-taolun');
 		var collection_query = collection.aggregate().match({
 			user_id: uid
 		}).sort({
@@ -172,7 +172,7 @@ module.exports = class resourceService extends Service {
 		};
 
 	}
-	// 获取资源列表
+	// 获取发帖列表
 	async getList() {
 		try {
 			var db = this.db;
@@ -184,7 +184,7 @@ module.exports = class resourceService extends Service {
 			var categories = data.categories;
 			// return ;
 			const collection = db.collection('jz-opendb-taolun');
-			const collectionconfig = db.collection('jz-custom-config');
+			// const collectionconfig = db.collection('jz-custom-config');
 
 			var where_obj = {
 				"article_status": 1,
@@ -277,6 +277,108 @@ module.exports = class resourceService extends Service {
 					as: 'guanzhu',
 				})
 				.end();
+			var app_bbh = data.app_bbh;
+			if (app_bbh >= 113) {
+				return {
+					"state": "0000",
+					"rows": resultdata.data,
+					"total": resultdata.data.length,
+					"msg": "查询成功"
+				};
+			} else {
+				return {
+					"state": "0000",
+					"rows": [],
+					"total": 0,
+					"msg": "查询成功"
+				};
+			}
+		} catch (e) {
+			console.log("e", e);
+			return {
+				"state": "9999",
+				"rows": [],
+				"msg": "查询失败"
+			};
+		}
+	}
+	async getgzList() {
+		// 1、先查询当前用户关注的所有人
+		// 2、在这些人中按时间查询发帖信息
+		try {
+			var db = this.db;
+			var context = this.ctx;
+			var data = this.ctx.data;
+			var rows = data.rows || 10;
+			var page = data.page || 1;
+			var uid = data.uid;
+			var gzlistwhere=[];
+			const collectiongz = db.collection('opendb-news-guanzhu');
+			const collection = db.collection('jz-opendb-taolun');
+			var where_obj = {
+				"article_status": 1,
+				"is_off": db.command.neq(1)
+			}
+			// 如果是管理员，读取全部资源，包括下架资源
+			var roles = await this.getUserRole(context);
+			if (roles && (roles.indexOf("Master") != -1 || roles.indexOf("AUDITOR") != -1)) {
+				delete where_obj.is_off;
+			}
+			// 获取关注人列表
+			var resgz=collectiongz.where({
+				user_id:uid
+			}).field("buser_id").get();
+			if(resgz.result&&resgz.result.data.length>0){
+				resgz.result.data.forEach((item)=>{
+					gzlistwhere.push(Object.assign({
+						user_id:item.buser_id
+					},where_obj));
+				});
+			}
+			var where = db.command.or(gzlistwhere); ///查询条件
+			
+			var collection_query = null;
+			collection_query = collection.aggregate().match(where).sort({
+				"publish_date": -1
+			}).skip((page - 1) * rows).limit(rows);
+			var resultdata = {};
+			
+			const dbCmd = db.command;
+			const $ = dbCmd.aggregate;
+			resultdata = await collection_query.lookup({
+					from: 'uni-id-users',
+					localField: 'user_id',
+					foreignField: '_id',
+					as: 'userinfo',
+				}).lookup({
+					from: 'opendb-news-favoriteTaolun', ///获取当前用户是否收藏
+					let: {
+						article_id: '$_id'
+					},
+					pipeline: $.pipeline()
+						.match(
+							dbCmd.expr($.and([
+								$.eq(['$article_id', '$$article_id']),
+								$.eq(['$user_id', uid])
+							]))
+						)
+						.done(),
+					as: 'favorite',
+				}).lookup({
+					from: 'opendb-news-likeTaolun', ///获取当前用户是否收藏
+					let: {
+						article_id: '$_id'
+					},
+					pipeline: $.pipeline()
+						.match(
+							dbCmd.expr($.and([
+								$.eq(['$article_id', '$$article_id']),
+								$.eq(['$user_id', uid])
+							]))
+						)
+						.done(),
+					as: 'like',
+				}).end();
 			var app_bbh = data.app_bbh;
 			if (app_bbh >= 113) {
 				return {

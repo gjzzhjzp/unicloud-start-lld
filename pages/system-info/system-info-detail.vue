@@ -47,7 +47,7 @@
 			...mapGetters({
 				userInfo: 'user/info',
 				hasLogin: 'user/hasLogin'
-			})
+			});
 		},
 		methods: {
 			async getinfos() {
@@ -57,7 +57,7 @@
 						user_id: userInfo._id,
 						type: this.infotype||1
 					})
-					.field("comment,comment_date").get();
+					.field("comment,comment_date").orderBy("comment_date desc").get();
 				// console.log("res",res);
 				if (res.result.data && res.result.data.length > 0) {
 					this.infos = res.result.data;

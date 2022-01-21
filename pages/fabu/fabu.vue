@@ -13,7 +13,6 @@
 					用户发帖，审核成功的帖子会发布到广场；用户投稿，审核成功的稿子将会收录到俊哲资源站，用户可在首页或分类收看
 				</view>
 			</view>
-			
 		</view>
 		<view class="jz-fabu-tab">
 			<u-tabs ref="tabs" :bar-width="0" active-color="#777BCE" :font-size="36" :list="tablist" :current="current"
@@ -60,9 +59,9 @@
 		data() {
 			return {
 				tablist: [{
-					name: '发帖'
-				}, {
 					name: '投稿'
+				}, {
+					name: '发帖'
 				}],
 				current: 0
 			}

@@ -29,7 +29,7 @@
 		</view>
 		<view v-if="topcurtab==1">
 			<view>
-				<item-list :list="flowList"></item-list>
+				<item-list :list="gzflowList" :isgz="true"></item-list>
 			</view>
 		</view>
 		<template v-if="isEmpty">
@@ -59,6 +59,7 @@
 				scrollTop: 0,
 				loadStatus: 'loadmore',
 				flowList: [],
+				gzflowList:[],////关注列表
 				list: [],
 				categories: "", ///分类编码
 				title: "列表", ///列表
@@ -85,7 +86,7 @@
 					name: '我的关注',
 					type: "1"
 				}],
-				topcurtab: "0",
+				topcurtab: 0,
 				currenttab: 0,
 				searchrows: [{
 						name: "最新内容",
@@ -160,7 +161,11 @@
 			if (this.loadStatus == 'loadmore') {
 				this.loadStatus = 'loading';
 				this.reset = false;
-				this.addRandomData();
+				if(this.topcurtab==0){
+					this.addRandomData();
+				}else{
+					this.addgzRandomData();
+				}
 			}
 		},
 		methods: {
@@ -185,11 +190,19 @@
 			resetlist() {
 				this.param.page = 1;
 				this.reset = true;
-				this.addRandomData();
+				if(this.topcurtab==0){
+					this.addRandomData();
+				}else{
+					this.addgzRandomData();
+				}
 			},
 			loadmoreList() {
 				this.reset = false;
+				if(this.topcurtab==0){
 				this.addRandomData();
+				}else{
+					this.addgzRandomData();
+				}
 			},
 			searchType(item) {
 				// debugger;
@@ -241,7 +254,6 @@
 						}
 					},
 				}).then((res) => {
-					console.log("getList22222222222222222", res.result);
 					var res = res.result;
 					if (this.reset) {
 						this.flowList.splice(0, this.flowList.length);
@@ -261,6 +273,70 @@
 						// console.log("this.flowList", this.flowList);
 						var resultlength = 0;
 						resultlength = this.flowList.length;
+						if (resultlength == 0) {
+							this.isEmpty = true;
+						} else {
+							this.isEmpty = false;
+						}
+					} else {
+						console.log("res.msg", res.msg);
+					}
+					uni.hideLoading();
+				}).catch((err) => {
+					console.log("网络错误，请重试——err", err);
+					uni.showModal({
+						content: err.message || '网络错误，请重试',
+						showCancel: false
+					});
+				});
+			},
+			// 获取关注人的发帖
+			addgzRandomData() {
+				// debugger;
+				uni.showLoading({
+					title: '加载中'
+				});
+				var app_bbh = "115";
+				//#ifdef APP-PLUS
+				app_bbh = plus.runtime.versionCode;
+				//#endif
+				var url = "taolun/getgzList";
+				var userinfo=uni.getStorageSync("userInfo");
+				var uid = userinfo._id;
+				uniCloud.callFunction({
+					name: 'jztaolun',
+					data: {
+						action: url,
+						data: {
+							// label: this.keyword,
+							// categories: this.categories || '',
+							// type: this.type || "zx",
+							page: this.param.page,
+							rows: this.param.rows,
+							uid:uid,
+							app_bbh: app_bbh
+						}
+					},
+				}).then((res) => {
+					var res = res.result;
+					if (this.reset) {
+						this.gzflowList.splice(0, this.gzflowList.length);
+					}
+					if (res.state == "0000") {
+						this.list = res.rows;
+						this.list.forEach((item1, index) => {
+							let item = JSON.parse(JSON.stringify(item1));
+							this.gzflowList.push(item);
+						});
+						if (this.list.length < this.param.rows) {
+							this.loadStatus = 'nomore';
+						} else {
+							this.loadStatus = 'loadmore';
+							this.param.page++;
+						}
+						// console.log("this.flowList", this.flowList);
+						var resultlength = 0;
+						resultlength = this.gzflowList.length;
 						if (resultlength == 0) {
 							this.isEmpty = true;
 						} else {

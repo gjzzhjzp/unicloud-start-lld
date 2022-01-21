@@ -72,25 +72,28 @@
 				isnewinfo: false, ///是否有新的系统消息
 				notTap: true, //一定要设置为true
 				topgridList: [{
-						"title": "浏览足迹",
+						"title": "足迹",
 						"to": '/pages/history/history',
 						"thumb": "/static/center/llzj.png"
 					}, {
-						"title": "我的收藏",
+						"title": "收藏",
 						"to": '/pages/myfavorite/myfavorite',
 						"thumb": "/static/center/sc.png"
 					},
 					{
-						"title": "我的点赞",
+						"title": "点赞",
 						"to": '/pages/mylike/mylike',
 						"thumb": "/static/newpage/like.png"
 					},
-
 					{
-						"title": "我的关注",
+						"title": "关注",
 						"to": '/pages/guanzhu/guanzhu',
-						"thumb": "/static/center/info.png",
-						"class": "systeminfo"
+						"thumb": "/static/center/info.png"	
+					},
+					{
+						"title": "粉丝",
+						"to": '/pages/guanzhu/guanzhu',
+						"thumb": "/static/center/info.png"
 					}
 				],
 				ucenterList: [

@@ -9,6 +9,11 @@
 			"style": {
 				"navigationBarTitleText": "关注列表"
 			}
+		}, {
+			"path": "pages/fensi/fensi",
+			"style": {
+				"navigationBarTitleText": "粉丝列表"
+			}
 		},{
 			"path": "pages/youxidetail/youxidetail",
 			"style": {

@@ -1,21 +1,21 @@
 <template>
 	<view class="container jz-opendb-resources-container">
-		<u-navbar :is-back="true" title="我的关注"></u-navbar>
+		<u-navbar :is-back="true" title="我的粉丝"></u-navbar>
 		<view style="margin: 4px 0px;">
-			<u-alert-tips type="warning" description="向左滑动可管理关注列表"></u-alert-tips>
+			<u-alert-tips type="warning" description="向左滑动可管理粉丝列表"></u-alert-tips>
 		</view>
 		<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}"
 			collection="opendb-news-guanzhu,uni-id-users" @load="loadSuccess" :page-size="10"
-			where="user_id == $cloudEnv_uid" orderby="guanzhu_date desc"
-			field="guanzhu_date,buser_id{nickname,username,avatar_file}">
+			where="buser_id == $cloudEnv_uid" orderby="guanzhu_date desc"
+			field="guanzhu_date,user_id{nickname,username,avatar_file}">
 			<view v-if="error">{{error.message}}</view>
 			<view v-else-if="data">
 				<u-swipe-action :show="item.show" :index="index" v-for="(item, index) in data" :key="item._id"
 					@click="click" @open="open" :options="options">
 					<view class="item u-border-bottom" @click="$notMoreTap(todetail,'notTap',item)">
-						<image mode="aspectFill" :src="item.buser_id[0].avatar_file?item.buser_id[0].avatar_file.url:''" />
+						<image mode="aspectFill" :src="item.user_id[0].avatar_file?item.user_id[0].avatar_file.url:''" />
 						<view class="title-wrap">
-							<text class="title u-line-2">{{ item.buser_id[0].nickname||item.buser_id[0].username }}</text>
+							<text class="title u-line-2">{{ item.user_id[0].nickname||item.user_id[0].username }}</text>
 						</view>
 					</view>
 				</u-swipe-action>
@@ -38,7 +38,7 @@
 					contentnomore: ''
 				},
 				options: [{
-						text: '取关',
+						text: '移除',
 						style: {
 							backgroundColor: '#7275D3'
 						}
@@ -99,7 +99,7 @@
 			},
 			handleDelete(id) {
 				this.$refs.udb.remove(id, {
-					confirmContent:"是否取关该用户？",
+					confirmContent:"是否移除该用户？",
 					success: (res) => {
 						// 删除数据成功后跳转到list页面
 						// uni.navigateTo({

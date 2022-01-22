@@ -192,6 +192,12 @@
 				default(){
 					return true
 				}
+			},
+			tosuccess:{
+				type:String,
+				default(){
+					return ""
+				}
 			}
 		},
 		methods: {
@@ -258,7 +264,14 @@
 						});
 					}
 					this.getOpenerEventChannel().emit('refreshData')
-					setTimeout(() => uni.navigateBack(), 500)
+					if(this.tosuccess){
+						setTimeout(() => uni.navigateTo({
+							url:this.tosuccess
+						}), 500)
+					}else{
+						setTimeout(() => uni.navigateBack(), 500)
+					}
+					
 				}).catch((err) => {
 					uni.showModal({
 						content: err.message || '请求服务失败',

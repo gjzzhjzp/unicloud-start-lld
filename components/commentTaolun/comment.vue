@@ -80,7 +80,7 @@
 				</text>
 			</view>
 		</u-popup>
-		<operator ref="operator" @reload="getComment"></operator>
+		<operator ref="operator" @delete="deleteComment"></operator>
 		<u-toast ref="uToast" />
 	</view>
 </template>
@@ -237,7 +237,7 @@
 					all_reply_comment_id: this.relaydata.all_reply_comment_id || "0",
 				}
 				// 评论层级为1，先插入静态数据,再去请求动态数据
-				debugger;
+				// debugger;
 				// 增加评论数
 				// debugger;
 				db.collection("jz-opendb-taolun").where({
@@ -324,6 +324,27 @@
 					like_count: that.commentList[index].like_count
 				});
 			},
+			// 删除某条评论
+			deleteComment(id){
+				var _index=0;
+				var delnumber=0;
+				this.commentArray.forEach((item,index)=>{
+					if(item._id==id||item.all_reply_comment_id.indexOf(id)!=-1){
+						this.commentArray.splice(_index,1);
+						delnumber++;
+					}else{
+						_index++;
+					}
+				});
+				this._dealcomment();
+				// 更新评论数
+				this.zydata.pl_count=this.zydata.pl_count-delnumber;
+				db.collection("jz-opendb-taolun").where({
+					_id:this.zydata._id
+				}).update({
+					pl_count:this.zydata.pl_count
+				});
+			},
 			// 评论列表
 			async getComment(comment_id) {
 				// debugger;
@@ -370,9 +391,7 @@
 					}
 					res_comment = res_comment.concat(comments.result.data)
 				}
-
 				if (res_comment.length > 0) {
-// debugger;
 					// 获取当前登录用户点赞的评论列表
 					// var like_pl = [];
 					if (!comment_id) {

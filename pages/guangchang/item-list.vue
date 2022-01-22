@@ -25,9 +25,9 @@
 										format="yyyy-MM-dd hh:mm:ss" :threshold="[60000, 2592000000]" />
 								</view>
 							</view>
-							<view class="er-item-list-gz" v-if="showguanzhu(item)">
+							<!-- <view class="er-item-list-gz" v-if="showguanzhu(item)">
 								<u-button size="medium" shape="circle" @click="guanzhu(item)">关注</u-button>
-							</view>
+							</view> -->
 						</view>
 						<view @click="$notMoreTap(toDetail,'notTap',item)">
 							<view class="er-item-list-content">

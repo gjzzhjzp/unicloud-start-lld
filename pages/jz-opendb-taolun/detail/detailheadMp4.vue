@@ -13,8 +13,8 @@
 							:threshold="[60000, 2592000000]" />
 					</view>
 				</view>
-				<view class="er-item-list-gz">
-					<u-button size="medium" shape="circle">关注</u-button>
+				<view class="er-item-list-gz" v-if="showguanzhu(data)">
+					<u-button size="medium" shape="circle" @click="guanzhu(data)">关注</u-button>
 				</view>
 			</view>
 			<!-- <view class="detail-title">
@@ -179,6 +179,40 @@
 			},
 		},
 		methods: {
+			async guanzhu(item) {
+				var userinfo = item.userinfo ? item.userinfo[0] : "";
+				if (userinfo) {
+					await db.collection("opendb-news-guanzhu").add({
+						user_id: db.getCloudEnv('$cloudEnv_uid'),
+						buser_id: userinfo._id,
+						guanzhu_date: db.getCloudEnv('$cloudEnv_now')
+					});
+					this.$set(item, "gz_sed", true);
+					this.$refs.uToast.show({
+						title: '已关注',
+						type: 'success'
+					});
+				}
+			},
+			showguanzhu(item) {
+				if (this.isgz) {
+					return false;
+				} else {
+					if (item.gz_sed) {
+						return false;
+					} else {
+						var userinfo = uni.getStorageSync("userInfo");
+						if (userinfo._id == item.user_id) {
+							return false;
+						} else if (item.guanzhu && item.guanzhu.length > 0) {
+							return false;
+						} else {
+							return true;
+						}
+					}
+				}
+				// !item.gz_sed
+			},
 			topl(data) {
 				this.$emit("topl", data);
 			},

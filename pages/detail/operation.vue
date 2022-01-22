@@ -1,9 +1,9 @@
 <template>
 	<view class="er-item-list-operation" :style="{'background':background}">
-		<view class="er-item-list-icon" @click.stop="topl()">
+		<!-- <view class="er-item-list-icon" @click.stop="topl()">
 			<u-icon name="chat" size="50"></u-icon>
 			<text class="er-item-list-icon-text">{{showtext?'评论':99}}</text>
-		</view>
+		</view> -->
 		<view class="er-item-list-icon" @click.stop="tolike1()">
 			<u-icon v-show="!islike" name="thumb-up" size="50"></u-icon>
 			<u-icon v-show="islike" color="#777BCE" name="thumb-up-fill" size="50"></u-icon>
@@ -24,8 +24,8 @@
 	} from 'vuex';
 	const db = uniCloud.database();
 	const uid = db.getCloudEnv('$cloudEnv_uid');
-	const collection = db.collection('opendb-news-favoriteTaolun');
-	const collection_like = db.collection('opendb-news-likeTaolun');
+	const collection = db.collection('opendb-news-favorite');
+	const collection_like = db.collection('opendb-news-like');
 	export default {
 		data() {
 			return {
@@ -85,7 +85,7 @@
 				if(this.islike){
 					await this.cancelFavorite_like();
 				}else{
-					await this.tolikeTaolun();
+					await this.tolike();
 				}
 				this.$emit("tolike", this.data);
 			},
@@ -95,10 +95,9 @@
 				}else{
 					await this.toFavorite();
 				}
-				await this.toFavorite();
 				this.$emit("tofavator", this.data);
 			},
-			async tolikeTaolun() {
+			async tolike() {
 				// debugger;
 				return new Promise(async (reslove) => {
 					var resultdata = await collection_like.add({
@@ -108,7 +107,7 @@
 						user_id: db.getCloudEnv('$cloudEnv_uid'),
 						create_date: db.getCloudEnv('$cloudEnv_now')
 					});
-					this.add_like_taolun().then(async () => {
+					this.add_like().then(async () => {
 						var add_value = {
 							type: 4,
 							user_id: this.data.user_id,
@@ -137,7 +136,7 @@
 					uniCloud.callFunction({
 						name: 'jzlike',
 						data: {
-							action: 'like/cancel_likeTaolun',
+							action: 'like/cancel_like',
 							data: {
 								_id: this.data._id,
 								like_count1: this.data.like_count1 || 0
@@ -161,7 +160,7 @@
 					});
 				});
 			},
-			add_like_taolun() {
+			add_like() {
 				return new Promise((reslove) => {
 					if (!this.data.like_count1) {
 						this.data.like_count1 = 0;
@@ -169,7 +168,7 @@
 					uniCloud.callFunction({
 						name: 'jzlike',
 						data: {
-							action: 'like/add_likeTaolun',
+							action: 'like/add_like',
 							data: {
 								_id: this.data._id,
 								like_count1: this.data.like_count1 || 0
@@ -232,7 +231,7 @@
 					uniCloud.callFunction({
 						name: 'jzfavator',
 						data: {
-							action: 'favator/cancel_favatorTaolun',
+							action: 'favator/cancel_favator',
 							data: {
 								_id: this.data._id,
 								like_count: this.data.like_count || 0
@@ -268,7 +267,7 @@
 					uniCloud.callFunction({
 						name: 'jzfavator',
 						data: {
-							action: 'favator/add_favatorTaolun',
+							action: 'favator/add_favator',
 							data: {
 								_id: this.data._id,
 								like_count: this.data.like_count || 0

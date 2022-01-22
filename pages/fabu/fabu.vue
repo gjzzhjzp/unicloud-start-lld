@@ -12,6 +12,11 @@
 				<view class="jz-fabu-content">
 					用户发帖，审核成功的帖子会发布到广场；用户投稿，审核成功的稿子将会收录到俊哲资源站，用户可在首页或分类收看
 				</view>
+				<view class="jz-fabu-content">
+					<!-- <u-button size="medium" shape="circle" @click="tougaojc()">投稿教程</u-button> -->
+					<u-button size="medium" shape="circle" @click="tougaogz()">投稿规则</u-button>
+					<u-button size="medium" shape="circle" @click="tougaogz()">发帖规则</u-button>
+				</view>
 			</view>
 		</view>
 		<view class="jz-fabu-tab">
@@ -20,32 +25,12 @@
 		</view>
 		<view class="jz-fabu-tabcontent">
 			<view v-if="current==0">
-				<addresources :showtitle="false"></addresources>
+				<addresources :showtitle="false" tosuccess="/pages/fabusuccess/fabusuccess"></addresources>
 			</view>
 			<view v-else>
-				<addtaolun :showtitle="false"></addtaolun>
+				<addtaolun :showtitle="false" tosuccess="/pages/fabusuccess/fabusuccess"></addtaolun>
 			</view>
 		</view>
-		<!-- <view class="jz-container-button">
-			<view>
-				<u-button @click="totougao()">我要投稿</u-button>
-			</view>
-			<view style="margin-top: 40px;">
-				<u-button @click="tofatie()">我要发帖</u-button>
-			</view>
-			<view style="margin-top: 40px;">
-				<u-button @click="tougaojc()">投稿教程</u-button>
-			</view>
-			<view style="margin-top: 40px;">
-				<u-button @click="tougaogz()">投稿规则</u-button>
-			</view>
-			<view style="margin-top: 40px;">
-				<u-button>发帖教程</u-button>
-			</view>
-			<view style="margin-top: 40px;">
-				<u-button>发帖规则</u-button>
-			</view>
-		</view>-->
 		<jz-tabbar></jz-tabbar>
 		<jz-gonggao ref="gonggao"></jz-gonggao>
 	</view>

@@ -18,13 +18,29 @@
 		<view v-show="current==0">
 			<view style="background-color: #fff;padding: 8px;">
 				<view class="detail-image-title">
+					<view class="title">
+						<commont-image
+							:src="(data.userinfo&&data.userinfo[0]&&data.userinfo[0].avatar_file)?data.userinfo[0].avatar_file.url:''"
+							:isoriginal="!!(data.userinfo&&data.userinfo[0].original==1)">
+						</commont-image>
+						<view class="original-title">
+							<view @click="tgrHref()" style="color: #333333;font-size: 14px;">{{tgr}}</view>
+							<uni-dateformat class="publish_date" :date="data.publish_date" format="yyyy-MM-dd"
+								:threshold="[60000, 2592000000]" />
+						</view>
+					</view>
+					<view class="er-item-list-gz" v-if="showguanzhu(data)">
+						<u-button size="medium" shape="circle" @click="guanzhu(data)">关注</u-button>
+					</view>
+				</view>
+				<view class="detail-image-title">
 					<view class="title" style="flex: 1;">
 						{{data.title}}
 					</view>
-					<view style="text-align: right;color: #909399;width: 160rpx;">
+					<!-- <view style="text-align: right;color: #909399;width: 160rpx;">
 						<uni-dateformat class="publish_date" :date="data.publish_date" format="yyyy-MM-dd"
 							:threshold="[60000, 2592000000]" />
-					</view>
+					</view> -->
 				</view>
 				<view class="detail-image-sx3">
 					<view class="showllsc" v-show="showllsc">
@@ -35,7 +51,7 @@
 							<u-icon name="heart" :size="30"></u-icon>收藏量：{{data.like_count>0?data.like_count:0}}
 						</view>
 					</view>
-					<view class="detail-image-sc">
+					<!-- <view class="detail-image-sc">
 						<view class="detail-image-sc1" v-show="!checkisLike" @click="toFavorite">
 							<u-icon :size="30" name="heart"></u-icon> 收藏
 						</view>
@@ -49,7 +65,7 @@
 								</a>
 							</template>
 						</view>
-					</view>
+					</view> -->
 				</view>
 				<view class="detail-image-sx">
 					<view class="detail-image-ly">
@@ -75,12 +91,13 @@
 						<u-tag :text="'# '+item" type="primary" shape="circle" />
 					</view>
 				</view>
+				<view class="detail-image-operation">
+					<operation :data="data"></operation>
+				</view>
 			</view>
-			
 			<view style="margin-top: 20rpx;">
 				<jz-sy-list ref="sylist" :label="tjcategories" :ignore="data._id" title="推荐资源" :showright="false"
 					:zy_gs="data.zy_gs"></jz-sy-list>
-
 			</view>
 		</view>
 		<view v-show="current==1">
@@ -91,8 +108,10 @@
 </template>
 <script>
 	import detail from "./detail.js"
+	import operation from "./operation.vue"
 	export default {
 		mixins: [detail],
+		components:{operation},
 		data() {
 			return {
 				showmp4Xz: false,
@@ -198,6 +217,40 @@
 			},
 		},
 		methods: {
+			async guanzhu(item) {
+				var userinfo = item.userinfo ? item.userinfo[0] : "";
+				if (userinfo) {
+					await db.collection("opendb-news-guanzhu").add({
+						user_id: db.getCloudEnv('$cloudEnv_uid'),
+						buser_id: userinfo._id,
+						guanzhu_date: db.getCloudEnv('$cloudEnv_now')
+					});
+					this.$set(item, "gz_sed", true);
+					this.$refs.uToast.show({
+						title: '已关注',
+						type: 'success'
+					});
+				}
+			},
+			showguanzhu(item) {
+				if (this.isgz) {
+					return false;
+				} else {
+					if (item.gz_sed) {
+						return false;
+					} else {
+						var userinfo = uni.getStorageSync("userInfo");
+						if (userinfo._id == item.user_id) {
+							return false;
+						} else if (item.guanzhu && item.guanzhu.length > 0) {
+							return false;
+						} else {
+							return true;
+						}
+					}
+				}
+				// !item.gz_sed
+			},
 			tgrHref(){
 				if (this.data.userinfo && this.data.userinfo.length > 0) {
 					var id= this.data.userinfo[0]._id;

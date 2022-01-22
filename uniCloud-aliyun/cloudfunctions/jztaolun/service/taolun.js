@@ -262,22 +262,22 @@ module.exports = class resourceService extends Service {
 						)
 						.done(),
 					as: 'like',
-				}).lookup({
-					from: 'opendb-news-guanzhu', ///获取当前用户是否收藏
-					let: {
-						user_id: '$user_id'
-					},
-					pipeline: $.pipeline()
-						.match(
-							dbCmd.expr($.and([
-								$.eq(['$buser_id', '$$user_id']),
-								$.eq(['$user_id', uid])
-							]))
-						)
-						.done(),
-					as: 'guanzhu',
-				})
-				.end();
+				}).end();
+				// .lookup({
+				// 	from: 'opendb-news-guanzhu', ///获取当前用户是否收藏
+				// 	let: {
+				// 		user_id: '$user_id'
+				// 	},
+				// 	pipeline: $.pipeline()
+				// 		.match(
+				// 			dbCmd.expr($.and([
+				// 				$.eq(['$buser_id', '$$user_id']),
+				// 				$.eq(['$user_id', uid])
+				// 			]))
+				// 		)
+				// 		.done(),
+				// 	as: 'guanzhu',
+				// })
 			var app_bbh = data.app_bbh;
 			if (app_bbh >= 113) {
 				// 获取置顶帖子
@@ -469,6 +469,21 @@ module.exports = class resourceService extends Service {
 						)
 						.done(),
 					as: 'like',
+				})
+				.lookup({
+					from: 'opendb-news-guanzhu', ///获取当前用户是否收藏
+					let: {
+						user_id: '$user_id'
+					},
+					pipeline: $.pipeline()
+						.match(
+							dbCmd.expr($.and([
+								$.eq(['$buser_id', '$$user_id']),
+								$.eq(['$user_id', uid])
+							]))
+						)
+						.done(),
+					as: 'guanzhu',
 				})
 				.end();
 			if (resultdata.data && resultdata.data.length > 0) {

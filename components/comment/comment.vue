@@ -78,7 +78,7 @@
 				发送
 			</text>
 		</view>
-		<operator ref="operator" @reload="getComment"></operator>
+		<operator ref="operator" @delete="deleteComment"></operator>
 		<u-toast ref="uToast" />
 	</view>
 </template>
@@ -168,6 +168,27 @@
 			}
 		},
 		methods: {
+			// 删除某条评论
+			deleteComment(id){
+				var _index=0;
+				var delnumber=0;
+				this.commentArray.forEach((item,index)=>{
+					if(item._id==id||item.all_reply_comment_id.indexOf(id)!=-1){
+						this.commentArray.splice(_index,1);
+						delnumber++;
+					}else{
+						_index++;
+					}
+				});
+				this._dealcomment();
+				// 更新评论数
+				this.zydata.pl_count=this.zydata.pl_count-delnumber;
+				db.collection("jz-opendb-resources").where({
+					_id:this.zydata._id
+				}).update({
+					pl_count:this.zydata.pl_count
+				});
+			},
 			// 点击回复当前资源
 			replyResource() {
 				// debugger;
@@ -233,7 +254,12 @@
 				}
 				// 评论层级为1，先插入静态数据,再去请求动态数据
 				// debugger;
-				console.log("this.relaydata.comment_cj",this.relaydata.comment_cj);
+				// 增加评论数
+				db.collection("jz-opendb-resources").where({
+					_id:this.zydata._id
+				}).update({
+					pl_count:this.zydata.pl_count?++this.zydata.pl_count:1
+				});
 				if(!this.relaydata.comment_cj||this.relaydata.comment_cj==1){
 					var _addsenddata=Object.assign(senddata,{
 						user_id:[this.userInfo]

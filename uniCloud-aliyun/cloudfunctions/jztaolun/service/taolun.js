@@ -201,9 +201,8 @@ module.exports = class resourceService extends Service {
 					"categories": parseInt(categories)
 				}, where_obj)]);
 			} else {
-				where = Object.assign(where_obj,{is_recommend:0});
+				where = Object.assign(where_obj,{is_recommend:data.is_recommend||0});
 			}
-			// console.log("whereaaaaaaaaaaaaaaaaaaaaaaaa",where);
 			var collection_query = null;
 			if (type == "zx") {
 				collection_query = collection.aggregate().match(where).sort({
@@ -281,15 +280,15 @@ module.exports = class resourceService extends Service {
 			var app_bbh = data.app_bbh;
 			if (app_bbh >= 113) {
 				// 获取置顶帖子
-				if(type=="zx"){
-					var tjdata=await collection.where({
-						is_recommend:1
-					}).limit(1).get()
-					console.log("tjdata",tjdata);
-					if(tjdata.data&&tjdata.data.length>0){
-						resultdata.data.unshift(tjdata.data[0]);
-					}
-				}
+				// if(type=="zx"){
+					// var tjdata=await collection.where({
+					// 	is_recommend:1
+					// }).limit(1).get()
+					// console.log("tjdata",tjdata);
+					// if(tjdata.data&&tjdata.data.length>0){
+					// 	resultdata.data.unshift(tjdata.data[0]);
+					// }
+				// }
 				return {
 					"state": "0000",
 					"rows": resultdata.data,
@@ -328,6 +327,7 @@ module.exports = class resourceService extends Service {
 			const collection = db.collection('jz-opendb-taolun');
 			var where_obj = {
 				"article_status": 1,
+				"is_recommend":0,
 				"is_off": db.command.neq(1)
 			}
 			// 如果是管理员，读取全部资源，包括下架资源

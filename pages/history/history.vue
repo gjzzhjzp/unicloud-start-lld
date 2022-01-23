@@ -24,7 +24,7 @@
 			</view>
 		</view>
 		<view v-else>
-			<gitem-list :list="gflowList"></gitem-list>
+			<gitem-list  :showoperation="false" :list="gflowList"></gitem-list>
 			<u-loadmore v-show="gflowList.length!=0" :status="loadStatus" @loadmore="addgRandomData"></u-loadmore>
 			<view style="margin-top: 20px;text-align: center;" v-show="gflowList.length==0">
 				<u-empty text="无历史记录" mode="history"></u-empty>

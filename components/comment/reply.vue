@@ -276,8 +276,8 @@
 				});
 				var add_value = {
 					type: 3,
-					user_id:  this.zydata.user_id,
-					comment: "你的投稿作品【<span class='zyid' id='"+this.zydata._id+"'>"+this.zydata.title+"</span>】有宝子【"+this.userInfo.nickname+"】评论啦~~【"+this.inputvalue+"】"
+					user_id: that.comment.user_id[0]._id,
+					comment: this.userInfo.nickname+"回复了你的评论【"+that.comment.comment_content+"】:【" + this.inputvalue + "】"
 				}
 				await db.collection("jz-custom-systeminfo").add(add_value);
 				that.inputvalue = "";
@@ -317,6 +317,12 @@
 							comment_id: that.commentList[index]._id,
 							comment_content: that.commentList[index].comment_content
 						});
+						var add_value = {
+							type: 2,
+							user_id: that.comment.user_id[0]._id,
+							comment: this.userInfo.nickname+"点赞了你的评论【"+that.commentList[index].comment_content+"】"
+						}
+						 db.collection("jz-custom-systeminfo").add(add_value);
 					} else {
 						this.commentList[index].like_count--;
 						await db.collection("opendb-news-likepl").where({
@@ -327,7 +333,7 @@
 					await db.collection("opendb-news-comments").where({
 						_id: this.commentList[index]._id
 					}).update({
-						like_count: this.commentList[index].like_count
+						like_count: (this.commentList[index].like_count||0)
 					});
 				} else {
 					if (this.comment.isLike == true) {
@@ -350,7 +356,7 @@
 					await db.collection("opendb-news-comments").where({
 						_id: this.comment._id
 					}).update({
-						like_count: this.comment.like_count
+						like_count: (this.comment.like_count||0)
 					});
 				}
 

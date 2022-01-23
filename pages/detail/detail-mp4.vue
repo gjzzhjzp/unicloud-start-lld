@@ -3,7 +3,7 @@
 
 		<detailhead-mp4 :data="data" :pl-number="plNumber">
 			<template slot="content">
-				<template v-if="data.aliyun_dz&&data.aliyun_dz.indexOf('/jzmp4/')!=-1">
+				<template v-if="data.aliyun_dz&&data.aliyun_dz.indexOf('.mp4')!=-1">
 					<view class="detail-image-item">
 						<div id="dplayer" ref="dplayer">
 						</div>
@@ -135,7 +135,7 @@
 			initDp(item) {
 				// debugger;
 				var url = "";
-				if (item.aliyun_dz && item.aliyun_dz.indexOf('/jzmp4/') != -1) {
+				if (item.aliyun_dz && item.aliyun_dz.indexOf('.mp4') != -1) {
 					url = item.aliyun_dz;
 				} else {
 					url = item.resources[0].url;
@@ -170,44 +170,33 @@
 				});
 				if (typeof plus != "undefined") {
 					var pscreen = plus.webview.currentWebview().opener();
-
 					this.dp.on("webfullscreen", function() {
 						// debugger;
 						window.jQuery(".detail-image-item").addClass("fullscren");
 
 						window.jQuery("#dplayer").append(`<div class="player-toggle heng"></div>`);
-					})
+					});
 					this.dp.on("webfullscreen_cancel", function() {
 						// debugger;
-						// var screen = uni.getStorageSync("screen");
-						// if (screen == "1") {
-						// uni.setStorageSync("screen", "0");
 						mui.fire(pscreen, 'changescreen', {
 							direction: "portrait-primary"
 						});
-						// } else {
 						window.jQuery(".detail-image-item").removeClass("fullscren");
 						window.jQuery("#dplayer .player-toggle").remove();
-						// }
 					});
 
 					window.jQuery("#dplayer").on("click", ".player-toggle.heng", function() {
-						// debugger;
+						
 						mui.fire(pscreen, 'changescreen', {
 							direction: "landscape-primary"
 						});
-						// uni.setStorageSync("screen", "1");
-						// getApp().globalData.screen="1";
 						window.jQuery("#dplayer").append(`<div class="player-toggle shu"></div>`);
 						window.jQuery("#dplayer .player-toggle.heng").remove();
 					})
 					window.jQuery("#dplayer").on("click", ".player-toggle.shu", function() {
-
 						mui.fire(pscreen, 'changescreen', {
 							direction: "portrait-primary"
 						});
-						// uni.setStorageSync("screen", "0");
-						// getApp().globalData.screen="0";
 						window.jQuery("#dplayer").append(`<div class="player-toggle heng"></div>`);
 						window.jQuery("#dplayer .player-toggle.shu").remove();
 					})

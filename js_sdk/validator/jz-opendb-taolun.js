@@ -52,9 +52,7 @@ const validator = {
 		"label": "文章状态"
 	},
 	"resources": {
-		"rules": [{
-				"required": true
-			},
+		"rules": [
 			{
 				"format": "array"
 			},

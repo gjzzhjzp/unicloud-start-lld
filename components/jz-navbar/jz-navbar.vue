@@ -58,21 +58,21 @@
 			async checknewinfo() {
 				this.isnewinfo = false;
 				var userInfo = uni.getStorageSync("userInfo");
-				var res = await db.collection('jz-custom-systeminfo').where({
+				var last_time = uni.getStorageSync("systeminfo_last");
+				var _obj = {
 					user_id: userInfo._id,
 					type: db.command.neq(0)
-				}).field("comment").get();
+				}
+				if (last_time) {
+					Object.assign(_obj, {
+						comment_date: db.command.gt(last_time)
+					})
+				}
+				var res = await db.collection('jz-custom-systeminfo').where(_obj).field("comment").get();
 				if (res.result.data && res.result.data.length > 0) {
-					var old_news = uni.getStorageSync("systeminfo_" + userInfo._id);
-					var infos = res.result.data;
-					var ids = [];
-					infos.forEach((item) => {
-						if (old_news.indexOf(item._id) == -1) {
-							this.isnewinfo = true;
-							return;
-						}
-					});
-					console.log("this.isnewinfo", this.isnewinfo);
+					this.$set(this,"isnewinfo",true);
+				}else{
+					this.$set(this,"isnewinfo",false);
 				}
 			},
 			tousercenter() {

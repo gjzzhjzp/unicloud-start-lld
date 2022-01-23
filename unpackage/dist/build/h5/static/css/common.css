@@ -217,10 +217,12 @@ body.pages-resource-list uni-page-body {
 	margin-top: -15px;
 }
 
-.dplayer:-webkit-full-screen .player-toggle {
+/* .dplayer:-webkit-full-screen .player-toggle {
+	display: block;
+} */
+.detail-image-item.fullscren .player-toggle {
 	display: block;
 }
-
 .player-toggle.heng::after {
 	content: "";
 	background-image: url(@/static/center/heng.png);
@@ -245,10 +247,12 @@ body.pages-resource-list uni-page-body {
 	margin-left: 4px;
 }
 
-.dplayer-full-in-icon {
+/* .dplayer-full-in-icon {
+	display: none !important;
+} */
+.dplayer-full-icon{
 	display: none !important;
 }
-
 .login_back_logo {
 	padding: 40px;
 }
@@ -310,4 +314,9 @@ body.pages-resource-list uni-page-body {
 }
 .jz-fabu-tab .u-tabs{
 	    padding: 0px 50px;
+}
+.jz-fabu-content .u-size-medium{
+	    height: 32px !important;
+	    line-height: 32px !important;
+	    padding: 0 20px !important;
 }

@@ -110,7 +110,8 @@
 				showsendpl: true,
 				like_pl: [],
 				plNumber: 0, ///评论数
-				oldid: ""
+				oldid: "",
+				pl_count:0////评论数
 			};
 		},
 
@@ -163,6 +164,7 @@
 					if (this.zydata._id && this.zydata._id != this.oldid) {
 						this.getComment();
 						this.oldid = this.zydata._id;
+						this.pl_count= this.zydata.pl_count||0;
 					}
 				}
 			}
@@ -174,11 +176,13 @@
 				var delnumber=0;
 				this.commentArray.forEach((item,index)=>{
 					if(item._id==id||item.all_reply_comment_id.indexOf(id)!=-1){
+						delnumber=item.children?(item.children.length+1):1;
 						this.commentArray.splice(_index,1);
-						delnumber++;
-					}else{
-						_index++;
+						// delnumber++;
 					}
+					// else{
+					// 	_index++;
+					// }
 				});
 				this._dealcomment();
 				// 更新评论数
@@ -186,7 +190,7 @@
 				db.collection("jz-opendb-resources").where({
 					_id:this.zydata._id
 				}).update({
-					pl_count:this.zydata.pl_count
+					pl_count:(this.zydata.pl_count||0)
 				});
 			},
 			// 点击回复当前资源
@@ -260,24 +264,38 @@
 				}).update({
 					pl_count:this.zydata.pl_count?++this.zydata.pl_count:1
 				});
+				console.log("this.zydata",this.zydata);
 				if(!this.relaydata.comment_cj||this.relaydata.comment_cj==1){
 					var _addsenddata=Object.assign(senddata,{
-						user_id:[this.userInfo]
+						user_id:[JSON.parse(JSON.stringify(this.userInfo))]
 					});
-					console.log("_addsenddata",_addsenddata);
+					// console.log("_addsenddata",_addsenddata);
 					this.commentArray.unshift(_addsenddata);
 					this._dealcomment();
 				}
-				await db.collection("opendb-news-comments").add(senddata);
 				
-				var add_value = {
-					type: 3,
-					user_id:  this.zydata.user_id,
-					comment: "你的投稿作品【<span class='zyid' id='"+this.zydata._id+"'>"+this.zydata.title+"</span>】有宝子【"+this.userInfo.nickname+"】评论啦~~【"+this.inputvalue+"】"
+				var add_value =null;
+				if(this.relaydata.comment_cj&&this.relaydata.comment_cj>1){
+					 add_value = {
+						type: 3,
+						user_id: this.zydata.user_id,
+						comment: this.userInfo.nickname+"回复了你的评论【"+this.relaydata.comment_content+"】【" + this.inputvalue + "】"
+					}
+				}else{
+					debugger;
+					 add_value = {
+						type: 3,
+						user_id: this.zydata.user_id,
+						comment: this.userInfo.nickname+"评论了你的作品【<span class='zyid' id='" + this.zydata._id + "'>" + this.zydata.title +
+							"</span>】【" + this.inputvalue + "】"
+					}
 				}
-				
-				await db.collection("jz-custom-systeminfo").add(add_value);
+				if(add_value){
+					 db.collection("jz-custom-systeminfo").add(add_value);
+				}
 				this.inputvalue = "";
+				await db.collection("opendb-news-comments").add(senddata);
+				// this.inputvalue = "";
 				if (this.relaydata.comment_cj > 1) {
 					this.getComment(this.relaydata.reply_comment_id);
 				} else {
@@ -290,6 +308,7 @@
 				this.relaydata = {
 					comment_cj: item.comment_cj + 1,
 					comment_type: 1,
+					comment_content:item.comment_content,
 					reply_user_id: item.user_id[0]._id,
 					reply_comment_id: item._id,
 					all_reply_comment_id: item.all_reply_comment_id + "," + item._id
@@ -324,6 +343,12 @@
 						comment_id: that.commentList[index]._id,
 						comment_content: that.commentList[index].comment_content
 					});
+					var add_value = {
+						type: 2,
+						user_id: this.zydata.user_id,
+						comment: this.userInfo.nickname+"点赞了你的评论【"+that.commentList[index].comment_content+"】"
+					}
+					 db.collection("jz-custom-systeminfo").add(add_value);
 				} else {
 					that.commentList[index].like_count--;
 					await db.collection("opendb-news-likepl").where({
@@ -362,13 +387,22 @@
 				// 获取统计数量
 				if(!comment_id){
 					var rescount = await db.collection('opendb-news-comments').where(param).count();
-					console.log("count", rescount);
 					this.plNumber = rescount.result.total;
-					
 				}else{
 					this.plNumber++;
 				}
-				this.$emit("changenumber", this.plNumber);
+				// if(this.zydata.pl_count){
+					if(this.plNumber>(this.zydata.pl_count||0)){
+						this.$set(this.zydata,"pl_count",this.plNumber);
+					}
+					db.collection("jz-opendb-resources").where({
+						_id:this.zydata._id
+					}).update({
+						pl_count:(this.zydata.pl_count||0)
+					});
+				// }
+				console.log("this.zydata",this.zydata,this.plNumber);
+				// this.$emit("changenumber", this.plNumber);
 
 				var dbcomments = db.collection("opendb-news-comments,uni-id-users").where(param).field(
 					"article_id,user_id{nickname,avatar_file,original},reply_user_id{nickname,avatar_file},comment_content,like_count,comment_type,comment_date,reply_comment_id,comment_cj,all_reply_comment_id"
@@ -499,10 +533,10 @@
 				data.forEach(item => {
 					var reply_comment_id=item.reply_comment_id||(item.reply_comment_id[0] && item.reply_comment_id[0]._id);
 					if (reply_comment_id) {
-					// if (item.reply_comment_id[0] && item.reply_comment_id[0]._id) {
 						let parent = map[reply_comment_id];
 						if (parent) {
-							(parent.children || (parent.children = [])).push(item);
+							parent.children=[];
+							parent.children.push(item);
 						} else {
 							result.push(item);
 						}

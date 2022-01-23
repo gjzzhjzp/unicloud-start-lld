@@ -6,10 +6,10 @@
 			  <uni-data-checkbox v-model="formData.categories" :localdata="formOptions.categories_localdata"></uni-data-checkbox>
 			</uni-forms-item>
 			<uni-forms-item required name="excerpt" label="详情">
-				<uni-easyinput placeholder="请输入详情" type="textarea" v-model="formData.excerpt" trim="both"></uni-easyinput>
+				<uni-easyinput placeholder="请输入详情" type="textarea" :maxlength="1000" v-model="formData.excerpt" trim="both"></uni-easyinput>
 			</uni-forms-item>
-			<uni-forms-item required name="resources" label="图片">
-				<uni-file-picker file-mediatype="image" :limit="9" return-type="array" :maxlength="200" v-model="formData.resources">
+			<uni-forms-item name="resources" label="图片">
+				<uni-file-picker file-mediatype="image" :limit="9" return-type="array"  v-model="formData.resources">
 				</uni-file-picker>
 			</uni-forms-item>
 			<view class="resource-ts">
@@ -160,12 +160,13 @@
 						icon: 'none',
 						title: '新增成功'
 					});
-					this.getOpenerEventChannel().emit('refreshData')
+					// 
 					if(this.tosuccess){
 						setTimeout(() => uni.navigateTo({
 							url:this.tosuccess
 						}), 500)
 					}else{
+						this.getOpenerEventChannel().emit('refreshData');
 						setTimeout(() => uni.navigateBack(), 500)
 					}
 				}).catch((err) => {

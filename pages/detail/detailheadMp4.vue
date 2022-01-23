@@ -37,20 +37,22 @@
 					<view class="title" style="flex: 1;">
 						{{data.title}}
 					</view>
-					<!-- <view style="text-align: right;color: #909399;width: 160rpx;">
-						<uni-dateformat class="publish_date" :date="data.publish_date" format="yyyy-MM-dd"
-							:threshold="[60000, 2592000000]" />
-					</view> -->
+					<view style="color: #909399;display: flex;align-items: center;" v-show="showllsc">
+						<u-icon name="eye" :size="30"></u-icon><text
+							style="margin-left: 2px;">{{data.view_count||0}}</text>
+						<!-- <uni-dateformat class="publish_date" :date="data.publish_date" format="yyyy-MM-dd"
+							:threshold="[60000, 2592000000]" /> -->
+					</view>
 				</view>
 				<view class="detail-image-sx3">
-					<view class="showllsc" v-show="showllsc">
+					<!-- <view class="showllsc" v-show="showllsc">
 						<view class="detail-image-sx31">
 							<u-icon name="eye" :size="30"></u-icon>浏览量：{{data.view_count||0}}
 						</view>
 						<view class="detail-image-sx32">
 							<u-icon name="heart" :size="30"></u-icon>收藏量：{{data.like_count>0?data.like_count:0}}
 						</view>
-					</view>
+					</view> -->
 					<!-- <view class="detail-image-sc">
 						<view class="detail-image-sc1" v-show="!checkisLike" @click="toFavorite">
 							<u-icon :size="30" name="heart"></u-icon> 收藏
@@ -70,7 +72,8 @@
 				<view class="detail-image-sx">
 					<view class="detail-image-ly">
 						<view class="detail-image-ly1">来源：{{data.author}}</view>
-						<view class="detail-image-ly2">投稿人：<view @click="tgrHref()" style="color: rgb(114, 117, 211);">{{tgr}}</view>
+						<view class="detail-image-ly2">投稿人：<view @click="tgrHref()" style="color: rgb(114, 117, 211);">
+								{{tgr}}</view>
 						</view>
 					</view>
 				</view>
@@ -78,7 +81,7 @@
 					<view class="detail-image-jj1">简介：</view>
 					<view class="detail-image-jj2" v-html="data.excerpt||'无'"></view>
 				</view>
-				<view class="detail-open " style="" v-if="data.aliyun_dz&&data.aliyun_dz.indexOf('/jzmp4/')==-1">
+				<view class="detail-open " style="" v-if="data.aliyun_dz&&data.aliyun_dz.indexOf('.mp4')==-1">
 					<view>
 						外链地址：
 					</view>
@@ -108,10 +111,15 @@
 </template>
 <script>
 	import detail from "./detail.js"
+	import commontImage from "../jz-opendb-taolun/detail/commontImage.vue"
 	import operation from "./operation.vue"
+	const db = uniCloud.database();
 	export default {
 		mixins: [detail],
-		components:{operation},
+		components: {
+			operation,
+			commontImage
+		},
 		data() {
 			return {
 				showmp4Xz: false,
@@ -141,12 +149,12 @@
 			}
 		},
 		watch: {
-			plNumber() {
+			"data.pl_count"() {
 				this.tablist.forEach((item) => {
 					if (item.name.indexOf('评论') != -1) {
-						item.name = "评论" + this.plNumber
+						item.name = "评论" + (this.data.pl_count || '')
 					}
-				})
+				});
 				// this.tablist.push({
 				// 	name: '评论'
 				// });
@@ -205,16 +213,16 @@
 				}
 				return tjcategories;
 			},
-			checkisLike() {
-				// debugger;
-				var islike = false;
-				if (this.islike || (this.data && this.data.favorite && this.data.favorite.length > 0)) {
-					islike = true;
-				} else {
-					islike = false;
-				}
-				return islike;
-			},
+			// checkisLike() {
+			// 	debugger;
+			// 	var islike = false;
+			// 	if (this.islike || (this.data && this.data.favorite && this.data.favorite.length > 0)) {
+			// 		islike = true;
+			// 	} else {
+			// 		islike = false;
+			// 	}
+			// 	return islike;
+			// },
 		},
 		methods: {
 			async guanzhu(item) {
@@ -230,6 +238,13 @@
 						title: '已关注',
 						type: 'success'
 					});
+					var dluserinfo = uni.getStorageSync("userInfo");
+					var add_value = {
+						type: 5,
+						user_id: this.data.user_id,
+						comment: dluserinfo.nickname + "关注了你"
+					}
+					db.collection("jz-custom-systeminfo").add(add_value);
 				}
 			},
 			showguanzhu(item) {
@@ -251,18 +266,18 @@
 				}
 				// !item.gz_sed
 			},
-			tgrHref(){
+			tgrHref() {
 				if (this.data.userinfo && this.data.userinfo.length > 0) {
-					var id= this.data.userinfo[0]._id;
-					if(id){
-						var userinfo=uni.getStorageSync("userInfo");
-						if(userinfo._id==id){
+					var id = this.data.userinfo[0]._id;
+					if (id) {
+						var userinfo = uni.getStorageSync("userInfo");
+						if (userinfo._id == id) {
 							uni.navigateTo({
-								url:"/pages/ucenter/ucenter"
+								url: "/pages/ucenter/ucenter"
 							});
-						}else{
+						} else {
 							uni.navigateTo({
-								url:"/pages/ucenter/tacenter?id="+id
+								url: "/pages/ucenter/tacenter?id=" + id
 							});
 						}
 					}
@@ -284,6 +299,17 @@
 <style>
 	.detail-image-ly2 {
 		display: flex;
+	}
+
+	.original-title {
+		display: flex;
+		flex-direction: column;
+		margin-left: 10px;
+	}
+
+	.publish_date {
+		font-size: 10px;
+		color: #888888;
 	}
 
 	.detail-image-ly2 .u-link {
@@ -384,7 +410,7 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 		max-width: 50%;
-		margin-left: 10px;
+		margin-left: 20px;
 	}
 
 	.detail-image-title {
@@ -398,7 +424,7 @@
 	.detail-image-title .title {
 		font-size: 36rpx;
 		flex: 1;
-
+		display: flex;
 	}
 
 	.detail-image-sx {

@@ -1,5 +1,5 @@
 <template>
-	<view class="">
+	<view class="jz-detail">
 		<u-navbar :is-back="true" :title="title"></u-navbar>
 		<view>
 			<template v-if="!detaildata.aliyun_dz">
@@ -18,11 +18,11 @@
 				</template>
 			</template>
 			<template v-else>
-				<!-- &&detaildata.aliyun_dz.indexOf('/jzmp4/')!=-1 -->
-				<template v-if="zy_gs=='1'&&detaildata.aliyun_dz.indexOf('/jzmp4/')!=-1">
+				<!-- &&detaildata.aliyun_dz.indexOf('.mp4')!=-1 -->
+				<template v-if="zy_gs=='1'&&detaildata.aliyun_dz.indexOf('.mp4')!=-1">
 					<detail-mp4 :data="detaildata"></detail-mp4>
 				</template>
-				<template v-else-if="zy_gs=='1'&&detaildata.aliyun_dz.indexOf('/jzmp4/')==-1&&detaildata.resources.length>0">
+				<template v-else-if="zy_gs=='1'&&detaildata.aliyun_dz.indexOf('.mp4')==-1&&detaildata.resources.length>0">
 					<detail-mp4 :data="detaildata"></detail-mp4>
 				</template>
 				<template v-else>
@@ -149,6 +149,12 @@
 	}
 </script>
 <style>
+	.jz-detail{
+		height: 100vh;
+		display: flex;
+		    flex-direction: column;
+			    background-color: #fff;
+	}
 	.jz-container-wl {
 		/* text-indent: 2em; */
 	}

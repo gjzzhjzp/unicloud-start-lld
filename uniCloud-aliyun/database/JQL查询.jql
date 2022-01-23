@@ -79,8 +79,8 @@ db.collection("opendb-news-commentsTaolun").where({
 	_id: db.command.neq(null)
 }).remove()
 
-db.collection("jz-custom-yqm").where({
-	status: false
+db.collection("jz-custom-systeminfo").where({
+	type: 5
 }).remove()
 
 db.collection("opendb-news-categories").where({

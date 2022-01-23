@@ -24,7 +24,8 @@
 				<u-tag :text="tagname" mode="light" closeable :show="showTag" @close="closetagClick" />
 			</view>
 			<view>
-				<item-list :list="flowList"></item-list>
+				<item-list :list="zdflowList" :showzd="true"></item-list>
+				<item-list :list="flowList" :showzd="true"></item-list>
 			</view>
 		</view>
 		<view v-if="topcurtab==1">
@@ -53,6 +54,7 @@
 		mixins: [gonggao],
 		data() {
 			return {
+				zdflowList:[],//置顶资源
 				tagname: "", ////tag标签
 				showTag: false,
 				keyword: "",
@@ -150,7 +152,7 @@
 				this.dvalue = 2;
 				this.dtitle = "用户";
 			}
-
+			this.getZdlist();
 			this.addRandomData();
 		},
 		onPageScroll(e) {
@@ -228,6 +230,28 @@
 					this.searchLogDbAdd(value)
 				}
 				this.resetlist();
+			},
+			getZdlist(){
+				var url = "taolun/getList";
+				var app_bbh = "115";
+				var userinfo=uni.getStorageSync("userInfo");
+				var uid = userinfo._id;
+				uniCloud.callFunction({
+					name: 'jztaolun',
+					data: {
+						action: url,
+						data: {
+							is_recommend:1,
+							page: this.param.page,
+							rows: this.param.rows,
+							uid:uid,
+							app_bbh: app_bbh
+						}
+					},
+				}).then((res) => {
+					// debugger;
+					this.zdflowList=res.result.rows;
+				})
 			},
 			addRandomData() {
 				// debugger;

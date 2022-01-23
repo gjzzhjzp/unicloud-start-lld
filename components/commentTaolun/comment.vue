@@ -217,6 +217,7 @@
 			// 发送评论
 			async sendComment() {
 				// debugger;
+				this.openpl=false;
 				if (this.userInfo.forbiddenwords) {
 					this.$refs.uToast.show({
 						title: '你已被禁言，请联系管理员',
@@ -247,23 +248,33 @@
 				});
 				if (!this.relaydata.comment_cj || this.relaydata.comment_cj == 1) {
 					var _addsenddata = Object.assign(senddata, {
-						user_id: [this.userInfo]
+						user_id: [JSON.parse(JSON.stringify(this.userInfo))]
 					});
 					////临时新增评论
 					this.commentArray.unshift(_addsenddata);
 					this._dealcomment();
 				}
+				
+				var add_value =null;
+				if(this.relaydata.comment_cj&&this.relaydata.comment_cj>1){
+					 add_value = {
+						type: 3,
+						user_id: this.zydata.user_id,
+						comment: this.userInfo.nickname+"回复了你的评论【"+this.relaydata.comment_content+"】【" + this.inputvalue + "】"
+					}
+				}else{
+					 add_value = {
+						type: 3,
+						user_id: this.zydata.user_id,
+						comment: this.userInfo.nickname+"评论了你的帖子【<span class='ftid' id='" + this.zydata._id + "'>" + this.zydata.title +
+							"</span>】【" + this.inputvalue + "】"
+					}
+				}
+				if(add_value){
+				  db.collection("jz-custom-systeminfo").add(add_value);
+				}
 				this.inputvalue = "";
 				await db.collection("opendb-news-commentsTaolun").add(senddata);
-
-				var add_value = {
-					type: 3,
-					user_id: this.zydata.user_id,
-					comment: "你的帖子【<span class='ftid' id='" + this.zydata._id + "'>" + this.zydata.title +
-						"</span>】有宝子【" + this.userInfo.nickname + "】评论啦~~【" + this.inputvalue + "】"
-				}
-				await db.collection("jz-custom-systeminfo").add(add_value);
-				
 				if (this.relaydata.comment_cj > 1) {
 					this.getComment(this.relaydata.reply_comment_id);
 				} else {
@@ -277,6 +288,7 @@
 				this.relaydata = {
 					comment_cj: item.comment_cj + 1,
 					comment_type: 1,
+					comment_content:item.comment_content,
 					reply_user_id: item.user_id[0]._id,
 					reply_comment_id: item._id,
 					all_reply_comment_id: item.all_reply_comment_id + "," + item._id
@@ -311,6 +323,12 @@
 						comment_id: that.commentList[index]._id,
 						comment_content: that.commentList[index].comment_content
 					});
+					var add_value = {
+						type: 2,
+						user_id: this.zydata.user_id,
+						comment: this.userInfo.nickname+"点赞了你的评论【"+that.commentList[index].comment_content+"】"
+					}
+					 db.collection("jz-custom-systeminfo").add(add_value);
 				} else {
 					that.commentList[index].like_count--;
 					await db.collection("opendb-news-likeplTaolun").where({
@@ -326,15 +344,19 @@
 			},
 			// 删除某条评论
 			deleteComment(id){
+				// debugger;
 				var _index=0;
 				var delnumber=0;
 				this.commentArray.forEach((item,index)=>{
-					if(item._id==id||item.all_reply_comment_id.indexOf(id)!=-1){
+					
+					if(item._id==id||(item.all_reply_comment_id.indexOf(id)!=-1)){
+						// debugger;
+						delnumber=item.children?(item.children.length+1):1;
 						this.commentArray.splice(_index,1);
-						delnumber++;
-					}else{
-						_index++;
 					}
+					// else{
+					// 	_index++;
+					// }
 				});
 				this._dealcomment();
 				// 更新评论数
@@ -435,6 +457,8 @@
 				}
 			},
 			_dealcomment() {
+				// debugger;
+				console.log("_dealcomment",this.commentArray);
 				var that = this;
 				that.commentList = that.getTree(this.commentArray);
 				that.commentList.forEach((item2) => {
@@ -475,6 +499,9 @@
 			},
 			getTree(data) {
 				// debugger;
+				// data.forEach((item)=>{
+				// 	delete item.children;
+				// })
 				let result = [];
 				let map = {};
 				data.forEach(item => {
@@ -485,7 +512,8 @@
 					if (reply_comment_id) {
 						let parent = map[reply_comment_id];
 						if (parent) {
-							(parent.children || (parent.children = [])).push(item);
+							parent.children=[];
+							parent.children.push(item);
 						} else {
 							result.push(item);
 						}
@@ -526,11 +554,11 @@
 
 	/* #ifdef H5 */
 	.slot-gonggao_content>uni-scroll-view {
-		max-height: calc(100vh - 820rpx);
+		max-height: calc(100vh - 300rpx);
 	}
 
 	.slot-gonggao_content.nosendpl>uni-scroll-view {
-		max-height: calc(100vh - 820rpx);
+		max-height: calc(100vh - 300rpx);
 	}
 
 	/* #endif */

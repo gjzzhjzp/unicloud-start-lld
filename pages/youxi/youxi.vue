@@ -23,4 +23,7 @@
 	.youxi-sy{
 		margin-top: 20rpx;
 	}
+	.youxi{
+		background-color: #fff;height: 100vh;
+	}
 </style>

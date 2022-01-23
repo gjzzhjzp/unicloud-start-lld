@@ -53,9 +53,6 @@
 				this.$refs.uToast.show({
 					title: '已删除'
 				})
-				this.$refs.uToast.show({
-					title: '已删除'
-				})
 				this.$emit("delete",this.curcomment._id);
 				// this.$emit("reload");
 			},

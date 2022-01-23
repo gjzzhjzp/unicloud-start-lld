@@ -263,12 +263,12 @@
 							title: '投稿成功'
 						});
 					}
-					this.getOpenerEventChannel().emit('refreshData')
 					if(this.tosuccess){
 						setTimeout(() => uni.navigateTo({
 							url:this.tosuccess
 						}), 500)
 					}else{
+						this.getOpenerEventChannel().emit('refreshData')
 						setTimeout(() => uni.navigateBack(), 500)
 					}
 					

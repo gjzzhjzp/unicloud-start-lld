@@ -54,6 +54,9 @@
 		methods: {
 			// 获取资源
 			getResource(id) {
+				uni.showLoading({
+					title:"加载中"
+				})
 				var that = this;
 				var uid = this.userInfo._id;
 				uniCloud.callFunction({

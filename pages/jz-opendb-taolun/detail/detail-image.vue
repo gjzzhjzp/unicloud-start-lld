@@ -60,7 +60,6 @@
 				this.$refs.comment.openpl=true;
 			},
 			saveImage(index) {
-				console.log(index, this.currentSrc);
 				if (typeof plus != "undefined") {
 					var pscreen = plus.webview.currentWebview().opener();
 					mui.fire(pscreen, 'saveImage', {
@@ -69,7 +68,6 @@
 				}
 			},
 			openlongan(data) {
-				console.log("data", data);
 				this.currentSrc = data.src;
 				this.showlongan = true;
 			},

@@ -444,6 +444,9 @@
 		}, {
 			"pagePath": "pages/sort/sort",
 			"text": "分类"
+		}, {
+			"pagePath": "pages/fabu/fabu",
+			"text": "发布"
 		},  {
 			"pagePath": "pages/guangchang/guangchang",
 			"text": "广场"

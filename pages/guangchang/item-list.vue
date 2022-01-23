@@ -4,7 +4,7 @@
 			<u-grid-item v-for="(item, index) in list" bg-color="#F5F5F5" :custom-style="{'padding':0}" :key="index">
 				<view class="er-item-list-warter">
 					<view class="er-item-list-warter2">
-						<view class="er-item-list-zd" v-if="item.is_recommend==1">
+						<view class="er-item-list-zd" v-if="showzd&&item.is_recommend==1">
 							<view style="display: flex;align-items: center;justify-content: center;">
 								<u-icon name="arrow-upward"></u-icon>置顶
 							</view>
@@ -30,8 +30,8 @@
 							</view> -->
 						</view>
 						<view @click="$notMoreTap(toDetail,'notTap',item)">
-							<view class="er-item-list-content">
-								{{item.excerpt}}
+							<view class="er-item-list-content" v-html="item.excerpt">
+								<!-- {{item.excerpt}} -->
 							</view>
 						</view>
 						<operation v-if="showoperation" :data="item" @topl="toDetail"></operation>
@@ -65,6 +65,12 @@
 				type: Boolean,
 				default () {
 					return true
+				}
+			},
+			showzd:{
+				type:Boolean,
+				default(){
+					return false
 				}
 			},
 			isgz: {
@@ -169,7 +175,9 @@
 	}
 
 	.er-item-list-content {
-		font-size: 14px;
+		    font-size: 14px;
+		    max-height: 10em;
+		    overflow: hidden;
 	}
 
 	.publish_date {
@@ -188,11 +196,11 @@
 	}
 
 	.original-img {
-		width: 68rpx;
-		height: 68rpx;
+		width: 110rpx;
+		height: 110rpx;
 		position: absolute;
-		top: -32rpx;
-		left: -10rpx;
+		top: -52rpx;
+		left: -14rpx;
 	}
 
 	.er-item-list-warter {

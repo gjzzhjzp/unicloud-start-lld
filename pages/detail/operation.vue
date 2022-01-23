@@ -1,20 +1,15 @@
 <template>
 	<view class="er-item-list-operation" :style="{'background':background}">
-		<!-- <view class="er-item-list-icon" @click.stop="topl()">
-			<u-icon name="chat" size="50"></u-icon>
-			<text class="er-item-list-icon-text">{{showtext?'评论':99}}</text>
-		</view> -->
 		<view class="er-item-list-icon" @click.stop="tolike1()">
 			<u-icon v-show="!islike" name="thumb-up" size="50"></u-icon>
 			<u-icon v-show="islike" color="#777BCE" name="thumb-up-fill" size="50"></u-icon>
-			<text class="er-item-list-icon-text">{{showtext?'点赞':data.like_count1||0}}</text>
+			<text class="er-item-list-icon-text">{{showtext?('点赞'+(data.like_count1||'')):data.like_count1||''}}</text>
 		</view>
 		<view class="er-item-list-icon" @click.stop="tofavator1()">
 			<u-icon v-show="!isfavator" name="heart" size="50"></u-icon>
 			<u-icon v-show="isfavator" color="#777BCE" name="heart-fill" size="50"></u-icon>
-			<text class="er-item-list-icon-text">{{showtext?'收藏':data.like_count||0}}</text>
+			<text class="er-item-list-icon-text">{{showtext?('收藏'+(data.like_count||'')):data.like_count||''}}</text>
 		</view>
-		<!-- <u-toast ref="uToast" /> -->
 	</view>
 </template>
 <script>
@@ -43,7 +38,7 @@
 			showtext:{
 				type:Boolean,
 				default(){
-					return false
+					return true
 				}
 			},
 			background:{
@@ -59,6 +54,14 @@
 				hasLogin: 'user/hasLogin'
 			})
 		},
+		watch:{
+			"data.like":{
+				deep:false,
+				handler(){
+					this.initdata();
+				}
+			}
+		},
 		created(){
 			
 		},
@@ -67,6 +70,7 @@
 		},
 		methods: {
 			initdata(){
+				// debugger;
 				if(this.data.like&&this.data.like.length>0){
 					this.$set(this,"islike",true)
 				}else{
@@ -103,17 +107,17 @@
 					var resultdata = await collection_like.add({
 						article_id: this.data._id,
 						article_title: this.data.title,
-						categories: this.data.categories,
+						zy_gs: this.data.zy_gs,
 						user_id: db.getCloudEnv('$cloudEnv_uid'),
 						create_date: db.getCloudEnv('$cloudEnv_now')
 					});
+					
 					this.add_like().then(async () => {
 						var add_value = {
-							type: 4,
+							type: 2,
 							user_id: this.data.user_id,
-							comment: "你的帖子【<span class='ftid' id='" + this.data._id +
-								"'>" + this.data.title + "</span>】被宝子【" + this.userInfo
-								.nickname + "】点赞啦~~"
+							comment: this.userInfo.nickname+"点赞了你的作品【<span class='zyid' id='" + this.data._id +
+								"'>" + this.data.title + "</span>】"
 						}
 						await db.collection("jz-custom-systeminfo").add(add_value);
 						reslove();
@@ -146,6 +150,7 @@
 						var res = res.result;
 						if (res.state == "0000") {
 							this.$set(this, "islike", false);
+							this.$set(this.data, "like", []);
 							this.$set(this.data, "like_count1", --this.data.like_count1);
 						} else {
 							console.log("res", res.msg);
@@ -178,6 +183,7 @@
 						var res = res.result;
 						if (res.state == "0000") {
 							this.$set(this, "islike", true);
+							this.$set(this.data, "like", [{}]);
 							this.$set(this.data, "like_count1", ++this.data.like_count1);
 						} else {
 							console.log("res", res.msg);
@@ -198,7 +204,7 @@
 					var resultdata = await collection.add({
 						article_id: this.data._id,
 						article_title: this.data.title,
-						categories: this.data.categories,
+						zy_gs: this.data.zy_gs,
 						user_id: db.getCloudEnv('$cloudEnv_uid'),
 						create_date: db.getCloudEnv('$cloudEnv_now')
 					});
@@ -206,9 +212,8 @@
 						var add_value = {
 							type: 4,
 							user_id: this.data.user_id,
-							comment: "你的帖子【<span class='ftid' id='" + this.data._id +
-								"'>" + this.data.title + "</span>】被宝子【" + this.userInfo
-								.nickname + "】收藏啦~~"
+							comment: this.userInfo.nickname+"收藏了你的作品【<span class='zyid' id='" + this.data._id +
+								"'>" + this.data.title + "</span>】"
 						}
 						await db.collection("jz-custom-systeminfo").add(add_value);
 						reslove();
@@ -245,6 +250,7 @@
 							// 	type: 'success'
 							// });
 							this.$set(this, "isfavator", false);
+							this.$set(this.data, "favorite", []);
 							this.$set(this.data, "like_count", --this.data.like_count);
 						} else {
 							console.log("res", res.msg);
@@ -281,6 +287,7 @@
 							// 	type: 'success'
 							// });
 							this.$set(this, "isfavator", true);
+							this.$set(this.data, "favorite", [{}]);
 							this.$set(this.data, "like_count", ++this.data.like_count);
 						} else {
 							console.log("res", res.msg);
@@ -303,10 +310,10 @@
 	.er-item-list-operation {
 		display: flex;
 		justify-content: space-between;
-		padding: 10px 40px;
+		padding: 10px 80px;
 		background: #EFEFF7;
 		border-radius: 6px;
-		margin-top: 20px;
+		margin-top: 5px;
 	}
 
 	.er-item-list-icon {

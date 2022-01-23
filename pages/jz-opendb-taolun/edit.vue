@@ -6,9 +6,9 @@
 				<uni-easyinput placeholder="分类" v-model="formData.categories" trim="both"></uni-easyinput>
 			</uni-forms-item>
 			<uni-forms-item required name="excerpt" label="详情">
-				<uni-easyinput placeholder="请输入详情" type="textarea" :maxlength="200" v-model="formData.excerpt" trim="both"></uni-easyinput>
+				<uni-easyinput placeholder="请输入详情" type="textarea" :maxlength="1000" v-model="formData.excerpt" trim="both"></uni-easyinput>
 			</uni-forms-item>
-			<uni-forms-item required name="resources" label="图片">
+			<uni-forms-item name="resources" label="图片">
 				<uni-file-picker file-mediatype="image" :limit="9" return-type="array" v-model="formData.resources">
 				</uni-file-picker>
 			</uni-forms-item>

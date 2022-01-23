@@ -556,6 +556,35 @@ module.exports = class resourceService extends Service {
 						)
 						.done(),
 					as: 'favorite',
+				}).lookup({
+					from: 'opendb-news-like', ///获取当前用户是否收藏
+					let: {
+						article_id: '$_id'
+					},
+					pipeline: $.pipeline()
+						.match(
+							dbCmd.expr($.and([
+								$.eq(['$article_id', '$$article_id']),
+								$.eq(['$user_id', uid])
+							]))
+						)
+						.done(),
+					as: 'like',
+				})
+				.lookup({
+					from: 'opendb-news-guanzhu', ///获取当前用户是否收藏
+					let: {
+						user_id: '$user_id'
+					},
+					pipeline: $.pipeline()
+						.match(
+							dbCmd.expr($.and([
+								$.eq(['$buser_id', '$$user_id']),
+								$.eq(['$user_id', uid])
+							]))
+						)
+						.done(),
+					as: 'guanzhu',
 				})
 				.end();
 			if (resultdata.data && resultdata.data.length > 0) {

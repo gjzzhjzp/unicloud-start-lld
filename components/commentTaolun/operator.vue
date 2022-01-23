@@ -44,6 +44,7 @@
 				}
 			},
 			async confirm() {
+				// debugger;
 				await db.collection("opendb-news-commentsTaolun").where({
 					all_reply_comment_id: new RegExp(this.curcomment._id, 'gi')
 				}).remove();

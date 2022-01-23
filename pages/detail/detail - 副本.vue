@@ -18,7 +18,7 @@
 				</template>
 			</template>
 			<template v-else>
-				<template v-if="zy_gs=='1'||detaildata.aliyun_dz.indexOf('/jzmp4/')!=-1">
+				<template v-if="zy_gs=='1'||detaildata.aliyun_dz.indexOf('.mp4')!=-1">
 					<detail-mp4 :data="detaildata"></detail-mp4>
 				</template>
 				<template v-else>

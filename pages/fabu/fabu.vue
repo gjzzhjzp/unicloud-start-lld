@@ -12,10 +12,14 @@
 				<view class="jz-fabu-content">
 					用户发帖，审核成功的帖子会发布到广场；用户投稿，审核成功的稿子将会收录到俊哲资源站，用户可在首页或分类收看
 				</view>
-				<view class="jz-fabu-content">
+				<view class="jz-fabu-content" style="display: flex;">
 					<!-- <u-button size="medium" shape="circle" @click="tougaojc()">投稿教程</u-button> -->
-					<u-button size="medium" shape="circle" @click="tougaogz()">投稿规则</u-button>
-					<u-button size="medium" shape="circle" @click="tougaogz()">发帖规则</u-button>
+					<view>
+						<u-button size="medium" type="primary" :plain="true" shape="circle" @click="tougaogz()">投稿规则</u-button>
+					</view>
+					<view style="margin-left: 10px;">
+						<u-button size="medium" type="primary" :plain="true" shape="circle" @click="tougaogz()">发帖规则</u-button>
+					</view>
 				</view>
 			</view>
 		</view>

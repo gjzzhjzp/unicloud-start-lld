@@ -1,9 +1,8 @@
 <template>
 	<view class="system-info">
-		<u-navbar :is-back="true" title="系统消息"></u-navbar>
+		<u-navbar :is-back="true" :title="zwtype+'消息'"></u-navbar>
 		<view class="">
 			<scroll-view id="scroll-Y" :scroll-top="scrollTop" scroll-y="true" class="scroll-Y">
-				<!-- :style="{'visibility': showinfo?'':'hidden'}" -->
 				<view class="all-system-info" id="all-system-info">
 					<view class="infos" v-for="(item,index) in infos" :key="index">
 						<yd-chatitem class="infos-chatitem" ref="chatitem" :message="item.comment" :leftTime="item.comment_date"></yd-chatitem>
@@ -25,23 +24,31 @@
 			return {
 				scrollTop:0,
 				infos: [],
-				// showinfo:false,
+				zwtype:"系统",
 				infotype:"",///消息类型
 				message: "你的投稿视频【<span class='zyid' id='619ce4e1808fdd00017261d3'>蜀道难，难于上青天</span>】有宝子【】评论啦~~【啊啊啊啊啊啊啊这里是内容】"
 			}
 		},
 		created(){
 			this.infotype=this.$Route.query.type;///获取消息类型
+			switch(this.infotype){
+				case "1":
+				this.zwtype="系统";
+				break;
+				case "2":
+				this.zwtype="点赞";
+				break;
+				case "3":
+				this.zwtype="评论";
+				break;
+				case "4":
+				this.zwtype="收藏";
+				break;
+				case "5":
+				this.zwtype="关注";
+				break;
+			}
 			this.getinfos();
-		},
-		mounted() {
-			// var that=this;
-			// setTimeout(()=>{
-			// 	// debugger;
-			// 	var _height=$("#all-system-info").height();
-			// 	that.scrollTop=_height;
-			// 	that.showinfo=true;
-			// },500)
 		},
 		computed: {
 			...mapGetters({
@@ -59,11 +66,9 @@
 					}).field("comment,comment_date").orderBy("comment_date desc").get();
 				if (res.result.data && res.result.data.length > 0) {
 					this.infos = res.result.data;
-					var ids = [];
-					this.infos.forEach((item) => {
-						ids.push(item._id);
-					});
-					uni.setStorageSync("systeminfo_" + this.userInfo._id, ids.join(","));
+					var curtime=new Date().getTime();
+					uni.setStorageSync("systeminfo_time_" + this.infotype,curtime);
+					uni.setStorageSync("systeminfo_last",curtime);
 				}
 			}
 		}

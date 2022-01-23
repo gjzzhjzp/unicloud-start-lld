@@ -54,6 +54,7 @@
 	import likelist from "./likelist.vue"
 	import favatorlist from "./favatorlist.vue"
 	import operation from "../../guangchang/operation.vue"
+	const db = uniCloud.database();
 	export default {
 		mixins: [detail],
 		components: {
@@ -98,11 +99,11 @@
 				deep: true,
 				handler(data) {
 					this.tablist = [{
-						name: '评论'+(data.pl_count||'')
+						name: '评论' + (data.pl_count || '')
 					}, {
-						name: '点赞'+(data.like_count1||'')
+						name: '点赞' + (data.like_count1 || '')
 					}, {
-						name: '收藏'+(data.like_count||'')
+						name: '收藏' + (data.like_count || '')
 					}];
 				}
 			},
@@ -192,6 +193,13 @@
 						title: '已关注',
 						type: 'success'
 					});
+					var dluserinfo = uni.getStorageSync("userInfo");
+					var add_value = {
+						type: 5,
+						user_id: this.data.user_id,
+						comment: dluserinfo.nickname + "关注了你"
+					}
+					db.collection("jz-custom-systeminfo").add(add_value);
 				}
 			},
 			showguanzhu(item) {
@@ -240,12 +248,13 @@
 </script>
 
 <style>
-	.detailhead-operation{
-		    position: fixed;
-		    bottom: 0px;
-		    width: 100%;
-		    margin-left: -10px;
+	.detailhead-operation {
+		position: fixed;
+		bottom: 0px;
+		width: 100%;
+		margin-left: -10px;
 	}
+
 	.detailhead-tabs {
 		margin-top: 10px;
 		background-color: #fff;

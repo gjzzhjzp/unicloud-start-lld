@@ -92,7 +92,7 @@
 					},
 					{
 						"title": "粉丝",
-						"to": '/pages/guanzhu/guanzhu',
+						"to": '/pages/fensi/fensi',
 						"thumb": "/static/center/info.png"
 					}
 				],

@@ -65,7 +65,7 @@ db.collection("jz-opendb-danmu").where({
 }).limit(500).get();
 
 db.collection("jz-opendb-danmu").where({
-	resource_id: "61aee1840d111e00012bf162"
+	resource_id: "61dba474f11e980001dee2a4"
 }).remove();
 
 db.collection("jz-opendb-resources").where({

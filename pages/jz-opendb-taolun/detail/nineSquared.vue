@@ -11,7 +11,7 @@
 			<view style="color: #7275D3;margin-left: 4px;">宫格</view>
 		</view>
 		<template v-if="listtype=='grid'">
-			<view class="nineSquared_1" v-if="list.length==1">
+			<!-- <view class="nineSquared_1" v-if="list.length==1">
 				<u-grid :col="1" :border="false">
 					<u-grid-item v-for="(item,index) in list" :key="index" :custom-style="{padding: '0px'}">
 						<small-image @load="loadsuccess" :index="index" :showNum="showNum" :single="true" :data="item"
@@ -19,8 +19,8 @@
 						</small-image>
 					</u-grid-item>
 				</u-grid>
-			</view>
-			<view class="nineSquared_2" v-else-if="list.length<5">
+			</view> -->
+			<view class="nineSquared_2" v-if="list.length<5">
 
 				<u-grid :col="2" :border="false">
 					<u-grid-item v-for="(item,index) in list" :key="index" :custom-style="{padding: '0px'}">

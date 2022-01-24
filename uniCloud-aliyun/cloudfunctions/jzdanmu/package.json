@@ -9,6 +9,8 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"excel-to-json": "file:../../../uni_modules/ml-excel-to-json/uniCloud/cloudfunctions/common/ml-excel-to-json",
+		"ml-excel-to-json": "file:../../../uni_modules/ml-excel-to-json/uniCloud/cloudfunctions/common/ml-excel-to-json",
 		"uni-cloud-router": "file:../../../uni_modules/uni-cloud-router/uniCloud/cloudfunctions/common/uni-cloud-router"
 	}
 }

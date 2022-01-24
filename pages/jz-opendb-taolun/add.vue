@@ -5,8 +5,8 @@
 			<uni-forms-item required name="categories" label="分类">
 			  <uni-data-checkbox v-model="formData.categories" :localdata="formOptions.categories_localdata"></uni-data-checkbox>
 			</uni-forms-item>
-			<uni-forms-item required name="excerpt" label="详情">
-				<uni-easyinput placeholder="请输入详情" type="textarea" :maxlength="1000" v-model="formData.excerpt" trim="both"></uni-easyinput>
+			<uni-forms-item required name="excerpt" label="内容">
+				<uni-easyinput placeholder="请输入内容" type="textarea" :maxlength="1000" v-model="formData.excerpt" trim="both"></uni-easyinput>
 			</uni-forms-item>
 			<uni-forms-item name="resources" label="图片">
 				<uni-file-picker file-mediatype="image" :limit="9" return-type="array"  v-model="formData.resources">

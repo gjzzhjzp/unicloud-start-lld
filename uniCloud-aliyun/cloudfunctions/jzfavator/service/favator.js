@@ -189,12 +189,26 @@ module.exports = class favatorService extends Service {
 			"update_date": -1
 		}).skip((page - 1) * rows).limit(rows);
 		var resultdata = {};
+		const dbCmd = db.command;
+		const $ = dbCmd.aggregate;
 		resultdata = await collection_query.lookup({
 			from: 'jz-opendb-taolun',
 			localField: 'article_id',
 			foreignField: '_id',
 			as: 'article_id',
-		}).end();
+		}).lookup({
+			from: 'uni-id-users', ///获取当前用户信息
+			let: {
+				buser_id: '$buser_id'
+			},
+			pipeline: $.pipeline()
+				.match(
+					dbCmd.expr($.and([
+						$.eq(['$_id', '$$buser_id'])
+					]))
+				)
+				.done(),
+			as: 'userinfo'}).end();
 		return {
 			"state": "0000",
 			"rows": resultdata.data,

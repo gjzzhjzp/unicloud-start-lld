@@ -1,0 +1,53 @@
+{
+	"bsonType": "object",
+	"required": ["title","options", "answer"],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"title": {
+			"bsonType": "string",
+			"description": "问题",
+			"maxLength": 500,
+			"title": "问题",
+			"trim": "both"
+		},
+		"options":{
+			"bsonType": "string",
+			"description": "选项",
+			"maxLength": 500,
+			"title": "选项",
+			"trim": "both"
+		},
+		"answer": {
+			"bsonType": "string",
+			"description": "答案",
+			"title": "答案"
+		},
+		"status": {
+			"bsonType": "bool",
+			"defaultValue": true,
+			"title": "生效状态"
+		},
+		"created_date": {
+			"title": "创建时间",
+			"bsonType": "timestamp",
+			"description": "创建时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		},
+		"description": {
+			"bsonType": "string",
+			"description": "维护者自用描述",
+			"title": "备注",
+			"trim": "both"
+		}
+	}
+}

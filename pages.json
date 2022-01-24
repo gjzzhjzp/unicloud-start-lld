@@ -4,7 +4,14 @@
 			"style": {
 				"enablePullDownRefresh": true
 			}
-		}, {
+		}, 
+		{
+			"path":"pages/gzquestion/gzquestion",
+			"style": {
+				"navigationBarTitleText": "规则问题"
+			}
+		},
+		{
 			"path": "pages/guanzhu/guanzhu",
 			"style": {
 				"navigationBarTitleText": "关注列表"

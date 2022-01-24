@@ -22,7 +22,9 @@ module.exports = class excelService extends Service {
 				if (item.danmu_text && item.danmu_text.substring(0, 1) == "[") {
 					item.danmu_text = JSON.parse(item.danmu_text)[4];
 				}
-				item.danmu_time = item.danmu_time.split(",")[0];
+				if(item.danmu_time&&typeof item.danmu_time=="string"){
+					item.danmu_time = item.danmu_time.split(",")[0];
+				}
 				item.resource_id = id;
 				item.danmu_color = "#fff";
 			});

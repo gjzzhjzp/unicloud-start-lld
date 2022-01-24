@@ -11,40 +11,48 @@
 						</view>
 						<view class="er-item-list-warter1">
 							<view class="er-item-list-img" @click="toperson(item)">
-
-								<view class="original" v-if="item.userinfo&&item.userinfo[0].original">
-									<image class="original-img" src="@/static/center/ori_back.png"></image>
-								</view>
-								<u-avatar :size="80"
-									:src="(item.userinfo&&item.userinfo[0].avatar_file)?item.userinfo[0].avatar_file.url:''">
-								</u-avatar>
+								<template v-if="item.userinfo&&item.userinfo.length>0">
+									<view class="original"
+										v-if="item.userinfo&&item.userinfo[0]&&item.userinfo[0].original">
+										<image class="original-img" src="@/static/center/ori_back.png"></image>
+									</view>
+									<u-avatar :size="80"
+										:src="(item.userinfo&&item.userinfo[0].avatar_file)?item.userinfo[0].avatar_file.url:''">
+									</u-avatar>
 								<view class="original-title">
 									<text
 										style="color: #333333;font-size: 14px;">{{item.userinfo&&item.userinfo[0].nickname?item.userinfo[0].nickname:'佚名'}}</text>
 									<uni-dateformat class="publish_date" :date="item.publish_date"
 										format="yyyy-MM-dd hh:mm:ss" :threshold="[60000, 2592000000]" />
 								</view>
+								</template>
 							</view>
 							<!-- <view class="er-item-list-gz" v-if="showguanzhu(item)">
 								<u-button size="medium" shape="circle" @click="guanzhu(item)">关注</u-button>
 							</view> -->
 						</view>
 						<view @click="$notMoreTap(toDetail,'notTap',item)">
-							<view class="er-item-list-content" v-html="item.excerpt">
+							<view class="er-item-list-content u-line-4" v-html="item.excerpt">
 								<!-- {{item.excerpt}} -->
 							</view>
 						</view>
+						<view @click="$notMoreTap(toDetail,'notTap',item)">
+							<nine-squared :list="item.resources"></nine-squared>
+						</view>
+						
 						<operation v-if="showoperation" :data="item" @topl="toDetail"></operation>
 					</view>
 				</view>
 			</u-grid-item>
 		</u-grid>
+		
 		<u-toast ref="uToast" />
 	</view>
 </template>
 <script>
 	const db = uniCloud.database();
 	import operation from "./operation.vue"
+	import nineSquared from "../jz-opendb-taolun/detail/nineSquared.vue"
 	export default {
 		data() {
 			return {
@@ -52,7 +60,8 @@
 			}
 		},
 		components: {
-			operation
+			operation,
+			nineSquared
 		},
 		props: {
 			list: {
@@ -67,9 +76,9 @@
 					return true
 				}
 			},
-			showzd:{
-				type:Boolean,
-				default(){
+			showzd: {
+				type: Boolean,
+				default () {
 					return false
 				}
 			},
@@ -175,9 +184,9 @@
 	}
 
 	.er-item-list-content {
-		    font-size: 14px;
-		    max-height: 10em;
-		    overflow: hidden;
+		font-size: 14px;
+		// max-height: 10em;
+		// overflow: hidden;
 	}
 
 	.publish_date {

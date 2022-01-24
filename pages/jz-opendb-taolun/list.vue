@@ -17,16 +17,16 @@
 						<u-icon size="40" v-else name="/static/lock.png"></u-icon>
 						<!-- <image mode="aspectFill" :src="item.images" /> -->
 						<view class="title-wrap">
-							<text class="title u-line-2">{{ item.title }}</text>
+							<text class="title u-line-2">{{ item.excerpt }}</text>
 						</view>
 					</view>
 				</u-swipe-action>
 			</view>
 			<uni-load-more :status="loading?'loading':(hasMore ? 'more' : 'noMore')"></uni-load-more>
 		</unicloud-db>
-			<template v-if="openAdd">
+			<!-- <template v-if="openAdd">
 		<uni-fab ref="fab" horizontal="right" vertical="bottom" :pop-menu="false" @fabClick="$notMoreTap(fabClick,'notTap')" />
-		</template>
+		</template> -->
 		<u-back-top :scroll-top="scrollTop" top="1000" mode="square" icon="arrow-up" tips="顶部"></u-back-top>
 	</view>
 </template>

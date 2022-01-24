@@ -194,9 +194,9 @@ import gitemList from "../guangchang/item-list.vue"
 				});
 				var userInfo = uni.getStorageSync("userInfo");
 				uniCloud.callFunction({
-					name: 'jztaolun',
+					name: 'jzfavator',
 					data: {
-						action: "taolun/getMyfavoriteList",
+						action: "favator/getMyFavatorTaolunList",
 						data: {
 							uid: userInfo._id,
 							page: this.param.page,

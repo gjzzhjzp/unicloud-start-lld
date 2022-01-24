@@ -113,6 +113,7 @@
 						article_title: this.data.title,
 						categories: this.data.categories,
 						user_id: db.getCloudEnv('$cloudEnv_uid'),
+						buser_id: this.data.user_id,
 						create_date: db.getCloudEnv('$cloudEnv_now')
 					});
 					this.add_like_taolun().then(async () => {
@@ -209,6 +210,7 @@
 						article_title: this.data.title,
 						categories: this.data.categories,
 						user_id: db.getCloudEnv('$cloudEnv_uid'),
+						buser_id: this.data.user_id,
 						create_date: db.getCloudEnv('$cloudEnv_now')
 					});
 					this.add_Favorite().then(async () => {

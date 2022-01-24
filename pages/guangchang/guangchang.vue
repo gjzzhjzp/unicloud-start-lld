@@ -112,7 +112,7 @@
 				zy_gs: "0", ////资源格式
 				param: {
 					page: 1,
-					rows: 8
+					rows: 4
 				},
 				// curuser:""////当前用户
 			}

@@ -17,10 +17,10 @@
 			</view>
 			<view v-if="currenttab!=2">
 				<u-loadmore v-show="flowList.length!=0" :status="loadStatus" @loadmore="addRandomData"></u-loadmore>
-			</view>
+			</view>-->
 			<view style="margin-top: 20px;text-align: center;" v-show="flowList.length==0">
 				<u-empty text="无喜欢" mode="favor"></u-empty>
-			</view> -->
+			</view> 
 		</view>
 		<view v-else>
 			<gitem-list :showoperation="false" :list="gflowList"></gitem-list>
@@ -139,6 +139,7 @@
 					},
 				}).then((res) => {
 					var rows = res.result.rows;
+					
 					if (rows.length < this.param.rows) {
 						this.loadStatus = 'nomore';
 					} else {
@@ -193,6 +194,7 @@
 				}).then((res) => {
 					// debugger;
 					var rows = res.result.rows;
+					console.log("rows",rows);
 					if (rows.length < this.param.rows) {
 						this.loadStatus = 'nomore';
 					} else {

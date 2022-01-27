@@ -61,13 +61,13 @@ db.collection('jz-custom-fks').add({
 });
 
 db.collection("jz-opendb-danmu").where({
-	resource_id: "61cec49df7f06e000183d6ec"
+	resource_id: "61ed57f3037ab600018fdd07"
 }).limit(500).get();
 
 db.collection("jz-opendb-danmu").where({
-	resource_id: "61dba474f11e980001dee2a4"
+	resource_id: "61ed57f3037ab600018fdd07"
 }).remove();
-
+	
 db.collection("jz-opendb-resources").where({
 	zy_gs: 1,
 	"categories": "100011"

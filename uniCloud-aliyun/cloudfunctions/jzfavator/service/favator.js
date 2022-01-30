@@ -123,7 +123,7 @@ module.exports = class favatorService extends Service {
 		var zy_gs = data.zy_gs;
 		var page = data.page;
 		var rows = data.rows || 16;
-		const collection = db.collection('opendb-news-like');
+		const collection = db.collection('opendb-news-favorite');
 		const collectionconfig = db.collection('jz-opendb-resources');
 		var collection_query = collection.aggregate().match({
 			user_id: uid,
@@ -181,7 +181,7 @@ module.exports = class favatorService extends Service {
 		var uid = data.uid;
 		var page = data.page;
 		var rows = data.rows || 16;
-		const collection = db.collection('opendb-news-likeTaolun');
+		const collection = db.collection('opendb-news-favoriteTaolun');
 		const collectionconfig = db.collection('jz-opendb-taolun');
 		var collection_query = collection.aggregate().match({
 			user_id: uid

@@ -7,7 +7,7 @@
 		"read": true,
 		"create": "auth.uid != null",
 		"update": true,
-		"delete": "doc.user_id == auth.uid"
+		"delete":"auth.uid != null"
 	},
 	"properties": {
 		"_id": {
@@ -18,6 +18,11 @@
 			"title": "文章ID",
 			"description": "文章ID，jz-opendb-resources 表中的`_id`字段",
 			"foreignKey": "jz-opendb-resources._id"
+		},
+		"comment_id": {
+			"bsonType": "string",
+			"title": "评论ID",
+			"description": "自动生成的评论id"
 		},
 		"user_id": {
 			"bsonType": "string",
@@ -53,8 +58,7 @@
 		"reply_comment_id": {
 			"bsonType": "string",
 			"title": "被回复的评论ID",
-			"description": "被回复的评论ID，comment_type为1时有效",
-			"foreignKey": "opendb-news-comments._id"
+			"description": "被回复的评论ID，comment_type为1时有效"
 		},
 		"all_reply_comment_id": {
 			"bsonType": "string",
@@ -69,10 +73,7 @@
 		"comment_date": {
 			"title": "评论发表时间",
 			"bsonType": "timestamp",
-			"description": "评论发表时间",
-			"forceDefaultValue": {
-				"$env": "now"
-			}
+			"description": "评论发表时间"
 		}
 	}
 }

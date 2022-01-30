@@ -46,15 +46,15 @@
 			async confirm() {
 				// debugger;
 				await db.collection("opendb-news-commentsTaolun").where({
-					all_reply_comment_id: new RegExp(this.curcomment._id, 'gi')
+					all_reply_comment_id: new RegExp(this.curcomment.comment_id, 'gi')
 				}).remove();
 				await db.collection("opendb-news-commentsTaolun").where({
-					_id: this.curcomment._id
+					comment_id: this.curcomment.comment_id
 				}).remove();
 				this.$refs.uToast.show({
 					title: '已删除'
 				})
-				this.$emit("delete",this.curcomment._id);
+				this.$emit("delete",this.curcomment.comment_id);
 			},
 			async confirmjubao() {
 				if (!this.jubaocontent) {

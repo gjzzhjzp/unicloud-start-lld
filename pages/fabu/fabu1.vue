@@ -1,6 +1,6 @@
 <template>
 	<view class=" jz-fabu" v-if="showfabu">
-		<u-navbar :is-back="false" title="发布"></u-navbar>
+		<u-navbar :is-back="true" title="发布"></u-navbar>
 		<view class="jz-fabu-con">
 			<view style="margin-right: 4px;">
 				<u-image width="100rpx" height="100rpx" src="/static/newpage/write.png"></u-image>
@@ -35,7 +35,7 @@
 				<addtaolun ref="addtaolun" @success="success" :showtitle="false" tosuccess="/pages/fabusuccess/fabusuccess"></addtaolun>
 			</view>
 		</view>
-		<jz-tabbar></jz-tabbar>
+		<!-- <jz-tabbar></jz-tabbar> -->
 		<jz-gonggao ref="gonggao"></jz-gonggao>
 	</view>
 </template>
@@ -57,9 +57,6 @@
 			}
 		},
 		onShow(){
-			// uni.redirectTo({
-			// 	url:"/pages/fabu/fabu1"
-			// })
 			// this.showfabu=true;
 			// if(this.$refs.addresources){
 			// 	this.$refs.addresources.initrules();

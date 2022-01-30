@@ -101,6 +101,17 @@
 			async getList() {
 				var article_id = this.data._id;
 				if (article_id) {
+					// 获取收藏总数
+					var rescount = await db.collection("opendb-news-favoriteTaolun").where({
+						article_id: article_id
+					}).count();
+					var _number = rescount.result.total;
+					db.collection("jz-opendb-taolun").where({
+						_id: this.data._id
+					}).update({
+						like_count: _number || 0
+					});
+					
 					var res = await db.collection("opendb-news-favoriteTaolun,uni-id-users").
 					where({
 						article_id: article_id
@@ -151,11 +162,11 @@
 	}
 	
 	.original-img {
-		width: 68rpx;
-		height: 68rpx;
+		width: 110rpx;
+		height: 110rpx;
 		position: absolute;
-		top: -32rpx;
-		left: -10rpx;
+		top: -50rpx;
+		left: -16rpx;
 	}
 	
 	.er-item-list-warter {

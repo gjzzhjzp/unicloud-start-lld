@@ -3,12 +3,13 @@ export default {
 	initconfig() {
 		// debugger;
 		console.log("initconfig");
-		var app_bbh = "117";
+		var app_bbh = getApp().globalData.app_bbh;
 		//#ifdef APP-PLUS
 		app_bbh = plus.runtime.versionCode;
 		//#endif
 		var yqm_success = uni.getStorageSync("yqm_success");
 		var config = getApp().globalData.systemconfig;
+		// debugger;
 		if (config["800014"] && config["800014"] == '1' && app_bbh < config["800004"]) {
 			uni.reLaunch({
 				url: "/uview-ui/components/u-full-screen/u-full-screen-xtsd"

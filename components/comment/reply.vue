@@ -16,9 +16,9 @@
 		<u-gap height="4" bg-color="#E9E9E9"></u-gap>
 		<view class="comment">
 			<view class="top">
-				<view class="left">
-					<view class="heart-photo">
-						<commont-image :src="res.user_id[0].avatar_file.url"
+				<view class="left" >
+					<view class="heart-photo"  @click="tgrHref(res.user_id[0])">
+						<commont-image :src="imageUrl(res)"
 							:isoriginal="!!(res.user_id[0].original==1)">
 						</commont-image>
 					</view>
@@ -46,9 +46,9 @@
 					<view class="itemb" @click="replycomment(res)">
 						<u-icon size="40" name="/static/comment/reply.png"></u-icon>
 					</view>
-					<view class="itemb" @click="openmore(res)">
+					<!-- <view class="itemb" @click="openmore(res)">
 						<u-icon size="40" name="/static/comment/more.png"></u-icon>
-					</view>
+					</view> -->
 				</view>
 			</view>
 		</view>
@@ -67,8 +67,8 @@
 						<view class="comment">
 							<view class="top">
 								<view class="left">
-									<view class="heart-photo">
-										<commont-image :src="item.user_id[0].avatar_file.url"
+									<view class="heart-photo" @click="tgrHref(item.user_id[0])">
+										<commont-image :src="imageUrl(item)"
 											:isoriginal="!!(item.user_id[0].original==1)">
 										</commont-image>
 										<!-- <image :src="item.user_id[0].avatar_file.url" mode=""></image> -->
@@ -76,7 +76,7 @@
 									<view class="user-info">
 										<view class="name">{{ item.user_id[0].nickname }}</view>
 										<view class="content" v-if="item.reply_comment_id[0]._id!=res._id">回复 <text
-												style="color: #7275D3;">@{{item.reply_user_id[0].nickname}}：</text>{{ item.comment_content }}
+												style="color: #7275D3;">@{{replyname(item)}}：</text>{{ item.comment_content }}
 										</view>
 										<view class="content" v-else>{{ item.comment_content }}</view>
 									</view>
@@ -126,7 +126,7 @@
 				发送
 			</text>
 		</view>
-		<operator ref="operator" @reload="reload()"></operator>
+		<operator ref="operator" @delete="deleteComment" @reload="reload()"></operator>
 	</view>
 </template>
 
@@ -213,6 +213,62 @@
 			console.log("this.commentList", this.commentList);
 		},
 		methods: {
+			imageUrl(item){
+				if(item.user_id&&item.user_id[0]&&item.user_id[0].avatar_file){
+					return item.user_id[0].avatar_file.url;
+				}else{
+					return ""
+				}
+			},
+			deleteComment(id){
+				// debugger;
+				var delnumber = 0;
+				this.commentList.forEach((item, index) => {
+					if (item.comment_id == id || item.all_reply_comment_id.indexOf(id) != -1) {
+						delnumber += 1;
+						delete this.commentList[index]
+					}
+				});
+				var _commentList=[];
+				this.commentList.forEach((item1)=>{
+					if(item1){
+						_commentList.push(item1);
+					}
+				});
+				this.commentList=_commentList;
+				// this.commentList=JSON.parse(JSON.stringify(this.commentList));
+				// this._dealcomment();
+				// 更新评论数
+				this.zydata.pl_count = this.zydata.pl_count - delnumber;
+				db.collection("jz-opendb-resources").where({
+					_id: this.zydata._id
+				}).update({
+					pl_count: (this.zydata.pl_count || 0)
+				});
+			},
+			replyname(item){
+				if(Array.isArray(item.reply_user_id)){
+					return item.reply_user_id[0].nickname
+				}else if(Array.isArray(item.reply_user_id_info)){
+					return item.reply_user_id_info[0].nickname
+				}
+			},
+			tgrHref(item) {
+				// debugger;
+					var id = item._id;
+					if (id) {
+						var userinfo = uni.getStorageSync("userInfo");
+						if (userinfo._id == id) {
+							uni.navigateTo({
+								url: "/pages/ucenter/ucenter"
+							});
+						} else {
+							uni.navigateTo({
+								url: "/pages/ucenter/tacenter?id=" + id
+							});
+						}
+					}
+			},
 			// reloadcomment(){
 			// 	this.$emit("reload");
 			// },
@@ -240,19 +296,25 @@
 			},
 			// 回复
 			replycomment(item) {
-				// debugger;
-				console.log("item", item);
 				this.placeholder = "回复 @" + item.user_id[0].nickname + ":";
 				this.relaydata = {
 					comment_type: 1,
 					reply_user_id: item.user_id[0]._id,
-					reply_comment_id: item._id,
+					reply_user_id_info:item.user_id,
+					comment_content:item.comment_content,
+					reply_comment_id: item.comment_id,
 					comment_cj: item.comment_cj + 1,
-					all_reply_comment_id: item.all_reply_comment_id + "," + item._id
+					all_reply_comment_id: item.all_reply_comment_id + "," + item.comment_id
 				}
+			},
+			// 获取评论id
+			getplid(){
+				var plid = Math.random().toString(36).substr(2);
+				return "pl_"+plid;
 			},
 			// 发送评论
 			async sendComment() {
+				// debugger;
 				if (this.userInfo.forbiddenwords) {
 					this.$refs.uToast.show({
 						title: '你已被禁言，请联系管理员',
@@ -261,19 +323,40 @@
 					return;
 				}
 				var that = this;
-				const uid = db.getCloudEnv('$cloudEnv_uid');
-				await db.collection("opendb-news-comments").add({
+				if(that.relaydata.all_reply_comment_id&&that.relaydata.all_reply_comment_id.indexOf("undefined")!=-1){
+					that.$refs.uToast.show({
+						title: '你的操作太快，请稍后再试',
+						type: 'error'
+					});
+					return;
+				}
+				var senddata={
 					article_id: that.zydata._id,
 					user_id: uid,
+					comment_id:this.getplid(),
 					comment_content: that.inputvalue,
 					like_count: 0,
 					comment_type: 1,
 					comment_cj: that.relaydata.comment_cj || 2, ///评论层级
 					reply_user_id: that.relaydata.reply_user_id || that.comment.user_id[0]._id,
-					reply_comment_id: that.relaydata.reply_comment_id || that.comment._id,
+					reply_comment_id: that.relaydata.reply_comment_id || that.comment.comment_id,
 					all_reply_comment_id: that.relaydata.all_reply_comment_id || that.comment
-						.all_reply_comment_id + "," + that.comment._id,
+						.all_reply_comment_id + "," + that.comment.comment_id,
+				}
+				
+				that.$set(that.zydata,"pl_count",that.zydata.pl_count?++that.zydata.pl_count:1);
+				db.collection("jz-opendb-resources").where({
+					_id:that.zydata._id
+				}).update({
+					pl_count:that.zydata.pl_count
 				});
+				var _addsenddata = Object.assign(JSON.parse(JSON.stringify(senddata)), {
+					user_id: [JSON.parse(JSON.stringify(that.userInfo))],
+					reply_user_id_info:that.relaydata.reply_user_id_info||that.comment.user_id
+				});
+				////临时新增评论
+				that.commentList.unshift(_addsenddata);
+				
 				var add_value = {
 					type: 3,
 					user_id: that.comment.user_id[0]._id,
@@ -281,8 +364,9 @@
 				}
 				await db.collection("jz-custom-systeminfo").add(add_value);
 				that.inputvalue = "";
+				await db.collection("opendb-news-comments").add(senddata);
 				// this.getComment();
-				that.$emit("reload", that.relaydata.reply_comment_id || that.comment._id);
+				// that.$emit("reload", that.relaydata.reply_comment_id || that.comment._id);
 			},
 			// 切换评论的显示方式
 			toggleType() {
@@ -314,7 +398,7 @@
 						await db.collection("opendb-news-likepl").add({
 							article_id: this.zydata._id,
 							user_id: uid,
-							comment_id: that.commentList[index]._id,
+							comment_id: that.commentList[index].comment_id,
 							comment_content: that.commentList[index].comment_content
 						});
 						var add_value = {
@@ -327,13 +411,13 @@
 						this.commentList[index].like_count--;
 						await db.collection("opendb-news-likepl").where({
 							user_id: uid,
-							comment_id: that.commentList[index]._id
+							comment_id: that.commentList[index].comment_id
 						}).remove();
 					}
 					await db.collection("opendb-news-comments").where({
-						_id: this.commentList[index]._id
+						comment_id: this.commentList[index].comment_id
 					}).update({
-						like_count: (this.commentList[index].like_count||0)
+						like_count: this.commentList[index].like_count
 					});
 				} else {
 					if (this.comment.isLike == true) {
@@ -341,7 +425,7 @@
 						this.comment.like_count--;
 						await db.collection("opendb-news-likepl").where({
 							user_id: uid,
-							comment_id: that.comment._id
+							comment_id: that.comment.comment_id
 						}).remove();
 					} else {
 						this.comment.isLike = !this.comment.isLike;
@@ -349,17 +433,16 @@
 						await db.collection("opendb-news-likepl").add({
 							article_id: this.zydata._id,
 							user_id: uid,
-							comment_id: this.comment._id,
+							comment_id: this.comment.comment_id,
 							comment_content: this.comment.comment_content
 						});
 					}
 					await db.collection("opendb-news-comments").where({
-						_id: this.comment._id
+						comment_id: this.comment.comment_id
 					}).update({
-						like_count: (this.comment.like_count||0)
+						like_count: this.comment.like_count
 					});
 				}
-
 			},
 			// 回复列表
 			getReply() {}
@@ -368,18 +451,22 @@
 </script>
 
 <style lang="scss" scoped>
-	.flex1,.flex2 {
+	.flex1,
+	.flex2 {
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
 		margin-top: 30rpx;
 	}
+
 	.slot-gonggao_content1 {
 		overflow: auto;
 	}
-.comment-input1{
-	flex: 1;
-}
+
+	.comment-input1 {
+		flex: 1;
+	}
+
 	.slot-gonggao_content1>uni-scroll-view {
 		max-height: calc(100vh - 640rpx);
 	}
@@ -462,7 +549,8 @@
 					font-size: 28rpx;
 					margin-bottom: 4rpx;
 				}
-				.content{
+
+				.content {
 					display: flex;
 					flex-direction: row;
 					flex-wrap: wrap;

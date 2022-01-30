@@ -43,8 +43,8 @@
 		watch: {
 			src:{
 				handler(src) {
-					console.log(src);
-					console.log(src.substring(0, 8));
+					// console.log(src);
+					// console.log(src.substring(0, 8));
 					if (src.substring(0, 8) == "cloud://") {
 						uniCloud.getTempFileURL({
 							fileList: [src]
@@ -55,6 +55,7 @@
 					}else{
 						this.cSrc = src
 					}
+					this.$emit('change',src)
 				},
 				immediate: true
 			}

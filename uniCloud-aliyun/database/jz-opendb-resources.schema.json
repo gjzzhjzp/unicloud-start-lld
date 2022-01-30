@@ -6,10 +6,10 @@
 		"avatar"
 	],
 	"permission": {
-		"read": "doc.state || auth.uid == doc.user_id || 'AUDITOR' in auth.role||'Master' in auth.role||'only_zylist' in auth.role",
+		"read": "doc.state || auth.uid == doc.user_id || 'AUDITOR' in auth.role||'Master' in auth.role||'only_zylist' in auth.role||'resource' in auth.role",
 		"create": "auth.uid != null",
-		"update": "'AUDITOR' in auth.role||auth.uid == doc.user_id||'Master' in auth.role||'only_zylist' in auth.role",
-		"delete": "auth.uid == doc.user_id||'AUDITOR' in auth.role||'Master' in auth.role||'only_zylist' in auth.role"
+		"update": "'AUDITOR' in auth.role||auth.uid == doc.user_id||'Master' in auth.role||'only_zylist' in auth.role||'resource' in auth.role",
+		"delete": "auth.uid == doc.user_id||'AUDITOR' in auth.role||'Master' in auth.role||'only_zylist' in auth.role||'resource' in auth.role"
 	},
 	"properties": {
 		"_id": {
@@ -83,17 +83,11 @@
 		},
 		"like_count": {
 			"bsonType": "int",
-			"description": "收藏数",
-			"permission": {
-				"write": false
-			}
+			"description": "收藏数"
 		},
 		"like_count1": {
 			"bsonType": "int",
-			"description": "喜欢数、点赞数",
-			"permission": {
-				"write": false
-			}
+			"description": "喜欢数、点赞数"
 		},
 		"avatar": {
 			"bsonType": "array",

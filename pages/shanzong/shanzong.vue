@@ -5,7 +5,7 @@
 		</jz-navbar> -->
 		<u-navbar :is-back="true" title="山总"></u-navbar>
 		<jz-notice :type="1"></jz-notice>
-		<view class="jz-container">
+		<view class="">
 			<view>
 				<jz-banner ref="banner" :type="2"></jz-banner>
 			</view>

@@ -1,7 +1,9 @@
 uni-page {
 	background-color: #F5F5F5;
 }
-
+uni-image{
+	background:transparent !important;
+}
 .jz-container {
 	padding: 0px 10px;
 }
@@ -223,6 +225,7 @@ body.pages-resource-list uni-page-body {
 .detail-image-item.fullscren .player-toggle {
 	display: block;
 }
+
 .player-toggle.heng::after {
 	content: "";
 	background-image: url(@/static/center/heng.png);
@@ -250,9 +253,10 @@ body.pages-resource-list uni-page-body {
 /* .dplayer-full-in-icon {
 	display: none !important;
 } */
-.dplayer-full-icon{
+.dplayer-full-icon {
 	display: none !important;
 }
+
 .login_back_logo {
 	padding: 40px;
 }
@@ -292,31 +296,50 @@ body.pages-resource-list uni-page-body {
 	top: 6px !important;
 }
 
-.er-item-list-gz .u-size-medium,.search-row .u-size-medium{
+.er-item-list-gz .u-size-medium,
+.search-row .u-size-medium {
 	padding: 0px 20px !important;
 	color: #777BCE;
 	height: 28px !important;
 	line-height: 28px !important;
 }
-.search-row-col.selected .u-btn--default{
-	    color: #777BCE;
-	    border-color: #777BCE;
-	    background-color: #ffffff;
+
+.search-row-col.selected .u-btn--default {
+	color: #777BCE;
+	border-color: #777BCE;
+	background-color: #ffffff;
 }
-.er-item-list .u-grid-item{
-	    background: #f5f5f5 !important;
+
+.er-item-list .u-grid-item {
+	background: #f5f5f5 !important;
 }
-.er-item-list-warter1{
+
+.er-item-list-warter1 {
 	background-color: #fff !important;
 }
-.jz-fabu-tab .u-tab-item{
+
+.jz-fabu-tab .u-tab-item {
 	width: 50% !important;
 }
-.jz-fabu-tab .u-tabs{
-	    padding: 0px 50px;
+
+.jz-fabu-tab .u-tabs {
+	padding: 0px 50px;
 }
-.jz-fabu-content .u-size-medium{
-	    height: 32px !important;
-	    line-height: 32px !important;
-	    padding: 0 20px !important;
+
+.jz-fabu-content .u-size-medium {
+	height: 32px !important;
+	line-height: 32px !important;
+	padding: 0 20px !important;
+}
+
+.gzquestion .u-radio {
+	display: flex !important;
+	flex-wrap: wrap;
+	overflow: auto !important;
+	flex: auto !important;
+}
+
+.gzquestion .u-radio .u-radio__label {
+	overflow: auto;
+	flex: 1;
 }

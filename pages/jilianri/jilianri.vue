@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="jz-jilianri">
 		<!-- <jz-navbar :issy="false" ref="navbar">
 			<view class="jz-navbar-title">纪念日</view>
 		</jz-navbar> -->
@@ -29,4 +29,8 @@
 </script>
 
 <style>
+	.jz-jilianri{
+		height: 100vh;
+		background-color: #fff;
+	}
 </style>

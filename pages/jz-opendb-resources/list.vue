@@ -29,9 +29,11 @@
 		<uni-fab ref="fab" horizontal="right" vertical="bottom" :pop-menu="false" @fabClick="$notMoreTap(fabClick,'notTap')" />
 		</template>
 		<u-back-top :scroll-top="scrollTop" top="1000" mode="square" icon="arrow-up" tips="顶部"></u-back-top>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 <script>
+	const db=uniCloud.database();
 	export default {
 		data() {
 			return {
@@ -95,6 +97,13 @@
 				}
 			},
 			todetail(item) {
+				if(item.zy_gs=='2'){
+					this.$refs.uToast.show({
+						title: '音乐不支持查看详情',
+						type: 'error'
+					});
+					return;
+				}
 				uni.navigateTo({
 					url: "/pages/detail/detail?id=" + item._id
 				});
@@ -126,11 +135,33 @@
 			},
 			handleDelete(id) {
 				this.$refs.udb.remove(id, {
-					success: (res) => {
+					"confirmContent":"删除后不可恢复，确定删除？",
+					success:async (res) => {
+						await db.collection("opendb-news-like").where({
+							"article_id":id
+						}).remove();
+						await db.collection("opendb-news-likepl").where({
+							"article_id":id
+						}).remove();
+						await db.collection("opendb-news-favorite").where({
+							"article_id":id
+						}).remove();
+						await db.collection("opendb-news-history").where({
+							"article_id":id
+						}).remove();
+						await db.collection("opendb-news-comments").where({
+							"article_id":id
+						}).remove();
+						await db.collection("opendb-news-jubaopl").where({
+							"article_id":id
+						}).remove();
+						await db.collection("jz-opendb-danmu").where({
+							"resource_id":id
+						}).remove();
 						// 删除数据成功后跳转到list页面
-						uni.navigateTo({
-			 			url: './list'
-						})
+						// uni.navigateTo({
+			 		// 	url: './list'
+						// })
 					}
 				})
 			},

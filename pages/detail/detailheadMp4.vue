@@ -18,7 +18,7 @@
 		<view v-show="current==0">
 			<view style="background-color: #fff;padding: 8px;">
 				<view class="detail-image-title">
-					<view class="title">
+					<view class="title" @click="tgrHref()">
 						<commont-image
 							:src="(data.userinfo&&data.userinfo[0]&&data.userinfo[0].avatar_file)?data.userinfo[0].avatar_file.url:''"
 							:isoriginal="!!(data.userinfo&&data.userinfo[0].original==1)">
@@ -72,9 +72,9 @@
 				<view class="detail-image-sx">
 					<view class="detail-image-ly">
 						<view class="detail-image-ly1">来源：{{data.author}}</view>
-						<view class="detail-image-ly2">投稿人：<view @click="tgrHref()" style="color: rgb(114, 117, 211);">
+						<!-- <view class="detail-image-ly2">投稿人：<view @click="tgrHref()" style="color: rgb(114, 117, 211);">
 								{{tgr}}</view>
-						</view>
+						</view> -->
 					</view>
 				</view>
 				<view class="detail-image-jj">
@@ -126,9 +126,9 @@
 				// labels: [],
 				showllsc: true,
 				current: 0,
-				tablist: [{
-					name: '简介'
-				}],
+				// tablist: [{
+				// 	name: '简介'
+				// }],
 				showpl: true,
 				showdanmu: true,
 				showsendDanmu: true
@@ -148,18 +148,18 @@
 				}
 			}
 		},
-		watch: {
-			"data.pl_count"() {
-				this.tablist.forEach((item) => {
-					if (item.name.indexOf('评论') != -1) {
-						item.name = "评论" + (this.data.pl_count || '')
-					}
-				});
-				// this.tablist.push({
-				// 	name: '评论'
-				// });
-			}
-		},
+		// watch: {
+		// 	"data.pl_count"() {
+		// 		this.tablist.forEach((item) => {
+		// 			if (item.name.indexOf('评论') != -1) {
+		// 				item.name = "评论" + (this.data.pl_count || '')
+		// 			}
+		// 		});
+		// 		// this.tablist.push({
+		// 		// 	name: '评论'
+		// 		// });
+		// 	}
+		// },
 		created() {
 			var config = getApp().globalData.systemconfig;
 			var t_800005 = config["800005"];
@@ -182,16 +182,28 @@
 			} else {
 				this.showsendDanmu = false;
 			}
-			if (this.showpl) {
-				this.tablist.push({
-					name: '评论'
-				});
-			}
+			// if (this.showpl) {
+			// 	this.tablist.push({
+			// 		name: '评论'
+			// 	});
+			// }
 			this.showmp4Xz = t_800005 == '1' ? true : false;
 			this.showllsc = t_800011 == '1' ? true : false;
 			// console.log("labels", this.labels);
 		},
 		computed: {
+			tablist() {
+				var data = this.data;
+				var _ary = [{
+					name: '简介'
+				}];
+				if (this.showpl) {
+					_ary.push({
+						name: '评论' + (data.pl_count || '')
+					})
+				}
+				return _ary;
+			},
 			labels() {
 				var labels = this.data.labels;
 				if (labels) {
@@ -268,6 +280,14 @@
 			},
 			tgrHref() {
 				if (this.data.userinfo && this.data.userinfo.length > 0) {
+					var username = this.data.userinfo[0].username;
+					if (username == "admin") {
+						this.$refs.uToast.show({
+							title: '该用户不支持查看主页',
+							type: 'error'
+						});
+						return;
+					}
 					var id = this.data.userinfo[0]._id;
 					if (id) {
 						var userinfo = uni.getStorageSync("userInfo");
@@ -402,7 +422,7 @@
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
-		max-width: 50%;
+		/* max-width: 50%; */
 	}
 
 	.detail-image-ly2 {

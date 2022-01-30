@@ -55,7 +55,7 @@
 			// 获取资源
 			getResource(id) {
 				uni.showLoading({
-					title:"加载中"
+					title: "加载中"
 				})
 				var that = this;
 				var uid = this.userInfo._id;
@@ -74,7 +74,8 @@
 						for (var key in res.rows[0]) {
 							that.$set(that.detaildata, key, res.rows[0][key]);
 						}
-						that.title = that.detaildata.title;
+						console.log("that.detaildata", that.detaildata);
+						that.title = that.detaildata.userinfo[0].nickname;
 						that.tohistory();
 						uni.hideLoading()
 					} else {
@@ -102,6 +103,7 @@
 						await collection.where({
 							_id: rows.result.data[0]._id
 						}).update({
+							buser_id: this.detaildata.user_id,
 							update_date: db.getCloudEnv('$cloudEnv_now')
 						});
 					} else {
@@ -109,6 +111,7 @@
 							article_id: this.detaildata._id,
 							article_title: this.detaildata.title,
 							user_id: db.getCloudEnv('$cloudEnv_uid'),
+							buser_id: this.detaildata.user_id,
 							create_date: db.getCloudEnv('$cloudEnv_now'),
 							categories: this.detaildata.categories
 						});

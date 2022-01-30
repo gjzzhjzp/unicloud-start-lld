@@ -7,7 +7,7 @@
 	"permission": {
 		"read": "doc.state || auth.uid == doc.user_id || 'AUDITOR' in auth.role||'Master' in auth.role||'only_zylist' in auth.role",
 		"create": "auth.uid != null",
-		"update": "'AUDITOR' in auth.role||auth.uid == doc.user_id||'Master' in auth.role||'only_zylist' in auth.role",
+		"update": "auth.uid != null",
 		"delete": "auth.uid == doc.user_id||'AUDITOR' in auth.role||'Master' in auth.role||'only_zylist' in auth.role"
 	},
 	"properties": {
@@ -26,7 +26,7 @@
 		"categories": {
 			"bsonType": "int",
 			"title": "分类",
-			"description": "资源类型：0 闲聊 1 磕糖 2 分享 3 其他",
+			"description": "资源类型：0 闲聊 1 嗑糖 2 分享 3 其他",
 			"defaultValue": 0,
 			"enum": [{
 					"value": 0,
@@ -34,7 +34,7 @@
 				},
 				{
 					"value": 1,
-					"text": "磕糖"
+					"text": "嗑糖"
 				},
 				{
 					"value": 2,
@@ -76,17 +76,11 @@
 		},
 		"like_count": {
 			"bsonType": "int",
-			"description": "收藏数",
-			"permission": {
-				"write": false
-			}
+			"description": "收藏数"
 		},
 		"like_count1": {
 			"bsonType": "int",
-			"description": "喜欢数、点赞数",
-			"permission": {
-				"write": false
-			}
+			"description": "喜欢数、点赞数"
 		},
 		"resources": {
 			"bsonType": "array",

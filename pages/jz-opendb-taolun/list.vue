@@ -5,8 +5,8 @@
 			<u-alert-tips type="warning" description="向左滑动可编辑/删除资源"></u-alert-tips>
 		</view>
 		<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}"
-			collection="jz-opendb-taolun" @load="loadSuccess" :page-size="10"
-			where="user_id == $cloudEnv_uid" orderby="last_modify_date desc"
+			collection="jz-opendb-taolun" @load="loadSuccess" :page-size="10" where="user_id == $cloudEnv_uid"
+			orderby="last_modify_date desc"
 			field="categories,title,article_status,comment_status,avatar,resources,excerpt">
 			<view v-if="error">{{error.message}}</view>
 			<view v-else-if="data">
@@ -24,19 +24,20 @@
 			</view>
 			<uni-load-more :status="loading?'loading':(hasMore ? 'more' : 'noMore')"></uni-load-more>
 		</unicloud-db>
-			<!-- <template v-if="openAdd">
+		<!-- <template v-if="openAdd">
 		<uni-fab ref="fab" horizontal="right" vertical="bottom" :pop-menu="false" @fabClick="$notMoreTap(fabClick,'notTap')" />
 		</template> -->
 		<u-back-top :scroll-top="scrollTop" top="1000" mode="square" icon="arrow-up" tips="顶部"></u-back-top>
 	</view>
 </template>
 <script>
+	const db=uniCloud.database();
 	export default {
 		data() {
 			return {
-				openAdd:false,
-				scrollTop:0,
-				notTap:true,//一定要设置为true
+				openAdd: false,
+				scrollTop: 0,
+				notTap: true, //一定要设置为true
 				loadMore: {
 					contentdown: '',
 					contentrefresh: '',
@@ -70,18 +71,18 @@
 			this.$refs.udb.loadMore()
 		},
 		onPageScroll(e) {
-				this.scrollTop = e.scrollTop;
-			},
+			this.scrollTop = e.scrollTop;
+		},
 		onShow() {
 			this.reload();
 		},
-		created(){
+		created() {
 			// debugger;
-			var config=getApp().globalData.systemconfig;
-			if(config["800022"]==1){
-				this.openAdd=true;
-			}else{
-				this.openAdd=false;
+			var config = getApp().globalData.systemconfig;
+			if (config["800022"] == 1) {
+				this.openAdd = true;
+			} else {
+				this.openAdd = false;
 			}
 		},
 		methods: {
@@ -100,12 +101,12 @@
 			},
 			loadSuccess(data) {
 				data.forEach((item) => {
-					var url="";
-					if(item.avatar){
-						if(Array.isArray(item.avatar)){
-							url=item.avatar[0].url;
-						}else{
-							url=item.avatar.url;
+					var url = "";
+					if (item.avatar) {
+						if (Array.isArray(item.avatar)) {
+							url = item.avatar[0].url;
+						} else {
+							url = item.avatar.url;
 						}
 					}
 					this.$set(item, "images", url);
@@ -125,11 +126,30 @@
 			},
 			handleDelete(id) {
 				this.$refs.udb.remove(id, {
-					success: (res) => {
+					"confirmContent":"删除后不可恢复，确定删除？",
+					success:async (res) => {
+						await db.collection("opendb-news-likeTaolun").where({
+							"article_id":id
+						}).remove();
+						await db.collection("opendb-news-likeplTaolun").where({
+							"article_id":id
+						}).remove();
+						await db.collection("opendb-news-favoriteTaolun").where({
+							"article_id":id
+						}).remove();
+						await db.collection("opendb-news-historyTaolun").where({
+							"article_id":id
+						}).remove();
+						await db.collection("opendb-news-commentsTaolun").where({
+							"article_id":id
+						}).remove();
+						await db.collection("opendb-news-jubaoplTaolun").where({
+							"article_id":id
+						}).remove();
 						// 删除数据成功后跳转到list页面
-						uni.navigateTo({
-			 			url: './list'
-						})
+						// uni.navigateTo({
+						// 	url: './list'
+						// })
 					}
 				})
 			},
@@ -184,7 +204,8 @@
 		font-size: 36rpx;
 		color: $u-content-color;
 	}
-	.u-icon{
+
+	.u-icon {
 		margin: 0 6px;
 	}
 </style>

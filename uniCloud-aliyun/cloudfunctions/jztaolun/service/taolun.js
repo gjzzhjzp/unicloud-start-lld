@@ -143,25 +143,33 @@ module.exports = class resourceService extends Service {
 		var page = data.page;
 		var rows = data.rows || 16;
 		const collection = db.collection('opendb-news-historyTaolun');
-		// const collectionconfig = db.collection('jz-opendb-taolun');
+		const collectionconfig = db.collection('jz-opendb-taolun');
 		var collection_query = collection.aggregate().match({
 			user_id: uid
 		}).sort({
 			"update_date": -1
 		}).skip((page - 1) * rows).limit(rows);
 		var resultdata = {};
-
+	const dbCmd = db.command;
+		const $ = dbCmd.aggregate;
 		resultdata = await collection_query.lookup({
 			from: 'jz-opendb-taolun',
 			localField: 'article_id',
 			foreignField: '_id',
 			as: 'article_id',
 		}).lookup({
-			from: 'uni-id-users',
-			localField: 'user_id',
-			foreignField: '_id',
-			as: 'userinfo',
-		}).end();
+			from: 'uni-id-users', ///获取当前用户信息
+			let: {
+				buser_id: '$buser_id'
+			},
+			pipeline: $.pipeline()
+				.match(
+					dbCmd.expr($.and([
+						$.eq(['$_id', '$$buser_id'])
+					]))
+				)
+				.done(),
+			as: 'userinfo'}).end();
 
 
 		return {

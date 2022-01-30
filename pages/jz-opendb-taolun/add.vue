@@ -1,19 +1,21 @@
 <template>
-	<view class="uni-container">
+	<view class="uni-container" style="background-color: #fff;">
 		<u-navbar v-if="showtitle" :is-back="true" title="我要发帖"></u-navbar>
 		<uni-forms ref="form" :value="formData" validate-trigger="submit" err-show-type="toast">
 			<uni-forms-item required name="categories" label="分类">
-			  <uni-data-checkbox v-model="formData.categories" :localdata="formOptions.categories_localdata"></uni-data-checkbox>
+				<uni-data-checkbox v-model="formData.categories" :localdata="formOptions.categories_localdata">
+				</uni-data-checkbox>
 			</uni-forms-item>
 			<uni-forms-item required name="excerpt" label="内容">
-				<uni-easyinput placeholder="请输入内容" type="textarea" :maxlength="1000" v-model="formData.excerpt" trim="both"></uni-easyinput>
+				<uni-easyinput placeholder="请输入内容" type="textarea" :maxlength="1000" v-model="formData.excerpt"
+					trim="both"></uni-easyinput>
 			</uni-forms-item>
 			<uni-forms-item name="resources" label="图片">
-				<uni-file-picker file-mediatype="image" :limit="9" return-type="array"  v-model="formData.resources">
+				<uni-file-picker file-mediatype="image" :limit="9" return-type="array" v-model="formData.resources">
 				</uni-file-picker>
 			</uni-forms-item>
 			<view class="resource-ts">
-				提示：请等待附件资源上传完毕后再提交
+				请等待附件资源上传完毕后再提交
 			</view>
 			<view class="uni-button-group">
 				<u-button type="primary" class="uni-button" @click="submit">提交</u-button>
@@ -39,38 +41,45 @@
 		}
 		return result
 	}
-
+	let formData = {
+		"categories": 0,
+		"article_status": 0,
+		"resources": [],
+		"last_modify_date": null,
+		"excerpt": "",
+		"is_recommend": 0,
+		"is_off": 0
+	}
+	let formData1 = {
+		"categories": 0,
+		"article_status": 0,
+		"resources": [],
+		"last_modify_date": null,
+		"excerpt": "",
+		"is_recommend": 0,
+		"is_off": 0
+	}
 	export default {
 		data() {
-			let formData = {
-				 "categories": 0,
-				"article_status": 0,
-				"resources": [],
-				"last_modify_date": null,
-				"excerpt": "",
-				"is_recommend": 0,
-				"is_off": 0
-			}
 			return {
 				formData,
 				formOptions: {
-					"categories_localdata": [
-					  {
-					    "value": 0,
-					    "text": "闲聊"
-					  },
-					  {
-					    "value": 1,
-					    "text": "磕糖"
-					  },
-					  {
-					    "value": 2,
-					    "text": "分享"
-					  },
-					  {
-					    "value": 3,
-					    "text": "其他"
-					  }
+					"categories_localdata": [{
+							"value": 0,
+							"text": "闲聊"
+						},
+						{
+							"value": 1,
+							"text": "嗑糖"
+						},
+						{
+							"value": 2,
+							"text": "分享"
+						},
+						{
+							"value": 3,
+							"text": "其他"
+						}
 					],
 					"article_status_localdata": [{
 							"value": 0,
@@ -105,24 +114,29 @@
 				}
 			}
 		},
-		props:{
-			showtitle:{
-				type:Boolean,
-				default(){
+		props: {
+			showtitle: {
+				type: Boolean,
+				default () {
 					return true
 				}
 			},
-			tosuccess:{
-				type:String,
-				default(){
+			tosuccess: {
+				type: String,
+				default () {
 					return ""
 				}
 			}
 		},
-		onReady() {
-			this.$refs.form.setRules(this.rules)
+		mounted() {
+			this.initrules();
 		},
 		methods: {
+			initrules(){
+				// debugger;
+				this.formData=JSON.parse(JSON.stringify(formData1));
+				this.$refs.form.setRules(this.rules)
+			},
 			/**
 			 * 验证表单并提交
 			 */
@@ -158,16 +172,18 @@
 				return db.collection(dbCollectionName).add(value).then((res) => {
 					uni.showToast({
 						icon: 'none',
-						title: '新增成功'
+						title: '发布成功'
 					});
-					// 
-					if(this.tosuccess){
+					this.$emit("success");
+					if (this.tosuccess) {
 						setTimeout(() => uni.navigateTo({
-							url:this.tosuccess
+							url: this.tosuccess
 						}), 500)
-					}else{
+						this.formData=formData1;
+					} else {
 						this.getOpenerEventChannel().emit('refreshData');
 						setTimeout(() => uni.navigateBack(), 500)
+						this.formData=formData1;
 					}
 				}).catch((err) => {
 					uni.showModal({
@@ -185,6 +201,7 @@
 		color: red;
 		margin-top: 6px;
 	}
+
 	.uni-container {
 		padding: 15px;
 	}

@@ -3,7 +3,7 @@
 		<view class="original" v-if="isoriginal">
 			<image class="original-img" src="@/static/center/ori_back.png"></image>
 		</view>
-		<image :src="imageUrl()" mode="aspectFill"></image>
+		<u-image :width="80" :height="80" border-radius="50%" :src="imageUrl()" loading-icon="/static/center/nologin.png" error-icon="/static/center/nologin.png" mode="aspectFill"></u-image>
 	</view>
 </template>
 
@@ -45,17 +45,17 @@
 	}
 
 	.original-img {
-		    width: 88rpx;
-		    height: 88rpx;
+		    width: 116rpx;
+		    height: 116rpx;
 		    position: absolute;
-		    top: -11rpx;
-		    left: -14rpx;
+		    top: -14rpx;
+		    left: -18rpx;
 	}
 
-	image {
+	/* image {
 		width: 64rpx;
 		height: 64rpx;
 		border-radius: 50%;
 		background-color: #f2f2f2;
-	}
+	} */
 </style>

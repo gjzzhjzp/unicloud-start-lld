@@ -405,7 +405,8 @@
 		}, {
 			"path": "pages/jz-opendb-taolun/detail/detail",
 			"style": {
-				"navigationBarTitleText": "详情"
+				"navigationBarTitleText": "详情",
+				"enablePullDownRefresh": true
 			}
 		}, {
 			"path": "pages/guangchang/guangchang",
@@ -415,6 +416,11 @@
 			}
 		}, {
 			"path": "pages/fabu/fabu",
+			"style": {
+				"navigationBarTitleText": "发布"
+			}
+		},{
+			"path": "pages/fabu/fabu1",
 			"style": {
 				"navigationBarTitleText": "发布"
 			}
@@ -452,9 +458,6 @@
 			"pagePath": "pages/sort/sort",
 			"text": "分类"
 		}, {
-			"pagePath": "pages/fabu/fabu",
-			"text": "发布"
-		},  {
 			"pagePath": "pages/guangchang/guangchang",
 			"text": "广场"
 		}, {

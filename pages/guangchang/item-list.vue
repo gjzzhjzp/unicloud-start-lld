@@ -37,7 +37,7 @@
 							</view>
 						</view>
 						<view @click="$notMoreTap(toDetail,'notTap',item)">
-							<nine-squared :list="item.resources"></nine-squared>
+							<nine-squared :showicon="false" :list="item.resources"></nine-squared>
 						</view>
 						
 						<operation v-if="showoperation" :data="item" @topl="toDetail"></operation>

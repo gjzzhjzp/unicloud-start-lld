@@ -215,6 +215,7 @@ import gitemList from "../guangchang/item-list.vue"
 					rows.forEach((item) => {
 						// debugger;
 						var obj = item.article_id[0];
+						if(obj){
 						obj.userinfo=item.userinfo;
 						var roles = that.getuserrole();
 						if (roles && (roles.indexOf("Master") != -1 || roles.indexOf("AUDITOR") != -1)) {
@@ -225,6 +226,7 @@ import gitemList from "../guangchang/item-list.vue"
 							if (obj && obj.article_status == 1 && obj.is_off != 1) {
 								this.gflowList.push(obj);
 							}
+						}
 						}
 					});
 					this.gflowList=this.AryDeleteMore(this.gflowList);

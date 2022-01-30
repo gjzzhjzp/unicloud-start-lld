@@ -2,13 +2,13 @@
 	<view :class="['detailhead','detailhead'+data.zy_gs]">
 		<view style="background-color: #fff;border-radius: 8px;padding: 10px;margin-top: 10px;">
 			<view class="detail-image-title">
-				<view class="title">
+				<view class="title" @click="tgrHref()">
 					<commont-image
 						:src="(data.userinfo&&data.userinfo[0]&&data.userinfo[0].avatar_file)?data.userinfo[0].avatar_file.url:''"
 						:isoriginal="!!(data.userinfo&&data.userinfo[0].original==1)">
 					</commont-image>
 					<view class="original-title">
-						<view @click="tgrHref()" style="color: #333333;font-size: 14px;">{{tgr}}</view>
+						<view style="color: #333333;font-size: 14px;">{{tgr}}</view>
 						<uni-dateformat class="publish_date" :date="data.publish_date" format="yyyy-MM-dd"
 							:threshold="[60000, 2592000000]" />
 					</view>
@@ -68,13 +68,6 @@
 				showmp4Xz: false,
 				showllsc: true,
 				current: 0,
-				tablist: [{
-					name: '评论'
-				}, {
-					name: '点赞'
-				}, {
-					name: '收藏'
-				}],
 				showpl: true,
 				showdanmu: true,
 				showsendDanmu: true
@@ -92,27 +85,6 @@
 				default () {
 					return 0
 				}
-			}
-		},
-		watch: {
-			data: {
-				deep: true,
-				handler(data) {
-					this.tablist = [{
-						name: '评论' + (data.pl_count || '')
-					}, {
-						name: '点赞' + (data.like_count1 || '')
-					}, {
-						name: '收藏' + (data.like_count || '')
-					}];
-				}
-			},
-			plNumber() {
-				// this.tablist.forEach((item) => {
-				// 	if (item.name.indexOf('评论') != -1) {
-				// 		item.name = "评论" + this.plNumber
-				// 	}
-				// })
 			}
 		},
 		created() {
@@ -137,16 +109,20 @@
 			} else {
 				this.showsendDanmu = false;
 			}
-			// if (this.showpl) {
-			// 	this.tablist.push({
-			// 		name: '评论'
-			// 	});
-			// }
 			this.showmp4Xz = t_800005 == '1' ? true : false;
 			this.showllsc = t_800011 == '1' ? true : false;
-			// console.log("labels", this.labels);
 		},
 		computed: {
+			tablist(){
+				var data=this.data;
+				return [{
+						name: '评论' + (data.pl_count || '')
+					}, {
+						name: '点赞' + (data.like_count1 || '')
+					}, {
+						name: '收藏' + (data.like_count || '')
+					}]
+			},
 			labels() {
 				var labels = this.data.labels;
 				if (labels) {
@@ -226,12 +202,25 @@
 			},
 			tgrHref() {
 				if (this.data.userinfo && this.data.userinfo.length > 0) {
-					var tgr = this.data.userinfo[0].nickname;
-					if (tgr) {
-						uni.navigateTo({
-							url: "/pages/resource/list?user=" + tgr
-						});
+					var id = this.data.userinfo[0]._id;
+					if (id) {
+						var userinfo = uni.getStorageSync("userInfo");
+						if (userinfo._id == id) {
+							uni.navigateTo({
+								url: "/pages/ucenter/ucenter"
+							});
+						} else {
+							uni.navigateTo({
+								url: "/pages/ucenter/tacenter?id=" + id
+							});
+						}
 					}
+					// var tgr = this.data.userinfo[0].nickname;
+					// if (tgr) {
+					// 	uni.navigateTo({
+					// 		url: "/pages/resource/list?user=" + tgr
+					// 	});
+					// }
 				}
 			},
 			changenumber(plNumber) {

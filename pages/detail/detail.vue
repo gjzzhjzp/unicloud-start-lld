@@ -132,6 +132,7 @@
 						await collection.where({
 							_id: rows.result.data[0]._id
 						}).update({
+							buser_id: this.detaildata.user_id,
 							update_date: db.getCloudEnv('$cloudEnv_now')
 						});
 					} else {
@@ -139,6 +140,7 @@
 							article_id: this.detaildata._id,
 							article_title: this.detaildata.title,
 							user_id: db.getCloudEnv('$cloudEnv_uid'),
+							buser_id: this.detaildata.user_id,
 							create_date: db.getCloudEnv('$cloudEnv_now'),
 							zy_gs: this.detaildata.zy_gs
 						});

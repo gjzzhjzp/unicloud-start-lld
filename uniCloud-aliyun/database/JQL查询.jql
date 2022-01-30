@@ -29,10 +29,22 @@ db.collection('opendb-news-appbb').where({
 					app_bbh: db.command.gt(124)
 				}).orderBy("app_bbh", "desc").get()
 
-db.collection('opendb-news-favorite').where({
-	user_id: "6173fc369ee65f00018fd5e6",
-	zy_gs: 2
+db.collection('opendb-news-comments').where({
+		comment_id:"pl_z47hgjxslvt"
 }).get();
+
+db.collection('opendb-news-comments').where({
+	comment_id:"pl_z47hgjxslvt"
+}).update({
+	comment_id:"pl_"+Math.random().toString(36).substr(2)
+});
+
+db.collection('jz-opendb-resources').where({
+	is_gonggao: 1
+}).update({
+	user_id:"61f5136e4690ae0001e6a387"
+});
+
 db.collection('opendb-news-favorite').aggregate().match({
 	user_id: "6173fc369ee65f00018fd5e6",
 	zy_gs: 2

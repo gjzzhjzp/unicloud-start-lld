@@ -88,12 +88,12 @@
 					{
 						"title": "关注",
 						"to": '/pages/guanzhu/guanzhu',
-						"thumb": "/static/center/info.png"	
+						"thumb": "/static/newpage/gz.png"	
 					},
 					{
 						"title": "粉丝",
 						"to": '/pages/fensi/fensi',
-						"thumb": "/static/center/info.png"
+						"thumb": "/static/newpage/fensi.png"
 					}
 				],
 				ucenterList: [

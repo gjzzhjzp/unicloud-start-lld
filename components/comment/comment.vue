@@ -11,7 +11,7 @@
 		<view :class="['comment-container1','slot-gonggao_content',showsendpl?'':'nosendpl']">
 			<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y">
 				<view class="comment" v-for="(res, index) in commentList" :key="res.id">
-					<view class="left">
+					<view class="left" @click="tgrHref(res.user_id[0])">
 						<commont-image
 							:src="(res.user_id[0]&&res.user_id[0].avatar_file)?res.user_id[0].avatar_file.url:''"
 							:isoriginal="!!(res.user_id[0].original==1)">
@@ -100,7 +100,7 @@
 				topleft: "最新评论",
 				topright: "按时间",
 				commentList: [],
-				commentArray:[],
+				commentArray: [],
 				inputvalue: "",
 				showreply: false,
 				currentData: {},
@@ -111,7 +111,7 @@
 				like_pl: [],
 				plNumber: 0, ///评论数
 				oldid: "",
-				pl_count:0////评论数
+				pl_count: 0 ////评论数
 			};
 		},
 
@@ -164,20 +164,41 @@
 					if (this.zydata._id && this.zydata._id != this.oldid) {
 						this.getComment();
 						this.oldid = this.zydata._id;
-						this.pl_count= this.zydata.pl_count||0;
+						this.pl_count = this.zydata.pl_count || 0;
 					}
 				}
 			}
 		},
 		methods: {
+			// 获取评论id
+			getplid() {
+				var plid = Math.random().toString(36).substr(2);
+				return "pl_" + plid;
+			},
+			tgrHref(item) {
+				// debugger;
+				var id = item._id;
+				if (id) {
+					var userinfo = uni.getStorageSync("userInfo");
+					if (userinfo._id == id) {
+						uni.navigateTo({
+							url: "/pages/ucenter/ucenter"
+						});
+					} else {
+						uni.navigateTo({
+							url: "/pages/ucenter/tacenter?id=" + id
+						});
+					}
+				}
+			},
 			// 删除某条评论
-			deleteComment(id){
-				var _index=0;
-				var delnumber=0;
-				this.commentArray.forEach((item,index)=>{
-					if(item._id==id||item.all_reply_comment_id.indexOf(id)!=-1){
-						delnumber=item.children?(item.children.length+1):1;
-						this.commentArray.splice(_index,1);
+			deleteComment(id) {
+				// var _index=0;
+				var delnumber = 0;
+				this.commentArray.forEach((item, index) => {
+					if (item.comment_id == id || item.all_reply_comment_id.indexOf(id) != -1) {
+						delnumber += 1;
+						delete this.commentArray[index]
 						// delnumber++;
 					}
 					// else{
@@ -186,11 +207,11 @@
 				});
 				this._dealcomment();
 				// 更新评论数
-				this.zydata.pl_count=this.zydata.pl_count-delnumber;
+				this.zydata.pl_count = this.zydata.pl_count - delnumber;
 				db.collection("jz-opendb-resources").where({
-					_id:this.zydata._id
+					_id: this.zydata._id
 				}).update({
-					pl_count:(this.zydata.pl_count||0)
+					pl_count: (this.zydata.pl_count || 0)
 				});
 			},
 			// 点击回复当前资源
@@ -228,15 +249,17 @@
 			closepopup() {
 				var that = this;
 				that.showreply = false;
-				if(typeof plus!="undefined"){
-				var pscreen = plus.webview.currentWebview().opener();
-				mui.fire(pscreen, 'waitclose', {
-					waitclose: "0"
-				});
+				if (typeof plus != "undefined") {
+					var pscreen = plus.webview.currentWebview().opener();
+					mui.fire(pscreen, 'waitclose', {
+						waitclose: "0"
+					});
 				}
 			},
 			// 发送评论
 			async sendComment() {
+				// debugger;
+				var that = this;
 				if (this.userInfo.forbiddenwords) {
 					this.$refs.uToast.show({
 						title: '你已被禁言，请联系管理员',
@@ -244,10 +267,19 @@
 					});
 					return;
 				}
+				if (that.relaydata.all_reply_comment_id && that.relaydata.all_reply_comment_id.indexOf("undefined") !=
+					-1) {
+					that.$refs.uToast.show({
+						title: '你的操作太快，请稍后再试',
+						type: 'error'
+					});
+					return;
+				}
 				const uid = db.getCloudEnv('$cloudEnv_uid');
-				var senddata={
+				var senddata = {
 					article_id: this.zydata._id,
 					user_id: uid,
+					comment_id: this.getplid(),
 					comment_content: this.inputvalue,
 					like_count: 0,
 					comment_cj: this.relaydata.comment_cj || 1, ///评论层级
@@ -255,52 +287,58 @@
 					reply_user_id: this.relaydata.reply_user_id || "0",
 					reply_comment_id: this.relaydata.reply_comment_id || "0",
 					all_reply_comment_id: this.relaydata.all_reply_comment_id || "0",
+					comment_date: new Date().getTime()
 				}
 				// 评论层级为1，先插入静态数据,再去请求动态数据
 				// debugger;
 				// 增加评论数
+				that.$set(that.zydata, "pl_count", that.zydata.pl_count ? ++that.zydata.pl_count : 1);
+
 				db.collection("jz-opendb-resources").where({
-					_id:this.zydata._id
+					_id: this.zydata._id
 				}).update({
-					pl_count:this.zydata.pl_count?++this.zydata.pl_count:1
+					pl_count: that.zydata.pl_count
 				});
-				console.log("this.zydata",this.zydata);
-				if(!this.relaydata.comment_cj||this.relaydata.comment_cj==1){
-					var _addsenddata=Object.assign(senddata,{
-						user_id:[JSON.parse(JSON.stringify(this.userInfo))]
-					});
-					// console.log("_addsenddata",_addsenddata);
-					this.commentArray.unshift(_addsenddata);
-					this._dealcomment();
-				}
-				
-				var add_value =null;
-				if(this.relaydata.comment_cj&&this.relaydata.comment_cj>1){
-					 add_value = {
+				// console.log("this.zydata",this.zydata);
+				// if(!this.relaydata.comment_cj||this.relaydata.comment_cj==1){
+				var _addsenddata = Object.assign(JSON.parse(JSON.stringify(senddata)), {
+					user_id: [JSON.parse(JSON.stringify(this.userInfo))],
+					reply_user_id_info: that.relaydata.reply_user_id_info
+				});
+				// console.log("_addsenddata",_addsenddata);
+				this.commentArray.unshift(_addsenddata);
+				this._dealcomment();
+				// }
+
+				var add_value = null;
+				if (this.relaydata.comment_cj && this.relaydata.comment_cj > 1) {
+					add_value = {
 						type: 3,
 						user_id: this.zydata.user_id,
-						comment: this.userInfo.nickname+"回复了你的评论【"+this.relaydata.comment_content+"】【" + this.inputvalue + "】"
+						comment: this.userInfo.nickname + "回复了你的评论【" + this.relaydata.comment_content + "】【" + this
+							.inputvalue + "】"
 					}
-				}else{
-					debugger;
-					 add_value = {
+				} else {
+					// debugger;
+					add_value = {
 						type: 3,
 						user_id: this.zydata.user_id,
-						comment: this.userInfo.nickname+"评论了你的作品【<span class='zyid' id='" + this.zydata._id + "'>" + this.zydata.title +
+						comment: this.userInfo.nickname + "评论了你的作品【<span class='zyid' id='" + this.zydata._id +
+							"'>" + this.zydata.title +
 							"</span>】【" + this.inputvalue + "】"
 					}
 				}
-				if(add_value){
-					 db.collection("jz-custom-systeminfo").add(add_value);
+				if (add_value) {
+					db.collection("jz-custom-systeminfo").add(add_value);
 				}
 				this.inputvalue = "";
 				await db.collection("opendb-news-comments").add(senddata);
 				// this.inputvalue = "";
-				if (this.relaydata.comment_cj > 1) {
-					this.getComment(this.relaydata.reply_comment_id);
-				} else {
-					this.getComment();
-				}
+				// if (this.relaydata.comment_cj > 1) {
+				// 	this.getComment(this.relaydata.reply_comment_id);
+				// } else {
+				// 	this.getComment();
+				// }
 			},
 			// 回复
 			replycomment(item) {
@@ -308,10 +346,11 @@
 				this.relaydata = {
 					comment_cj: item.comment_cj + 1,
 					comment_type: 1,
-					comment_content:item.comment_content,
+					comment_content: item.comment_content,
 					reply_user_id: item.user_id[0]._id,
-					reply_comment_id: item._id,
-					all_reply_comment_id: item.all_reply_comment_id + "," + item._id
+					reply_user_id_info: item.user_id,
+					reply_comment_id: item.comment_id,
+					all_reply_comment_id: item.all_reply_comment_id + "," + item.comment_id
 				}
 			},
 			// 跳转到全部回复
@@ -320,14 +359,14 @@
 				this.currentData = item;
 				this.showreply = true;
 				//向父级窗口发送等待返回的消息,接收到消息否关闭该窗口
-				if(typeof plus!="undefined"){
-				var pscreen = plus.webview.currentWebview().opener();
-				mui.fire(pscreen, 'waitclose', {
-					waitclose: "1"
-				});
-				window.addEventListener('allowclose', function(e) {
-					that.closepopup();
-				});
+				if (typeof plus != "undefined") {
+					var pscreen = plus.webview.currentWebview().opener();
+					mui.fire(pscreen, 'waitclose', {
+						waitclose: "1"
+					});
+					window.addEventListener('allowclose', function(e) {
+						that.closepopup();
+					});
 				}
 			},
 			// 点赞
@@ -340,24 +379,25 @@
 					await db.collection("opendb-news-likepl").add({
 						article_id: this.zydata._id,
 						user_id: uid,
-						comment_id: that.commentList[index]._id,
+						comment_id: that.commentList[index].comment_id,
 						comment_content: that.commentList[index].comment_content
 					});
 					var add_value = {
 						type: 2,
 						user_id: this.zydata.user_id,
-						comment: this.userInfo.nickname+"点赞了你的评论【"+that.commentList[index].comment_content+"】"
+						comment: this.userInfo.nickname + "点赞了你的评论【" + that.commentList[index].comment_content +
+							"】"
 					}
-					 db.collection("jz-custom-systeminfo").add(add_value);
+					db.collection("jz-custom-systeminfo").add(add_value);
 				} else {
 					that.commentList[index].like_count--;
 					await db.collection("opendb-news-likepl").where({
 						user_id: uid,
-						comment_id: that.commentList[index]._id
+						comment_id: that.commentList[index].comment_id
 					}).remove();
 				}
 				await db.collection("opendb-news-comments").where({
-					_id: that.commentList[index]._id
+					comment_id: that.commentList[index].comment_id
 				}).update({
 					like_count: that.commentList[index].like_count
 				});
@@ -365,9 +405,9 @@
 			// 评论列表
 			async getComment(comment_id) {
 				// debugger;
-				// uni.showLoading({
-				// 	title: "加载中"
-				// });
+				uni.showLoading({
+					title: "加载中"
+				});
 				var that = this;
 				var comments = {};
 				var param = {
@@ -385,27 +425,17 @@
 				}
 
 				// 获取统计数量
-				if(!comment_id){
-					var rescount = await db.collection('opendb-news-comments').where(param).count();
-					this.plNumber = rescount.result.total;
-				}else{
-					this.plNumber++;
-				}
-				// if(this.zydata.pl_count){
-					if(this.plNumber>(this.zydata.pl_count||0)){
-						this.$set(this.zydata,"pl_count",this.plNumber);
-					}
-					db.collection("jz-opendb-resources").where({
-						_id:this.zydata._id
-					}).update({
-						pl_count:(this.zydata.pl_count||0)
-					});
-				// }
-				console.log("this.zydata",this.zydata,this.plNumber);
-				// this.$emit("changenumber", this.plNumber);
+				var rescount = await db.collection('opendb-news-comments').where(param).count();
+				this.plNumber = rescount.result.total;
+				this.$set(this.zydata, "pl_count", this.plNumber);
+				db.collection("jz-opendb-resources").where({
+					_id: this.zydata._id
+				}).update({
+					pl_count: (this.zydata.pl_count || 0)
+				});
 
 				var dbcomments = db.collection("opendb-news-comments,uni-id-users").where(param).field(
-					"article_id,user_id{nickname,avatar_file,original},reply_user_id{nickname,avatar_file},comment_content,like_count,comment_type,comment_date,reply_comment_id,comment_cj,all_reply_comment_id"
+					"article_id,comment_id,user_id{nickname,avatar_file,original},reply_user_id{nickname,avatar_file},comment_content,like_count,comment_type,comment_date,reply_comment_id,comment_cj,all_reply_comment_id"
 				);
 				var f_c = Math.ceil(this.plNumber / 100);
 				var res_comment = [];
@@ -449,7 +479,7 @@
 								this.$set(item2, "isLike", false);
 							}
 						});
-						that.commentArray=res_comment;
+						that.commentArray = res_comment;
 						that._dealcomment();
 						// that.commentList = that.getTree(res_comment);
 						// that.commentList.forEach((item2) => {
@@ -479,20 +509,20 @@
 							}
 						})
 					}
-					// uni.hideLoading();
+					uni.hideLoading();
 				} else {
-					// uni.hideLoading();
+					uni.hideLoading();
 				}
 			},
-			_dealcomment(){
-				console.log("this.commentArray",this.commentArray);
-				var that=this;
+			_dealcomment() {
+				console.log("this.commentArray", this.commentArray);
+				var that = this;
 				that.commentList = that.getTree(this.commentArray);
 				that.commentList.forEach((item2) => {
 					if (item2.children) {
-						if (!item2.allchildren) {
-							that.$set(item2, "allchildren", []);
-						}
+						// if (!item2.allchildren) {
+						that.$set(item2, "allchildren", []);
+						// }
 						that._dealChildren(item2, item2.children);
 					}
 				});
@@ -525,18 +555,40 @@
 				});
 			},
 			getTree(data) {
+				// debugger;
+				var commentid = "comment_id";
 				let result = [];
 				let map = {};
+				console.log("getTree1", data);
 				data.forEach(item => {
-					map[item._id] = item;
+					// if(!item[commentid]){
+					// 	commentid="_id";
+					// }
+					delete item.children;
+					map[item[commentid]] = item;
 				});
 				data.forEach(item => {
-					var reply_comment_id=item.reply_comment_id||(item.reply_comment_id[0] && item.reply_comment_id[0]._id);
+					// if(!item[commentid]){
+					// 	commentid="_id";
+					// }
+					var reply_comment_id = item.reply_comment_id || (item.reply_comment_id[0] && item
+						.reply_comment_id[0][commentid]);
 					if (reply_comment_id) {
 						let parent = map[reply_comment_id];
 						if (parent) {
-							parent.children=[];
-							parent.children.push(item);
+							if (!parent.children) {
+								parent.children = [];
+							}
+							var flag = false;
+							// debugger;
+							parent.children.forEach((item1) => {
+								if (item1[commentid] == item[commentid]) {
+									flag = true;
+								}
+							})
+							if (!flag) {
+								parent.children.push(item);
+							}
 						} else {
 							result.push(item);
 						}
@@ -544,6 +596,7 @@
 						result.push(item);
 					}
 				});
+				console.log("result111111", result);
 				return result;
 			}
 		}
@@ -555,9 +608,10 @@
 	// 	position: fixed;
 	// 	bottom: 50px;
 	// }
-	.comment-container{
+	.comment-container {
 		background-color: #fff;
 	}
+
 	.slot-gonggao_content {
 		overflow: auto;
 	}
@@ -679,6 +733,7 @@
 					padding: 20rpx;
 					border-bottom: solid 2rpx $u-border-color;
 					flex-flow: wrap;
+
 					.username {
 						color: #7275D3;
 					}

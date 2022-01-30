@@ -11,7 +11,7 @@
 		<view :class="['comment-container1','slot-gonggao_content',showsendpl?'':'nosendpl']">
 			<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y">
 				<view class="comment" v-for="(res, index) in commentList" :key="res.id">
-					<view class="left">
+					<view class="left" @click="tgrHref(res.user_id[0])">
 						<commont-image
 							:src="(res.user_id[0]&&res.user_id[0].avatar_file)?res.user_id[0].avatar_file.url:''"
 							:isoriginal="!!(res.user_id[0].original==1)">
@@ -162,16 +162,34 @@
 			zydata: {
 				deep: true,
 				handler() {
-					// debugger;
 					if (this.zydata._id && this.zydata._id != this.oldid) {
 						this.getComment();
 						this.oldid = this.zydata._id;
-						this.pl_count= this.zydata.pl_count||0
 					}
 				}
 			}
 		},
 		methods: {
+			// 获取评论id
+			getplid(){
+				var plid = Math.random().toString(36).substr(2);
+				return "pl_"+plid;
+			},
+			tgrHref(item) {
+					var id = item._id;
+					if (id) {
+						var userinfo = uni.getStorageSync("userInfo");
+						if (userinfo._id == id) {
+							uni.navigateTo({
+								url: "/pages/ucenter/ucenter"
+							});
+						} else {
+							uni.navigateTo({
+								url: "/pages/ucenter/tacenter?id=" + id
+							});
+						}
+					}
+			},
 			// 点击回复当前资源
 			replyResource() {
 				// debugger;
@@ -179,6 +197,7 @@
 				this.relaydata = {};
 			},
 			openmore(res) {
+				// debugger;
 				if (res.user_id[0]._id == this.userInfo._id) {
 					this.$refs.operator.list = [{
 						text: "删除"
@@ -216,73 +235,86 @@
 			},
 			// 发送评论
 			async sendComment() {
-				// debugger;
-				this.openpl=false;
-				if (this.userInfo.forbiddenwords) {
-					this.$refs.uToast.show({
+				var that=this;
+				// 动态生成当前评论id,不用默认的评论id
+				that.openpl=false;
+				if (that.userInfo.forbiddenwords) {
+					that.$refs.uToast.show({
 						title: '你已被禁言，请联系管理员',
+						type: 'error'
+					});
+					return;
+				}
+				if(that.relaydata.all_reply_comment_id&&that.relaydata.all_reply_comment_id.indexOf("undefined")!=-1){
+					that.$refs.uToast.show({
+						title: '你的操作太快，请稍后再试',
 						type: 'error'
 					});
 					return;
 				}
 				const uid = db.getCloudEnv('$cloudEnv_uid');
 				var senddata = {
-					article_id: this.zydata._id,
+					article_id: that.zydata._id,
 					user_id: uid,
-					comment_content: this.inputvalue,
+					comment_id:this.getplid(),
+					comment_content: that.inputvalue,
 					like_count: 0,
-					comment_cj: this.relaydata.comment_cj || 1, ///评论层级
-					comment_type: this.relaydata.comment_type || 0,
-					reply_user_id: this.relaydata.reply_user_id || "0",
-					reply_comment_id: this.relaydata.reply_comment_id || "0",
-					all_reply_comment_id: this.relaydata.all_reply_comment_id || "0",
+					comment_cj: that.relaydata.comment_cj || 1, ///评论层级
+					comment_type: that.relaydata.comment_type || 0,
+					reply_user_id: that.relaydata.reply_user_id || "0",
+					reply_comment_id: that.relaydata.reply_comment_id || "0",
+					all_reply_comment_id: that.relaydata.all_reply_comment_id || "0",
+					comment_date:new Date().getTime()
 				}
 				// 评论层级为1，先插入静态数据,再去请求动态数据
-				// debugger;
 				// 增加评论数
 				// debugger;
+				that.$set(that.zydata,"pl_count",that.zydata.pl_count?++that.zydata.pl_count:1);
 				db.collection("jz-opendb-taolun").where({
-					_id:this.zydata._id
+					_id:that.zydata._id
 				}).update({
-					pl_count:this.zydata.pl_count?++this.zydata.pl_count:1
+					pl_count:that.zydata.pl_count
 				});
-				if (!this.relaydata.comment_cj || this.relaydata.comment_cj == 1) {
-					var _addsenddata = Object.assign(senddata, {
-						user_id: [JSON.parse(JSON.stringify(this.userInfo))]
+				// if (!that.relaydata.comment_cj || that.relaydata.comment_cj == 1) {
+					var _addsenddata = Object.assign(JSON.parse(JSON.stringify(senddata)), {
+						user_id: [JSON.parse(JSON.stringify(that.userInfo))],
+						reply_user_id_info:that.relaydata.reply_user_id_info
 					});
 					////临时新增评论
-					this.commentArray.unshift(_addsenddata);
-					this._dealcomment();
-				}
+					that.commentArray.unshift(_addsenddata);
+					that._dealcomment();
+				// }
 				
 				var add_value =null;
-				if(this.relaydata.comment_cj&&this.relaydata.comment_cj>1){
+				if(that.relaydata.comment_cj&&that.relaydata.comment_cj>1){
 					 add_value = {
 						type: 3,
-						user_id: this.zydata.user_id,
-						comment: this.userInfo.nickname+"回复了你的评论【"+this.relaydata.comment_content+"】【" + this.inputvalue + "】"
+						user_id: that.zydata.user_id,
+						comment: that.userInfo.nickname+"回复了你的评论【<span class='ftid' id='"+this.zydata._id+"'>"+that.relaydata.comment_content+"</span>】【" + that.inputvalue + "】"
 					}
 				}else{
 					 add_value = {
 						type: 3,
-						user_id: this.zydata.user_id,
-						comment: this.userInfo.nickname+"评论了你的帖子【<span class='ftid' id='" + this.zydata._id + "'>" + this.zydata.title +
-							"</span>】【" + this.inputvalue + "】"
+						user_id: that.zydata.user_id,
+						comment: that.userInfo.nickname+"评论了你的帖子【<span class='ftid' id='" + that.zydata._id + "'>" + that.zydata.excerpt.substr(0,10) +
+							"</span>】【" + that.inputvalue + "】"
 					}
 				}
 				if(add_value){
 				  db.collection("jz-custom-systeminfo").add(add_value);
 				}
-				this.inputvalue = "";
+				that.inputvalue = "";
 				await db.collection("opendb-news-commentsTaolun").add(senddata);
-				if (this.relaydata.comment_cj > 1) {
-					this.getComment(this.relaydata.reply_comment_id);
-				} else {
-					this.getComment();
-				}
+				// 不主动获取评论
+				// if (that.relaydata.comment_cj > 1) {
+				// 	that.getComment(that.relaydata.reply_comment_id);
+				// } else {
+				// 	that.getComment();
+				// }
 			},
 			// 回复
 			replycomment(item) {
+				// debugger;
 				this.openpl=true;
 				this.placeholder = "回复 @" + item.user_id[0].nickname + ":";
 				this.relaydata = {
@@ -290,8 +322,9 @@
 					comment_type: 1,
 					comment_content:item.comment_content,
 					reply_user_id: item.user_id[0]._id,
-					reply_comment_id: item._id,
-					all_reply_comment_id: item.all_reply_comment_id + "," + item._id
+					reply_user_id_info:item.user_id,
+					reply_comment_id: item.comment_id,
+					all_reply_comment_id: item.all_reply_comment_id + "," + item.comment_id
 				}
 			},
 			// 跳转到全部回复
@@ -320,24 +353,25 @@
 					await db.collection("opendb-news-likeplTaolun").add({
 						article_id: this.zydata._id,
 						user_id: uid,
-						comment_id: that.commentList[index]._id,
+						comment_id: that.commentList[index].comment_id,
 						comment_content: that.commentList[index].comment_content
 					});
+					
 					var add_value = {
 						type: 2,
 						user_id: this.zydata.user_id,
-						comment: this.userInfo.nickname+"点赞了你的评论【"+that.commentList[index].comment_content+"】"
+						comment: this.userInfo.nickname+"点赞了你的评论【<span class='ftid' id='"+this.zydata._id+"'>"+that.commentList[index].comment_content+"</span>】"
 					}
 					 db.collection("jz-custom-systeminfo").add(add_value);
 				} else {
 					that.commentList[index].like_count--;
 					await db.collection("opendb-news-likeplTaolun").where({
 						user_id: uid,
-						comment_id: that.commentList[index]._id
+						comment_id: that.commentList[index].comment_id
 					}).remove();
 				}
 				await db.collection("opendb-news-commentsTaolun").where({
-					_id: that.commentList[index]._id
+					comment_id: that.commentList[index].comment_id
 				}).update({
 					like_count: that.commentList[index].like_count
 				});
@@ -345,14 +379,15 @@
 			// 删除某条评论
 			deleteComment(id){
 				// debugger;
-				var _index=0;
+				// var _index=0;
 				var delnumber=0;
 				this.commentArray.forEach((item,index)=>{
 					
-					if(item._id==id||(item.all_reply_comment_id.indexOf(id)!=-1)){
+					if(item.comment_id==id||(item.all_reply_comment_id.indexOf(id)!=-1)){
 						// debugger;
-						delnumber=item.children?(item.children.length+1):1;
-						this.commentArray.splice(_index,1);
+						delnumber+=1;
+						delete this.commentArray[index]
+						// this.commentArray.splice(_index,1);
 					}
 					// else{
 					// 	_index++;
@@ -370,9 +405,9 @@
 			// 评论列表
 			async getComment(comment_id) {
 				// debugger;
-				// uni.showLoading({
-				// 	title: "加载中"
-				// });
+				uni.showLoading({
+					title: "加载中"
+				});
 				var that = this;
 				var comments = {};
 				var param = {
@@ -389,18 +424,17 @@
 				}
 
 				// 获取统计数量
-				if (!comment_id) {
-					var rescount = await db.collection('opendb-news-commentsTaolun').where(param).count();
-					
-					this.plNumber = rescount.result.total;
-
-				} else {
-					this.plNumber++;
-				}
-				this.$emit("changenumber", this.plNumber);
+				var rescount = await db.collection('opendb-news-commentsTaolun').where(param).count();
+				this.plNumber = rescount.result.total;
+				this.$set(this.zydata, "pl_count", this.plNumber);
+				db.collection("jz-opendb-taolun").where({
+					_id: this.zydata._id
+				}).update({
+					pl_count: (this.zydata.pl_count || 0)
+				});
 
 				var dbcomments = db.collection("opendb-news-commentsTaolun,uni-id-users").where(param).field(
-					"article_id,user_id{nickname,avatar_file,original},reply_user_id{nickname,avatar_file},comment_content,like_count,comment_type,comment_date,reply_comment_id,comment_cj,all_reply_comment_id"
+					"article_id,comment_id,user_id{nickname,avatar_file,original},reply_user_id{nickname,avatar_file},comment_content,like_count,comment_type,comment_date,reply_comment_id,comment_cj,all_reply_comment_id"
 				);
 				
 				var f_c = Math.ceil(this.plNumber / 100);
@@ -432,7 +466,7 @@
 							})
 						}
 						res_comment.forEach((item2) => {
-							if (this.like_pl.indexOf(item2._id) != -1) {
+							if (this.like_pl.indexOf(item2.comment_id) != -1||this.like_pl.indexOf(item2._id) != -1) {
 								this.$set(item2, "isLike", true);
 							} else {
 								this.$set(item2, "isLike", false);
@@ -451,21 +485,21 @@
 							}
 						})
 					}
-					// uni.hideLoading();
+					uni.hideLoading();
 				} else {
-					// uni.hideLoading();
+					uni.hideLoading();
 				}
 			},
 			_dealcomment() {
 				// debugger;
-				console.log("_dealcomment",this.commentArray);
 				var that = this;
 				that.commentList = that.getTree(this.commentArray);
+				// debugger;
 				that.commentList.forEach((item2) => {
 					if (item2.children) {
-						if (!item2.allchildren) {
+						// if (!item2.allchildren) {
 							that.$set(item2, "allchildren", []);
-						}
+						// }
 						that._dealChildren(item2, item2.children);
 					}
 				});
@@ -499,21 +533,37 @@
 			},
 			getTree(data) {
 				// debugger;
-				// data.forEach((item)=>{
-				// 	delete item.children;
-				// })
+				var commentid="comment_id";
 				let result = [];
 				let map = {};
 				data.forEach(item => {
-					map[item._id] = item;
+					// if(!item[commentid]){
+					// 	commentid="_id";
+					// }
+					delete item.children;
+					map[item[commentid]] = item;
 				});
 				data.forEach(item => {
-					var reply_comment_id=item.reply_comment_id||(item.reply_comment_id[0] && item.reply_comment_id[0]._id);
+					// if(!item[commentid]){
+					// 	commentid="_id";
+					// }
+					var reply_comment_id=item.reply_comment_id||(item.reply_comment_id[0] && item.reply_comment_id[0][commentid]);
 					if (reply_comment_id) {
 						let parent = map[reply_comment_id];
 						if (parent) {
-							parent.children=[];
-							parent.children.push(item);
+							if(!parent.children){
+								parent.children=[];
+							}
+							var flag=false;
+							// debugger;
+							parent.children.forEach((item1)=>{
+								if(item1[commentid]==item[commentid]){
+									flag=true;
+								}
+							})
+							if(!flag){
+								parent.children.push(item);
+							}
 						} else {
 							result.push(item);
 						}

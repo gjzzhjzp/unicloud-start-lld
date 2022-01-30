@@ -38,7 +38,8 @@
 				{{passcontent}}
 			</view>
 		</u-modal>
-		<u-modal v-model="showshinfo" confirm-text="重新提交" @cancel="confimsh" @confirm="reconfirmsh" cancel-text="退出" :show-cancel-button="true">
+		<u-modal v-model="showshinfo" confirm-text="重新提交" @cancel="confimsh" @confirm="reconfirmsh" cancel-text="退出"
+			:show-cancel-button="true">
 			<view v-html="shcontent" style="padding: 10px;">
 
 			</view>
@@ -239,31 +240,33 @@
 				}
 			},
 			// 重新提交审核
-			reconfirmsh(){
+			reconfirmsh() {
 				uni.navigateTo({
 					url: "/pages/ucenter/login-page/pwd-login/pwd-weibo"
 				});
 			},
 			// 检测时候有新的系统消息
 			async checknewinfo(data) {
+				// debugger;
 				this.shcontent = '您已提交微博验证【' + data.weibocontent + '】申请，如已发微博，请等待管理员审核'
 				var userInfo = uni.getStorageSync("userInfo");
 				const db = uniCloud.database();
 				var res = await db.collection('jz-custom-systeminfo').where({
 					user_id: userInfo._id,
 					type: 0
-				}).field("comment").get();
+				}).field("comment,comment_date").get();
 				if (res.result.data && res.result.data.length > 0) {
 					var infos = res.result.data;
 					if (infos && infos.length > 0) {
 						this.isnewinfo = infos[infos.length - 1].comment;
+						var time = infos[infos.length - 1].comment_date;
 						if (this.isnewinfo) {
 							this.shcontent += "<br>审核意见：【" + this.isnewinfo + "】";
-						
+							this.shcontent += "<br>审核时间：【" + this.$u.timeFormat(time, 'yyyy-mm-dd hh:MM:ss') + "】";
 						}
 					}
 				}
-				this.showshinfo=true;
+				this.showshinfo = true;
 				// console.log("isnewinfo",this.isnewinfo);
 			},
 			createCaptcha() {

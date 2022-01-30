@@ -40,7 +40,10 @@
 						</uni-file-picker>
 						<view style="color: red;margin-top: 10px;">请等待图片上传完之后再提交</view>
 						<view style="color: red;margin-top: 10px;">
-							请尽可能多地提供你这边有关他俩的截图痕迹（氪金、相册、云盘、其他平台的~均可
+							请尽可能多地提供你这边有关他俩的截图痕迹（商务、周边、相册、抖音、公益、云盘、其他平台的~均可
+						</view>
+						<view @click="opennotice()" style="color: red;margin-top: 10px;">
+							<view style="text-decoration: underline;">点击查看注意事项</view>
 						</view>
 					</uni-forms-item>
 					<uni-forms-item v-if="sfxs_yqm" label="邀请码" name="yqm" v-model="formData.yqm" required>
@@ -61,6 +64,21 @@
 			</u-modal>
 		</view>
 		<sevicecontent ref="sevicecontent" @confirm="confirmcontent"></sevicecontent>
+		<u-modal v-model="shownotice" title="注意事项">
+			<view class="slot-content">
+				<view>
+					1、提交验证资料时务必加上app昵称的水印，其他无关水印不认【更不要泛指橘子皮/俊哲/1640/51129等】
+					<br>
+					2、小宇宙已多次表示婉拒橘域网内所有公认的雷点，注册申请前请自行检查，不满足请勿申请
+					<br>
+					3、验证资料的图片请实时截图，漏出系统时间，提交时间与系统时间间隔不超过半小时
+					<br>
+					4、请尽可能多方面的提供资料，每种类型最多两张即可，可拼图。
+					<br>
+					以上请先自查，请按照规则提交
+				</view>
+			</view>
+		</u-modal>
 	</view>
 </template>
 <script>
@@ -75,6 +93,7 @@
 		},
 		data() {
 			return {
+				shownotice: false,
 				showmodel: false,
 				formData: {
 					"username": "",
@@ -82,7 +101,7 @@
 					'password': '',
 					'pwd2': '',
 					'weiboname': "", ////微博主页链接地址
-					"resources":null,
+					"resources": null,
 					"yqm": "", //邀请码
 					"weibocontent": "山河不足重，重在遇知己"
 				},
@@ -119,6 +138,10 @@
 
 		},
 		methods: {
+			// 打开注意事项
+			opennotice() {
+				this.shownotice = true;
+			},
 			goback() {
 				uni.navigateBack();
 			},
@@ -169,7 +192,7 @@
 								}
 								if (username) {
 									var _user = await db.collection("uni-id-users").where(
-									"username=='"+username+"'&&status!=1&&isbdwb==true"
+										"username=='" + username + "'&&status!=1&&isbdwb==true"
 									).field("_id,username,nickname").get();
 									if (_user.result && _user.result.data && _user.result.data.length > 0) {
 										this.yqr_id = _user.result.data[0]._id;
@@ -259,15 +282,15 @@
 								content: '您已注册成功，且申请已提交，请尽快发微博，待管理员审核后方可登录',
 								success: function(res) {
 									if (res.confirm) {
-										if(typeof plus!="undefined"){
-										var pscreen = plus.webview.currentWebview().opener();
-										mui.fire(pscreen, 'quit', {
-											data: "quit"
-										});
-										console.log("在这里退出App");
-										// #ifdef APP-PLUS  
-										plus.runtime.quit();
-										// #endif
+										if (typeof plus != "undefined") {
+											var pscreen = plus.webview.currentWebview().opener();
+											mui.fire(pscreen, 'quit', {
+												data: "quit"
+											});
+											console.log("在这里退出App");
+											// #ifdef APP-PLUS  
+											plus.runtime.quit();
+											// #endif
 										}
 									}
 								}

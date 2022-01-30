@@ -10,21 +10,21 @@ const router = createRouter({
 import me from "./methods.js"
 //全局路由前置守卫
 router.beforeEach((to, from, next) => {
-	console.log("to", to);
-	console.log("from", from);
+	// console.log("to", to);
+	// console.log("from", from);
 	// console.log("navigator.userAgent",navigator.userAgent);
 	// debugger;
 	// console.log("aaaaaaaa",uni.getSystemInfoSync());
-	var screenWidth=uni.getSystemInfoSync().screenWidth;
-	if (screenWidth>1200) { //pc端
-		if (to.path.indexOf("/pc/pc") != -1) {
-			next();
-		} else {
-			uni.navigateTo({
-				url: "/pages/pc/pc"
-			});
-		}
-	} else {
+	// var screenWidth=uni.getSystemInfoSync().screenWidth;
+	// if (screenWidth>1200) { //pc端
+	// 	if (to.path.indexOf("/pc/pc") != -1) {
+	// 		next();
+	// 	} else {
+	// 		uni.navigateTo({
+	// 			url: "/pages/pc/pc"
+	// 		});
+	// 	}
+	// } else {
 		me.getConfig().then(() => {
 			if (to.path.indexOf("login-page") != -1 || to.path.indexOf("u-full-screen") != -1 || to.path
 				.indexOf("/question/") != -1) {
@@ -38,7 +38,7 @@ router.beforeEach((to, from, next) => {
 				next();
 			}
 		});
-	}
+	// }
 });
 // 全局路由后置守卫
 router.afterEach((to, from) => {})

@@ -35,7 +35,7 @@
 					{
 						"title": "评论消息",
 						"to": '/pages/system-info/system-info-detail?type=3',
-						"thumb": "/static/center/user.png",
+						"thumb": "/static/newpage/pl.png",
 						"type": 3,
 						"isnewinfo": false,
 						"class": "systeminfo"
@@ -51,7 +51,7 @@
 					{
 						"title": "关注消息",
 						"to": '/pages/system-info/system-info-detail?type=5',
-						"thumb": "/static/center/info.png",
+						"thumb": "/static/newpage/gzinfo.png",
 						"type": 5,
 						"isnewinfo": false,
 						"class": "systeminfo"

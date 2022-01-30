@@ -16,7 +16,7 @@ const validator = {
 					},
 					{
 						"value": 1,
-						"text": "磕糖"
+						"text": "嗑糖"
 					},
 					{
 						"value": 2,
@@ -124,7 +124,7 @@ const validator = {
 const enumConverter = {
 	"categories_valuetotext": {
 		"0": "闲聊",
-		"1": "磕糖",
+		"1": "嗑糖",
 		"2": "分享",
 		"3": "其他"
 	},

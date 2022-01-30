@@ -56,6 +56,7 @@
 		methods: {
 			// 检测时候有新的系统消息
 			async checknewinfo() {
+				// debugger;
 				this.isnewinfo = false;
 				var userInfo = uni.getStorageSync("userInfo");
 				var last_time = uni.getStorageSync("systeminfo_last");
@@ -69,6 +70,7 @@
 					})
 				}
 				var res = await db.collection('jz-custom-systeminfo').where(_obj).field("comment").get();
+				console.log("消息",res);
 				if (res.result.data && res.result.data.length > 0) {
 					this.$set(this,"isnewinfo",true);
 				}else{

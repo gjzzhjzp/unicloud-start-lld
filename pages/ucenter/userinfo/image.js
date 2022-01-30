@@ -14,7 +14,8 @@ export default{
 				count: 1,
 				crop,
 				success: async (res) => {
-					console.log(res);
+					// debugger;
+					// console.log(res);
 					let tempFile = res.tempFiles[0],
 						avatar_file = {
 							// #ifdef H5
@@ -40,7 +41,7 @@ export default{
 						});
 					})
 					// #endif
-					console.log(this.userInfo);
+					// console.log(this.userInfo);
 					let cloudPath = "";
 					if(this.userInfo){
 						 cloudPath = this.userInfo._id + '' + Date.now()
@@ -61,9 +62,9 @@ export default{
 					});
 					// console.log(result)
 					avatar_file.url = fileID
-					console.log({
-						avatar_file
-					});
+					// console.log({
+					// 	avatar_file
+					// });
 					uni.hideLoading()
 		
 					this.setAvatarFile(avatar_file)

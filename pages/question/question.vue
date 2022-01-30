@@ -16,6 +16,8 @@
 </script>
 <style>
 	.jz-container{
-		padding: 10px;
+		background-color: #fff;
+		height: 100vh;
+		/* padding: 10px; */
 	}
 </style>

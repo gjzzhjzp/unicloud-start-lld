@@ -1,5 +1,5 @@
 <template>
-	<view class="uni-container">
+	<view class="uni-container" style="background-color: #fff;">
 		<u-navbar :is-back="true" title="我的投稿"></u-navbar>
 		<view style="margin: 4px 0px;">
 			<!-- #ifdef H5 -->
@@ -23,9 +23,11 @@
 				</uni-easyinput>
 				<yunmiao-cascader :select-value="formData.categories" ref="cascader" value-name="flbm"
 					:cascaderData="cascaderData" @confirem="cascaderConfirem"></yunmiao-cascader>
+					<view class="resource-ts">请尽可能多的选择相对应分类，若没有相对应分类请在标签中写详细</view>
 			</uni-forms-item>
 			<uni-forms-item name="labels" label="标签">
 				<uni-easyinput placeholder="多个标签以逗号隔开" v-model="formData.labels" trim="both"></uni-easyinput>
+				<view class="resource-ts">多个标签以逗号隔开，请写详细标签方便查找</view>
 			</uni-forms-item>
 			<uni-forms-item name="avatar" label="封面大图" required>
 				<cloud-image @click="uploadAvatarImg" custom-class="uploadZy" v-if="formData.avatar"
@@ -43,20 +45,20 @@
 				<template v-if="formData.zy_gs==0||formData.zy_gs==3">
 					<uni-file-picker file-mediatype="image" return-type="array" v-model="formData.resources">
 					</uni-file-picker>
-					<view class="resource-ts">提示：支持PNG,JPG图片格式(注意：部分手机不能多选上传图片，可联系申请后台上传)</view>
+					<view class="resource-ts">支持PNG,JPG图片格式(注意：部分手机不能多选上传图片，可联系申请后台上传)</view>
 				</template>
 				<template v-else-if="formData.zy_gs==1">
 					<uni-file-picker file-mediatype="video" file-extname="mp4" :limit="1" return-type="array"
 						v-model="formData.resources">
 					</uni-file-picker>
-					<view class="resource-ts">提示：支持MP4格式，超过100M的视频可联系后台上传</view>
+					<view class="resource-ts">支持MP4格式，超过100M的视频可联系后台上传</view>
 				</template>
 				<!-- #ifdef H5 -->
 				<template v-else-if="formData.zy_gs==2">
 					<uni-file-picker file-mediatype="all" file-extname="mp3" :limit="1" return-type="array"
 						v-model="formData.resources">
 					</uni-file-picker>
-					<view class="resource-ts">提示：支持MP3格式</view>
+					<view class="resource-ts">支持MP3格式</view>
 				</template>
 				<template v-else>
 					<uni-file-picker file-mediatype="all" :limit="1" return-type="array" v-model="formData.resources">
@@ -86,10 +88,10 @@
 			<uni-forms-item name="is_encryption" label="是否加密">
 				<uni-data-checkbox v-model="formData.is_encryption" :localdata="formOptions.is_encryption_localdata">
 				</uni-data-checkbox>
-				<view class="resource-ts" v-show="formData.is_encryption==1">提示：勾选加密代表用户在本平台申请邀请码即可查看详情</view>
+				<view class="resource-ts" v-show="formData.is_encryption==1">勾选加密代表用户在本平台申请邀请码即可查看详情</view>
 			</uni-forms-item>
 			<view class="resource-ts">
-				提示：请等待附件资源上传完毕后再提交
+				请等待附件资源上传完毕后再提交
 			</view>
 			<view class="uni-button-group">
 				<button type="primary" class="uni-button" @click="submit">提交</button>

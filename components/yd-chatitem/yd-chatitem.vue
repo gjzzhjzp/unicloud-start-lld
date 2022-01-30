@@ -100,6 +100,16 @@
 					});
 				})
 			})
+			$(".ftid").each(function(){
+				var that=this;
+				$(that).on("click",()=>{
+					var that=this;
+					var id=$(that).attr("id");
+					uni.navigateTo({
+						url:"/pages/jz-opendb-taolun/detail/detail?id="+id
+					});
+				})
+			})
 		}
 	}
 </script>

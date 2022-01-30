@@ -24,7 +24,7 @@
 				<u-tag :text="tagname" mode="light" closeable :show="showTag" @close="closetagClick" />
 			</view>
 			<view>
-				<item-list :list="zdflowList" :showzd="true"></item-list>
+				<item-list v-show="currenttab==''" :list="zdflowList" :showzd="true"></item-list>
 				<item-list :list="flowList" :showzd="true"></item-list>
 			</view>
 		</view>
@@ -34,9 +34,9 @@
 			</view>
 		</view>
 		<template v-if="isEmpty">
-			<view style="margin-top: 100rpx;">
+			<!-- <view style="margin-top: 100rpx;">
 				<u-empty text="数据为空" mode="list"></u-empty>
-			</view>
+			</view> -->
 		</template>
 		<template v-else>
 			<u-loadmore :status="loadStatus" @loadmore="loadmoreList"></u-loadmore>
@@ -72,7 +72,7 @@
 					name: '闲聊',
 					type: "0"
 				}, {
-					name: '磕糖',
+					name: '嗑糖',
 					type: "1"
 				}, {
 					name: '分享',
@@ -121,8 +121,16 @@
 		components: {
 			itemList
 		},
+		onShow(){
+			if (this.$refs.navbar) {
+				this.$refs.navbar.checknewinfo();
+			}
+			this.getZdlist();
+			this.resetlist();
+		},
 		// 下拉刷新
 		onPullDownRefresh() {
+			this.getZdlist();
 			this.resetlist();
 			uni.stopPullDownRefresh();
 		},
@@ -242,7 +250,7 @@
 						action: url,
 						data: {
 							is_recommend:1,
-							page: this.param.page,
+							page: 1,
 							rows: this.param.rows,
 							uid:uid,
 							app_bbh: app_bbh

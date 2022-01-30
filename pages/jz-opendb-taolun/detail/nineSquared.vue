@@ -1,15 +1,18 @@
 <template>
 	<view class="nineSquared">
-		<view @click="toggleType('grid')" v-show="listtype=='grid'" style="display: flex;justify-content: flex-end;"
-			class="nineSquared_icon" :style="{'top':top+'px'}">
-			<u-icon size="36" name="/static/grid/list.png"></u-icon>
-			<view style="color: #7275D3;margin-left: 4px;">列表</view>
-		</view>
-		<view @click="toggleType('list')" v-show="listtype=='list'" style="display: flex;justify-content: flex-end;"
-			class="nineSquared_icon" :style="{'top':top+'px'}">
-			<u-icon size="32" name="/static/grid/grid.png"></u-icon>
-			<view style="color: #7275D3;margin-left: 4px;">宫格</view>
-		</view>
+		<template v-if="showicon&&list.length>0">
+			<view @click="toggleType('grid')" v-show="listtype=='grid'" style="display: flex;justify-content: flex-end;"
+				class="nineSquared_icon" :style="{'top':top+'px'}">
+				<u-icon size="36" name="/static/grid/list.png"></u-icon>
+				<view style="color: #7275D3;margin-left: 4px;">列表</view>
+			</view>
+			<view @click="toggleType('list')" v-show="listtype=='list'" style="display: flex;justify-content: flex-end;"
+				class="nineSquared_icon" :style="{'top':top+'px'}">
+				<u-icon size="32" name="/static/grid/grid.png"></u-icon>
+				<view style="color: #7275D3;margin-left: 4px;">宫格</view>
+			</view>
+		</template>
+		
 		<template v-if="listtype=='grid'">
 			<!-- <view class="nineSquared_1" v-if="list.length==1">
 				<u-grid :col="1" :border="false">
@@ -74,7 +77,7 @@
 			return {
 				top:16,
 				showmore: false,
-				listtype: "grid",
+				listtype: this.type||"list",
 				showNum: 0 ///允许显示的index
 			}
 		},
@@ -87,10 +90,22 @@
 						}
 		},
 		props: {
+			type:{
+				type:String,
+				default(){
+					return "grid"
+				}
+			},
 			list: {
 				type: Array,
 				default () {
 					return []
+				}
+			},
+			showicon:{
+				type:Boolean,
+				default(){
+					return true
 				}
 			}
 		},

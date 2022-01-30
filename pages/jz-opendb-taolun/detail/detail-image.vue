@@ -3,7 +3,7 @@
 		<detailhead-mp4 :data="data" :pl-number="plNumber" @topl="topl">
 			<template slot="content">
 				<view style="margin-top: 20rpx;">
-					<nine-squared :list="data.resources" @preview="previewOpen"></nine-squared>
+					<nine-squared type="list" :list="data.resources" @preview="previewOpen"></nine-squared>
 					<kxj-previewImage ref="previewImage" :imgs="imgs" @longPress="openlongan"></kxj-previewImage>
 				</view>
 				<!-- <detailhead :data="data"></detailhead> -->

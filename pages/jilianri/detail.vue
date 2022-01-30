@@ -72,6 +72,9 @@
 	}
 </script>
 <style lang="scss">
+	.rili-detail{
+		background-color: #fff;
+	}
 	.rili-bottom {
 		margin-top: 4px;
 		.one {

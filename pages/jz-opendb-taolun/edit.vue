@@ -1,19 +1,20 @@
 <template>
-	<view class="uni-container">
+	<view class="uni-container" style="background-color: #fff;">
 		<u-navbar :is-back="true" title="我的发帖"></u-navbar>
 		<uni-forms ref="form" :value="formData" validate-trigger="submit" err-show-type="toast">
 			<uni-forms-item required name="categories" label="分类">
 				<uni-easyinput placeholder="分类" v-model="formData.categories" trim="both"></uni-easyinput>
 			</uni-forms-item>
 			<uni-forms-item required name="excerpt" label="内容">
-				<uni-easyinput placeholder="请输入内容" type="textarea" :maxlength="1000" v-model="formData.excerpt" trim="both"></uni-easyinput>
+				<uni-easyinput placeholder="请输入内容" type="textarea" :maxlength="1000" v-model="formData.excerpt"
+					trim="both"></uni-easyinput>
 			</uni-forms-item>
 			<uni-forms-item name="resources" label="图片">
 				<uni-file-picker file-mediatype="image" :limit="9" return-type="array" v-model="formData.resources">
 				</uni-file-picker>
 			</uni-forms-item>
 			<view class="resource-ts">
-				提示：请等待附件资源上传完毕后再提交
+				请等待附件资源上传完毕后再提交
 			</view>
 			<view class="uni-button-group">
 				<u-button type="primary" class="uni-button" @click="submit">提交</u-button>
@@ -54,23 +55,22 @@
 			return {
 				formData,
 				formOptions: {
-					"categories_localdata": [
-					  {
-					    "value": 0,
-					    "text": "闲聊"
-					  },
-					  {
-					    "value": 1,
-					    "text": "磕糖"
-					  },
-					  {
-					    "value": 2,
-					    "text": "分享"
-					  },
-					  {
-					    "value": 3,
-					    "text": "其他"
-					  }
+					"categories_localdata": [{
+							"value": 0,
+							"text": "闲聊"
+						},
+						{
+							"value": 1,
+							"text": "嗑糖"
+						},
+						{
+							"value": 2,
+							"text": "分享"
+						},
+						{
+							"value": 3,
+							"text": "其他"
+						}
 					],
 					"article_status_localdata": [{
 							"value": 0,
@@ -195,8 +195,11 @@
 		color: red;
 		margin-top: 6px;
 	}
+
 	.uni-container {
-		padding: 15px;
+		padding: 10px;
+		height: 100vh;
+		background-color: #fff;
 	}
 
 	.uni-input-border,

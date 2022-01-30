@@ -21,7 +21,10 @@
 					</uni-file-picker>
 					<view style="color: red;margin-top: 10px;">请等待图片上传完之后再提交</view>
 					<view style="color: red;margin-top: 10px;">
-						请尽可能多地提供你这边有关他俩的截图痕迹（氪金、相册、云盘、其他平台的~均可
+						请尽可能多地提供你这边有关他俩的截图痕迹（商务、周边、相册、抖音、公益、云盘、其他平台的~均可
+					</view>
+					<view @click="opennotice()" style="color: red;margin-top: 10px;">
+						<view style="text-decoration: underline;">点击查看注意事项</view>
 					</view>
 				</uni-forms-item>
 				
@@ -38,6 +41,21 @@
 					<view style="text-indent: 2em;">注意请不要重复注册账号，加大管理组的审核工作量，多余的账号将会被锁定。</view>
 				</view>
 			</u-modal>
+			<u-modal v-model="shownotice" title="注意事项">
+				<view class="slot-content">
+					<view>
+						1、提交验证资料时务必加上app昵称的水印，其他无关水印不认【更不要泛指橘子皮/俊哲/1640/51129等】
+						<br>
+						2、小宇宙已多次表示婉拒橘域网内所有公认的雷点，注册申请前请自行检查，不满足请勿申请
+						<br>
+						3、验证资料的图片请实时截图，漏出系统时间，提交时间与系统时间间隔不超过半小时
+						<br>
+						4、请尽可能多方面的提供资料，每种类型最多两张即可，可拼图。
+						<br>
+						以上请先自查，请按照规则提交
+					</view>
+				</view>
+			</u-modal>
 		</view>
 	</view>
 </template>
@@ -48,6 +66,7 @@
 		mixins: [mixin],
 		data() {
 			return {
+				shownotice: false,
 				showmodel: false,
 				weiboname: "",
 				resources:null,
@@ -71,6 +90,10 @@
 
 		},
 		methods: {
+			// 打开注意事项
+			opennotice() {
+				this.shownotice = true;
+			},
 			goback() {
 				uni.navigateBack();
 			},

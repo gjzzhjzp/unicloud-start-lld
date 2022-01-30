@@ -8,7 +8,8 @@
 				发布成功！
 			</view>
 			<view class="fabusuccess-btn">
-				<u-button size="medium" shape="circle" @click="returnHome()">返回首页</u-button>
+				<u-button size="medium" shape="circle" @click="returnHome()">返回首页</u-button><br><br>
+				<u-button size="medium" shape="circle" @click="returnGuangchang()">返回广场</u-button>
 			</view>
 		</view>
 		
@@ -17,12 +18,17 @@
 <script>
 	export default{
 		data(){
-			
+			return {}
 		},
 		methods:{
 			returnHome(){
-				uni.navigateTo({
+				uni.redirectTo({
 					url:"/pages/index/index"
+				});
+			},
+			returnGuangchang(){
+				uni.redirectTo({
+					url:"/pages/guangchang/guangchang"
 				});
 			}
 		}

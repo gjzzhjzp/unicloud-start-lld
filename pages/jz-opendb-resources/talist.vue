@@ -17,6 +17,7 @@
 			<uni-load-more :status="loading?'loading':(hasMore ? 'more' : 'noMore')"></uni-load-more>
 		</unicloud-db>
 		<u-back-top :scroll-top="scrollTop" top="1000" mode="square" icon="arrow-up" tips="顶部"></u-back-top>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 <script>
@@ -85,6 +86,13 @@
 				}
 			},
 			todetail(item) {
+				if(item.zy_gs=='2'){
+					this.$refs.uToast.show({
+						title: '音乐不支持查看详情',
+						type: 'error'
+					});
+					return;
+				}
 				uni.navigateTo({
 					url: "/pages/detail/detail?id=" + item._id
 				});

@@ -51,15 +51,21 @@
 			if (this.$refs.navbar) {
 				this.$refs.navbar.checknewinfo();
 			}
+			if(this.$refs.sylist2){
+				this.$refs.sylist2.getList();
+			}
+			
 		},
 		// 下拉刷新
 		onPullDownRefresh() {
+			// debugger;
+			
 			this.$refs.banner.getList();
 			this.$refs.sylist1.getList();
 			this.$refs.sylist2.getList();
 			// this.$refs.sylist3.getList();
 			this.$refs.sylist4.getList();
-			uni.stopPullDownRefresh()
+			uni.stopPullDownRefresh();
 		},
 		methods: {
 			tosearch() {

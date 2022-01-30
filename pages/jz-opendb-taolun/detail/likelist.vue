@@ -20,9 +20,6 @@
 										format="yyyy-MM-dd hh:mm:ss" :threshold="[60000, 2592000000]" />
 								</view>
 							</view>
-						<!-- 	<view class="er-item-list-gz" v-if="showguanzhu(item)">
-								<u-button size="medium" shape="circle" @click="guanzhu(item)">关注</u-button>
-							</view> -->
 						</view>
 						<view @click="$notMoreTap(toDetail,'notTap',item)">
 							<view class="er-item-list-content">
@@ -101,11 +98,22 @@
 			async getList() {
 				var article_id = this.data._id;
 				if (article_id) {
+					// 获取点赞总数
+					var rescount = await db.collection("opendb-news-likeTaolun").where({
+						article_id: article_id
+					}).count();
+					var _number = rescount.result.total;
+					db.collection("jz-opendb-taolun").where({
+						_id: this.data._id
+					}).update({
+						like_count1: _number || 0
+					});
 					var res = await db.collection("opendb-news-likeTaolun,uni-id-users").
 					where({
-						article_id: article_id
-					}).field("user_id{username,nickname,avatar_file,original},create_date").orderBy("create_date desc")
-					.get();
+							article_id: article_id
+						}).field("user_id{username,nickname,avatar_file,original},create_date").orderBy(
+							"create_date desc")
+						.get();
 					if (res.result && res.result.data) {
 						this.list = res.result.data;
 					}
@@ -134,54 +142,54 @@
 	.er-item-list-content {
 		font-size: 14px;
 	}
-	
+
 	.publish_date {
 		font-size: 10px;
 		color: #888888;
 	}
-	
+
 	.original {
 		position: relative;
 	}
-	
+
 	.original-title {
 		display: flex;
 		flex-direction: column;
 		margin-left: 10px;
 	}
-	
+
 	.original-img {
-		width: 68rpx;
-		height: 68rpx;
+		width: 110rpx;
+		height: 110rpx;
 		position: absolute;
-		top: -32rpx;
-		left: -10rpx;
+		top: -50rpx;
+		left: -16rpx;
 	}
-	
+
 	.er-item-list-warter {
 		border-radius: 8px;
 		/* padding: 10rpx 20rpx; */
 		position: relative;
 		width: 100%;
 	}
-	
+
 	.er-item-list-warter2 {
 		padding: 20rpx;
 		background-color: #fff;
 		border-radius: 8px;
 	}
-	
+
 	.u-close {
 		position: absolute;
 		top: 32rpx;
 		right: 32rpx;
 	}
-	
+
 	.er-item-list-image {
 		width: 100%;
 		border-radius: 4px;
 	}
-	
+
 	.er-item-list-title {
 		font-size: 36rpx;
 		font-weight: 600;
@@ -190,14 +198,14 @@
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
-	
+
 	}
-	
+
 	.er-item-list-tag {
 		display: flex;
 		margin-top: 5px;
 	}
-	
+
 	.er-item-list-tag-owner {
 		background-color: $u-type-error;
 		color: #FFFFFF;
@@ -208,7 +216,7 @@
 		font-size: 20rpx;
 		line-height: 1;
 	}
-	
+
 	.er-item-list-tag-text {
 		border: 1px solid $u-type-primary;
 		color: $u-type-primary;
@@ -221,7 +229,7 @@
 		border-radius: 50rpx;
 		font-size: 20rpx;
 	}
-	
+
 	.er-item-list-author {
 		font-size: 22rpx;
 		color: $u-tips-color;
@@ -230,25 +238,25 @@
 		align-items: center;
 		justify-content: space-between;
 	}
-	
+
 	.er-item-list-img {
 		display: flex;
 		align-items: center;
 	}
-	
+
 	.er-item-list .er-item-list-warter {}
-	
+
 	.er-item-list-right {
 		display: flex;
 		justify-content: center;
 		align-items: center;
 	}
-	
+
 	.er-item-list .er-item-list-warter {
 		// width: 50%;
 		display: inline-block;
 	}
-	
+
 	.er-item-list-warter1 {
 		width: 100%;
 		// border-bottom: 1px solid #d5d5d6;

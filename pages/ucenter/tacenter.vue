@@ -2,8 +2,8 @@
 	<view class="center">
 		<view class="userInfo" @click.capture="$notMoreTap(toUserInfo,'notTap')">
 			<view class="usercenter-top">
-				<u-navbar :is-back="true" title="TA的主页" :border-bottom="false" title-color="#fff"
-					back-icon-color="#fff" :background="{'background':'none'}">
+				<u-navbar :is-back="true" title="TA的主页" :border-bottom="false" title-color="#fff" back-icon-color="#fff"
+					:background="{'background':'none'}">
 				</u-navbar>
 			</view>
 			<view :class="['userinfo-image',isoriginal?'original':'']">
@@ -24,15 +24,15 @@
 				@click="$notMoreTap(ucenterListClick,'notTap',item)" :thumb="item.thumb">
 			</uni-list-item>
 		</uni-list>
-		<!-- <view class="bottom-back" @click="clickLogout">
-			<text class="bottom-back-text" v-if="hasLogin">{{$t('settings.logOut')}}</text>
-			<text class="bottom-back-text" v-else>{{$t('settings.login')}}</text>
-		</view> -->
+		<view class="bottom-back" @click="toggleguanzhu">
+			<text class="bottom-back-text" v-if="!isguanzhu">关注</text>
+			<text class="bottom-back-text" v-else>取消关注</text>
+		</view>
+		<u-toast ref="uToast" />
 		<!-- <jz-tabbar></jz-tabbar> -->
 		<!-- <jz-gonggao ref="gonggao"></jz-gonggao> -->
 	</view>
 </template>
-
 <script>
 	import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update';
 	import callCheckVersion from '@/uni_modules/uni-upgrade-center-app/utils/call-check-version';
@@ -52,9 +52,9 @@
 		},
 		data() {
 			return {
-				curid:"",///当前id
-				isoriginal:false,
-				curuserinfo:{},////当前用户
+				curid: "", ///当前id
+				isoriginal: false,
+				curuserinfo: {}, ////当前用户
 				isbbgx: false, ///是否版本更新
 				isnewinfo: false, ///是否有新的系统消息
 				notTap: true, //一定要设置为true
@@ -86,6 +86,7 @@
 						"radius": "100%" // 边框圆角，支持百分比
 					}
 				},
+				isguanzhu: false
 			}
 		},
 		onLoad() {
@@ -103,18 +104,57 @@
 			//#endif
 		},
 		methods: {
+			async toggleguanzhu() {
+				var userInfo = uni.getStorageSync("userInfo");
+				if (!this.isguanzhu) { ///关注
+					await db.collection('opendb-news-guanzhu').add({
+						buser_id: this.curuserinfo._id,
+						user_id: userInfo._id
+					});
+					this.$refs.uToast.show({
+						title: '已关注',
+						type: 'success'
+					})
+					this.isguanzhu=true;
+				} else { ///取消关注
+					await db.collection('opendb-news-guanzhu').where({
+						buser_id: this.curuserinfo._id,
+						user_id: userInfo._id
+					}).remove();
+					this.$refs.uToast.show({
+						title: '已取消关注',
+						type: 'success'
+					})
+					this.isguanzhu=false;
+				}
+			},
 			///获取用户信息
-			async getUserinfo(){
-				var _id=this.$Route.query.id;
-				this.curid=_id;
+			async getUserinfo() {
+				var _id = this.$Route.query.id;
+				this.curid = _id;
 				const usersTable = db.collection('uni-id-users')
 				var userdata = await usersTable.where({
-					_id:_id
+					_id: _id
 				}).field(
 					"username,weiboname,resources,weibocontent,nickname,isbdwb,original,forbiddenwords,status,avatar,avatar_file,role,register_date,token"
-					).get();
+				).get();
 				var userinf = userdata.result.data[0];
-				this.curuserinfo=userinf;
+				this.curuserinfo = userinf;
+				this.checkisguanzhu();
+			},
+			// 检查是否关注
+			async checkisguanzhu() {
+				var userInfo = uni.getStorageSync("userInfo");
+				var resgz = await db.collection('opendb-news-guanzhu').where({
+					buser_id: this.curuserinfo._id,
+					user_id: userInfo._id
+				}).get();
+				console.log("resgz", resgz);
+				if (resgz && resgz.result.data && resgz.result.data.length > 0) {
+					this.isguanzhu = true;
+				} else {
+					this.isguanzhu = false;
+				}
 			},
 			// 检测版本
 			async checkBb() {
@@ -135,25 +175,25 @@
 					url: "/pages/index/index"
 				})
 			},
-			
+
 			/**
 			 * 个人中心项目列表点击事件
 			 */
 			ucenterListClick(item) {
 				// debugger;
-				var _id=this.curid;
+				var _id = this.curid;
 				uni.navigateTo({
-					url: item.to1+'?id='+_id
+					url: item.to1 + '?id=' + _id
 				})
 				// if (!item.to && item.event) {
 				// 	this[item.event]();
 				// }
 			},
-			
+
 			toUserInfo() {
-				var _id=this.$Route.query.id;
+				var _id = this.$Route.query.id;
 				uni.navigateTo({
-					url: '/pages/ucenter/userinfo/tauserinfo?id='+_id
+					url: '/pages/ucenter/userinfo/tauserinfo?id=' + _id
 				})
 			}
 		}

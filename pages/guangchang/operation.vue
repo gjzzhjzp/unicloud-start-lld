@@ -121,7 +121,7 @@
 							type: 2,
 							user_id: this.data.user_id,
 							comment: this.userInfo.nickname+"点赞了你的帖子【<span class='ftid' id='" + this.data._id +
-								"'>" + this.data.excerpt + "</span>】"
+								"'>" + this.data.excerpt.substr(0,10) + "</span>】"
 						}
 						await db.collection("jz-custom-systeminfo").add(add_value);
 						reslove();
@@ -218,7 +218,7 @@
 							type: 4,
 							user_id: this.data.user_id,
 							comment: this.userInfo.nickname+"收藏了你的帖子【<span class='ftid' id='" + this.data._id +
-								"'>" + this.data.title + "</span>】"
+								"'>" + this.data.excerpt.substr(0,10) + "</span>】"
 						}
 						await db.collection("jz-custom-systeminfo").add(add_value);
 						reslove();

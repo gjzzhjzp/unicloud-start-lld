@@ -9,7 +9,7 @@ export default{
 	watch:{
 		
 	},
-	onReady() {
+	created() {
 		this.getcategories();
 	},
 	methods:{
@@ -20,7 +20,7 @@ export default{
 					startWith: "flbm=='100000'" ////分类顶级编码
 				}
 			});
-			console.log("categories", categories);
+			// console.log("categories", categories);
 			if (categories.result && categories.result.data.length > 0) {
 				this.cascaderData = categories.result.data;
 			}

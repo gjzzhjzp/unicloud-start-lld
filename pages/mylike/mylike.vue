@@ -204,16 +204,18 @@
 					rows.forEach((item) => {
 						// debugger;
 						var obj = item.article_id[0];
-						obj.userinfo=item.userinfo;
-						var roles = that.getuserrole();
-						if (roles && (roles.indexOf("Master") != -1 || roles.indexOf("AUDITOR") != -
-							1)) {
-							if (obj) {
-								this.gflowList.push(obj);
-							}
-						} else {
-							if (obj && obj.article_status == 1 && obj.is_off != 1) {
-								this.gflowList.push(obj);
+						if(obj){
+							obj.userinfo=item.userinfo;
+							var roles = that.getuserrole();
+							if (roles && (roles.indexOf("Master") != -1 || roles.indexOf("AUDITOR") != -
+								1)) {
+								if (obj) {
+									this.gflowList.push(obj);
+								}
+							} else {
+								if (obj && obj.article_status == 1 && obj.is_off != 1) {
+									this.gflowList.push(obj);
+								}
 							}
 						}
 					});

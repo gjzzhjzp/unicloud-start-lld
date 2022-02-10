@@ -237,6 +237,7 @@
 			},
 			// 发送评论
 			async sendComment() {
+				debugger;
 				var that = this;
 				// 动态生成当前评论id,不用默认的评论id
 				that.openpl = false;
@@ -289,7 +290,7 @@
 				that._dealcomment();
 				// }
 
-				var add_value = null;
+				var add_value = [];
 				if (that.relaydata.comment_cj && that.relaydata.comment_cj > 1) {
 					if (that.zydata.user_id != that.userInfo._id) {
 						add_value.push({

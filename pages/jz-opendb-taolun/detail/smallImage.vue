@@ -86,7 +86,7 @@
 	.smallImage_gif {
 		    position: absolute;
 		    right: 2px;
-		    z-index: 999;
+		    z-index: 9;
 		    bottom: 2px;
 		    background: rgb(114, 117, 211);
 		    font-size: 12px;

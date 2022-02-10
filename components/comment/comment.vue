@@ -314,7 +314,7 @@
 				this._dealcomment();
 				// }
 
-				var add_value = null;
+				var add_value = [];
 				if (this.relaydata.comment_cj && this.relaydata.comment_cj > 1) {
 					if (that.zydata.user_id != that.userInfo._id) {
 						add_value.push({
@@ -336,13 +336,13 @@
 					
 				} else {
 					if (this.zydata.user_id != that.userInfo._id) {
-						add_value = {
+						add_value.push({
 							type: 3,
 							user_id: this.zydata.user_id,
 							comment: this.userInfo.nickname + "评论了你的作品【<span class='zyid' id='" + this.zydata._id +
 								"'>" + this.zydata.title +
 								"</span>】【" + this.inputvalue + "】"
-						}
+						})
 					}
 					
 				}

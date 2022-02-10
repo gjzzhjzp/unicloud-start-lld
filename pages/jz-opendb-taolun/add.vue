@@ -7,8 +7,10 @@
 				</uni-data-checkbox>
 			</uni-forms-item>
 			<uni-forms-item required name="excerpt" label="内容">
-				<uni-easyinput placeholder="请输入内容" type="textarea" :maxlength="1000" v-model="formData.excerpt"
-					trim="both"></uni-easyinput>
+				<!-- formData.excerpt:{{formData.excerpt}} -->
+				<editor id="editor" class="ql-container" placeholder="请输入内容" @ready="onEditorReady" @input="onEditorInput"></editor>
+				<!-- <uni-easyinput placeholder="请输入内容" type="textarea" :maxlength="1000" v-model="formData.excerpt"
+					trim="both"></uni-easyinput> -->
 			</uni-forms-item>
 			<uni-forms-item name="resources" label="图片">
 				<uni-file-picker file-mediatype="image" :limit="9" return-type="array" v-model="formData.resources">
@@ -132,9 +134,15 @@
 			this.initrules();
 		},
 		methods: {
-			initrules(){
+			onEditorReady() {
+				
+			},
+			onEditorInput(data) {
+				this.formData.excerpt = data.detail.html;
+			},
+			initrules() {
 				// debugger;
-				this.formData=JSON.parse(JSON.stringify(formData1));
+				this.formData = JSON.parse(JSON.stringify(formData1));
 				this.$refs.form.setRules(this.rules)
 			},
 			/**
@@ -179,11 +187,11 @@
 						setTimeout(() => uni.navigateTo({
 							url: this.tosuccess
 						}), 500)
-						this.formData=formData1;
+						this.formData = formData1;
 					} else {
 						this.getOpenerEventChannel().emit('refreshData');
 						setTimeout(() => uni.navigateBack(), 500)
-						this.formData=formData1;
+						this.formData = formData1;
 					}
 				}).catch((err) => {
 					uni.showModal({

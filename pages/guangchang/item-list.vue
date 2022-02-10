@@ -87,6 +87,12 @@
 				default () {
 					return false
 				}
+			},
+			type:{
+				type:String,
+				default(){
+					return "1"///1普通列表,2置顶列表,3关注列表
+				}
 			}
 		},
 		watch: {
@@ -167,8 +173,13 @@
 				return url;
 			},
 			toDetail(item) {
+				var id=item._id;
+				if(id){
+					getApp().globalData.guangchang_curid=id;
+					getApp().globalData.guangchang_type=this.type;
+				}
 				uni.navigateTo({
-					url: "/pages/jz-opendb-taolun/detail/detail?id=" + item._id
+					url: "/pages/jz-opendb-taolun/detail/detail?id=" + id
 				});
 			}
 		}

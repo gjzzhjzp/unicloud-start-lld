@@ -75,6 +75,7 @@
 							that.$set(that.detaildata, key, res.rows[0][key]);
 						}
 						console.log("that.detaildata", that.detaildata);
+						getApp().globalData.guangchang_item=that.detaildata;
 						that.title = that.detaildata.userinfo[0].nickname;
 						that.tohistory();
 						uni.hideLoading()

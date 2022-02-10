@@ -3,11 +3,11 @@
 		@touchmove.stop.prevent>
 		<swiper class="swiper" :current="index" @change="swiperChange" :disable-touch="swiper" :circular="circular">
 			<swiper-item v-for="(img, i) in imgs" :key="'swiper-item-'+i" :id="'swiper-item-'+i">
-				<movable-area class="marea" scale-area>
+				<!-- <movable-area class="marea" scale-area>
 					<movable-view :id="'movable-view-'+i" :key="'movable-view-'+i" class="mview" direction="all"
 						:out-of-bounds="false" :inertia="true" damping="90" friction="2" scale="true" scale-min="1"
-						scale-max="4" :scale-value="scale" @scale="onScale" @change="movableChange">
-						<view class="slot-gonggao_content">
+						scale-max="4" :scale-value="scale" @scale="onScale" @change="movableChange"> -->
+						<view class="slot-gonggao_content previewImage_content">
 							<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y">
 								<image :id="'image-'+i" :key="'movable-view'+i" class="image" :src="img"
 									:style="{ transform: 'rotateZ(' + deg + 'deg)' }" :data-index="i" :data-src="img"
@@ -15,8 +15,8 @@
 									@touchend="handletouchend" />
 							</scroll-view>
 						</view>
-					</movable-view>
-				</movable-area>
+					<!-- </movable-view>
+				</movable-area> -->
 			</swiper-item>
 		</swiper>
 		<view class="page" v-if="imgs.length > 0">
@@ -53,7 +53,7 @@
 			//透明度,0到1之间。
 			opacity: {
 				type: Number,
-				default: 0.8
+				default: 0.9
 			},
 			//保存按键
 			saveBtn: {
@@ -119,6 +119,7 @@
 			},
 			//清除定时器
 			handletouchmove() {
+				// console.log("1111111111");
 				clearTimeout(this.time);
 				this.time = 0;
 			},

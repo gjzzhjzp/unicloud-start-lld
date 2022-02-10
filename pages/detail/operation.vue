@@ -104,6 +104,12 @@
 			async tolike() {
 				// debugger;
 				return new Promise(async (reslove) => {
+					if (!this.data.like_count1) {
+						this.data.like_count1 = 0;
+					}
+					this.$set(this, "islike", true);
+					this.$set(this.data, "like", [{}]);
+					this.$set(this.data, "like_count1", ++this.data.like_count1);
 					var resultdata = await collection_like.add({
 						article_id: this.data._id,
 						article_title: this.data.title,
@@ -127,6 +133,9 @@
 			},
 			async cancelFavorite_like() {
 				return new Promise(async (reslove) => {
+					this.$set(this, "islike", false);
+					this.$set(this.data, "like", []);
+					this.$set(this.data, "like_count1", --this.data.like_count1);
 					var resultdata = await collection_like.where({
 						article_id: this.data._id,
 						user_id: db.getCloudEnv('$cloudEnv_uid')
@@ -144,20 +153,23 @@
 							action: 'like/cancel_like',
 							data: {
 								_id: this.data._id,
-								like_count1: this.data.like_count1 || 0
+								like_count1: this.data.like_count1 || 0,
+								type:"1"
 							}
 						},
 					}).then((res) => {
 						var res = res.result;
 						if (res.state == "0000") {
 							this.$set(this, "islike", false);
-							this.$set(this.data, "like", []);
-							this.$set(this.data, "like_count1", --this.data.like_count1);
+							// this.$set(this.data, "like", []);
+							// this.$set(this.data, "like_count1", --this.data.like_count1);
 						} else {
 							console.log("res", res.msg);
+							this.$set(this, "islike", true);
 						}
 						reslove();
 					}).catch((err) => {
+						this.$set(this, "islike", true);
 						console.log("网络错误，请重试——err", err);
 						uni.showModal({
 							content: err.message || '网络错误，请重试',
@@ -168,24 +180,23 @@
 			},
 			add_like() {
 				return new Promise((reslove) => {
-					if (!this.data.like_count1) {
-						this.data.like_count1 = 0;
-					}
+					
 					uniCloud.callFunction({
 						name: 'jzlike',
 						data: {
 							action: 'like/add_like',
 							data: {
 								_id: this.data._id,
-								like_count1: this.data.like_count1 || 0
+								like_count1: this.data.like_count1 || 0,
+								type:"1"
 							}
 						},
 					}).then((res) => {
 						var res = res.result;
 						if (res.state == "0000") {
 							this.$set(this, "islike", true);
-							this.$set(this.data, "like", [{}]);
-							this.$set(this.data, "like_count1", ++this.data.like_count1);
+							// this.$set(this.data, "like", [{}]);
+							// this.$set(this.data, "like_count1", ++this.data.like_count1);
 						} else {
 							console.log("res", res.msg);
 						}
@@ -202,6 +213,12 @@
 			async toFavorite() {
 				// debugger;
 				return new Promise(async (reslove) => {
+					if (!this.data.like_count) {
+						this.data.like_count = 0;
+					}
+					this.$set(this, "isfavator", true);
+					this.$set(this.data, "favorite", [{}]);
+					this.$set(this.data, "like_count", ++this.data.like_count);
 					var resultdata = await collection.add({
 						article_id: this.data._id,
 						article_title: this.data.title,
@@ -224,6 +241,9 @@
 			},
 			async cancelFavorite() {
 				return new Promise(async (reslove) => {
+					this.$set(this, "isfavator", false);
+					this.$set(this.data, "favorite", []);
+					this.$set(this.data, "like_count", --this.data.like_count);
 					var resultdata = await collection.where({
 						article_id: this.data._id,
 						user_id: db.getCloudEnv('$cloudEnv_uid')
@@ -241,24 +261,23 @@
 							action: 'favator/cancel_favator',
 							data: {
 								_id: this.data._id,
-								like_count: this.data.like_count || 0
+								like_count: this.data.like_count || 0,
+								type:"1"
 							}
 						},
 					}).then((res) => {
 						var res = res.result;
 						if (res.state == "0000") {
-							// this.$refs.uToast.show({
-							// 	title: '已取消',
-							// 	type: 'success'
-							// });
 							this.$set(this, "isfavator", false);
-							this.$set(this.data, "favorite", []);
-							this.$set(this.data, "like_count", --this.data.like_count);
+							// this.$set(this.data, "favorite", []);
+							// this.$set(this.data, "like_count", --this.data.like_count);
 						} else {
 							console.log("res", res.msg);
+							this.$set(this, "isfavator", true);
 						}
 						reslove();
 					}).catch((err) => {
+						this.$set(this, "isfavator", true);
 						console.log("网络错误，请重试——err", err);
 						uni.showModal({
 							content: err.message || '网络错误，请重试',
@@ -269,33 +288,31 @@
 			},
 			add_Favorite() {
 				return new Promise((reslove) => {
-					if (!this.data.like_count) {
-						this.data.like_count = 0;
-					}
+				
 					uniCloud.callFunction({
 						name: 'jzfavator',
 						data: {
 							action: 'favator/add_favator',
 							data: {
 								_id: this.data._id,
-								like_count: this.data.like_count || 0
+								like_count: this.data.like_count || 0,
+								type:"1"
 							}
 						},
 					}).then((res) => {
 						var res = res.result;
 						if (res.state == "0000") {
-							// this.$refs.uToast.show({
-							// 	title: '收藏成功',
-							// 	type: 'success'
-							// });
+							
 							this.$set(this, "isfavator", true);
-							this.$set(this.data, "favorite", [{}]);
-							this.$set(this.data, "like_count", ++this.data.like_count);
+							// this.$set(this.data, "favorite", [{}]);
+							// this.$set(this.data, "like_count", ++this.data.like_count);
 						} else {
 							console.log("res", res.msg);
+							this.$set(this, "isfavator", false);
 						}
 						reslove();
 					}).catch((err) => {
+						this.$set(this, "isfavator", false);
 						console.log("网络错误，请重试——err", err);
 						uni.showModal({
 							content: err.message || '网络错误，请重试',

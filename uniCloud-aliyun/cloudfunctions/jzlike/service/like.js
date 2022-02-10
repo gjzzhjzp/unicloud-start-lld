@@ -13,11 +13,14 @@ module.exports = class likeService extends Service {
 			var data = this.ctx.data;
 			const collection_resource = db.collection('jz-opendb-taolun');
 			var like_count1 = data.like_count1 || 0;
+			if(data.type!="1"){
 			like_count1 += 1;
+			}
 			await collection_resource.where({
 				_id: data._id
 			}).update({
-				like_count1: like_count1
+				like_count1: like_count1,
+				last_modify_date:new Date().getTime()
 			});
 			return {
 				"state": "0000",
@@ -40,7 +43,9 @@ module.exports = class likeService extends Service {
 			var data = this.ctx.data;
 			const collection_resource = db.collection('jz-opendb-taolun');
 			var like_count1 = data.like_count1 || 0;
-			like_count1 -= 1;
+			if(data.type!="1"){
+				like_count1 -= 1;
+			}
 			await collection_resource.where({
 				_id: data._id
 			}).update({
@@ -68,11 +73,14 @@ module.exports = class likeService extends Service {
 			const collection_resource = db.collection('jz-opendb-resources');
 			
 			var like_count1 = data.like_count1 || 0;
+			if(data.type!="1"){
 			like_count1 += 1;
+			}
 			await collection_resource.where({
 				_id: data._id
 			}).update({
-				like_count1: like_count1
+				like_count1: like_count1,
+				last_modify_date:new Date().getTime()
 			});
 			return {
 				"state": "0000",
@@ -95,7 +103,9 @@ module.exports = class likeService extends Service {
 			var data = this.ctx.data;
 			const collection_resource = db.collection('jz-opendb-resources');
 			var like_count1 = data.like_count1 || 0;
-			like_count1 -= 1;
+			if(data.type!="1"){
+				like_count1 -= 1;
+			}
 			await collection_resource.where({
 				_id: data._id
 			}).update({

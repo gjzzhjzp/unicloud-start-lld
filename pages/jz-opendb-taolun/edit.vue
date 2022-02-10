@@ -3,11 +3,15 @@
 		<u-navbar :is-back="true" title="我的发帖"></u-navbar>
 		<uni-forms ref="form" :value="formData" validate-trigger="submit" err-show-type="toast">
 			<uni-forms-item required name="categories" label="分类">
-				<uni-easyinput placeholder="分类" v-model="formData.categories" trim="both"></uni-easyinput>
+				<uni-data-checkbox v-model="formData.categories" :localdata="formOptions.categories_localdata">
+				</uni-data-checkbox>
+				<!-- <uni-easyinput placeholder="分类" v-model="formData.categories" trim="both"></uni-easyinput> -->
 			</uni-forms-item>
 			<uni-forms-item required name="excerpt" label="内容">
-				<uni-easyinput placeholder="请输入内容" type="textarea" :maxlength="1000" v-model="formData.excerpt"
-					trim="both"></uni-easyinput>
+				<editor id="editor" class="ql-container" placeholder="请输入内容" @ready="onEditorReady"
+					@input="onEditorInput"></editor>
+				<!-- <uni-easyinput placeholder="请输入内容" type="textarea" :maxlength="1000" v-model="formData.excerpt"
+					trim="both"></uni-easyinput> -->
 			</uni-forms-item>
 			<uni-forms-item name="resources" label="图片">
 				<uni-file-picker file-mediatype="image" :limit="9" return-type="array" v-model="formData.resources">
@@ -102,7 +106,8 @@
 				},
 				rules: {
 					...getValidator(Object.keys(formData))
-				}
+				},
+				editorCtx:null
 			}
 		},
 		onLoad(e) {
@@ -116,6 +121,17 @@
 			this.$refs.form.setRules(this.rules)
 		},
 		methods: {
+			onEditorReady() {
+				uni.createSelectorQuery().select('#editor').context((res) => {
+					// debugger;
+					
+					this.editorCtx = res.context;
+					
+				}).exec()
+			},
+			onEditorInput(data) {
+				this.formData.excerpt = data.detail.html;
+			},
 			/**
 			 * 验证表单并提交
 			 */
@@ -175,7 +191,12 @@
 				).get().then((res) => {
 					const data = res.result.data[0]
 					if (data) {
-						this.formData = data
+						this.formData = data;
+						let contents = JSON.stringify(this.formData.excerpt)
+						this.editorCtx.setContents({
+							html: this.formData.excerpt,
+							delta: contents
+						})
 					}
 				}).catch((err) => {
 					uni.showModal({

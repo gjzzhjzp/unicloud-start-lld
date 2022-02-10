@@ -347,7 +347,8 @@
 				db.collection("jz-opendb-taolun").where({
 					_id:that.zydata._id
 				}).update({
-					pl_count:that.zydata.pl_count
+					pl_count:that.zydata.pl_count,
+					last_modify_date:new Date().getTime()
 				});
 				var _addsenddata = Object.assign(JSON.parse(JSON.stringify(senddata)), {
 					user_id: [JSON.parse(JSON.stringify(that.userInfo))],
@@ -355,13 +356,14 @@
 				});
 				////临时新增评论
 				that.commentList.unshift(_addsenddata);
-				
-				var add_value = {
-					type: 3,
-					user_id: that.comment.user_id[0]._id,
-					comment: this.userInfo.nickname+"回复了你的评论【<span class='ftid' id='"+this.zydata._id+"'>"+that.comment.comment_content+"</span>】:【" + this.inputvalue + "】"
+				if (that.comment.user_id[0]._id != that.userInfo._id) {
+					var add_value = {
+						type: 3,
+						user_id: that.comment.user_id[0]._id,
+						comment: this.userInfo.nickname+"回复了你的评论【<span class='ftid' id='"+this.zydata._id+"'>"+that.comment.comment_content+"</span>】:【" + this.inputvalue + "】"
+					}
+					await db.collection("jz-custom-systeminfo").add(add_value);
 				}
-				await db.collection("jz-custom-systeminfo").add(add_value);
 				that.inputvalue = "";
 				await db.collection("opendb-news-commentsTaolun").add(senddata);
 				// this.getComment();

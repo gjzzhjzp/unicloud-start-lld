@@ -52,7 +52,7 @@ exports.main = async (event, context) => {
 		if (!uniIdToken) {
 			return {
 				code: 403,
-				msg: '缺少token'
+				msg: '操作失败'
 			}
 		}
 		let payload = await uniID.checkToken(uniIdToken)

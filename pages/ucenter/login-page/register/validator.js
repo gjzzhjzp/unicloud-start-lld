@@ -35,10 +35,6 @@ export default {
 	},
 	"resources": {
 	  "rules": [
-		  {
-		  		required: true,
-		  		errorMessage: '请上传验证资料',
-		  	},
 	    {
 	      "format": "array"
 	    },

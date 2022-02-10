@@ -131,6 +131,21 @@
 				}
 			]
 		},
+		"is_good": {
+			"bsonType": "int",
+			"title": "是否精华",
+			"description": "是否精华：0 不是 1 是",
+			"defaultValue": 0,
+			"enum": [{
+					"value": 0,
+					"text": "不是"
+				},
+				{
+					"value": 1,
+					"text": "是"
+				}
+			]
+		},
 		"is_off": {
 			"bsonType": "int",
 			"title": "是否下架",

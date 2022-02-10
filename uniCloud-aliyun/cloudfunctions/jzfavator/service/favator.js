@@ -13,11 +13,15 @@ module.exports = class favatorService extends Service {
 			var data = this.ctx.data;
 			const collection_resource = db.collection('jz-opendb-taolun');
 			var like_count = data.like_count || 0;
-			like_count += 1;
+			if (data.type != "1") {
+				like_count += 1;
+			}
+
 			await collection_resource.where({
 				_id: data._id
 			}).update({
-				like_count: like_count
+				like_count: like_count,
+				last_modify_date:new Date().getTime()
 			});
 			return {
 				"state": "0000",
@@ -40,7 +44,10 @@ module.exports = class favatorService extends Service {
 			var data = this.ctx.data;
 			const collection_resource = db.collection('jz-opendb-taolun');
 			var like_count = data.like_count || 0;
-			like_count -= 1;
+			if (data.type != "1") {
+				like_count -= 1;
+			}
+
 			await collection_resource.where({
 				_id: data._id
 			}).update({
@@ -66,13 +73,16 @@ module.exports = class favatorService extends Service {
 			var context = this.ctx;
 			var data = this.ctx.data;
 			const collection_resource = db.collection('jz-opendb-resources');
-			
+
 			var like_count = data.like_count || 0;
-			like_count += 1;
+			if (data.type != "1") {
+				like_count += 1;
+			}
 			await collection_resource.where({
 				_id: data._id
 			}).update({
-				like_count: like_count
+				like_count: like_count,
+				last_modify_date:new Date().getTime()
 			});
 			return {
 				"state": "0000",
@@ -95,7 +105,9 @@ module.exports = class favatorService extends Service {
 			var data = this.ctx.data;
 			const collection_resource = db.collection('jz-opendb-resources');
 			var like_count = data.like_count || 0;
-			like_count -= 1;
+			if (data.type != "1") {
+				like_count -= 1;
+			}
 			await collection_resource.where({
 				_id: data._id
 			}).update({
@@ -208,7 +220,8 @@ module.exports = class favatorService extends Service {
 					]))
 				)
 				.done(),
-			as: 'userinfo'}).end();
+			as: 'userinfo'
+		}).end();
 		return {
 			"state": "0000",
 			"rows": resultdata.data,

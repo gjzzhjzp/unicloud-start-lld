@@ -20,9 +20,9 @@
 					</view>
 				</template>
 			</uni-list-item>
-			<uni-list-item class="item" title="用户/登录名" :rightText="curuserinfo.username">
-			</uni-list-item>
-			<uni-list-item class="item" :title="curuserinfo.nickname"
+			<!-- <uni-list-item class="item" title="用户/登录名" :rightText="curuserinfo.username">
+			</uni-list-item> -->
+			<uni-list-item class="item" title="昵称"
 				:rightText="curuserinfo.nickname">
 			</uni-list-item>
 		</uni-list>

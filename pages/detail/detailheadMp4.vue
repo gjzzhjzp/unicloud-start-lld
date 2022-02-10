@@ -44,31 +44,6 @@
 							:threshold="[60000, 2592000000]" /> -->
 					</view>
 				</view>
-				<view class="detail-image-sx3">
-					<!-- <view class="showllsc" v-show="showllsc">
-						<view class="detail-image-sx31">
-							<u-icon name="eye" :size="30"></u-icon>浏览量：{{data.view_count||0}}
-						</view>
-						<view class="detail-image-sx32">
-							<u-icon name="heart" :size="30"></u-icon>收藏量：{{data.like_count>0?data.like_count:0}}
-						</view>
-					</view> -->
-					<!-- <view class="detail-image-sc">
-						<view class="detail-image-sc1" v-show="!checkisLike" @click="toFavorite">
-							<u-icon :size="30" name="heart"></u-icon> 收藏
-						</view>
-						<view class="detail-image-sc1" v-show="checkisLike" @click="cancelFavorite">
-							<u-icon :size="30" name="heart-fill" color="red"></u-icon> 已收藏
-						</view>
-						<view class="detail-image-sc1" v-if="data.zy_gs=='1'&&showmp4Xz">
-							<template v-if="data.resources.length>0">
-								<a class="download-head" :download="data.title" :href="data.resources[0].url">
-									<u-icon :size="30" name="download"></u-icon> 下载
-								</a>
-							</template>
-						</view>
-					</view> -->
-				</view>
 				<view class="detail-image-sx">
 					<view class="detail-image-ly">
 						<view class="detail-image-ly1">来源：{{data.author}}</view>
@@ -81,7 +56,8 @@
 					<view class="detail-image-jj1">简介：</view>
 					<view class="detail-image-jj2" v-html="data.excerpt||'无'"></view>
 				</view>
-				<view class="detail-open " style="" v-if="data.aliyun_dz&&data.aliyun_dz.indexOf('.mp4')==-1">
+				<!-- <view class="detail-open " style="" v-if="data.aliyun_dz&&(data.aliyun_dz.indexOf('.mp4')==-1||data.aliyun_dz.indexOf('jzmp4')!=-1&&!plus)"> -->
+				<view class="detail-open " style="" v-if="data.aliyun_dz&&(data.aliyun_dz.indexOf('.mp4')==-1)">
 					<view>
 						外链地址：
 					</view>
@@ -89,10 +65,16 @@
 						<u-link :href="data.aliyun_dz" color="rgb(114, 117, 211)">点击跳转</u-link>
 					</view>
 				</view>
+				<view class="detail-open " style="" v-if="data.aliyun_dz&&(data.aliyun_dz.indexOf('jzmp4')!=-1&&!plus)">
+					<view style="color: red;">提示：此视频暂不支持移动网页版播放</view>
+				</view>
 				<view class="detail-image-bq">
 					<view class="detail-image-bq1" v-for="(item,index) in labels" :key="index">
 						<u-tag :text="'# '+item" type="primary" shape="circle" />
 					</view>
+				</view>
+				<view style="padding: 6px;" @click="tohjHref()" v-show="showhj">
+					<view style="color: rgb(114, 117, 211);">点击查看系列合集</view>
 				</view>
 				<view class="detail-image-operation">
 					<operation :data="data"></operation>
@@ -122,6 +104,7 @@
 		},
 		data() {
 			return {
+				showhj:false,
 				showmp4Xz: false,
 				// labels: [],
 				showllsc: true,
@@ -131,7 +114,9 @@
 				// }],
 				showpl: true,
 				showdanmu: true,
-				showsendDanmu: true
+				showsendDanmu: true,
+				plus: false,
+				hjHref:""///合集地址
 			}
 		},
 		props: {
@@ -148,19 +133,10 @@
 				}
 			}
 		},
-		// watch: {
-		// 	"data.pl_count"() {
-		// 		this.tablist.forEach((item) => {
-		// 			if (item.name.indexOf('评论') != -1) {
-		// 				item.name = "评论" + (this.data.pl_count || '')
-		// 			}
-		// 		});
-		// 		// this.tablist.push({
-		// 		// 	name: '评论'
-		// 		// });
-		// 	}
-		// },
 		created() {
+			if (typeof plus != "undefined") {
+				this.plus = true;
+			}
 			var config = getApp().globalData.systemconfig;
 			var t_800005 = config["800005"];
 			var t_800011 = config["800011"];
@@ -190,6 +166,12 @@
 			this.showmp4Xz = t_800005 == '1' ? true : false;
 			this.showllsc = t_800011 == '1' ? true : false;
 			// console.log("labels", this.labels);
+			this.checkishj();
+		},
+		watch:{
+			data(){
+				this.checkishj();
+			}
 		},
 		computed: {
 			tablist() {
@@ -225,18 +207,30 @@
 				}
 				return tjcategories;
 			},
-			// checkisLike() {
-			// 	debugger;
-			// 	var islike = false;
-			// 	if (this.islike || (this.data && this.data.favorite && this.data.favorite.length > 0)) {
-			// 		islike = true;
-			// 	} else {
-			// 		islike = false;
-			// 	}
-			// 	return islike;
-			// },
 		},
 		methods: {
+			tohjHref(){
+				uni.navigateTo({
+					url:this.hjHref
+				});
+			},
+			async checkishj(){
+				// debugger;
+				// 检查是否存在合集
+				console.log("this.data._id",this.data._id);
+				if(this.data._id){
+					var dbcount=await db.collection("jz-opendb-resourceshj").where({
+						article_id:this.data._id
+					}).get();
+					if(dbcount.result.data&&dbcount.result.data.length>0){
+						this.showhj=true;
+						this.hjHref="/pages/resourcehj/resourcehj?id="+dbcount.result.data[0].parent_id;
+					}else{
+						this.showhj=false;
+					}
+					console.log("dbcount",dbcount);
+				}
+			},
 			async guanzhu(item) {
 				var userinfo = item.userinfo ? item.userinfo[0] : "";
 				if (userinfo) {

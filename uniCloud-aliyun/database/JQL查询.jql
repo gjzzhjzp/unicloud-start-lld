@@ -13,6 +13,12 @@ db.collection('uni-id-users').where(db.command.or({
 	register_date=1641571199999
 })).count()
 
+db.collection("jz-opendb-taolun").where({
+	user_id:"61f5136e4690ae0001e6a387",
+	article_status:1,
+	is_off:db.command.neq(1)
+}).get()
+
 db.collection('jz-opendb-taolun').where(db.command.or([{
 	"article_status": 1,
 	"is_off": db.command.neq(1),
@@ -44,7 +50,21 @@ db.collection('jz-opendb-resources').where({
 }).update({
 	user_id:"61f5136e4690ae0001e6a387"
 });
+db.collection('jz-opendb-resources').where({
+	title:  new RegExp("按时间线带你补课", 'gi'),
+	aliyun_dz:new RegExp("jzmp4", 'gi')
+}).get()
 
+
+db.collection('jz-opendb-resources').where(
+db.command.or([{
+	title:  new RegExp("按时间线带你补课", 'gi'),
+	aliyun_dz:new RegExp(/(^(?!.*jzmp4))|null/, 'gi')
+}])).get();
+{
+	title:  new RegExp("按时间线带你补课", 'gi'),
+	aliyun_dz:null
+}
 db.collection('opendb-news-favorite').aggregate().match({
 	user_id: "6173fc369ee65f00018fd5e6",
 	zy_gs: 2

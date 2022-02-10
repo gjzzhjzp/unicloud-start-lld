@@ -1,5 +1,5 @@
 <template>
-	<view class="u-grid-item" :hover-class="parentData.hoverClass"
+	<view class="u-grid-item" 
 	 :hover-stay-time="200" @tap="click" :style="{
 			background: bgColor,
 			width: width,
@@ -7,6 +7,7 @@
 		<view class="u-grid-item-box" :style="[customStyle]" :class="[parentData.border ? 'u-border-right u-border-bottom' : '']">
 			<slot />
 		</view>
+		<!-- :hover-class="parentData.hoverClass" -->
 	</view>
 </template>
 

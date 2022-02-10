@@ -71,18 +71,18 @@
 		},
 		created() {
 			var config = getApp().globalData.systemconfig;
-			// if (config["800026"] == "1") {
-			// 	this.showRegister = false;
-			// } else {
-			// 	this.showRegister = true;
-			// 	if (config["800026"] == "2") {
-			// 		this.registerText="邀请码注册"
-			// 	}else if (config["800026"] == "3") {
-			// 		this.registerText="注册账号"
-			// 	}else{
-			// 		this.registerText="注册账号"
-			// 	}
-			// }
+			if (config["800026"] == "1") {
+				this.showRegister = false;
+			} else {
+				this.showRegister = true;
+				if (config["800026"] == "2") {
+					this.registerText="邀请码注册"
+				}else if (config["800026"] == "3") {
+					this.registerText="注册账号"
+				}else{
+					this.registerText="注册账号"
+				}
+			}
 		},
 		computed: {
 			passcontent() {

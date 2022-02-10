@@ -25,7 +25,7 @@
 			</view> -->
 			<view class="nineSquared_2" v-if="list.length<5">
 
-				<u-grid :col="2" :border="false">
+				<u-grid :col="2" :border="false" hover-class="none">
 					<u-grid-item v-for="(item,index) in list" :key="index" :custom-style="{padding: '0px'}">
 						<small-image @load="loadsuccess" :index="index" :showNum="showNum" :data="item"
 							ref="smallImage2" @preview="preview(item)"></small-image>
@@ -33,7 +33,7 @@
 				</u-grid>
 			</view>
 			<view class="nineSquared_3" v-else>
-				<u-grid :col="3" :border="false">
+				<u-grid :col="3" :border="false" hover-class="none">
 					<u-grid-item v-for="(item,index) in list" :key="index" :custom-style="{padding: '0px'}">
 						<template v-if="index>=8&&list.length>9">
 							<template v-if="index==8">

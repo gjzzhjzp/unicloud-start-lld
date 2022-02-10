@@ -120,7 +120,7 @@
 							"class": "systeminfo"
 						},
 						{
-							"title": "我的邀请码",
+							"title": "资源邀请码",
 							"to": '/pages/jz-custom-yqm/list',
 							"thumb": "/static/center/yqm.png"
 						},

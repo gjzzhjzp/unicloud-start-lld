@@ -24,13 +24,13 @@
 				<u-tag :text="tagname" mode="light" closeable :show="showTag" @close="closetagClick" />
 			</view>
 			<view>
-				<item-list v-show="currenttab==''" :list="zdflowList" :showzd="true"></item-list>
-				<item-list :list="flowList" :showzd="true"></item-list>
+				<item-list type="2" v-show="currenttab==''" :list="zdflowList" :showzd="true"></item-list>
+				<item-list type="1"  :list="flowList"></item-list>
 			</view>
 		</view>
 		<view v-if="topcurtab==1">
 			<view>
-				<item-list :list="gzflowList" :isgz="true"></item-list>
+				<item-list type="3" :list="gzflowList" :isgz="true" :showzd="false"></item-list>
 			</view>
 		</view>
 		<template v-if="isEmpty">
@@ -69,6 +69,9 @@
 					name: '全部',
 					type: ""
 				}, {
+					name: '精华',
+					type: "9"
+				}, {
 					name: '闲聊',
 					type: "0"
 				}, {
@@ -91,22 +94,26 @@
 				topcurtab: 0,
 				currenttab: 0,
 				searchrows: [{
+						name: "最新评论",
+						type: "zxpl",
+						selected: true
+					},{
 						name: "最新内容",
 						type: "zx",
-						selected: true
+						selected: false
 					},
 					{
 						name: "热门内容",
 						type: "rm",
 						selected: false
-					},
-					{
-						name: "收藏量高",
-						type: "sc",
-						selected: false
 					}
+					// {
+					// 	name: "收藏量高",
+					// 	type: "sc",
+					// 	selected: false
+					// }
 				],
-				type: "zx",
+				type: "zxpl",
 				reset: false, ///重置
 				isEmpty: false,
 				zy_gs: "0", ////资源格式
@@ -124,13 +131,14 @@
 		onShow(){
 			if (this.$refs.navbar) {
 				this.$refs.navbar.checknewinfo();
-			}
-			this.getZdlist();
-			this.resetlist();
+			} 
+			this.getcuritem();
+			// this.getZdlist();
+			// this.resetlist();
 		},
 		// 下拉刷新
 		onPullDownRefresh() {
-			this.getZdlist();
+			// this.getZdlist();
 			this.resetlist();
 			uni.stopPullDownRefresh();
 		},
@@ -139,7 +147,7 @@
 			if (e.flmc && e.flbm) {
 				this.showTag = true;
 			}
-			this.type = e.type || "zx";
+			this.type = e.type || "zxpl";
 			if (e.type) {
 				this.searchrows.forEach((item) => {
 					if (item.type == this.type) {
@@ -179,6 +187,44 @@
 			}
 		},
 		methods: {
+			async getcuritem(){
+				var id=getApp().globalData.guangchang_curid;
+				var type=getApp().globalData.guangchang_type;
+				var data=getApp().globalData.guangchang_item;
+				if(!id){
+					return false;
+				}
+				console.log("guangchang_item",data);
+				// var db=uniCloud.database();
+				// var res=await db.collection("jz-opendb-taolun").where({
+				// 	_id:id
+				// }).field("pl_count,like_count,like_count1").get();
+				// if(res.result&&res.result.data.length>0){
+				// 	data=res.result.data[0];
+				// }
+				///如果是置顶
+				if(type=="2"){
+					this.zdflowList.forEach((item)=>{
+						if(item._id==id){
+							Object.assign(item,data);
+						}
+					})
+				}else if(type=="3"){
+					///如果是关注列表
+					this.gzflowList.forEach((item)=>{
+						if(item._id==id){
+							Object.assign(item,data);
+						}
+					})
+				}else{
+					///如果是普通广场列表
+					this.flowList.forEach((item)=>{
+						if(item._id==id){
+							Object.assign(item,data);
+						}
+					})
+				}
+			},
 			changeTopTabs(index) {
 				this.topcurtab = index;
 				this.resetlist();
@@ -280,7 +326,7 @@
 						data: {
 							label: this.keyword,
 							categories: this.categories || '',
-							type: this.type || "zx",
+							type: this.type || "zxpl",
 							page: this.param.page,
 							rows: this.param.rows,
 							uid:uid,
@@ -305,6 +351,7 @@
 							this.param.page++;
 						}
 						// console.log("this.flowList", this.flowList);
+						this.flowList=this.AryDeleteMore(this.flowList);
 						var resultlength = 0;
 						resultlength = this.flowList.length;
 						if (resultlength == 0) {
@@ -369,6 +416,7 @@
 							this.param.page++;
 						}
 						// console.log("this.flowList", this.flowList);
+						this.gzflowList=this.AryDeleteMore(this.gzflowList);
 						var resultlength = 0;
 						resultlength = this.gzflowList.length;
 						if (resultlength == 0) {
@@ -387,11 +435,25 @@
 						showCancel: false
 					});
 				});
+			},
+			// 资源数组去重
+			AryDeleteMore(arr) {
+				if (!Array.isArray(arr)) {
+					return;
+				}
+				var array = [];
+				var array_id = [];
+				for (var i = 0; i < arr.length; i++) {
+					if (array_id.indexOf(arr[i]._id) == -1) {
+						array.push(arr[i]);
+						array_id.push(arr[i]._id);
+					}
+				}
+				return array;
 			}
 		}
 	}
 </script>
-
 <style>
 	.search-row {
 		padding: 8px 10px;

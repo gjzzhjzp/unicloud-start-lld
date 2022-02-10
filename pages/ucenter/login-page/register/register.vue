@@ -34,7 +34,7 @@
 						<uni-easyinput :inputBorder="false" class="easyinput" placeholder="http://"
 							v-model="formData.weiboname" trim="both" />
 					</uni-forms-item>
-					<uni-forms-item label="验证资料" name="resources" v-model="formData.resources" required>
+					<uni-forms-item v-if="isyzzl" label="验证资料" name="resources" v-model="formData.resources">
 						<uni-file-picker file-mediatype="image" :limit="9" return-type="array"
 							v-model="formData.resources">
 						</uni-file-picker>
@@ -111,7 +111,8 @@
 				yqr_number: 3, ///默认3个邀请人数
 				yqrxz_number: 10000, ////邀请限制人数
 				sfxs_yqm: false, ////是否显示邀请码注册
-				gd_yqm: "" ///固定邀请码
+				gd_yqm: "" ,///固定邀请码
+				isyzzl:true,////是否开启验证资料
 			}
 		},
 		created() {
@@ -131,6 +132,11 @@
 			}
 			if (config["800029"]) {
 				this.gd_yqm = config["800029"];
+			}
+			if (config["800032"]=="1") {
+				this.isyzzl = true;
+			}else{
+				this.isyzzl = false;
 			}
 		},
 		onReady() {

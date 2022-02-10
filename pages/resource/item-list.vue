@@ -85,13 +85,12 @@
 			console.log("list", this.list);
 		},
 		methods: {
-
 			imageUrl(item) {
 				var url = "";
 				if (Array.isArray(item.avatar)) {
 					url = item.avatar[0].url;
 				} else {
-					url = item.avatar.url;
+					url = item.avatar?item.avatar.url:'';
 				}
 				return url;
 			}

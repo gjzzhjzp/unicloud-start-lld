@@ -245,6 +245,7 @@ module.exports = class resourceService extends Service {
 			var config_800001_value = config_800001.data[0].config_val;
 			var where_obj = {
 				"article_status": 1,
+				"is_gonggao":db.command.neq(1),
 				"is_off": db.command.neq(1)
 			}
 			// 如果是管理员，读取全部资源，包括下架资源

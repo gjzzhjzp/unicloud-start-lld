@@ -2,7 +2,7 @@
 	<view class=" pwd-login pwd-weibo">
 		<view class="login-back">
 			<view class="usercenter-top">
-				<u-navbar :is-back="true" title="验证资料" :border-bottom="false" title-color="#fff" back-icon-color="#fff"
+				<u-navbar :is-back="true" title="验证" :border-bottom="false" title-color="#fff" back-icon-color="#fff"
 					:background="{'background':'none'}">
 				</u-navbar>
 			</view>
@@ -16,7 +16,7 @@
 					<uni-easyinput :inputBorder="false" class="easyinput" placeholder="http://"
 						v-model="weiboname" trim="both" />
 				</uni-forms-item>
-				<uni-forms-item label="验证资料" name="resources" v-model="resources" required>
+				<uni-forms-item v-if="isyzzl"  label="验证资料" name="resources" v-model="resources">
 					<uni-file-picker file-mediatype="image" :limit="9" return-type="array" v-model="resources">
 					</uni-file-picker>
 					<view style="color: red;margin-top: 10px;">请等待图片上传完之后再提交</view>
@@ -70,7 +70,8 @@
 				showmodel: false,
 				weiboname: "",
 				resources:null,
-				wbcontent: "山河不足重，重在遇知己"
+				wbcontent: "山河不足重，重在遇知己",
+				isyzzl:true,////是否开启验证资料
 			}
 		},
 		created() {
@@ -84,6 +85,12 @@
 			}
 			if(userInfo.resources){
 				this.resources=userInfo.resources;
+			}
+			var config = getApp().globalData.systemconfig;
+			if (config["800032"]=="1") {
+				this.isyzzl = true;
+			}else{
+				this.isyzzl = false;
 			}
 		},
 		computed: {
@@ -151,12 +158,12 @@
 						icon: 'none'
 					});
 				}
-				if (!this.resources||this.resources.length==0) {
-					return uni.showToast({
-						title: "请上传验证资料",
-						icon: 'none'
-					});
-				}
+				// if (!this.resources||this.resources.length==0) {
+				// 	return uni.showToast({
+				// 		title: "请上传验证资料",
+				// 		icon: 'none'
+				// 	});
+				// }
 				this.showmodel = true;
 			}
 		}

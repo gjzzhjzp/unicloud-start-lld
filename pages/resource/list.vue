@@ -275,6 +275,7 @@
 							this.loadStatus = 'loadmore';
 							this.param.page++;
 						}
+						this.flowList=this.AryDeleteMore(this.flowList);
 						// console.log("this.flowList", this.flowList);
 						var resultlength = 0;
 						if (this.zy_gs == '2') {
@@ -298,6 +299,21 @@
 						showCancel: false
 					});
 				});
+			},
+			// 资源数组去重
+			AryDeleteMore(arr) {
+				if (!Array.isArray(arr)) {
+					return;
+				}
+				var array = [];
+				var array_id = [];
+				for (var i = 0; i < arr.length; i++) {
+					if (array_id.indexOf(arr[i]._id) == -1) {
+						array.push(arr[i]);
+						array_id.push(arr[i]._id);
+					}
+				}
+				return array;
 			}
 		}
 	}

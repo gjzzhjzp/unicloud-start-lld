@@ -11,7 +11,7 @@
 				<u-form-item required label="相信国家，相信党，永远跟党走" label-position="top" :key="4">
 					<u-input v-model="answer" placeholder="请完整输入以上内容" />
 				</u-form-item>
-				<u-form-item required label="人民有信仰，民族有希望，国家有力量" label-position="top" :key="5">
+				<u-form-item required label="人民有信仰，国家有力量，民族有希望" label-position="top" :key="5">
 					<u-input v-model="answer2" placeholder="请完整输入以上内容" />
 				</u-form-item>
 			</u-form>
@@ -93,7 +93,7 @@
 				if (!flag) {
 					return;
 				} else {
-					if (this.answer != "相信国家，相信党，永远跟党走" || this.answer2 != "人民有信仰，民族有希望，国家有力量") {
+					if (this.answer != "相信国家，相信党，永远跟党走" || this.answer2 != "人民有信仰，国家有力量，民族有希望") {
 						this.$refs.uToast.show({
 							title: "答案错误",
 							type: 'error'

@@ -17,7 +17,7 @@
 						<u-icon size="40" v-else name="/static/lock.png"></u-icon>
 						<!-- <image mode="aspectFill" :src="item.images" /> -->
 						<view class="title-wrap">
-							<text class="title u-line-2">{{ item.excerpt }}</text>
+							<text class="title u-line-2" v-html="item.excerpt"></text>
 						</view>
 					</view>
 				</u-swipe-action>

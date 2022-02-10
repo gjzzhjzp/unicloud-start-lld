@@ -1,0 +1,50 @@
+{
+	"bsonType": "object",
+	"required": [],
+	"permission": {
+		"read": true,
+		"create": "auth.uid != null",
+		"update":"auth.uid != null",
+		"delete": "auth.uid != null"
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"hj_id":{
+			"bsonType": "string",
+			"description": "编码",
+			"label": "编码",
+			"trim": "both"
+		},
+		"parent_id": {
+			"bsonType": "string",
+			"description": "父级编码",
+			"label": "父级编码",
+			"parentKey": "hj_id"
+		},
+		"article_id": {
+			"bsonType": "string",
+			"description": "文章id，参考jz-opendb-resources表",
+			"foreignKey": "jz-opendb-resources._id",
+			"label": "资源id"
+		},
+		"resourceshj_title": {
+			"bsonType": "string",
+			"description": "合集标题",
+			"label": "合集标题"
+		},
+		"sort": {
+			"bsonType": "int",
+			"description": "排序号",
+			"label": "排序"
+		},
+		"create_date": {
+			"bsonType": "timestamp",
+			"description": "创建时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		}
+	}
+}

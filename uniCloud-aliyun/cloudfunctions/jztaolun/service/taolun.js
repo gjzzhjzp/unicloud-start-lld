@@ -186,7 +186,7 @@ module.exports = class resourceService extends Service {
 			var db = this.db;
 			var context = this.ctx;
 			var data = this.ctx.data;
-			var type = data.type || "zx";
+			var type = data.type || "zxpl";
 			var rows = data.rows || 10;
 			var page = data.page || 1;
 			var categories = data.categories;
@@ -205,9 +205,16 @@ module.exports = class resourceService extends Service {
 			}
 			var where = {}; ///查询条件
 			if (categories) {
-				where = db.command.or([Object.assign({
-					"categories": parseInt(categories)
-				}, where_obj)]);
+				if(categories=='9'){///精华帖
+					where = db.command.or([Object.assign({
+						"is_good": 1
+					}, where_obj)]);
+				}else{
+					where = db.command.or([Object.assign({
+						"categories": parseInt(categories)
+					}, where_obj)]);
+				}
+				
 			} else {
 				where = Object.assign(where_obj,{is_recommend:data.is_recommend||0});
 			}
@@ -216,7 +223,11 @@ module.exports = class resourceService extends Service {
 				collection_query = collection.aggregate().match(where).sort({
 					"publish_date": -1
 				}).skip((page - 1) * rows).limit(rows);
-			} else if (type == "rm") {
+			} else if(type=="zxpl"){
+				collection_query = collection.aggregate().match(where).sort({
+					"last_modify_date": -1
+				}).skip((page - 1) * rows).limit(rows);
+			}else if (type == "rm") {
 				collection_query = collection.aggregate().match(where).sort({
 					"like_count1": -1
 				}).skip((page - 1) * rows).limit(rows);
@@ -335,7 +346,7 @@ module.exports = class resourceService extends Service {
 			const collection = db.collection('jz-opendb-taolun');
 			var where_obj = {
 				"article_status": 1,
-				"is_recommend":0,
+				// "is_recommend":0,
 				"is_off": db.command.neq(1)
 			}
 			// 如果是管理员，读取全部资源，包括下架资源

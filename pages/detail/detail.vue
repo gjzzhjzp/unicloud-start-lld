@@ -1,5 +1,6 @@
 <template>
 	<view class="jz-detail">
+		
 		<u-navbar :is-back="true" :title="title"></u-navbar>
 		<view>
 			<template v-if="!detaildata.aliyun_dz">
@@ -19,11 +20,17 @@
 			</template>
 			<template v-else>
 				<!-- &&detaildata.aliyun_dz.indexOf('.mp4')!=-1 -->
-				<template v-if="zy_gs=='1'&&detaildata.aliyun_dz.indexOf('.mp4')!=-1">
+				<template v-if="zy_gs=='1'&&detaildata.aliyun_dz.indexOf('jzmp4')!=-1&&!plus">
+					<detail-open :data="detaildata"></detail-open>
+				</template>
+				<template v-else-if="zy_gs=='1'&&detaildata.aliyun_dz.indexOf('.mp4')!=-1">
 					<detail-mp4 :data="detaildata"></detail-mp4>
 				</template>
 				<template v-else-if="zy_gs=='1'&&detaildata.aliyun_dz.indexOf('.mp4')==-1&&detaildata.resources.length>0">
 					<detail-mp4 :data="detaildata"></detail-mp4>
+				</template>
+				<template v-else-if="(zy_gs=='0'||zy_gs=='3')&&detaildata.resources.length>0">
+					<detail-image :data="detaildata"></detail-image>
 				</template>
 				<template v-else>
 					<detail-open :data="detaildata"></detail-open>
@@ -48,7 +55,8 @@
 				title: "",
 				detaildata: {},
 				id: "",
-				zy_gs: "0" ///当前资源格式
+				zy_gs: "0", ///当前资源格式
+				plus:false///是否是APP
 			}
 		},
 		onPageScroll(e) {
@@ -63,6 +71,9 @@
 		created(){
 			this.id=this.$Route.query.id;
 			this.getResource(this.id);
+			if(typeof plus!="undefined"){
+				this.plus=true;
+			}
 		},
 		computed: {
 			...mapGetters({

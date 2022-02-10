@@ -20,6 +20,15 @@
 		onReady() {
 			this.show = true;
 		},
+		created(){
+			var userInfo=uni.getStorageSync("userInfo");
+			var username=userInfo.username;
+			var nickname=userInfo.nickname;
+			if(!this.weibocontent){
+				this.weibocontent=userInfo.weibocontent;
+			}
+			this.content=nickname+'（'+username+'），你的微博审核已通过，请重新登陆';
+		},
 		methods: {
 			cancel() {
 				this.closeModal();

@@ -144,7 +144,7 @@
 					return;
 				}
 				this.oldUrl = url;
-				this.dp = new DPlayer({
+				var dplayer = {
 					container: document.getElementById('dplayer'),
 					autoplay: true,
 					theme: '#7275D3',
@@ -159,7 +159,17 @@
 						url: url,
 						type: 'auto',
 					},
-					danmaku: {
+					// danmaku: {
+					// id: item._id,
+					// api: 'getdanmu',
+					// maximum: 10000,
+					// user: 'jzp',
+					// bottom: '15%',
+					// unlimited: true,
+					// }
+				}
+				if (typeof plus != "undefined") {
+					dplayer.danmaku = {
 						id: item._id,
 						api: 'getdanmu',
 						maximum: 10000,
@@ -167,7 +177,8 @@
 						bottom: '15%',
 						unlimited: true,
 					}
-				});
+				}
+				this.dp = new DPlayer(dplayer);
 				if (typeof plus != "undefined") {
 					var pscreen = plus.webview.currentWebview().opener();
 					this.dp.on("webfullscreen", function() {
@@ -186,7 +197,7 @@
 					});
 
 					window.jQuery("#dplayer").on("click", ".player-toggle.heng", function() {
-						
+
 						mui.fire(pscreen, 'changescreen', {
 							direction: "landscape-primary"
 						});

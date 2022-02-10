@@ -8,7 +8,13 @@
 		{
 			"path":"pages/gzquestion/gzquestion",
 			"style": {
-				"navigationBarTitleText": "规则问题"
+				"navigationBarTitleText": "社区公约"
+			}
+		},
+		{
+			"path":"pages/resourcehj/resourcehj",
+			"style": {
+				"navigationBarTitleText": "资源合集"
 			}
 		},
 		{
@@ -140,13 +146,15 @@
 		{
 			"path": "pages/ucenter/ucenter",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "个人中心"
 				// "enablePullDownRefresh": true
 			}
 		},{
 			"path": "pages/ucenter/tacenter",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "TA的主页"
 				// "enablePullDownRefresh": true
 			}
 		},  {
@@ -167,12 +175,12 @@
 		}, {
 			"path": "pages/ucenter/login-page/pwd-login/pwd-login",
 			"style": {
-				"navigationBarTitleText": ""
+				"navigationBarTitleText": "登录"
 			}
 		}, {
 			"path": "pages/ucenter/login-page/pwd-login/pwd-weibo",
 			"style": {
-				"navigationBarTitleText": ""
+				"navigationBarTitleText": "验证"
 			}
 		}, {
 			"path": "pages/ucenter/login-page/register/register",
@@ -434,7 +442,7 @@
 	"globalStyle": {
 		"navigationStyle": "custom",
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "俊哲宇宙",
+		"navigationBarTitleText": "橘域网",
 		"navigationBarBackgroundColor": "#FFFFFF",
 		"backgroundColor": "#F8F8F8",
 		"enablePullDownRefresh": false,

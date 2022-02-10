@@ -1,17 +1,17 @@
 <template>
 	<view class="container jz-opendb-taolun-container">
 		<u-navbar :is-back="true" title="TA的发帖"></u-navbar>
-		
 		<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}"
 			collection="jz-opendb-taolun" @load="loadSuccess" :page-size="20"
 			:where="where" orderby="last_modify_date desc"
 			field="categories,article_status,comment_status,avatar,resources,excerpt">
+			<!-- data:{{data}} -->
 			<view v-if="error">{{error.message}}</view>
 			<view v-else-if="data">
 				<view v-for="(item, index) in data" :key="item._id" class="item u-border-bottom" @click="$notMoreTap(todetail,'notTap',item)">
 					
 					<view class="title-wrap">
-						<text class="title u-line-2">{{ item.title }}</text>
+						<text class="title u-line-2">{{ item.excerpt }}</text>
 					</view>
 				</view>
 			</view>
@@ -40,6 +40,7 @@
 			}
 		},
 		created(){
+			// debugger;
 			var _id = this.$Route.query.id;
 			this.where={
 				user_id:_id,
@@ -115,5 +116,8 @@
 	}
 	.u-icon{
 		margin: 0 6px;
+	}
+	.jz-opendb-taolun-container{
+		background-color: #fff;
 	}
 </style>

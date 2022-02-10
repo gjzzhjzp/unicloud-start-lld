@@ -7,9 +7,11 @@
 				{{topright}}
 			</view>
 		</view>
-		<u-empty v-if="commentList.length==0" mode="data"></u-empty>
+		<u-empty v-if="commentList.length==0&&!isloading" mode="data"></u-empty>
 		<view :class="['comment-container1','slot-gonggao_content',showsendpl?'':'nosendpl']">
 			<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y">
+				<u-loadmore v-if="isloading" status="loading" />
+
 				<view class="comment" v-for="(res, index) in commentList" :key="res.id">
 					<view class="left" @click="tgrHref(res.user_id[0])">
 						<commont-image
@@ -95,6 +97,7 @@
 	export default {
 		data() {
 			return {
+				isloading: false, ///是否正在加载中
 				scrollTop: 0,
 				toptype: "zx",
 				topleft: "最新评论",
@@ -297,7 +300,8 @@
 				db.collection("jz-opendb-resources").where({
 					_id: this.zydata._id
 				}).update({
-					pl_count: that.zydata.pl_count
+					pl_count: that.zydata.pl_count,
+					last_modify_date:new Date().getTime()
 				});
 				// console.log("this.zydata",this.zydata);
 				// if(!this.relaydata.comment_cj||this.relaydata.comment_cj==1){
@@ -312,21 +316,35 @@
 
 				var add_value = null;
 				if (this.relaydata.comment_cj && this.relaydata.comment_cj > 1) {
-					add_value = {
-						type: 3,
-						user_id: this.zydata.user_id,
-						comment: this.userInfo.nickname + "回复了你的评论【" + this.relaydata.comment_content + "】【" + this
-							.inputvalue + "】"
+					if (that.zydata.user_id != that.userInfo._id) {
+						add_value.push({
+							type: 3,
+							user_id: that.zydata.user_id,
+							comment: that.userInfo.nickname + "回复了评论【<span class='zyid' id='" + this.zydata._id +
+								"'>" + that.relaydata.comment_content + "</span>】【" + that.inputvalue + "】"
+						});
+						
 					}
+					if (that.relaydata.reply_user_id != that.userInfo._id) {
+						add_value.push({
+							type: 3,
+							user_id: that.relaydata.reply_user_id,
+							comment: that.userInfo.nickname + "回复了你的评论【<span class='zyid' id='" + this.zydata._id +
+								"'>" + that.relaydata.comment_content + "</span>】【" + that.inputvalue + "】"
+						})
+					}
+					
 				} else {
-					// debugger;
-					add_value = {
-						type: 3,
-						user_id: this.zydata.user_id,
-						comment: this.userInfo.nickname + "评论了你的作品【<span class='zyid' id='" + this.zydata._id +
-							"'>" + this.zydata.title +
-							"</span>】【" + this.inputvalue + "】"
+					if (this.zydata.user_id != that.userInfo._id) {
+						add_value = {
+							type: 3,
+							user_id: this.zydata.user_id,
+							comment: this.userInfo.nickname + "评论了你的作品【<span class='zyid' id='" + this.zydata._id +
+								"'>" + this.zydata.title +
+								"</span>】【" + this.inputvalue + "】"
+						}
 					}
+					
 				}
 				if (add_value) {
 					db.collection("jz-custom-systeminfo").add(add_value);
@@ -405,10 +423,11 @@
 			// 评论列表
 			async getComment(comment_id) {
 				// debugger;
-				uni.showLoading({
-					title: "加载中"
-				});
+				// uni.showLoading({
+				// 	title: "加载中"
+				// });
 				var that = this;
+				that.isloading = true;
 				var comments = {};
 				var param = {
 					article_id: that.zydata._id
@@ -509,9 +528,11 @@
 							}
 						})
 					}
-					uni.hideLoading();
+					// uni.hideLoading();
+					that.isloading = false;
 				} else {
-					uni.hideLoading();
+					// uni.hideLoading();
+					that.isloading = false;
 				}
 			},
 			_dealcomment() {

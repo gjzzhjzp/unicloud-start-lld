@@ -16,10 +16,9 @@
 		<u-gap height="4" bg-color="#E9E9E9"></u-gap>
 		<view class="comment">
 			<view class="top">
-				<view class="left" >
-					<view class="heart-photo"  @click="tgrHref(res.user_id[0])">
-						<commont-image :src="imageUrl(res)"
-							:isoriginal="!!(res.user_id[0].original==1)">
+				<view class="left">
+					<view class="heart-photo" @click="tgrHref(res.user_id[0])">
+						<commont-image :src="imageUrl(res)" :isoriginal="!!(res.user_id[0].original==1)">
 						</commont-image>
 					</view>
 					<view class="user-info">
@@ -213,14 +212,14 @@
 			console.log("this.commentList", this.commentList);
 		},
 		methods: {
-			imageUrl(item){
-				if(item.user_id&&item.user_id[0]&&item.user_id[0].avatar_file){
+			imageUrl(item) {
+				if (item.user_id && item.user_id[0] && item.user_id[0].avatar_file) {
 					return item.user_id[0].avatar_file.url;
-				}else{
+				} else {
 					return ""
 				}
 			},
-			deleteComment(id){
+			deleteComment(id) {
 				// debugger;
 				var delnumber = 0;
 				this.commentList.forEach((item, index) => {
@@ -229,13 +228,13 @@
 						delete this.commentList[index]
 					}
 				});
-				var _commentList=[];
-				this.commentList.forEach((item1)=>{
-					if(item1){
+				var _commentList = [];
+				this.commentList.forEach((item1) => {
+					if (item1) {
 						_commentList.push(item1);
 					}
 				});
-				this.commentList=_commentList;
+				this.commentList = _commentList;
 				// this.commentList=JSON.parse(JSON.stringify(this.commentList));
 				// this._dealcomment();
 				// 更新评论数
@@ -246,28 +245,28 @@
 					pl_count: (this.zydata.pl_count || 0)
 				});
 			},
-			replyname(item){
-				if(Array.isArray(item.reply_user_id)){
+			replyname(item) {
+				if (Array.isArray(item.reply_user_id)) {
 					return item.reply_user_id[0].nickname
-				}else if(Array.isArray(item.reply_user_id_info)){
+				} else if (Array.isArray(item.reply_user_id_info)) {
 					return item.reply_user_id_info[0].nickname
 				}
 			},
 			tgrHref(item) {
 				// debugger;
-					var id = item._id;
-					if (id) {
-						var userinfo = uni.getStorageSync("userInfo");
-						if (userinfo._id == id) {
-							uni.navigateTo({
-								url: "/pages/ucenter/ucenter"
-							});
-						} else {
-							uni.navigateTo({
-								url: "/pages/ucenter/tacenter?id=" + id
-							});
-						}
+				var id = item._id;
+				if (id) {
+					var userinfo = uni.getStorageSync("userInfo");
+					if (userinfo._id == id) {
+						uni.navigateTo({
+							url: "/pages/ucenter/ucenter"
+						});
+					} else {
+						uni.navigateTo({
+							url: "/pages/ucenter/tacenter?id=" + id
+						});
 					}
+				}
 			},
 			// reloadcomment(){
 			// 	this.$emit("reload");
@@ -300,17 +299,17 @@
 				this.relaydata = {
 					comment_type: 1,
 					reply_user_id: item.user_id[0]._id,
-					reply_user_id_info:item.user_id,
-					comment_content:item.comment_content,
+					reply_user_id_info: item.user_id,
+					comment_content: item.comment_content,
 					reply_comment_id: item.comment_id,
 					comment_cj: item.comment_cj + 1,
 					all_reply_comment_id: item.all_reply_comment_id + "," + item.comment_id
 				}
 			},
 			// 获取评论id
-			getplid(){
+			getplid() {
 				var plid = Math.random().toString(36).substr(2);
-				return "pl_"+plid;
+				return "pl_" + plid;
 			},
 			// 发送评论
 			async sendComment() {
@@ -323,17 +322,18 @@
 					return;
 				}
 				var that = this;
-				if(that.relaydata.all_reply_comment_id&&that.relaydata.all_reply_comment_id.indexOf("undefined")!=-1){
+				if (that.relaydata.all_reply_comment_id && that.relaydata.all_reply_comment_id.indexOf("undefined") !=
+					-1) {
 					that.$refs.uToast.show({
 						title: '你的操作太快，请稍后再试',
 						type: 'error'
 					});
 					return;
 				}
-				var senddata={
+				var senddata = {
 					article_id: that.zydata._id,
 					user_id: uid,
-					comment_id:this.getplid(),
+					comment_id: this.getplid(),
 					comment_content: that.inputvalue,
 					like_count: 0,
 					comment_type: 1,
@@ -343,26 +343,29 @@
 					all_reply_comment_id: that.relaydata.all_reply_comment_id || that.comment
 						.all_reply_comment_id + "," + that.comment.comment_id,
 				}
-				
-				that.$set(that.zydata,"pl_count",that.zydata.pl_count?++that.zydata.pl_count:1);
+
+				that.$set(that.zydata, "pl_count", that.zydata.pl_count ? ++that.zydata.pl_count : 1);
 				db.collection("jz-opendb-resources").where({
-					_id:that.zydata._id
+					_id: that.zydata._id
 				}).update({
-					pl_count:that.zydata.pl_count
+					pl_count: that.zydata.pl_count,
+					last_modify_date: new Date().getTime()
 				});
 				var _addsenddata = Object.assign(JSON.parse(JSON.stringify(senddata)), {
 					user_id: [JSON.parse(JSON.stringify(that.userInfo))],
-					reply_user_id_info:that.relaydata.reply_user_id_info||that.comment.user_id
+					reply_user_id_info: that.relaydata.reply_user_id_info || that.comment.user_id
 				});
 				////临时新增评论
 				that.commentList.unshift(_addsenddata);
-				
-				var add_value = {
-					type: 3,
-					user_id: that.comment.user_id[0]._id,
-					comment: this.userInfo.nickname+"回复了你的评论【"+that.comment.comment_content+"】:【" + this.inputvalue + "】"
+				if (that.comment.user_id[0]._id != that.userInfo._id) {
+					var add_value = {
+						type: 3,
+						user_id: that.comment.user_id[0]._id,
+						comment: this.userInfo.nickname + "回复了你的评论【" + that.comment.comment_content + "】:【" + this
+							.inputvalue + "】"
+					}
+					await db.collection("jz-custom-systeminfo").add(add_value);
 				}
-				await db.collection("jz-custom-systeminfo").add(add_value);
 				that.inputvalue = "";
 				await db.collection("opendb-news-comments").add(senddata);
 				// this.getComment();
@@ -404,9 +407,10 @@
 						var add_value = {
 							type: 2,
 							user_id: that.comment.user_id[0]._id,
-							comment: this.userInfo.nickname+"点赞了你的评论【"+that.commentList[index].comment_content+"】"
+							comment: this.userInfo.nickname + "点赞了你的评论【" + that.commentList[index]
+								.comment_content + "】"
 						}
-						 db.collection("jz-custom-systeminfo").add(add_value);
+						db.collection("jz-custom-systeminfo").add(add_value);
 					} else {
 						this.commentList[index].like_count--;
 						await db.collection("opendb-news-likepl").where({

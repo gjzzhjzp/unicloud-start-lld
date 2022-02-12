@@ -237,7 +237,7 @@
 			},
 			// 发送评论
 			async sendComment() {
-				debugger;
+				// debugger;
 				var that = this;
 				// 动态生成当前评论id,不用默认的评论id
 				that.openpl = false;
@@ -448,6 +448,8 @@
 				}
 
 				// 获取统计数量
+				
+				// var rescount = await _taolun.count();
 				var rescount = await db.collection('opendb-news-commentsTaolun').where(param).count();
 				this.plNumber = rescount.result.total;
 				this.$set(this.zydata, "pl_count", this.plNumber);
@@ -456,21 +458,36 @@
 				}).update({
 					pl_count: (this.zydata.pl_count || 0)
 				});
-
-				var dbcomments = db.collection("opendb-news-commentsTaolun,uni-id-users").where(param).field(
-					"article_id,comment_id,user_id{nickname,avatar_file,original},reply_user_id{nickname,avatar_file},comment_content,like_count,comment_type,comment_date,reply_comment_id,comment_cj,all_reply_comment_id"
-				);
-
+				// const _taolun = db.collection("opendb-news-commentsTaolun").where(param).getTemp();
+				// const _user = db.collection('uni-id-users').field('_id,nickname,avatar_file,original').getTemp();
+				// console.log("_taolun",_taolun);
+				// var dbcomments= db.collection(_taolun, _user);
+				// var dbcomments = db.collection("opendb-news-commentsTaolun,uni-id-users").where(param).field(
+				// 	"article_id,comment_id,user_id{nickname,avatar_file,original},reply_user_id{nickname,avatar_file},comment_content,like_count,comment_type,comment_date,reply_comment_id,comment_cj,all_reply_comment_id"
+				// );
+				var dbcomments=null;
 				var f_c = Math.ceil(this.plNumber / 100);
 				var res_comment = [];
+				const _user = db.collection('uni-id-users').field('_id,nickname,avatar_file,original').getTemp();
 				for (var i = 0; i < f_c; i++) {
+					
 					if (that.toptype == "zx") {
-						comments = await dbcomments.orderBy("comment_date", "desc").skip(100 * i).limit(100).get();
+						const _taolun = db.collection("opendb-news-commentsTaolun").where(param).orderBy("comment_date", "desc").skip(100 * i).limit(100).getTemp();
+						
+						comments = await db.collection(_taolun, _user).get();
+						// console.log("_taolun",_taolun);
+						// var dbcomments= db.collection(_taolun, _user);
+						
+						// comments = await dbcomments.orderBy("comment_date", "desc").skip(100 * i).limit(100).get();
 					} else {
-						comments = await dbcomments.orderBy("like_count", "desc").skip(100 * i).limit(100).get();
+						const _taolun = db.collection("opendb-news-commentsTaolun").where(param).orderBy("like_count", "desc").skip(100 * i).limit(100).getTemp();
+						
+						comments = await db.collection(_taolun, _user).get();
+						// comments = await dbcomments.orderBy("like_count", "desc").skip(100 * i).limit(100).get();
 					}
 					res_comment = res_comment.concat(comments.result.data)
 				}
+				console.log("dbcomments",comments);
 				if (res_comment.length > 0) {
 					// 获取当前登录用户点赞的评论列表
 					// var like_pl = [];

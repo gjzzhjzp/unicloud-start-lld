@@ -114,6 +114,20 @@
 						for(var key in res.rows[0]){
 							that.$set(that.detaildata,key,res.rows[0][key]);
 						}
+						// console.log("that.detaildata", that.detaildata);
+						if(that.detaildata.resources&&that.detaildata.resources.length>0){
+							var list=[];
+							that.detaildata.resources.forEach((item)=>{
+								if(item.fileType=="image"){
+									if(item.path.indexOf("blob:")==-1){
+										list.push(item);
+									}
+								}else{
+									list.push(item);
+								}
+							});
+							that.$set(that.detaildata,"resources",list);
+						}
 						that.title = that.detaildata.title;
 						that.zy_gs = that.detaildata.zy_gs;
 						that.tohistory();

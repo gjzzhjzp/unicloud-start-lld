@@ -14,15 +14,7 @@
 		</template>
 		
 		<template v-if="listtype=='grid'">
-			<!-- <view class="nineSquared_1" v-if="list.length==1">
-				<u-grid :col="1" :border="false">
-					<u-grid-item v-for="(item,index) in list" :key="index" :custom-style="{padding: '0px'}">
-						<small-image @load="loadsuccess" :index="index" :showNum="showNum" :single="true" :data="item"
-							ref="smallImage2" @preview="preview(item)">
-						</small-image>
-					</u-grid-item>
-				</u-grid>
-			</view> -->
+		
 			<view class="nineSquared_2" v-if="list.length<5">
 
 				<u-grid :col="2" :border="false" hover-class="none">
@@ -63,9 +55,6 @@
 					border-radius="10" :image="data.url" img-mode="widthFix"></u-lazy-load>
 				<image v-else :src="data.url" @click="preview(data)" mode="widthFix"></image>
 			</view>
-			<!-- 
-		<small-image v-for="(item,index) in list" :data="item" ref="smallImage4" @preview="preview(item)">
-		</small-image> -->
 		</template>
 	</view>
 </template>

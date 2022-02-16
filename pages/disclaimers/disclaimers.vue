@@ -22,4 +22,8 @@
 </script>
 
 <style>
+	.jz-container{
+		background-color: #fff;
+		min-height: 100vh;
+	}
 </style>

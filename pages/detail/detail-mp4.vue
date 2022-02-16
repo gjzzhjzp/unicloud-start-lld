@@ -168,7 +168,8 @@
 					// unlimited: true,
 					// }
 				}
-				if (typeof plus != "undefined") {
+				// debugger;
+				if (typeof plus != "undefined"||getApp().globalData.platform=="android"||getApp().globalData.platform=="windows") {
 					dplayer.danmaku = {
 						id: item._id,
 						api: 'getdanmu',

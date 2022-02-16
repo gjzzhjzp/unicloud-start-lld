@@ -1,9 +1,20 @@
+/* 微信浏览器专用 */
+ .dplayer-full-in-icon {
+	display: none !important;
+}
+/* APP专用 */
+/* .dplayer-full-icon {
+	display: none !important;
+} */
+
 uni-page {
 	background-color: #F5F5F5;
 }
-uni-image{
-	background:transparent !important;
+
+uni-image {
+	background: transparent !important;
 }
+
 .jz-container {
 	padding: 0px 10px;
 }
@@ -250,12 +261,6 @@ body.pages-resource-list uni-page-body {
 	margin-left: 4px;
 }
 
-/* .dplayer-full-in-icon {
-	display: none !important;
-} */
-.dplayer-full-icon {
-	display: none !important;
-}
 
 .login_back_logo {
 	padding: 40px;
@@ -343,11 +348,72 @@ body.pages-resource-list uni-page-body {
 	overflow: auto;
 	flex: 1;
 }
-.previewImage_content .uni-scroll-view-content{
-	    display: flex;
-	    align-items: center;
-	    justify-content: center;
+
+.previewImage_content .uni-scroll-view-content {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
-.uni-scroll-view-content uni-image{
+
+.uni-scroll-view-content uni-image {
 	width: 100%;
+}
+
+.er-guangchang .er-item-list-content>p {
+	display: none;
+}
+
+.er-guangchang .er-item-list-content>p:first-child {
+	overflow: hidden;
+	word-break: break-all;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 4;
+}
+/* 媒体查询 */
+@media screen and (min-width: 1200px) {
+    html,body{
+        width: 475px;
+		margin: 0 auto;
+    }
+	/* uni-page-body{
+		border-radius: 2px;
+		border: 1px solid #e3e3e6;
+	} */
+	.u-tabbar .u-tabbar__content,.u-navbar-inner,.comment-container2,.yqm-button,.previewImage{
+		width: 475px !important;
+		margin: 0 auto;
+		left: auto !important;	
+	}
+	.slot-gonggao_content{
+		width: 100% !important;
+	}
+	.u-navbar,.imt-audio,.u-drawer,.detailhead-operation,.u-mask{
+		width: 475px !important;
+		margin: 0 auto;
+	}
+	.detail-image-item{
+		width: 100% !important;
+	}
+	.u-navbar-content-title{
+		    right: 187.5px !important;
+		    width: 125px;
+		    left: 187.5px !important;
+	}
+	.center .bottom-back,.center .userInfo{
+		width: 100% !important;
+	}
+	.uni-list .item{
+		width: 100% !important;
+	}
+	.jz-banner uni-swiper{
+		height: 200px !important;
+	}
+	.jz-sy-list .u-image{
+		height: 120px !important;
+	}
+	.login-back-con{
+		margin-top: 0px !important;
+	}
 }

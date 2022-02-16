@@ -8,8 +8,10 @@
 				<!-- <uni-easyinput placeholder="分类" v-model="formData.categories" trim="both"></uni-easyinput> -->
 			</uni-forms-item>
 			<uni-forms-item required name="excerpt" label="内容">
-				<editor id="editor" class="ql-container" placeholder="请输入内容" @ready="onEditorReady"
-					@input="onEditorInput"></editor>
+				<view class="add-editor">
+					<editor id="editor" class="ql-container" placeholder="请输入内容" @ready="onEditorReady"
+						@input="onEditorInput"></editor>
+				</view>
 				<!-- <uni-easyinput placeholder="请输入内容" type="textarea" :maxlength="1000" v-model="formData.excerpt"
 					trim="both"></uni-easyinput> -->
 			</uni-forms-item>
@@ -107,7 +109,7 @@
 				rules: {
 					...getValidator(Object.keys(formData))
 				},
-				editorCtx:null
+				editorCtx: null
 			}
 		},
 		onLoad(e) {
@@ -124,9 +126,9 @@
 			onEditorReady() {
 				uni.createSelectorQuery().select('#editor').context((res) => {
 					// debugger;
-					
+
 					this.editorCtx = res.context;
-					
+
 				}).exec()
 			},
 			onEditorInput(data) {
@@ -212,6 +214,12 @@
 </script>
 
 <style>
+	.add-editor {
+		border: 1px solid rgb(238, 238, 238);
+		border-radius: 4px;
+		padding: 6px;
+	}
+
 	.resource-ts {
 		color: red;
 		margin-top: 6px;

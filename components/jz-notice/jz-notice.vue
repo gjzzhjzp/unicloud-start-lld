@@ -1,5 +1,5 @@
 <template>
-	<view class="jz-notice">
+	<view class="jz-notice" >
 		<template v-if="list.length>0">
 		<u-notice-bar :mode="mode" :list="list"></u-notice-bar>
 		</template>
@@ -49,6 +49,7 @@
 </script>
 <style>
 	.jz-notice{
-		padding: 10rpx 0px;
+		padding: 4rpx 0px;
+		background-color: #fff;
 	}
 </style>

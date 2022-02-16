@@ -352,6 +352,19 @@
 						}
 						// console.log("this.flowList", this.flowList);
 						this.flowList=this.AryDeleteMore(this.flowList);
+						this.flowList.forEach((item)=>{
+							var list=[];
+							item.resources.forEach((item1)=>{
+								if(item1.fileType=="image"){
+									if(item1.path.indexOf("blob:")==-1){
+										list.push(item1);
+									}
+								}else{
+									list.push(item1);
+								}
+							});
+							this.$set(item,"resources",list);
+						});
 						var resultlength = 0;
 						resultlength = this.flowList.length;
 						if (resultlength == 0) {
@@ -417,6 +430,19 @@
 						}
 						// console.log("this.flowList", this.flowList);
 						this.gzflowList=this.AryDeleteMore(this.gzflowList);
+						this.gzflowList.forEach((item)=>{
+							var list=[];
+							item.resources.forEach((item1)=>{
+								if(item1.fileType=="image"){
+									if(item1.path.indexOf("blob:")==-1){
+										list.push(item1);
+									}
+								}else{
+									list.push(item1);
+								}
+							});
+							this.$set(item,"resources",list);
+						});
 						var resultlength = 0;
 						resultlength = this.gzflowList.length;
 						if (resultlength == 0) {

@@ -297,6 +297,13 @@ module.exports = class resourceService extends Service {
 				collection_query = collection.aggregate().match(where).sort({
 					"publish_date": -1
 				}).skip((page - 1) * rows).limit(rows);
+			}else if (type == "zxpl") {
+				Object.assign(where, {
+					"is_recommend": db.command.neq(1)
+				});
+				collection_query = collection.aggregate().match(where).sort({
+					"last_modify_date": -1
+				}).skip((page - 1) * rows).limit(rows);
 			} else if (type == "rm") {
 				collection_query = collection.aggregate().match(where).sort({
 					"view_count": -1
@@ -344,23 +351,6 @@ module.exports = class resourceService extends Service {
 					.end();
 			}
 			var app_bbh = data.app_bbh;
-			// if (type == "tj") {
-			// 	if (app_bbh) {
-			// 		return {
-			// 			"state": "0000",
-			// 			"rows": resultdata.data,
-			// 			"total": resultdata.data.length,
-			// 			"msg": "查询成功"
-			// 		};
-			// 	} else {
-			// 		return {
-			// 			"state": "0000",
-			// 			"rows": [resultdata.data[0]],
-			// 			"total": resultdata.data.length,
-			// 			"msg": "查询成功"
-			// 		};
-			// 	}
-			// } else {
 			if (app_bbh >= 113) {
 				return {
 					"state": "0000",
@@ -376,7 +366,6 @@ module.exports = class resourceService extends Service {
 					"msg": "查询成功"
 				};
 			}
-			// }
 		} catch (e) {
 			console.log("e", e);
 			return {

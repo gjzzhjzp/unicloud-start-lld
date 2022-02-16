@@ -11,15 +11,30 @@ export default {
 			// },
 			{
 				validateFunction:function(rule,value,data,callback){
-					console.log(value);
-					// if(/^1\d{10}$/.test(value) || /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/.test(value)){
-					// 	callback('登录名不能是：手机号或邮箱')
-					// };
 					if(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,32}$/.test(value)){
 						return true
 					}else{
 						callback('登录名由6-32位数字和字母组成')
 					}
+				}
+			},
+			{
+				validateFunction:async function(rule,value,data,callback){
+					const db = uniCloud.database();
+					var res=await db.collection("uni-id-users").where({
+						username:value
+					}).field("username").get();
+					console.log("res11111111111",res);
+					if(res.result.data&&res.result.data.length>0){
+						callback('该登录名已被占用');
+					}else{
+						return true;
+					}
+					// if(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,32}$/.test(value)){
+					// 	return true
+					// }else{
+					// 	callback('登录名由6-32位数字和字母组成')
+					// }
 				}
 			}
 		],

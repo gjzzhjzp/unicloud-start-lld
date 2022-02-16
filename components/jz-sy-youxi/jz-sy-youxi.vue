@@ -24,20 +24,21 @@
 					</view>
 				</u-col>
 			</u-row>
-			<u-modal v-model="showmodal" title="选择游戏模式" :show-confirm-button="false" :mask-close-able="true" :show-cancel-button="true">
+			<u-modal v-model="showmodal" title="选择游戏模式" :show-confirm-button="false" :mask-close-able="true"
+				:show-cancel-button="true">
 				<view style="margin: 30px 20px 20px 20px;">
-					<u-button >
-						<u-link :href="wudihref()" color="rgb(114, 117, 211)">
-							无敌跳跳版
-						</u-link>
+					<u-button @click="wudihref()">
+						<!-- <u-link :href="wudihref()" color="rgb(114, 117, 211)"> -->
+						无敌跳跳版
+						<!-- </u-link> -->
 					</u-button>
 				</view>
 				<view style="margin: 20px;">
-				<u-button>
-					<u-link :href="putonghref()" color="rgb(114, 117, 211)">
+					<u-button @click="putonghref()">
+						<!-- <u-link :href="putonghref()" color="rgb(114, 117, 211)"> -->
 						普通版
-					</u-link>
-				</u-button>
+						<!-- </u-link> -->
+					</u-button>
 				</view>
 			</u-modal>
 			<u-toast ref="uToast" />
@@ -53,7 +54,7 @@
 				list: [],
 				where: "",
 				isEmpty: true,
-				curitem:{}
+				curitem: {}
 			}
 		},
 		props: {
@@ -113,17 +114,32 @@
 		},
 		methods: {
 			todetail(item) {
-				this.showmodal=true;
-				this.curitem=item;
+				// debugger;
+				this.showmodal = true;
+				this.curitem = item;
 				// uni.navigateTo({
 				// 	url: "/pages/youxidetail/youxidetail?src=" + item.path
 				// })
 			},
-			wudihref(){
-				return this.curitem.path+"?tiaotiao=1";
+			wudihref() {
+				if (this.curitem.path) {
+					// debugger;
+					var path=this.curitem.path + "?tiaotiao=1";
+					uni.navigateTo({
+						url: "/pages/youxidetail/youxidetail?src=" + encodeURIComponent(path)
+					})
+				}
+
+				// return this.curitem.path+"?tiaotiao=1";
 			},
-			putonghref(){
-				return this.curitem.path+"?tiaotiao=0";
+			putonghref() {
+				if (this.curitem.path) {
+					var path=this.curitem.path + "?tiaotiao=0";
+					uni.navigateTo({
+						url: "/pages/youxidetail/youxidetail?src=" + encodeURIComponent(path)
+					})
+				}
+				// return this.curitem.path+"?tiaotiao=0";
 			},
 			imageUrl(item) {
 				if (Array.isArray(item.icon)) {

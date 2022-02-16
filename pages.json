@@ -84,6 +84,11 @@
 			"style": {
 				"navigationBarTitleText": "404"
 			}
+		},{
+			"path": "pages/browser/browser",
+			"style": {
+				"navigationBarTitleText": "温馨提示"
+			}
 		}, {
 			"path": "pages/disclaimers/disclaimers",
 			"style": {

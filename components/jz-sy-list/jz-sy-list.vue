@@ -56,7 +56,7 @@
 					return 4
 				}
 			},
-			// 类型，热门还是最新
+			// 类型，热门还是最新,最新评论
 			type: {
 				type: String,
 				default () {

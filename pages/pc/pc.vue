@@ -4,7 +4,7 @@
 			
 		</u-image>
 		<view class="text">
-			请使用手机浏览器（不是微信）扫码预览
+			请使用微信扫码浏览
 		</view>
 	</view>
 </template>

@@ -133,7 +133,9 @@
 					src: src,
 					index: index
 				};
-				this.$emit('longPress', data);
+				if(typeof plus!="undefined"){
+					this.$emit('longPress', data);
+				}
 				console.log("长按");
 			},
 			//长按事件相关内容---------结束-------------------

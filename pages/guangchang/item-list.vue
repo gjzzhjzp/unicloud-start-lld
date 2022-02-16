@@ -1,5 +1,5 @@
 <template>
-	<view class="er-item-list">
+	<view class="er-item-list er-guangchang">
 		<u-grid :col="1" :border="false">
 			<u-grid-item v-for="(item, index) in list" bg-color="#F5F5F5" :custom-style="{'padding':0}" :key="index">
 				<view class="er-item-list-warter">
@@ -19,12 +19,12 @@
 									<u-avatar :size="80"
 										:src="(item.userinfo&&item.userinfo[0].avatar_file)?item.userinfo[0].avatar_file.url:''">
 									</u-avatar>
-								<view class="original-title">
-									<text
-										style="color: #333333;font-size: 14px;">{{item.userinfo&&item.userinfo[0].nickname?item.userinfo[0].nickname:'佚名'}}</text>
-									<uni-dateformat class="publish_date" :date="item.publish_date"
-										format="yyyy-MM-dd hh:mm:ss" :threshold="[60000, 2592000000]" />
-								</view>
+									<view class="original-title">
+										<text
+											style="color: #333333;font-size: 14px;">{{item.userinfo&&item.userinfo[0].nickname?item.userinfo[0].nickname:'佚名'}}</text>
+										<uni-dateformat class="publish_date" :date="item.publish_date"
+											format="yyyy-MM-dd hh:mm:ss" :threshold="[60000, 2592000000]" />
+									</view>
 								</template>
 							</view>
 							<!-- <view class="er-item-list-gz" v-if="showguanzhu(item)">
@@ -32,20 +32,21 @@
 							</view> -->
 						</view>
 						<view @click="$notMoreTap(toDetail,'notTap',item)">
-							<view class="er-item-list-content u-line-4" v-html="item.excerpt">
+							<!-- u-line-4 -->
+							<view class="er-item-list-content" v-html="item.excerpt">
 								<!-- {{item.excerpt}} -->
 							</view>
 						</view>
 						<view @click="$notMoreTap(toDetail,'notTap',item)">
 							<nine-squared :showicon="false" :list="item.resources"></nine-squared>
 						</view>
-						
+
 						<operation v-if="showoperation" :data="item" @topl="toDetail"></operation>
 					</view>
 				</view>
 			</u-grid-item>
 		</u-grid>
-		
+
 		<u-toast ref="uToast" />
 	</view>
 </template>
@@ -88,10 +89,10 @@
 					return false
 				}
 			},
-			type:{
-				type:String,
-				default(){
-					return "1"///1普通列表,2置顶列表,3关注列表
+			type: {
+				type: String,
+				default () {
+					return "1" ///1普通列表,2置顶列表,3关注列表
 				}
 			}
 		},
@@ -173,10 +174,10 @@
 				return url;
 			},
 			toDetail(item) {
-				var id=item._id;
-				if(id){
-					getApp().globalData.guangchang_curid=id;
-					getApp().globalData.guangchang_type=this.type;
+				var id = item._id;
+				if (id) {
+					getApp().globalData.guangchang_curid = id;
+					getApp().globalData.guangchang_type = this.type;
 				}
 				uni.navigateTo({
 					url: "/pages/jz-opendb-taolun/detail/detail?id=" + id
@@ -199,6 +200,8 @@
 		// max-height: 10em;
 		// overflow: hidden;
 	}
+
+	
 
 	.publish_date {
 		font-size: 10px;

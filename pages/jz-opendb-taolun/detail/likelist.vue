@@ -108,12 +108,12 @@
 					}).update({
 						like_count1: _number || 0
 					});
-					var res = await db.collection("opendb-news-likeTaolun,uni-id-users").
-					where({
+					const _taolun = db.collection('opendb-news-likeTaolun').where({
 							article_id: article_id
-						}).field("user_id{username,nickname,avatar_file,original},create_date").orderBy(
-							"create_date desc")
-						.get();
+						}).field('user_id,create_date').orderBy(
+							"create_date desc").getTemp();
+					const _user = db.collection('uni-id-users').field('_id,username,nickname,avatar_file,original').getTemp();
+					var res = await db.collection(_taolun,_user).get();
 					if (res.result && res.result.data) {
 						this.list = res.result.data;
 					}

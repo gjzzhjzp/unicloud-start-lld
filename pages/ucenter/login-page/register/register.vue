@@ -10,7 +10,7 @@
 				<u-image width="100%" :src="'/static/login-index/login_back.png'" mode="widthFix"></u-image>
 			</view>
 			<view class="login-back-con">
-				<uni-forms ref="form" :value="formData" :rules="rules" validate-trigger="submit"
+				<uni-forms ref="form" :value="formData" :rules="rules" validate-trigger="bind"
 					err-show-type="undertext" label-width="160px" label-position="right">
 					<uni-forms-item label="登录名" name="username" required>
 						<uni-easyinput :inputBorder="false" class="easyinput" placeholder="请输入登录名(不区分大小写)"
@@ -112,32 +112,63 @@
 				yqrxz_number: 10000, ////邀请限制人数
 				sfxs_yqm: false, ////是否显示邀请码注册
 				gd_yqm: "" ,///固定邀请码
-				isyzzl:true,////是否开启验证资料
+				isyzzl:false,////是否开启验证资料
 			}
 		},
 		created() {
 			var weibonc = getApp().globalData.weiboyz;
 			var index = parseInt(Math.random() * weibonc.length);
 			this.$set(this.formData, "weibocontent", weibonc[index]);
-			var config = getApp().globalData.systemconfig;
-			var t_800027 = config["800027"]; //、邀请人数	
-			if (t_800027) {
-				this.yqr_number = t_800027 || 3;
-			}
-			if (config["800026"] == "2") {
-				this.sfxs_yqm = true
-			}
-			if (config["800028"]) {
-				this.yqrxz_number = config["800028"];
-			}
-			if (config["800029"]) {
-				this.gd_yqm = config["800029"];
-			}
-			if (config["800032"]=="1") {
-				this.isyzzl = true;
-			}else{
-				this.isyzzl = false;
-			}
+			// 注册时重新获取配置项
+			uniCloud.callFunction({
+				name: 'jzconfig',
+				data: {
+					action: 'config/getConfig'
+				},
+			}).then((res) => {
+				var res = res.result;
+				var config = {};
+				var weiboyz = [];
+				if (res.state == "0000") {
+					var configdata = res.data.config;
+					var weiboyzdata = res.data.weiboyz;
+					if (configdata.data && configdata.data.length > 0) {
+						configdata.data.forEach((item) => {
+							config[item.config_bm] = item.config_val;
+						});
+					}
+					if (weiboyzdata.data && weiboyzdata.data.length > 0) {
+						weiboyzdata.data.forEach((item) => {
+							weiboyz.push(item.content);
+						});
+					}
+					getApp().globalData.systemconfig = config;
+					getApp().globalData.weiboyz = weiboyz;
+					var t_800027 = config["800027"]; //、邀请人数
+					if (t_800027) {
+						this.yqr_number = t_800027 || 3;
+					}
+					if (config["800026"] == "2") {
+						this.sfxs_yqm = true
+					}
+					if (config["800028"]) {
+						this.yqrxz_number = config["800028"];
+					}
+					if (config["800029"]) {
+						this.gd_yqm = config["800029"];
+					}
+					if (config["800032"]=="1") {
+						this.isyzzl = true;
+					}else{
+						this.isyzzl = false;
+					}
+				} else {
+					uni.showToast({
+						title: res.msg,
+						icon: null
+					});
+				}
+			});
 		},
 		onReady() {
 			this.$refs.form.setRules(this.rules);

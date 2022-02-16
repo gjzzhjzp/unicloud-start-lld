@@ -100,15 +100,20 @@
 						selected: true
 					},
 					{
-						name: "热门内容",
-						type: "rm",
+						name: "最新评论",
+						type: "zxpl",
 						selected: false
 					},
 					{
-						name: "收藏量高",
-						type: "sc",
+						name: "热门内容",
+						type: "rm",
 						selected: false
 					}
+					// {
+					// 	name: "收藏量高",
+					// 	type: "sc",
+					// 	selected: false
+					// }
 				],
 				type: "zx",
 				reset: false, ///重置

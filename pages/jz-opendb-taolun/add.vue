@@ -8,7 +8,10 @@
 			</uni-forms-item>
 			<uni-forms-item required name="excerpt" label="内容">
 				<!-- formData.excerpt:{{formData.excerpt}} -->
-				<editor id="editor" class="ql-container" placeholder="请输入内容" @ready="onEditorReady" @input="onEditorInput"></editor>
+				<view class="add-editor">
+					<editor id="editor" class="ql-container" placeholder="请输入内容" @ready="onEditorReady" @input="onEditorInput"></editor>
+					
+				</view>
 				<!-- <uni-easyinput placeholder="请输入内容" type="textarea" :maxlength="1000" v-model="formData.excerpt"
 					trim="both"></uni-easyinput> -->
 			</uni-forms-item>
@@ -205,6 +208,11 @@
 </script>
 
 <style>
+	.add-editor{
+		    border: 1px solid rgb(238, 238, 238);
+		    border-radius: 4px;
+		    padding: 6px;
+	}
 	.resource-ts {
 		color: red;
 		margin-top: 6px;

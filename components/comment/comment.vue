@@ -453,16 +453,25 @@
 					pl_count: (this.zydata.pl_count || 0)
 				});
 
-				var dbcomments = db.collection("opendb-news-comments,uni-id-users").where(param).field(
-					"article_id,comment_id,user_id{nickname,avatar_file,original},reply_user_id{nickname,avatar_file},comment_content,like_count,comment_type,comment_date,reply_comment_id,comment_cj,all_reply_comment_id"
-				);
+				// var dbcomments = db.collection("opendb-news-comments,uni-id-users").where(param).field(
+				// 	"article_id,comment_id,user_id{nickname,avatar_file,original},reply_user_id{nickname,avatar_file},comment_content,like_count,comment_type,comment_date,reply_comment_id,comment_cj,all_reply_comment_id"
+				// );
+				var dbcomments=null;
 				var f_c = Math.ceil(this.plNumber / 100);
 				var res_comment = [];
+				const _user = db.collection('uni-id-users').field('_id,nickname,avatar_file,original').getTemp();
 				for (var i = 0; i < f_c; i++) {
 					if (that.toptype == "zx") {
-						comments = await dbcomments.orderBy("comment_date", "desc").skip(100 * i).limit(100).get();
+						const _resource = db.collection("opendb-news-comments").where(param).orderBy("comment_date", "desc").skip(100 * i).limit(100).getTemp();
+						
+						comments = await db.collection(_resource, _user).get();
+						
+						// comments = await dbcomments.orderBy("comment_date", "desc").skip(100 * i).limit(100).get();
 					} else {
-						comments = await dbcomments.orderBy("like_count", "desc").skip(100 * i).limit(100).get();
+						const _resource = db.collection("opendb-news-comments").where(param).orderBy("like_count", "desc").skip(100 * i).limit(100).getTemp();
+						
+						comments = await db.collection(_resource, _user).get();
+						// comments = await dbcomments.orderBy("like_count", "desc").skip(100 * i).limit(100).get();
 					}
 					// var list = await this.db.collection("jz-opendb-danmu").where({
 					// 	resource_id: event.id

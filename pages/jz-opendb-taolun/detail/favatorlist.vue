@@ -111,12 +111,18 @@
 					}).update({
 						like_count: _number || 0
 					});
+					const _taolun = db.collection('opendb-news-favoriteTaolun').where({
+							article_id: article_id
+						}).field('user_id,create_date').orderBy("create_date desc").getTemp();
+					const _user = db.collection('uni-id-users').field('_id,username,nickname,avatar_file,original').getTemp();
+					var res = await db.collection(_taolun,_user).get();
 					
-					var res = await db.collection("opendb-news-favoriteTaolun,uni-id-users").
-					where({
-						article_id: article_id
-					}).field("user_id{username,nickname,avatar_file,original},create_date").orderBy("create_date desc")
-					.get();
+					
+					// var res = await db.collection("opendb-news-favoriteTaolun,uni-id-users").
+					// where({
+					// 	article_id: article_id
+					// }).field("user_id{username,nickname,avatar_file,original},create_date").orderBy("create_date desc")
+					// .get();
 					if (res.result && res.result.data) {
 						this.list = res.result.data;
 					}

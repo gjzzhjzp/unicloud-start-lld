@@ -1,11 +1,11 @@
-/* 微信浏览器专用 */
- .dplayer-full-in-icon {
-	display: none !important;
-}
-/* APP专用 */
-/* .dplayer-full-icon {
+/* 浏览器专用 */
+/* .dplayer-full-in-icon {
 	display: none !important;
 } */
+/* APP专用 */
+.dplayer-full-icon {
+	display: none !important;
+}
 
 uni-page {
 	background-color: #F5F5F5;
@@ -359,7 +359,7 @@ body.pages-resource-list uni-page-body {
 	width: 100%;
 }
 
-.er-guangchang .er-item-list-content>p {
+/* .er-guangchang .er-item-list-content>p {
 	display: none;
 }
 
@@ -370,50 +370,91 @@ body.pages-resource-list uni-page-body {
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 4;
-}
+} */
+
 /* 媒体查询 */
 @media screen and (min-width: 1200px) {
-    html,body{
-        width: 475px;
+
+	html,
+	body {
+		width: 700px;
 		margin: 0 auto;
-    }
+	}
+
 	/* uni-page-body{
 		border-radius: 2px;
 		border: 1px solid #e3e3e6;
 	} */
-	.u-tabbar .u-tabbar__content,.u-navbar-inner,.comment-container2,.yqm-button,.previewImage{
-		width: 475px !important;
+	.u-tabbar .u-tabbar__content,
+	.u-navbar-inner,
+	.comment-container2,
+	.yqm-button,
+	.previewImage {
+		width: 700px !important;
 		margin: 0 auto;
-		left: auto !important;	
+		left: auto !important;
 	}
-	.slot-gonggao_content{
+
+	.slot-gonggao_content {
 		width: 100% !important;
 	}
-	.u-navbar,.imt-audio,.u-drawer,.detailhead-operation,.u-mask{
-		width: 475px !important;
+
+	.u-navbar,
+	.imt-audio,
+	.u-drawer,
+	.detailhead-operation,
+	.u-mask {
+		width: 700px !important;
 		margin: 0 auto;
 	}
-	.detail-image-item{
+
+	.detail-image-item {
 		width: 100% !important;
 	}
-	.u-navbar-content-title{
-		    right: 187.5px !important;
-		    width: 125px;
-		    left: 187.5px !important;
+
+	.u-navbar-content-title {
+		right: 250px !important;
+		width: 200px !important;
+		left: 250px !important;
 	}
-	.center .bottom-back,.center .userInfo{
+
+	.center .bottom-back,
+	.center .userInfo {
 		width: 100% !important;
 	}
-	.uni-list .item{
+
+	.uni-list .item {
 		width: 100% !important;
 	}
-	.jz-banner uni-swiper{
-		height: 200px !important;
+
+	.jz-banner uni-swiper {
+		height: 300px !important;
 	}
-	.jz-sy-list .u-image{
-		height: 120px !important;
+
+	.jz-sy-list .u-image {
+		height: 125px !important;
 	}
-	.login-back-con{
+
+	.login-back-con {
 		margin-top: 0px !important;
 	}
+
+	.jz-sy-list .jz-sy-item {
+		flex: 0 0 33.333% !important;
+		width: 33.333% !important;
+	}
+	.wrap .search-row{
+		padding: 8px 15px;
+		display: flex;
+		    margin-top: 5px;
+		    align-items: center;
+		    justify-content: center;
+	}
+	.nineSquared_2 .u-grid-item{
+		width: 33.33% !important;
+	}
+	.detail-image-item.MP4{
+		height: 350px !important;
+	}
 }
+

@@ -16,7 +16,7 @@
 					</view>
 				</template>
 				<template v-else>
-					<view class="detail-image-item" v-for="(item,index) in data.resources" :key="index">
+					<view class="detail-image-item MP4" v-for="(item,index) in data.resources" :key="index">
 						<div id="dplayer" ref="dplayer">
 						</div>
 						<div v-if="videoDirection=='shu'" class="player-toggle shu" @click="toggleMp4('shu')">
@@ -213,6 +213,9 @@
 						window.jQuery("#dplayer .player-toggle.shu").remove();
 					})
 				}
+				$(".dplayer").on("contextmenu", function() {
+				   event.returnValue = false;
+				  });
 			},
 			changenumber(plNumber) {
 				this.plNumber = plNumber;

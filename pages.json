@@ -30,7 +30,7 @@
 		},{
 			"path": "pages/youxidetail/youxidetail",
 			"style": {
-				"navigationBarTitleText": "游戏详情"
+				"navigationBarTitleText": "游戏"
 			}
 		}, {
 			"path": "pages/pc/pc",

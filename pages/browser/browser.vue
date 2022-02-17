@@ -5,13 +5,13 @@
 				温馨提示
 			</view>
 			<view class="jz-browser-text2">
-				<view class="browser" style="margin-top: 30px;">
+				<!-- <view class="browser" style="margin-top: 30px;">
 					因多方面因素限制，ios将不再推出APP
-				</view>
+				</view> -->
 				<!-- <view class="browser" style="margin-top: 20px;">
 					ios移动端网页版可在微信和百度浏览器中打开，其他暂不支持
 				</view> -->
-				<view class="browser" style="margin-top: 20px;">
+				<view class="browser" style="text-align: center;">
 					移动端网页版暂只支持在微信中打开
 				</view>
 			</view>

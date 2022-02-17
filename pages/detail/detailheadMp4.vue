@@ -82,7 +82,7 @@
 			</view>
 			<view style="margin-top: 20rpx;">
 				<jz-sy-list ref="sylist" :label="tjcategories" :ignore="data._id" title="推荐资源" :showright="false"
-					:zy_gs="data.zy_gs"></jz-sy-list>
+					:zy_gs="data.zy_gs" :rows="6"></jz-sy-list>
 			</view>
 		</view>
 		<view v-show="current==1">

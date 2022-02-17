@@ -33,8 +33,8 @@
 						</view>
 						<view @click="$notMoreTap(toDetail,'notTap',item)">
 							<!-- u-line-4 -->
-							<view class="er-item-list-content" v-html="item.excerpt">
-								<!-- {{item.excerpt}} -->
+							<view class="er-item-list-content u-line-4" style="white-space: pre-line;">
+								{{f_content(item.excerpt)}}
 							</view>
 						</view>
 						<view @click="$notMoreTap(toDetail,'notTap',item)">
@@ -113,6 +113,10 @@
 			}
 		},
 		methods: {
+			f_content(content){
+				var _con=content.replace(/<p>/g,"").replace(/<\/p>/g,"\n").replace(/<br>/g,"\n");
+				return _con;
+			},
 			showguanzhu(item) {
 				if (this.isgz) {
 					return false;

@@ -1,7 +1,7 @@
 <template>
 	<view class=" jz-container jz-sy-youxi">
 		<view class="jz-sy-youxi-section">
-			<u-section line-color="#7275D3" :font-size="32" :title="title" :right="showright" sub-title="查看更多>>"
+			<u-section line-color="#7275D3" :show-line="false" :font-size="16" title="合成大西瓜" :right="showright" sub-title="查看更多>>"
 				:arrow="false" @click="$notMoreTap(tomore,'notTap')"></u-section>
 		</view>
 		<view class="jz-sy-youxi">
@@ -15,7 +15,7 @@
 								</u-image>
 							</u-link> -->
 							<view @click="todetail(item)">
-								<u-image width="200rpx" height="200rpx" border-radius="20" :src="imageUrl(item)"
+								<u-image width="100px" height="100px" border-radius="20" :src="imageUrl(item)"
 									loading-icon="/static/center/zheng.png" error-icon="/static/center/error_zheng.png">
 								</u-image>
 							</view>
@@ -43,6 +43,27 @@
 			</u-modal>
 			<u-toast ref="uToast" />
 		</view>
+		<view class="jz-sy-youxi-section">
+			<u-section line-color="#7275D3" :show-line="false" :font-size="16" title="龚张小游戏" :right="showright" sub-title="查看更多>>"
+				:arrow="false" @click="$notMoreTap(tomore,'notTap')"></u-section>
+		</view>
+		<view class="jz-sy-youxi">
+			<u-row gutter="16">
+				<u-col span="6" class="jz-sy-item" v-for="(item,index) in list1" :key="index">
+					<view class="jz-sy-youxi-item">
+						<view>
+							<view @click="todetail1(item)">
+								<u-image width="100px" height="100px" border-radius="20" :src="imageUrl(item)"
+									loading-icon="/static/center/zheng.png" error-icon="/static/center/error_zheng.png">
+								</u-image>
+							</view>
+						</view>
+						<view class="jz-sy-youxi-text">{{item.name}}</view>
+					</view>
+				</u-col>
+			</u-row>
+			<u-toast ref="uToast" />
+		</view>
 	</view>
 </template>
 <script>
@@ -52,6 +73,7 @@
 				showmodal: false,
 				notTap: true, //一定要设置为true
 				list: [],
+				list1:[],
 				where: "",
 				isEmpty: true,
 				curitem: {}
@@ -113,6 +135,14 @@
 			this.getList();
 		},
 		methods: {
+			todetail1(item){
+				if (item.path) {
+					var path=item.path;
+					uni.navigateTo({
+						url: "/pages/youxidetail/youxidetail?src=" + encodeURIComponent(path)
+					})
+				}
+			},
 			todetail(item) {
 				// debugger;
 				this.showmodal = true;
@@ -152,14 +182,16 @@
 				var db = uniCloud.database();
 				var categories = await db.collection("opendb-news-categories").get({
 					getTree: {
-						startWith: "flbm=='300000'" ////分类顶级编码
+						startWith: "flbm=='300000'||flbm=='500000'" ////分类顶级编码
 					}
 				});
-				console.log("categories", categories);
+				console.log("categories.result",categories.result);
 				if (categories.result && categories.result.data.length > 0) {
 					this.list = categories.result.data[0].children;
+					if(categories.result.data[1]){
+						this.list1 = categories.result.data[1].children;
+					}
 				}
-				console.log("this.list", this.list);
 			},
 		}
 	}

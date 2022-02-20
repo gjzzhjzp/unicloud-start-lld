@@ -3,7 +3,7 @@ export default function(result){
 		title: '登录成功',
 		icon: 'none'
 	});
-	console.log('登录成功',result);
+	// console.log('登录成功',result);
 	
 	var delta = 0//判断需要返回几层
 	let pages = getCurrentPages();

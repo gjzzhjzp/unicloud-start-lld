@@ -43,7 +43,7 @@
 			// 组件的整体大小
 			size: {
 				type: [String, Number],
-				default: 34
+				default: 17
 			},
 			// 是否禁止点击提示语选中复选框
 			labelDisabled: {
@@ -58,7 +58,7 @@
 			// 图标的大小，单位rpx
 			iconSize: {
 				type: [String, Number],
-				default: 20
+				default: 10
 			},
 			// 每个checkbox占u-checkbox-group的宽度
 			width: {

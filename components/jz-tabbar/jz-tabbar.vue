@@ -1,6 +1,6 @@
 <template>
-	<view>
-		<u-tabbar v-model="current" :mid-button="true" :list="list" :height="110" active-color="#777BCE" icon-size="50rpx"></u-tabbar>
+	<view class="jz-banner">
+		<u-tabbar v-model="current" :mid-button="true" :list="list" :height="58" active-color="#777BCE" icon-size="25px"></u-tabbar>
 	</view>
 </template>
 <script>

@@ -24,7 +24,7 @@ export default {
 					var res=await db.collection("uni-id-users").where({
 						username:value
 					}).field("username").get();
-					console.log("res11111111111",res);
+					// console.log("res11111111111",res);
 					if(res.result.data&&res.result.data.length>0){
 						callback('该登录名已被占用');
 					}else{
@@ -94,7 +94,7 @@ export default {
 			},
 			{
 				validateFunction:function(rule,value,data,callback){
-					console.log(value);
+					// console.log(value);
 					if(value!=data.password){
 						callback('两次输入密码不一致')
 					};

@@ -114,13 +114,11 @@
 				}
 			},
 			copy(e) {
-				console.log('index', e)
 				uni.showModal({
 					content: JSON.stringify(e.lyrics)
 				})
 			},
 			centerBtnClick(e) {
-				console.log(e)
 				this.curTime = e.centerTime
 			},
 			makeTime() {

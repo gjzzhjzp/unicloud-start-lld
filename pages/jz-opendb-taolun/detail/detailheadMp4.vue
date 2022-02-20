@@ -287,11 +287,11 @@
 	}
 
 	.detail-title {
-		font-size: 50rpx;
+		font-size: 25px;
 	}
 
 	.detail-image-jj2 {
-		font-size: 28rpx;
+		font-size: 14px;
 		line-height: 22px;
 	}
 
@@ -376,7 +376,7 @@
 	}
 
 	.detail-image-title .title {
-		font-size: 36rpx;
+		font-size: 18px;
 		flex: 1;
 		display: flex;
 	}

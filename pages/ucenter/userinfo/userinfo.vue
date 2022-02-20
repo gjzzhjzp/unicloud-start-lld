@@ -116,7 +116,7 @@
 					success: this.univerify(), //预登录成功
 					fail: (res) => { // 预登录失败
 						// 不显示一键登录选项（或置灰）
-						console.log(res)
+						// console.log(res)
 						this.bindMobileBySmsCode()
 					}
 				})
@@ -136,7 +136,7 @@
 					"provider": 'univerify',
 					"univerifyStyle": this.univerifyStyle,
 					success: async e => {
-						console.log(e.authResult);
+						// console.log(e.authResult);
 						uniCloud.callFunction({
 							name: 'uni-id-cf',
 							data: {
@@ -146,7 +146,7 @@
 							success: ({
 								result
 							}) => {
-								console.log(result);
+								// console.log(result);
 								if (result.code === 0) {
 									this.setUserInfo({
 										"mobile": result.mobile
@@ -165,7 +165,7 @@
 						})
 					},
 					fail: (err) => {
-						console.log(err);
+						// console.log(err);
 						if (err.code == '30002' || err.code == '30001') {
 							this.bindMobileBySmsCode()
 						}
@@ -178,7 +178,7 @@
 				})
 			},
 			setNickname(nickname) {
-				console.log(nickname);
+				// console.log(nickname);
 				if (nickname) {
 					usersTable.where('_id==$env.uid').update({
 						nickname
@@ -278,7 +278,7 @@
 				usersTable.where('_id==$env.uid').update({
 					avatar_file
 				}).then((res) => {
-					console.log(res);
+					// console.log(res);
 					if (avatar_file) {
 						uni.showToast({
 							icon: 'none',

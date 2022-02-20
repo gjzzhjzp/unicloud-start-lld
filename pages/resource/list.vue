@@ -5,14 +5,14 @@
 			<!-- 搜索框 -->
 			<view class="search-container-bar">
 
-				<u-navbar :is-back="true" back-icon-name="arrow-leftward" :back-icon-size="40">
-					<view style="width: 120rpx;">
+				<u-navbar :is-back="true" back-icon-name="arrow-leftward" :back-icon-size="20">
+					<view style="width: 60px;">
 						<u-dropdown>
 							<u-dropdown-item @change="changedropItem" v-model="dvalue" :title="dtitle"
 								:options="doptions"></u-dropdown-item>
 						</u-dropdown>
 					</view>
-					<u-search border-color="#7275D3" bg-color="#fff" v-model="keyword" height="60"
+					<u-search border-color="#7275D3" bg-color="#fff" v-model="keyword" height="30"
 						:placeholder="dplaceholder" @search="confirm" @custom="confirm" :show-action="true"></u-search>
 				</u-navbar>
 			</view>
@@ -40,7 +40,7 @@
 		</view>
 		<template v-if="currenttab!=2">
 			<template v-if="isEmpty">
-				<view style="margin-top: 100rpx;">
+				<view style="margin-top: 50px;">
 					<u-empty text="数据为空" mode="list"></u-empty>
 				</view>
 			</template>
@@ -81,12 +81,12 @@
 				categories: "", ///分类编码
 				title: "列表", ///列表
 				tabslist: [{
-					name: '图片',
-					type: "0"
-				}, {
 					name: '视频',
 					type: "1"
-				}, {
+				},{
+					name: '图片',
+					type: "0"
+				},  {
 					name: '音乐',
 					type: "2"
 				}, {
@@ -118,10 +118,10 @@
 				type: "zx",
 				reset: false, ///重置
 				isEmpty: false,
-				zy_gs: "0", ////资源格式
+				zy_gs: "1", ////资源格式
 				param: {
 					page: 1,
-					rows: 16
+					rows: 18
 				},
 				// curuser:""////当前用户
 			}
@@ -215,7 +215,7 @@
 			},
 			changeTabs(index) {
 				this.currenttab = index;
-				this.zy_gs = index;
+				this.zy_gs = this.tabslist[index].type;
 				this.resetlist();
 			},
 			confirm() {

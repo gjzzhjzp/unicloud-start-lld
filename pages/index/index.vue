@@ -1,7 +1,7 @@
 <template>
 	<view v-if="showindex">
 		<jz-navbar ref="navbar">
-			<u-search :disabled="true" border-color="#7275D3" bg-color="#fff" height="60" placeholder=""
+			<u-search :disabled="true" border-color="#7275D3" bg-color="#fff" height="30" placeholder=""
 				@focus="$notMoreTap(tosearch,'notTap')" @click="$notMoreTap(tosearch,'notTap')"
 				@search="$notMoreTap(tosearch,'notTap')" @custom="$notMoreTap(tosearch,'notTap')" :show-action="true">
 			</u-search>
@@ -23,7 +23,7 @@
 			<!-- <jz-sy-list ref="sylist4" title="夺笋" label="夺笋"></jz-sy-list> -->
 			<jz-tabbar></jz-tabbar>
 			<jz-gonggao ref="gonggao"></jz-gonggao>
-			<drag-icon ref="drag"></drag-icon>
+			<drag-icon v-if="showdrag" ref="drag"></drag-icon>
 		<!-- </view> -->
 	</view>
 	<view v-else>
@@ -37,6 +37,7 @@
 	export default {
 		data() {
 			return {
+				showdrag:true,
 				notTap: true, //一定要设置为true
 				showindex: false,
 				startpng: "/static/start/start.png"
@@ -48,14 +49,18 @@
 			if (question_success1) {
 				this.showindex=true;
 			}
-			console.log("this.$refs.navbar", this.$refs.navbar);
+			// console.log("this.$refs.navbar", this.$refs.navbar);
 			if (this.$refs.navbar) {
 				this.$refs.navbar.checknewinfo();
 			}
 			if(this.$refs.sylist2){
 				this.$refs.sylist2.getList();
 			}
-			
+			if(getApp().globalData.platform=="windows"){
+				this.showdrag=false;
+			}else{
+				this.showdrag=true;
+			}
 		},
 		// 下拉刷新
 		onPullDownRefresh() {

@@ -12,15 +12,15 @@
 		    v-model="inputVal" class="u-number-input" @blur="onBlur" @focus="onFocus"
 		    type="number" :style="{
 				color: color,
-				fontSize: size + 'rpx',
+				fontSize: size + 'px',
 				background: bgColor,
-				height: inputHeight + 'rpx',
-				width: inputWidth + 'rpx'
+				height: inputHeight + 'px',
+				width: inputWidth + 'px'
 			}" />
 		<view class="u-icon-plus" @touchstart.stop.prevent="btnTouchStart('plus')" @touchend.stop.prevent="clearTimer" :class="{ 'u-icon-disabled': disabled || inputVal >= max }"
 		    :style="{
 				background: bgColor,
-				height: inputHeight + 'rpx',
+				height: inputHeight + 'px',
 				color: color
 			}">
 			<u-icon name="plus" :size="size"></u-icon>
@@ -91,7 +91,7 @@
 			// input的字体大小，单位rpx
 			size: {
 				type: [Number, String],
-				default: 26
+				default: 13
 			},
 			// 加减图标的颜色
 			color: {
@@ -101,12 +101,12 @@
 			// input宽度，单位rpx
 			inputWidth: {
 				type: [Number, String],
-				default: 80
+				default: 40
 			},
 			// input高度，单位rpx
 			inputHeight: {
 				type: [Number, String],
-				default: 50
+				default: 25
 			},
 			// index索引，用于列表中使用，让用户知道是哪个numberbox发生了变化，一般使用for循环出来的index值即可
 			index: {
@@ -122,7 +122,7 @@
 			// 输入框于键盘之间的距离
 			cursorSpacing: {
 				type: [Number, String],
-				default: 100
+				default: 50
 			},
 			// 是否开启长按连续递增或递减
 			longPress: {
@@ -337,18 +337,18 @@
 
 	.u-icon-plus,
 	.u-icon-minus {
-		width: 60rpx;
+		width: 30px;
 		@include vue-flex;
 		justify-content: center;
 		align-items: center;
 	}
 
 	.u-icon-plus {
-		border-radius: 0 8rpx 8rpx 0;
+		border-radius: 0 4px 4px 0;
 	}
 
 	.u-icon-minus {
-		border-radius: 8rpx 0 0 8rpx;
+		border-radius: 4px 0 0 4px;
 	}
 
 	.u-icon-disabled {

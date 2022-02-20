@@ -107,7 +107,7 @@
 			 * 开始生物认证
 			 */
 			startSoterAuthentication(checkAuthMode) {
-				console.log(checkAuthMode);
+				// console.log(checkAuthMode);
 				let title = {"fingerPrint":this.$t('settings.fingerPrint'),"facial":this.$t('settings.facial')}[checkAuthMode]
 				// 检查是否开启认证
 				this.checkIsSoterEnrolledInDevice({checkAuthMode,title})
@@ -245,11 +245,11 @@
 				});
 			},
 			changeLanguage(){
-				console.log('语言切换')
+				// console.log('语言切换')
 				uni.showActionSheet({
 					itemList: ["English","简体中文"],
 					success: res => {
-						console.log(res.tapIndex); 
+						// console.log(res.tapIndex); 
 						let language = uni.getStorageSync('CURRENT_LANG')
 						if(
 							!res.tapIndex && language=='zh-Hans' || res.tapIndex && language=='en'

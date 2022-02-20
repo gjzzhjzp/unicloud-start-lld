@@ -10,7 +10,7 @@
 		data() {
 			return {
 				bannerList: [],
-				height:340
+				height:180
 			}
 		},
 		props:{

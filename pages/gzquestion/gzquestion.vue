@@ -58,7 +58,6 @@
 							value: ""
 						});
 					});
-					console.log("this.list", this.list);
 				}
 			},
 			confirm() {

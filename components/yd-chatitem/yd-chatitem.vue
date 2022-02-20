@@ -1,7 +1,7 @@
 <template>
 	<view class="chatitem">
 		<view v-if="isLeft" class="leftitem" :style="{backgroundColor: bgColor}">
-			<image class="icon" :src="icon" :style="{height: iconSize, width: iconSize,marginTop:'20rpx',borderRadius:'6px'}"></image>
+			<image class="icon" :src="icon" :style="{height: iconSize, width: iconSize,marginTop:'10px',borderRadius:'6px'}"></image>
 			<view class="info">
 				<text class="nickname" :style="{fontSize: nameSize, color: nameColor}">{{ nickname }}</text>
 				<text class="message"
@@ -65,7 +65,7 @@
 			},
 			nameSize: {
 				type: String,
-				default: "32rpx"
+				default: "16px"
 			},
 			messageSize: {
 				type: String,
@@ -81,7 +81,7 @@
 			},
 			iconSize: {
 				type: String,
-				default: "90rpx"
+				default: "45px"
 			}
 		},
 		data() {
@@ -125,9 +125,9 @@
 			.icon {
 				.iconStyle {
 					display: inline-block;
-					width: 90rpx;
-					height: 90rpx;
-					border-radius: 12rpx;
+					width: 45px;
+					height: 45px;
+					border-radius: 6px;
 				}
 			}
 			.time{
@@ -136,11 +136,11 @@
 			}
 
 			.info {
-				margin: 6rpx 20rpx;
+				margin: 3px 10px;
 				flex:1;
 
 				.nickname {
-					font-size: 32rpx;
+					font-size: 16px;
 					color: #9b9b9b;
 					display: block;
 				}
@@ -151,19 +151,19 @@
 					top: 0;
 					left: 0;
 					font-size: 16px;
-					margin-top: 6rpx;
-					padding: 20rpx 20rpx;
+					margin-top: 3px;
+					padding: 10px 10px;
 					background-color: #fff;
-					border-radius: 10rpx;
+					border-radius: 5px;
 
 					.angle {
 						position: absolute;
-						left: -23rpx;
-						top: 28rpx;
+						left: -12px;
+						top: 14px;
 						width: 0;
 						height: 0;
-						border: 10rpx solid transparent;
-						border-right: 15rpx solid #fff;
+						border: 5px solid transparent;
+						border-right: 8px solid #fff;
 					}
 				}
 			}
@@ -176,18 +176,18 @@
 			.icon {
 				.iconStyle {
 					display: inline-block;
-					width: 90rpx;
-					height: 90rpx;
-					border-radius: 12rpx;
+					width: 45px;
+					height: 45px;
+					border-radius: 6px;
 				}
 			}
 
 			.info {
-				margin: 6rpx 20rpx;
+				margin: 3px 10px;
 				text-align: right;
 
 				.nickname {
-					font-size: 32rpx;
+					font-size: 16px;
 					color: #9b9b9b;
 					display: block;
 				}
@@ -198,19 +198,19 @@
 					top: 0;
 					right: 0;
 					font-size: 16px;
-					margin-top: 6rpx;
-					padding: 20rpx 20rpx;
+					margin-top: 3px;
+					padding: 10px 10px;
 					background-color: #fff;
-					border-radius: 10rpx;
+					border-radius: 5px;
 
 					.angle {
 						position: absolute;
-						right: -23rpx;
-						top: 28rpx;
+						right: -12px;
+						top: 14px;
 						width: 0;
 						height: 0;
-						border: 10rpx solid transparent;
-						border-left: 15rpx solid #fff;
+						border: 5px solid transparent;
+						border-left: 8px solid #fff;
 					}
 				}
 			}

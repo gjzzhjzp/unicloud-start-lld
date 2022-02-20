@@ -45,7 +45,7 @@
 				    action: 'search/getHotList'
 				  },
 				}).then((res)=>{
-					console.log("getHotList",res);
+					// console.log("getHotList",res);
 					if(res.result&&res.result.rows){
 						res.result.rows.forEach((item)=>{
 							if(item.title){
@@ -63,7 +63,7 @@
 				    action: 'search/getHistoryList'
 				  },
 				}).then((res)=>{
-					console.log("getHistoryList",res);
+					// console.log("getHistoryList",res);
 					if(res.result&&res.result.rows){
 						res.result.rows.forEach((item)=>{
 							if(item.title){

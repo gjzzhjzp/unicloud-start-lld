@@ -151,7 +151,7 @@
 								},
 							},
 							success: ({result}) => {
-								console.log(result);
+								// console.log(result);
 								uni.showToast({
 									title: result.msg,
 									icon: 'none'

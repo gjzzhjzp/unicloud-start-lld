@@ -10,7 +10,7 @@
 				<view class="original" v-if="isoriginal">
 					<image class="original-img" src="@/static/center/ori_back.png"></image>
 				</view>
-				<cloud-image width="150rpx" height="150rpx" v-if="userInfo.avatar_file&&userInfo.avatar_file.url"
+				<cloud-image width="75px" height="75px" v-if="userInfo.avatar_file&&userInfo.avatar_file.url"
 					:src="userInfo.avatar_file.url"></cloud-image>
 				<image v-else class="logo-img" src="@/static/center/nologin.png"></image>
 			</view>
@@ -22,7 +22,7 @@
 		<view class="center-grid">
 			<u-grid :col="5" :border="false">
 				<u-grid-item v-for="(item,index) in topgridList" :key="index" @click="togridDetail(item)">
-					<u-icon :name="item.thumb" :size="46"></u-icon>
+					<u-icon :name="item.thumb" :size="23"></u-icon>
 					<view class="grid-text" style="margin-top: 4px;">{{item.title}}</view>
 				</u-grid-item>
 			</u-grid>
@@ -138,8 +138,8 @@
 					]
 				],
 				listStyles: {
-					"height": "150rpx", // 边框高度
-					"width": "150rpx", // 边框宽度
+					"height": "75px", // 边框高度
+					"width": "75px", // 边框宽度
 					"border": { // 如果为 Boolean 值，可以控制边框显示与否
 						"color": "#eee", // 边框颜色
 						"width": "1px", // 边框宽度
@@ -289,7 +289,7 @@
 			},
 			async checkVersion() {
 				let res = await callCheckVersion()
-				console.log(res);
+				// console.log(res);
 				if (res.result.code > 0) {
 					checkUpdate()
 				} else {
@@ -312,6 +312,9 @@
 	// .userinfo-image.original{
 	// 	background: url("/static/center/ori_back.png");
 	// }
+	.grid-text{
+		font-size: 14px;
+	}
 	.usercenter-top {
 		color: #fff;
 		font-size: 16px;
@@ -328,7 +331,7 @@
 
 	.bottom-back {
 		margin-top: 10px;
-		width: 750rpx;
+		width: 100%;
 		height: 44px;
 		/* #ifndef APP-NVUE */
 		display: flex;
@@ -345,7 +348,7 @@
 	}
 
 	.bottom-back-text {
-		font-size: 33rpx;
+		font-size: 16px;
 	}
 
 	/* #ifndef APP-NVUE */
@@ -368,7 +371,7 @@
 	}
 
 	.userInfo {
-		width: 750rpx;
+		width: 100%;
 		background-image: url(@/static/center/backcenter.jpg);
 		flex-direction: column;
 		align-items: center;
@@ -376,9 +379,9 @@
 	}
 
 	.logo-img {
-		width: 150rpx;
-		height: 150rpx;
-		border-radius: 150rpx;
+		width: 75px;
+		height: 75px;
+		border-radius: 75px;
 	}
 
 	.original {
@@ -386,11 +389,11 @@
 	}
 
 	.original-img {
-		width: 210rpx;
-		height: 210rpx;
+		width: 105px;
+		height: 105px;
 		position: absolute;
-		top: -24rpx;
-		left: -30rpx;
+		top: -12px;
+		left: -15px;
 	}
 
 	.logo-title {
@@ -401,21 +404,21 @@
 	}
 
 	.uer-name {
-		height: 100rpx;
-		line-height: 100rpx;
-		font-size: 32rpx;
+		height: 50px;
+		line-height: 50px;
+		font-size: 16px;
 		color: #FFFFFF;
 	}
 
 	.center-list {
-		margin-bottom: 30rpx;
+		margin-bottom: 15px;
 		background-color: #f9f9f9;
 	}
 
 	.center-list-cell {
-		width: 750rpx;
+		width: 100%;
 		background-color: #7275D3;
-		height: 40rpx;
+		height: 20px;
 	}
 
 	.grid {
@@ -424,7 +427,7 @@
 	}
 
 	.uni-grid .text {
-		font-size: 30rpx;
+		font-size: 15px;
 		height: 25px;
 		line-height: 25px;
 		color: #817f82;
@@ -441,7 +444,7 @@
 	.center-list ::v-deep .uni-list--border:after {
 		-webkit-transform: scaleY(0.2);
 		transform: scaleY(0.2);
-		margin-left: 80rpx;
+		margin-left: 40px;
 	}
 
 	.center-list ::v-deep .uni-list--border-top,
@@ -457,18 +460,18 @@
 
 	.item-footer-text {
 		color: #999;
-		font-size: 24rpx;
+		font-size: 12px;
 		padding-right: 10rpx;
 	}
 
 	.item-footer-badge {
-		width: 20rpx;
-		height: 20rpx;
+		width: 10px;
+		height: 10px;
 		/* #ifndef APP-NVUE */
 		border-radius: 50%;
 		/* #endif */
 		/* #ifdef APP-NVUE */
-		border-radius: 10rpx;
+		border-radius: 5px;
 		/* #endif */
 		background-color: #DD524D;
 	}

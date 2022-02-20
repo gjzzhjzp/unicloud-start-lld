@@ -22,9 +22,6 @@
 			}
 		},
 		watch:{
-			imageValue(){
-				console.log("imageValue",this.imageValue);
-			}
 		},
 		methods:{
 			select(){

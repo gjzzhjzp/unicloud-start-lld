@@ -6,7 +6,7 @@
 			'u-input--error': validateState
 		}"
 		:style="{
-			padding: `0 ${border ? 20 : 0}rpx`,
+			padding: `0 ${border ? 10 : 0}px`,
 			borderColor: borderColor,
 			textAlign: inputAlign
 		}"
@@ -57,15 +57,15 @@
 		/>
 		<view class="u-input__right-icon u-flex">
 			<view class="u-input__right-icon__clear u-input__right-icon__item" @tap="onClear" v-if="clearable && value != '' && focused">
-				<u-icon size="32" name="close-circle-fill" color="#c0c4cc"/>
+				<u-icon size="16" name="close-circle-fill" color="#c0c4cc"/>
 			</view>
 			<view class="u-input__right-icon__clear u-input__right-icon__item" v-if="passwordIcon && type == 'password'">
-				<u-icon size="32" :name="!showPassword ? 'eye' : 'eye-fill'" color="#c0c4cc" @click="showPassword = !showPassword"/>
+				<u-icon size="16" :name="!showPassword ? 'eye' : 'eye-fill'" color="#c0c4cc" @click="showPassword = !showPassword"/>
 			</view>
 			<view class="u-input__right-icon--select u-input__right-icon__item" v-if="type == 'select'" :class="{
 				'u-input__right-icon--select--reverse': selectOpen
 			}">
-				<u-icon name="arrow-down-fill" size="26" color="#c0c4cc"></u-icon>
+				<u-icon name="arrow-down-fill" size="13" color="#c0c4cc"></u-icon>
 			</view>
 		</view>
 	</view>
@@ -218,8 +218,8 @@ export default {
 	data() {
 		return {
 			defaultValue: this.value,
-			inputHeight: 70, // input的高度
-			textareaHeight: 100, // textarea的高度
+			inputHeight: 35, // input的高度
+			textareaHeight: 50, // textarea的高度
 			validateState: false, // 当前input的验证状态，用于错误时，边框是否改为红色
 			focused: false, // 当前是否处于获得焦点的状态
 			showPassword: false, // 是否预览密码
@@ -245,8 +245,8 @@ export default {
 		getStyle() {
 			let style = {};
 			// 如果没有自定义高度，就根据type为input还是textare来分配一个默认的高度
-			style.minHeight = this.height ? this.height + 'rpx' : this.type == 'textarea' ?
-				this.textareaHeight + 'rpx' : this.inputHeight + 'rpx';
+			style.minHeight = this.height ? this.height + 'px' : this.type == 'textarea' ?
+				this.textareaHeight + 'px' : this.inputHeight + 'px';
 			style = Object.assign(style, this.customStyle);
 			return style;
 		},
@@ -345,22 +345,22 @@ export default {
 
 	&__input {
 		//height: $u-form-item-height;
-		font-size: 28rpx;
+		font-size: 14px;
 		color: $u-main-color;
 		flex: 1;
 	}
 
 	&__textarea {
 		width: auto;
-		font-size: 28rpx;
+		font-size: 14px;
 		color: $u-main-color;
-		padding: 10rpx 0;
+		padding: 5px 0;
 		line-height: normal;
 		flex: 1;
 	}
 
 	&--border {
-		border-radius: 6rpx;
+		border-radius: 3px;
 		border-radius: 4px;
 		border: 1px solid $u-form-item-border-color;
 	}
@@ -372,7 +372,7 @@ export default {
 	&__right-icon {
 
 		&__item {
-			margin-left: 10rpx;
+			margin-left: 5px;
 		}
 
 		&--select {

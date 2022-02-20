@@ -48,7 +48,6 @@
 			},
 			dragStart(e) {
 				this.time1=new Date().getTime();
-				console.log("this.time1",this.time1)
 				this.$refs.div.style.transition = 'none';
 			},
 			dragEnd(e) {
@@ -56,7 +55,6 @@
 				if(this.time2-this.time1<200){
 					this.toyouxi();
 				}else{
-					console.log("this.time2",this.time2)
 					this.$refs.div.style.transition = 'all 0.3s';
 					if (this.left > this.clientWidth / 2) {
 						this.left = this.clientWidth - this.itemWidth - this.gapWidth;

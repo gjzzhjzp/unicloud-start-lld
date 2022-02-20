@@ -3,7 +3,7 @@
 		<u-navbar :is-back="isBack">
 			<template>
 				<view v-show="showlogo" style="margin: 10px;">
-					<u-image width="200rpx" height="60rpx" src="/static/head/logo.png" mode="widthFix"></u-image>
+					<u-image width="100px" height="30px" src="/static/head/logo.png" mode="widthFix"></u-image>
 				</view>
 				<view class="sy-u-search">
 					<slot></slot>
@@ -13,7 +13,7 @@
 				</view> -->
 				<view style="margin: 10px;" @click="$notMoreTap(tousercenter,'notTap')"
 					:class="[isnewinfo?'isnewinfo':'']">
-					<u-image width="50rpx" height="50rpx" src="/static/newpage/notice.png"></u-image>
+					<u-image width="25px" height="25px" src="/static/newpage/notice.png"></u-image>
 				</view>
 			</template>
 		</u-navbar>
@@ -70,7 +70,7 @@
 					})
 				}
 				var res = await db.collection('jz-custom-systeminfo').where(_obj).field("comment").get();
-				console.log("消息",res);
+				
 				if (res.result.data && res.result.data.length > 0) {
 					this.$set(this,"isnewinfo",true);
 				}else{

@@ -14,7 +14,7 @@
 					    class="u-title u-line-1"
 					    :style="{
 							color: titleColor,
-							fontSize: titleSize + 'rpx',
+							fontSize: titleSize + 'px',
 							fontWeight: titleBold ? 'bold' : 'normal'
 						}">
 						{{ title }}
@@ -85,7 +85,7 @@
 			// 左边返回图标的大小，rpx
 			backIconSize: {
 				type: [String, Number],
-				default: '44'
+				default: '22'
 			},
 			// 返回的文字提示
 			backText: {
@@ -124,7 +124,7 @@
 			// 标题的字体大小
 			titleSize: {
 				type: [String, Number],
-				default: 32
+				default: 16
 			},
 			isBack: {
 				type: [Boolean, String],

@@ -50,7 +50,7 @@
 			 * 完成并提交
 			 */
 			submit() {
-				console.log(this.formData);
+				// console.log(this.formData);
 				uniCloud.callFunction({
 					name:'uni-id-cf',
 					data:{
@@ -61,7 +61,7 @@
 						},
 					},
 					success: ({result}) => {
-						console.log(result);
+						// console.log(result);
 						this.setUserInfo({"mobile":result.mobile})
 						uni.showToast({
 							title: result.msg,

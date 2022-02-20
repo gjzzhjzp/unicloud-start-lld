@@ -32,17 +32,17 @@
 					<text class="u-line-1">{{item.text}}</text>
 				</view>
 			</view>
-			<view v-if="midButton" class="u-tabbar__content__circle__border" :class="{
+			<!-- <view v-if="midButton" class="u-tabbar__content__circle__border" :class="{
 				'u-border': borderTop,
 			}" :style="{
 				backgroundColor: bgColor,
 				left: midButtonLeft
 			}">
-			</view>
+			</view> -->
 		</view>
 		<!-- 这里加上一个48rpx的高度,是为了增高有凸起按钮时的防塌陷高度(也即按钮凸出来部分的高度) -->
 		<view class="u-fixed-placeholder safe-area-inset-bottom" :style="{
-				height: `calc(${$u.addUnit(height)} + ${midButton ? 48 : 0}rpx)`,
+				height: `calc(${$u.addUnit(height)} + ${midButton ? 24 : 0}px)`,
 			}"></view>
 	</view>
 </template>
@@ -68,17 +68,17 @@
 			// tabbar的高度，默认50px，单位任意，如果为数值，则为rpx单位
 			height: {
 				type: [String, Number],
-				default: '50px'
+				default: '60px'
 			},
 			// 非凸起图标的大小，单位任意，数值默认rpx
 			iconSize: {
 				type: [String, Number],
-				default: 40
+				default: 20
 			},
 			// 凸起的图标的大小，单位任意，数值默认rpx
 			midButtonSize: {
 				type: [String, Number],
-				default: 90
+				default: "45px"
 			},
 			// 激活时的演示，包括字体图标，提示文字等的演示
 			activeColor: {
@@ -289,10 +289,10 @@
 
 				&__text {
 					color: $u-content-color;
-					font-size: 26rpx;
-					line-height: 28rpx;
+					font-size: 13px;
+					line-height: 14px;
 					position: absolute;
-					bottom: 14rpx;
+					bottom: 7px;
 					left: 50%;
 					transform: translateX(-50%);
 					width: 100%;
@@ -311,15 +311,15 @@
 				/* #endif */
 
 				&__button {
-					width: 90rpx;
-					height: 90rpx;
+					width: 45px;
+					height: 45px;
 					border-radius: 100%;
 					@include vue-flex;
 					justify-content: center;
 					align-items: center;
 					position: absolute;
 					background-color: #ffffff;
-					top: -40rpx;
+					top: -20px;
 					left: 50%;
 					z-index: 6;
 					transform: translateX(-50%);

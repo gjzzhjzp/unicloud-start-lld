@@ -63,8 +63,8 @@
 	}
 
 	.u-cell-title {
-		padding: 30rpx 32rpx 10rpx 32rpx;
-		font-size: 30rpx;
+		padding: 15px 16px 5px 16px;
+		font-size: 15px;
 		text-align: left;
 		color: $u-tips-color;
 	}

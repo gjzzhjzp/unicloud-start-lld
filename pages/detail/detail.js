@@ -17,7 +17,7 @@ export default {
 		})
 	},
 	mounted() {
-		console.log("this.data", this.data);
+		// console.log("this.data", this.data);
 		// this.checkisLike();
 	},
 	watch: {
@@ -113,7 +113,7 @@ export default {
 						this.$set(this,"islike",false);
 						this.$set(this.data, "like_count", --this.data.like_count);
 					} else {
-						console.log("res", res.msg);
+						// console.log("res", res.msg);
 					}
 					reslove();
 				}).catch((err) => {

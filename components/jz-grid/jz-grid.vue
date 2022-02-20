@@ -5,7 +5,7 @@
 				<u-grid :col="5" :border="false">
 					<u-grid-item v-for="(item,index) in one_list" :key="index"
 						@click="$notMoreTap(tomore,'notTap',item)">
-						<u-image width="100rpx" height="100rpx" loading-icon="/static/center/nologin.png"
+						<u-image width="50px" height="50px" loading-icon="/static/center/nologin.png"
 							error-icon="/static/center/nologin.png" :src="imageUrl(item)"></u-image>
 						<view class="grid-text">{{item.name}}</view>
 					</u-grid-item>
@@ -15,7 +15,7 @@
 				<u-grid :col="5" :border="false">
 					<u-grid-item v-for="(item,index) in two_list" :key="index"
 						@click="$notMoreTap(tomore,'notTap',item)">
-						<u-image width="100rpx" height="100rpx" loading-icon="/static/center/nologin.png"
+						<u-image width="50px" height="50px" loading-icon="/static/center/nologin.png"
 							error-icon="/static/center/nologin.png" :src="imageUrl(item)"></u-image>
 						<view class="grid-text">{{item.name}}</view>
 					</u-grid-item>
@@ -77,11 +77,10 @@
 						startWith: "flbm=='400000'" ////分类顶级编码
 					}
 				});
-				console.log("categories", categories);
 				if (categories.result && categories.result.data.length > 0) {
 					// debugger;
 					this.gridList = categories.result.data[0].children;
-					console.log("this.gridList",this.gridList);
+					
 					this.one_list=this.gridList.slice(0,5);
 					this.two_list=this.gridList.slice(5);
 				}
@@ -92,6 +91,8 @@
 <style lang="scss">
 	.grid-text {
 		color: $u-type-primary;
+		margin-top: 4px;
+		font-size: 14px;
 	}
 	.jz-grid {
 		padding: 0px 4px;
@@ -104,7 +105,7 @@
 	// 	}
 
 	.swiper {
-		height: 180rpx;
+		height: 90px;
 	}
 
 	.indicator-dots {

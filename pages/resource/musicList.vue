@@ -8,24 +8,24 @@
 			</view>
 			<view class="music-list-right">
 				<view class="music-list-right-icon" @click="to_operate(item2,'like',index2)">
-					<u-image v-show="!item2.selected" width="60rpx" height="60rpx" src="/static/music/like.png">
+					<u-image v-show="!item2.selected" width="30px" height="30px" src="/static/music/like.png">
 					</u-image>
-					<u-image v-show="item2.selected" width="60rpx" height="60rpx" src="/static/music/like_sed.png">
+					<u-image v-show="item2.selected" width="30px" height="30px" src="/static/music/like_sed.png">
 					</u-image>
 				</view>
 				<view v-show="showMusicxz" class="music-list-right-icon" @click="to_operate(item2,'download',index2)">
 					<!-- item2:{{item2.resources[0]}} -->
 					<!-- <a :download='item2.title' :href="item2.resources?item2.resources[0].url:''"> -->
 					<u-image @click="downloadfile(item2)" v-show="!item2.download"
-						width="60rpx" height="60rpx" src="/static/music/download.png">
+						width="30px" height="30px" src="/static/music/download.png">
 					</u-image>
 					<!-- </a> -->
-					<u-image v-show="item2.download" width="60rpx" height="60rpx" src="/static/music/download_sed.png">
+					<u-image v-show="item2.download" width="30px" height="30px" src="/static/music/download_sed.png">
 					</u-image>
 				</view>
 				<view class="music-list-right-icon" @click="to_operate(item2,'play',index2)">
-					<u-image v-show="!item2.play" width="60rpx" height="60rpx" src="/static/music/play.png"></u-image>
-					<u-image v-show="item2.play" width="60rpx" height="60rpx" src="/static/music/play_sed.png">
+					<u-image v-show="!item2.play" width="30px" height="30px" src="/static/music/play.png"></u-image>
+					<u-image v-show="item2.play" width="30px" height="30px" src="/static/music/play_sed.png">
 					</u-image>
 				</view>
 			</view>
@@ -87,7 +87,7 @@
 		computed: {
 			curdata() {
 				var data = this.list[this.now];
-				console.log("data", data);
+				// console.log("data", data);
 				var avatarurl = "";
 				if (data) {
 					if (Array.isArray(data.avatar)) {
@@ -136,7 +136,7 @@
 				if (this.allLove.length == 0) {
 					this.getAllLove().then(() => {
 						this.initList();
-						console.log("this.list", this.list);
+						// console.log("this.list", this.list);
 					});
 				} else {
 
@@ -144,7 +144,7 @@
 			}
 		},
 		mounted() {
-			console.log("this.list", this.list);
+			// console.log("this.list", this.list);
 		},
 		methods: {
 			downloadfile(item2) {
@@ -207,7 +207,7 @@
 				}
 			},
 			loadmoreList() {
-				console.log("-------------------------")
+				// console.log("-------------------------")
 				this.$emit("loadmore");
 			},
 			pause(index) {
@@ -434,8 +434,6 @@
 						rows.forEach((item) => {
 							this.allLove.push(item.article_id);
 						})
-						// this.allLove=rows;
-						console.log("rows111", this.allLove);
 					} else {
 						// uni.navigateTo({
 						// 	url: "/pages/ucenter/login-page/index/index"

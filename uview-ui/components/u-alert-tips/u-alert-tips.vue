@@ -21,11 +21,11 @@
 		<view class="u-icon-wrap">
 			<u-icon @click="close" v-if="closeAble && !closeText" hoverClass="u-type-error-hover-color" name="close" color="#c0c4cc"
 			 :size="22" class="u-close-icon" :style="{
-				top: description ? '18rpx' : '24rpx'
+				top: description ? '9px' : '12px'
 			}"></u-icon>
 		</view>
 		<text v-if="closeAble && closeText" class="u-close-text" :style="{
-			top: description ? '18rpx' : '24rpx'
+			top: description ? '9px' : '12px'
 		}">{{closeText}}</text>
 	</view>
 </template>
@@ -168,8 +168,8 @@
 	.u-alert-tips {
 		@include vue-flex;
 		align-items: center;
-		padding: 16rpx 30rpx;
-		border-radius: 8rpx;
+		padding: 8px 15px;
+		border-radius: 4px;
 		position: relative;
 		transition: all 0.3s linear;
 		border: 1px solid #fff;
@@ -225,20 +225,20 @@
 	}
 
 	.u-alert-title {
-		font-size: 28rpx;
+		font-size: 14px;
 		color: $u-main-color;
 	}
 
 	.u-alert-desc {
-		font-size: 26rpx;
+		font-size: 13px;
 		text-align: left;
 		color: $u-content-color;
 	}
 
 	.u-close-icon {
 		position: absolute;
-		top: 20rpx;
-		right: 20rpx;
+		top: 10px;
+		right: 10px;
 	}
 
 	.u-close-hover {
@@ -246,11 +246,11 @@
 	}
 	
 	.u-close-text {
-		font-size: 24rpx;
+		font-size: 12px;
 		color: $u-tips-color;
 		position: absolute;
-		top: 20rpx;
-		right: 20rpx;
+		top: 10px;
+		right: 10px;
 		line-height: 1;
 	}
 </style>

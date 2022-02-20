@@ -63,12 +63,12 @@
 			// 图标的大小
 			iconSize: {
 				type: [String, Number],
-				default: 120
+				default: 60
 			},
 			// 文字大小，单位rpx
 			fontSize: {
 				type: [String, Number],
-				default: 26
+				default: 13
 			},
 			// 选择预置的图标类型
 			mode: {
@@ -78,7 +78,7 @@
 			//  图标宽度，单位rpx
 			imgWidth: {
 				type: [String, Number],
-				default: 120
+				default: 60
 			},
 			// 图标高度，单位rpx
 			imgHeight: {

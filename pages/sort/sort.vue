@@ -96,7 +96,7 @@
 				if(categories.result&&categories.result.data.length>0){
 					this.sortList=categories.result.data[0].children;
 				}
-				console.log("sortList",this.sortList);
+				// console.log("sortList",this.sortList);
 			},
 			// 点击左边的栏目切换
 			async swichMenu(index) {
@@ -242,18 +242,18 @@
 	}
 
 	.u-tab-view {
-		width: 200rpx;
+		width: 100px;
 		height: 100%;
 	}
 
 	.u-tab-item {
-		height: 110rpx;
+		height: 55px;
 		background: #f6f6f6;
 		box-sizing: border-box;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		font-size: 26rpx;
+		font-size: 13px;
 		color: #444;
 		font-weight: 400;
 		line-height: 1;
@@ -262,7 +262,7 @@
 	.u-tab-item-active {
 		position: relative;
 		color: #000;
-		font-size: 30rpx;
+		font-size: 15px;
 		font-weight: 600;
 		background: #fff;
 	}
@@ -300,14 +300,14 @@
 	}
 
 	.item-title {
-		font-size: 26rpx;
+		font-size: 13px;
 		color: $u-main-color;
 		font-weight: bold;
 	}
 
 	.item-menu-name {
 		font-weight: normal;
-		font-size: 24rpx;
+		font-size: 12px;
 		color: $u-main-color;
 		margin-top: 6px;
 	}
@@ -323,8 +323,8 @@
 		align-items: center;
 		justify-content: center;
 		flex-direction: column;
-		margin-top: 20rpx;
-		padding: 10rpx;
+		margin-top: 10px;
+		padding: 5px;
 	}
 
 	.item-menu-image {

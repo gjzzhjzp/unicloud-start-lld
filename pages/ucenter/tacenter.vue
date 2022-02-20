@@ -149,7 +149,7 @@
 					buser_id: this.curuserinfo._id,
 					user_id: userInfo._id
 				}).get();
-				console.log("resgz", resgz);
+				// console.log("resgz", resgz);
 				if (resgz && resgz.result.data && resgz.result.data.length > 0) {
 					this.isguanzhu = true;
 				} else {

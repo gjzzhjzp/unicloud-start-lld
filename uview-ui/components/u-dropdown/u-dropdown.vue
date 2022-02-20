@@ -82,7 +82,7 @@
 			// 标题菜单的高度，单位任意，数值默认为rpx单位
 			height: {
 				type: [Number, String],
-				default: 80
+				default: 40
 			},
 			// 是否显示下边框
 			borderBottom: {
@@ -92,7 +92,7 @@
 			// 标题的字体大小
 			titleSize: {
 				type: [Number, String],
-				default: 28
+				default: 14
 			},
 			// 下拉出来的内容部分的圆角值
 			borderRadius: {
@@ -107,7 +107,7 @@
 			// 菜单右侧图标的大小
 			menuIconSize: {
 				type: [Number, String],
-				default: 26
+				default: 13
 			}
 		},
 		data() {
@@ -242,7 +242,7 @@
 			@include vue-flex;
 			position: relative;
 			z-index: 11;
-			height: 80rpx;
+			height: 40px;
 
 			&__item {
 				flex: 1;
@@ -251,7 +251,7 @@
 				align-items: center;
 
 				&__text {
-					font-size: 28rpx;
+					font-size: 14px;
 					color: $u-content-color;
 				}
 

@@ -209,7 +209,7 @@
 					} else {
 						reslove(false);
 					}
-					console.log("result", result);
+					// console.log("result", result);
 				});
 
 			},
@@ -238,7 +238,7 @@
 			},
 			/* 前往注册 */
 			toRegister(e) {
-				console.log(e);
+				// console.log(e);
 				uni.navigateTo({
 					url: '/pages/ucenter/login-page/register/register'
 				})

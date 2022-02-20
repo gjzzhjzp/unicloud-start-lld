@@ -84,7 +84,7 @@ export default{
 					if (labels) {
 						that.labels = labels.split("，");
 					}
-					console.log("that.detaildata",that.labels,that.detaildata);
+					
 					var srcurl="";
 					if(that.detaildata.resources&&that.detaildata.resources.length>0){
 						srcurl=that.detaildata.resources[0].url;
@@ -103,7 +103,6 @@ export default{
 						download: false
 					}];
 					this.videoList=videoList;
-					console.log("videoList",videoList);
 					that.tohistory();
 					uni.hideLoading()
 				} else {

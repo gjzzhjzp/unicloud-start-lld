@@ -228,9 +228,6 @@
 				if (old || this.autoplay) {
 					this.play()
 				}
-			},
-			data() {
-				console.log("data111111111111", this.data);
 			}
 		}
 	}
@@ -258,8 +255,8 @@
 
 	.audio-number {
 		display: none;
-		width: 120upx;
-		font-size: 24upx;
+		width: 60px;
+		font-size: 12px;
 		line-height: 1;
 		color: #333;
 		text-align: center;
@@ -284,7 +281,7 @@
 	}
 
 	.audio-control {
-		font-size: 32upx;
+		font-size: 16px;
 		line-height: 1;
 	}
 
@@ -293,30 +290,30 @@
 	}
 
 	.audio-control-switch {
-		font-size: 40upx;
+		font-size: 20px;
 		/* margin: 0 80upx; */
 	}
 
 	.audio-control-switch1 {
-		font-size: 40upx;
+		font-size: 20px;
 		margin-right: 80upx;
-		/* margin: 0 50upx; */
+		/* margin: 0 25px; */
 	}
 
 	.audio-control-switch2 {
-		font-size: 40upx;
+		font-size: 20px;
 		margin-left: 80upx;
-		/* margin: 0 50upx; */
+		/* margin: 0 25px; */
 	}
 
 	.audio-icon {
-		width: 50upx;
-		height: 50upx;
+		width: 25px;
+		height: 25px;
 	}
 
 	.audio-icon1 {
-		width: 85upx;
-		height: 85upx;
+		width: 42px;
+		height: 42px;
 	}
 
 	.audioLoading {
@@ -333,15 +330,15 @@
 
 	.geciposition {
 		/* #ifdef APP-PLUS */
-		margin-top: 78upx;
+		margin-top: 40px;
 		/* #endif */
 		width: 85%;
-		height: 950upx;
+		height: 925px;
 		position: fixed;
 		background-color: rgba(0, 0, 0, 0.5);
-		font-size: 35upx;
+		font-size: 18px;
 		color: #fff;
-		top: 70upx;
+		top: 35px;
 	}
 
 	.whole {

@@ -10,7 +10,7 @@
 								<view class="original" v-if="item.user_id&&item.user_id[0].original">
 									<image class="original-img" src="@/static/center/ori_back.png"></image>
 								</view>
-								<u-avatar :size="80"
+								<u-avatar :size="40"
 									:src="(item.user_id&&item.user_id[0].avatar_file)?item.user_id[0].avatar_file.url:''">
 								</u-avatar>
 								<view class="original-title">
@@ -168,30 +168,29 @@
 	}
 	
 	.original-img {
-		width: 110rpx;
-		height: 110rpx;
+		width: 55px;
+		height: 55px;
 		position: absolute;
-		top: -50rpx;
-		left: -16rpx;
+		top: -25px;
+		left: -8px;
 	}
 	
 	.er-item-list-warter {
 		border-radius: 8px;
-		/* padding: 10rpx 20rpx; */
 		position: relative;
 		width: 100%;
 	}
 	
 	.er-item-list-warter2 {
-		padding: 20rpx;
+		padding: 10px;
 		background-color: #fff;
 		border-radius: 8px;
 	}
 	
 	.u-close {
 		position: absolute;
-		top: 32rpx;
-		right: 32rpx;
+		top: 16px;
+		right: 16px;
 	}
 	
 	.er-item-list-image {
@@ -200,7 +199,7 @@
 	}
 	
 	.er-item-list-title {
-		font-size: 36rpx;
+		font-size: 18px;
 		font-weight: 600;
 		margin-top: 5px;
 		color: $u-main-color;
@@ -220,9 +219,9 @@
 		color: #FFFFFF;
 		display: flex;
 		align-items: center;
-		padding: 4rpx 14rpx;
-		border-radius: 50rpx;
-		font-size: 20rpx;
+		padding: 2px 7px;
+		border-radius: 25px;
+		font-size: 10px;
 		line-height: 1;
 	}
 	
@@ -230,17 +229,17 @@
 		border: 1px solid $u-type-primary;
 		color: $u-type-primary;
 		margin-left: 10px;
-		border-radius: 50rpx;
+		border-radius: 25px;
 		line-height: 1;
-		padding: 4rpx 14rpx;
+		padding: 2px 7px;
 		display: flex;
 		align-items: center;
-		border-radius: 50rpx;
-		font-size: 20rpx;
+		border-radius: 25px;
+		font-size: 10px;
 	}
 	
 	.er-item-list-author {
-		font-size: 22rpx;
+		font-size: 12px;
 		color: $u-tips-color;
 		margin-top: 5px;
 		display: flex;

@@ -223,7 +223,7 @@
 					} else {
 						reslove(false);
 					}
-					console.log("result", result);
+					// console.log("result", result);
 				});
 
 			},
@@ -233,7 +233,7 @@
 					mui.fire(pscreen, 'quit', {
 						data: "quit"
 					});
-					console.log("在这里退出App");
+					// console.log("在这里退出App");
 					// #ifdef APP-PLUS  
 					plus.runtime.quit();
 					// #endif
@@ -351,7 +351,7 @@
 	}
 
 	.auth-box .link {
-		font-size: 26rpx;
+		font-size: 14px;
 	}
 
 	.login-text-sub {

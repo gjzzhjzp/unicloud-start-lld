@@ -178,7 +178,6 @@
 						article_status: 1
 					});
 				}
-				console.log("value", value);
 				// 使用 clientDB 提交数据
 				return db.collection(dbCollectionName).add(value).then((res) => {
 					uni.showToast({

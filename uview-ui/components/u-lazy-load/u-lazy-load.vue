@@ -92,7 +92,7 @@
 			// 图片高度，单位rpx
 			height: {
 				type: [Number, String],
-				default: '450'
+				default: '220px'
 			}
 		},
 		data() {

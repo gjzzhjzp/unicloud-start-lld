@@ -40,7 +40,7 @@
 				type: Object,
 				default() {
 					return {
-						padding: '30rpx 0'
+						padding: '15px 0'
 					}
 				}
 			}

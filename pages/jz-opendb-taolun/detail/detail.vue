@@ -74,7 +74,6 @@
 						for (var key in res.rows[0]) {
 							that.$set(that.detaildata, key, res.rows[0][key]);
 						}
-						console.log("that.detaildata", that.detaildata);
 						if(that.detaildata.resources&&that.detaildata.resources.length>0){
 							var list=[];
 							that.detaildata.resources.forEach((item)=>{

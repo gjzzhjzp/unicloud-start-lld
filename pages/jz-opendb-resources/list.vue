@@ -13,9 +13,9 @@
 				<u-swipe-action :show="item.show" :index="index" v-for="(item, index) in data" :key="item._id"
 					@click="click" @open="open" :options="options">
 					<view class="item u-border-bottom" @click="$notMoreTap(todetail,'notTap',item)">
-						<u-icon size="40" color="#18b566" v-if="item.article_status==1" name="checkmark"></u-icon>
+						<u-icon size="20" color="#18b566" v-if="item.article_status==1" name="checkmark"></u-icon>
 						
-						<u-icon size="40" v-else name="/static/lock.png"></u-icon>
+						<u-icon size="20" v-else name="/static/lock.png"></u-icon>
 						<image mode="aspectFill" :src="item.images" />
 						<view class="title-wrap">
 							<text class="title u-line-2">{{ item.title }}</text>
@@ -25,9 +25,9 @@
 			</view>
 			<uni-load-more :status="loading?'loading':(hasMore ? 'more' : 'noMore')"></uni-load-more>
 		</unicloud-db>
-			<template v-if="openAdd">
+			<!-- <template v-if="openAdd">
 		<uni-fab ref="fab" horizontal="right" vertical="bottom" :pop-menu="false" @fabClick="$notMoreTap(fabClick,'notTap')" />
-		</template>
+		</template> -->
 		<u-back-top :scroll-top="scrollTop" top="1000" mode="square" icon="arrow-up" tips="顶部"></u-back-top>
 		<u-toast ref="uToast" />
 	</view>
@@ -203,22 +203,22 @@
 	}
 	.item {
 		display: flex;
-		padding: 20rpx;
+		padding: 10px;
 	}
 
 	image {
-		width: 120rpx;
-		flex: 0 0 120rpx;
-		height: 120rpx;
-		margin-right: 20rpx;
-		border-radius: 12rpx;
+		width: 60px;
+		flex: 0 0 60px;
+		height: 60px;
+		margin-right: 10px;
+		border-radius: 6px;
 	}
 
 	.title {
 		text-align: left;
-		font-size: 28rpx;
+		font-size: 14px;
 		color: $u-content-color;
-		margin-top: 20rpx;
+		margin-top: 10px;
 	}
 	.u-icon{
 		margin: 0 6px;

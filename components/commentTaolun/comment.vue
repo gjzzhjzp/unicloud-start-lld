@@ -3,7 +3,7 @@
 		<view class="comment-container-top">
 			<view>{{topleft}}</view>
 			<view class="comment-container-lb" @click.stop="toggleType()">
-				<u-icon size="40" name="/static/comment/liebiao.png"></u-icon>
+				<u-icon size="20" name="/static/comment/liebiao.png"></u-icon>
 				{{topright}}
 			</view>
 		</view>
@@ -41,21 +41,21 @@
 							<view class="bottom-right">
 								<view class="itemb">
 									<view class="like" :class="{ highlight: res.isLike }" @click.stop="getLike(index)">
-										<u-icon v-if="!res.isLike" name="/static/comment/like.png" :size="40"
+										<u-icon v-if="!res.isLike" name="/static/comment/like.png" :size="20"
 											color="#A0A0A0">
 										</u-icon>
-										<u-icon v-if="res.isLike" name="thumb-up-fill" :size="40"
+										<u-icon v-if="res.isLike" name="thumb-up-fill" :size="20"
 											color="rgb(114, 117, 211)"></u-icon>
 										<view class="num" v-show="res.like_count>0">{{ res.like_count }}</view>
 									</view>
-									<!-- <u-icon size="40" name="/static/comment/like.png"></u-icon> -->
+									<!-- <u-icon size="20" name="/static/comment/like.png"></u-icon> -->
 								</view>
 								<view class="itemb" @click.stop="replycomment(res)">
-									<u-icon size="40" name="/static/comment/reply.png">
+									<u-icon size="20" name="/static/comment/reply.png">
 									</u-icon>
 								</view>
 								<view class="itemb" @click.stop="openmore(res)">
-									<u-icon size="40" name="/static/comment/more.png"></u-icon>
+									<u-icon size="20" name="/static/comment/more.png"></u-icon>
 								</view>
 							</view>
 						</view>
@@ -74,7 +74,7 @@
 		<u-popup v-model="openpl" mode="bottom" border-radius="10" height="50px" :mask="false">
 			<view class="comment-container2" v-show="showsendpl">
 				<view class="comment-input1">
-					<u-input v-model="inputvalue" height="60" type="text" :border="true" :placeholder="placeholder" />
+					<u-input v-model="inputvalue" height="30" type="text" :border="true" :placeholder="placeholder" />
 				</view>
 				<text class="comment-input-button" @click.stop="sendComment()">
 					发送
@@ -487,7 +487,6 @@
 					}
 					res_comment = res_comment.concat(comments.result.data)
 				}
-				console.log("dbcomments",comments);
 				if (res_comment.length > 0) {
 					// 获取当前登录用户点赞的评论列表
 					// var like_pl = [];
@@ -635,7 +634,7 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
-		padding: 20rpx 20rpx;
+		padding: 10px;
 	}
 
 	.comment-container-lb {
@@ -649,11 +648,11 @@
 
 	/* #ifdef H5 */
 	.slot-gonggao_content>uni-scroll-view {
-		max-height: calc(100vh - 300rpx);
+		max-height: calc(100vh - 150px);
 	}
 
 	.slot-gonggao_content.nosendpl>uni-scroll-view {
-		max-height: calc(100vh - 300rpx);
+		max-height: calc(100vh - 150px);
 	}
 
 	/* #endif */
@@ -662,7 +661,7 @@
 		flex-direction: row;
 
 		.itemb {
-			margin: 0 10rpx;
+			margin: 0 5px;
 
 			.like {
 				display: flex;
@@ -672,8 +671,8 @@
 	}
 
 	.comment-input-button {
-		line-height: 72rpx;
-		margin: 0 16rpx;
+		line-height: 36px;
+		margin: 0 8px;
 		color: #909399;
 	}
 
@@ -692,21 +691,21 @@
 	.comment {
 		display: flex;
 		flex-direction: row;
-		padding: 30rpx;
+		padding: 15px;
 
 		.left {}
 
 		.right {
 			flex: 1;
-			padding-left: 20rpx;
-			font-size: 30rpx;
+			padding-left: 10px;
+			font-size: 15px;
 
 			.top {
 				display: flex;
 				flex-direction: row;
 				justify-content: space-between;
 				align-items: center;
-				margin-bottom: 10rpx;
+				margin-bottom: 5px;
 
 				.name {
 					color: #9A9A9A;
@@ -717,10 +716,10 @@
 					flex-direction: row;
 					align-items: center;
 					color: #9a9a9a;
-					font-size: 26rpx;
+					font-size: 13px;
 
 					.num {
-						margin-right: 4rpx;
+						margin-right: 2px;
 						color: #9a9a9a;
 					}
 				}
@@ -735,18 +734,18 @@
 			}
 
 			.content {
-				margin-bottom: 10rpx;
+				margin-bottom: 5px;
 			}
 
 			.reply-box {
 				background-color: rgb(242, 242, 242);
-				border-radius: 12rpx;
+				border-radius: 6px;
 
 				.item {
 					display: flex;
 					flex-direction: row;
-					padding: 20rpx;
-					border-bottom: solid 2rpx $u-border-color;
+					padding: 10px;
+					border-bottom: solid 1px $u-border-color;
 					flex-flow: wrap;
 
 					.username {
@@ -755,29 +754,29 @@
 				}
 
 				.all-reply {
-					padding: 20rpx;
+					padding: 10px;
 					display: flex;
 					flex-direction: row;
 					color: #5677fc;
 					align-items: center;
 
 					.more {
-						margin-left: 6rpx;
+						margin-left: 3px;
 					}
 				}
 			}
 
 			.bottom {
-				margin-top: 20rpx;
+				margin-top: 10px;
 				display: flex;
 				flex-direction: row;
-				font-size: 28rpx;
+				font-size: 14px;
 				color: #9a9a9a;
 				justify-content: space-between;
 
 				.reply {
 					color: #5677fc;
-					margin-left: 10rpx;
+					margin-left: 5px;
 				}
 			}
 		}

@@ -103,7 +103,6 @@ this.$refs.cascader.hide()
 				this.$refs.cascader.show()
 			},
 			cascaderConfirem(e) {
-				console.log(e)
 				this.form['category_ids'] = e.select_ids;
 				this.category_name = e.select_names;
 			}

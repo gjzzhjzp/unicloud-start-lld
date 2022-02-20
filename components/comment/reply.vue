@@ -2,14 +2,14 @@
 	<view class="wrap reply_wrap">
 		<view class="reply_head">
 			<view class="reply_head1">
-				<u-icon name="reload" :size="40" @click="reload()">
+				<u-icon name="reload" :size="20" @click="reload()">
 				</u-icon>
 			</view>
 			<view class="reply_head2">
 				共 {{commentList.length}} 条回复
 			</view>
 			<view class="reply_head3">
-				<u-icon name="close" :size="40" @click="close()">
+				<u-icon name="close" :size="20" @click="close()">
 				</u-icon>
 			</view>
 		</view>
@@ -28,34 +28,34 @@
 				</view>
 			</view>
 			<view class="flex1">
-				<view class="date" style="margin-left: 70rpx;">
+				<view class="date" style="margin-left: 35px;">
 					<uni-dateformat :threshold="[]" :date="res.comment_date" format="'yyyy-MM-dd hh:mm:ss">
 					</uni-dateformat>
 				</view>
 				<view class="bottom-right">
 					<view class="itemb">
 						<view class="like" :class="{ highlight: res.isLike }">
-							<u-icon v-if="!res.isLike" name="/static/comment/like.png" :size="40" @click="getLike()">
+							<u-icon v-if="!res.isLike" name="/static/comment/like.png" :size="20" @click="getLike()">
 							</u-icon>
-							<u-icon v-if="res.isLike" name="thumb-up-fill" color="rgb(114, 117, 211)" :size="40"
+							<u-icon v-if="res.isLike" name="thumb-up-fill" color="rgb(114, 117, 211)" :size="20"
 								@click="getLike()"></u-icon>
 							<view class="num" v-show="res.like_count>0">{{ res.like_count }}</view>
 						</view>
 					</view>
 					<view class="itemb" @click="replycomment(res)">
-						<u-icon size="40" name="/static/comment/reply.png"></u-icon>
+						<u-icon size="20" name="/static/comment/reply.png"></u-icon>
 					</view>
 					<!-- <view class="itemb" @click="openmore(res)">
-						<u-icon size="40" name="/static/comment/more.png"></u-icon>
+						<u-icon size="20" name="/static/comment/more.png"></u-icon>
 					</view> -->
 				</view>
 			</view>
 		</view>
 		<u-gap height="10" bg-color="#E9E9E9"></u-gap>
-		<!-- <view style="display:flex;justify-content: space-between;padding: 20rpx 20rpx;">
+		<!-- <view style="display:flex;justify-content: space-between;padding: 10px 10px;">
 			<view>{{topleft}}</view>
 			<view style="display:flex;" @click="toggleType()">
-				<u-icon size="40" name="/static/comment/liebiao.png"></u-icon>
+				<u-icon size="20" name="/static/comment/liebiao.png"></u-icon>
 				{{topright}}
 			</view>
 		</view> -->
@@ -86,7 +86,7 @@
 						<view class="text">{{ item.reply_comment_id[0].comment_content }}</view>
 					</view> -->
 							<view class="flex2">
-								<view class="date" style="margin-left: 70rpx;">
+								<view class="date" style="margin-left: 35px;">
 									<uni-dateformat :threshold="[]" :date="item.comment_date"
 										format="'yyyy-MM-dd hh:mm:ss">
 									</uni-dateformat>
@@ -94,20 +94,20 @@
 								<view class="bottom-right">
 									<view class="itemb">
 										<view class="like" :class="{ highlight: item.isLike }">
-											<u-icon v-if="!item.isLike" name="/static/comment/like.png" :size="40"
+											<u-icon v-if="!item.isLike" name="/static/comment/like.png" :size="20"
 												@click="getLike(index)">
 											</u-icon>
 											<u-icon v-if="item.isLike" name="thumb-up-fill" color="rgb(114, 117, 211)"
-												:size="40" @click="getLike(index)">
+												:size="20" @click="getLike(index)">
 											</u-icon>
 											<view class="num" v-show="item.like_count>0">{{ item.like_count }}</view>
 										</view>
 									</view>
 									<view class="itemb" @click="replycomment(item)">
-										<u-icon size="40" name="/static/comment/reply.png"></u-icon>
+										<u-icon size="20" name="/static/comment/reply.png"></u-icon>
 									</view>
 									<view class="itemb" @click="openmore(item)">
-										<u-icon size="40" name="/static/comment/more.png"></u-icon>
+										<u-icon size="20" name="/static/comment/more.png"></u-icon>
 									</view>
 								</view>
 							</view>
@@ -119,7 +119,7 @@
 		</view>
 		<view class="comment-container2" v-if="showsendpl">
 			<view class="comment-input1">
-				<u-input v-model="inputvalue" height="60" type="text" :border="true" :placeholder="placeholder" />
+				<u-input v-model="inputvalue" height="30" type="text" :border="true" :placeholder="placeholder" />
 			</view>
 			<text class="comment-input-button" @click="sendComment()">
 				发送
@@ -209,7 +209,6 @@
 			});
 			// this.commentList = this.res.children;
 			this.comment = this.res;
-			console.log("this.commentList", this.commentList);
 		},
 		methods: {
 			imageUrl(item) {
@@ -460,7 +459,7 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
-		margin-top: 30rpx;
+		margin-top: 15px;
 	}
 
 	.slot-gonggao_content1 {
@@ -472,11 +471,11 @@
 	}
 
 	.slot-gonggao_content1>uni-scroll-view {
-		max-height: calc(100vh - 640rpx);
+		max-height: calc(100vh - 320px);
 	}
 
 	.slot-gonggao_content1.nosendpl1>uni-scroll-view {
-		max-height: calc(100vh - 520rpx);
+		max-height: calc(100vh - 270px);
 	}
 
 	.comment-container2 {
@@ -492,7 +491,7 @@
 
 	.comment-input-button {
 		line-height: 36px;
-		margin: 0 16rpx;
+		margin: 0 8px;
 		color: #909399;
 	}
 
@@ -501,7 +500,7 @@
 		flex-direction: row;
 
 		.itemb {
-			margin: 0 10rpx;
+			margin: 0 5px;
 
 			.like {
 				display: flex;
@@ -514,7 +513,7 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
-		padding: 30rpx;
+		padding: 15px;
 	}
 
 	.reply_head2 {
@@ -522,8 +521,8 @@
 	}
 
 	.comment {
-		padding: 30rpx;
-		font-size: 32rpx;
+		padding: 15px;
+		font-size: 16px;
 		background-color: #ffffff;
 
 		.top {
@@ -538,20 +537,20 @@
 
 			.heart-photo {
 				image {
-					width: 64rpx;
-					height: 64rpx;
+					width: 32px;
+					height: 32px;
 					border-radius: 50%;
 					background-color: #f2f2f2;
 				}
 			}
 
 			.user-info {
-				margin-left: 10rpx;
+				margin-left: 5px;
 
 				.name {
 					color: #9A9A9A;
-					font-size: 28rpx;
-					margin-bottom: 4rpx;
+					font-size: 14px;
+					margin-bottom: 2px;
 				}
 
 				.content {
@@ -561,7 +560,7 @@
 				}
 
 				.date {
-					font-size: 20rpx;
+					font-size: 10px;
 					color: $u-light-color;
 				}
 			}
@@ -570,16 +569,16 @@
 		.right {
 			display: flex;
 			flex-direction: row;
-			font-size: 20rpx;
+			font-size: 10px;
 			align-items: center;
 			color: #9a9a9a;
 
 			.like {
-				margin-left: 6rpx;
+				margin-left: 3px;
 			}
 
 			.num {
-				font-size: 26rpx;
+				font-size: 13px;
 				color: #9a9a9a;
 			}
 		}
@@ -594,30 +593,30 @@
 	}
 
 	.all-reply {
-		margin-top: 10rpx;
-		padding-top: 20rpx;
+		margin-top: 5px;
+		padding-top: 10px;
 		background-color: #ffffff;
 
 		.all-reply-top {
-			margin-left: 20rpx;
-			padding-left: 20rpx;
-			border-left: solid 4rpx #5677fc;
-			font-size: 30rpx;
+			margin-left: 10px;
+			padding-left: 10px;
+			border-left: solid 2px #5677fc;
+			font-size: 15px;
 			font-weight: bold;
 		}
 
 		.item {
-			border-bottom: solid 2rpx $u-border-color;
+			border-bottom: solid 1px $u-border-color;
 		}
 
 		.reply {
-			padding: 20rpx;
+			padding: 10px;
 			background-color: rgb(242, 242, 242);
-			border-radius: 12rpx;
-			margin: 10rpx 0;
+			border-radius: 6px;
+			margin: 5px 0;
 
 			.username {
-				font-size: 24rpx;
+				font-size: 12px;
 				color: #7a7a7a;
 			}
 		}

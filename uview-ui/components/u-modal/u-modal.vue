@@ -82,7 +82,7 @@
 			// 弹窗宽度，可以是数值(rpx)，百分比，auto等
 			width: {
 				type: [Number, String],
-				default: 600
+				default: "300px"
 			},
 			// 弹窗内容
 			content: {
@@ -242,7 +242,7 @@
 	.u-model {
 		height: auto;
 		overflow: hidden;
-		font-size: 32rpx;
+		font-size: 14px;
 		background-color: #fff;
 
 		&__btn--hover {
@@ -250,7 +250,7 @@
 		}
 
 		&__title {
-			padding-top: 48rpx;
+			padding-top: 24px;
 			font-weight: 500;
 			text-align: center;
 			color: $u-main-color;
@@ -258,8 +258,8 @@
 
 		&__content {
 			&__message {
-				padding: 48rpx;
-				font-size: 30rpx;
+				padding: 24px;
+				font-size: 15px;
 				text-align: center;
 				color: $u-content-color;
 			}
@@ -270,13 +270,13 @@
 
 			&__button {
 				flex: 1;
-				height: 100rpx;
-				line-height: 100rpx;
-				font-size: 32rpx;
+				height: 50px;
+				line-height: 50px;
+				font-size: 16px;
 				box-sizing: border-box;
 				cursor: pointer;
 				text-align: center;
-				border-radius: 4rpx;
+				border-radius: 2px;
 			}
 		}
 	}

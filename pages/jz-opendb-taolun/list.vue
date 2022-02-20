@@ -13,8 +13,8 @@
 				<u-swipe-action :show="item.show" :index="index" v-for="(item, index) in data" :key="item._id"
 					@click="click" @open="open" :options="options">
 					<view class="item u-border-bottom" @click="$notMoreTap(todetail,'notTap',item)">
-						<u-icon size="40" color="#18b566" v-if="item.article_status==1" name="checkmark"></u-icon>
-						<u-icon size="40" v-else name="/static/lock.png"></u-icon>
+						<u-icon size="20" color="#18b566" v-if="item.article_status==1" name="checkmark"></u-icon>
+						<u-icon size="20" v-else name="/static/lock.png"></u-icon>
 						<!-- <image mode="aspectFill" :src="item.images" /> -->
 						<view class="title-wrap">
 							<text class="title u-line-2" v-html="item.excerpt"></text>
@@ -188,20 +188,20 @@
 <style>
 	.item {
 		display: flex;
-		padding: 20rpx;
+		padding: 10px;
 	}
 
 	image {
-		width: 120rpx;
-		flex: 0 0 120rpx;
-		height: 120rpx;
-		margin-right: 20rpx;
-		border-radius: 12rpx;
+		width: 60px;
+		flex: 0 0 60px;
+		height: 60px;
+		margin-right: 10px;
+		border-radius: 6px;
 	}
 
 	.title {
 		text-align: left;
-		font-size: 36rpx;
+		font-size: 18px;
 		color: $u-content-color;
 	}
 

@@ -70,7 +70,7 @@
 				// zy_gs: 0,
 				param: {
 					page: 1,
-					rows: 10
+					rows: 18
 				}
 			}
 		},

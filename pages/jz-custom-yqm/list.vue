@@ -26,8 +26,8 @@
 							</u-td>
 							<u-td class="u-td" width="10%">
 								<view class="u-td3">
-								<u-icon size="36" v-if="item.status&&item.date==curdate" name="checkmark"></u-icon>
-								<u-icon size="36" v-else="!item.status" name="close"></u-icon>
+								<u-icon size="18" v-if="item.status&&item.date==curdate" name="checkmark"></u-icon>
+								<u-icon size="18" v-else name="close"></u-icon>
 								</view>
 							</u-td>
 							<u-td class="u-td" width="30%">
@@ -52,11 +52,11 @@
 			@fabClick="$notMoreTap(fabClick,'notTap')" /> -->
 		<u-toast ref="uToast" />
 		<u-modal v-model="showadd" title="申请邀请码" :show-cancel-button="true" @confirm="confirmAdd">
-			<view class="slot-content" style="padding: 20px;">
+			<view class="slot-content" style="padding: 10px;">
 				<u-alert-tips type="warning" :description="description"></u-alert-tips>
 				<view style="margin-top: 10px;">
 					<text style="margin-right: 20px;">申请个数</text>
-					<u-number-box v-model="number" :max="maxnumber" :min="1" :size="32"></u-number-box>
+					<u-number-box v-model="number" :max="maxnumber" :min="1" :size="16"></u-number-box>
 				</view>
 			</view>
 		</u-modal>
@@ -89,7 +89,6 @@
 		if(config["800008"]){
 			this.maxnumber=parseInt(config["800008"])||5;
 		}
-		console.log("this.maxnumber",this.maxnumber);
 		this.description="注意：邀请码用于查看加密资源详情，一天最多申请"+this.maxnumber+"个，每个邀请码用一次失效，且只能申请账号在申请当天使用，过期失效";
 		},
 		onPullDownRefresh() {
@@ -152,7 +151,8 @@
 				else{
 					return db.collection(dbCollectionName).add(addvalues).then((res) => {
 					  uni.showToast({
-					    title: '新增成功'
+					    title: '申请成功',
+						icon:"none"
 					  });
 					  this.maxnumber=this.maxnumber-addvalues.length;
 					  this.number=1;
@@ -204,7 +204,7 @@
 								user_id:uid,
 								date:db.command.neq(_date)
 							}).remove();
-							console.log("yqmlist",yqmlist);
+							// console.log("yqmlist",yqmlist);
 							uni.showToast({
 							  title: '已清除',
 							  icon:"none"
@@ -254,7 +254,7 @@
 		    width: 100%;
 		    left: 0;
 		    justify-content: space-between;
-		    padding: 20px;
+		    padding: 20px 10%;
 	}
 	.u-td-flex {
 		position: relative;
@@ -266,9 +266,12 @@
 		/* height: 36px; */
 	}
 
-	.u-td3 {
-		height: 30px;
-		text-align: center;
+	.u-td3,.u-td2 {
+		    height: 30px;
+		    text-align: center;
+		    display: flex;
+		    justify-content: center;
+		    align-items: center;
 	}
 
 	.u-td1 {

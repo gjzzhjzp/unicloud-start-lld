@@ -242,7 +242,7 @@ export default {
 
 .u-swipe-del {
 	position: relative;
-	font-size: 30rpx;
+	font-size: 16px;
 	color: #ffffff;
 }
 

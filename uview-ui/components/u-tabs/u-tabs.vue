@@ -69,12 +69,12 @@
 			// 导航栏的高度和行高
 			height: {
 				type: [String, Number],
-				default: 80
+				default: 40
 			},
 			// 字体大小
 			fontSize: {
 				type: [String, Number],
-				default: 30
+				default: 15
 			},
 			// 过渡动画时长, 单位ms
 			duration: {
@@ -94,17 +94,17 @@
 			// 菜单底部移动的bar的宽度，单位rpx
 			barWidth: {
 				type: [String, Number],
-				default: 40
+				default: 20
 			},
 			// 移动bar的高度
 			barHeight: {
 				type: [String, Number],
-				default: 6
+				default: 3
 			},
 			// 单个tab的左或有内边距（左右相同）
 			gutter: {
 				type: [String, Number],
-				default: 30
+				default: 15
 			},
 			// 导航栏的背景颜色
 			bgColor: {
@@ -204,12 +204,12 @@
 			// 移动bar的样式
 			tabBarStyle() {
 				let style = {
-					width: this.barWidth + 'rpx',
+					width: this.barWidth + 'px',
 					transform: `translate(${this.scrollBarLeft}px, -100%)`,
 					// 滑块在页面渲染后第一次滑动时，无需动画效果
 					'transition-duration': `${this.barFirstTimeMove ? 0 : this.duration }s`,
 					'background-color': this.activeColor,
-					height: this.barHeight + 'rpx',
+					height: this.barHeight + 'px',
 					opacity: this.barFirstTimeMove ? 0 : 1,
 					// 设置一个很大的值，它会自动取能用的最大值，不用高度的一半，是因为高度可能是单数，会有小数出现
 					'border-radius': `${this.barHeight / 2}px`
@@ -221,11 +221,11 @@
 			tabItemStyle() {
 				return (index) => {
 					let style = {
-						height: this.height + 'rpx',
-						'line-height': this.height + 'rpx',
-						'font-size': this.fontSize + 'rpx',
+						height: this.height + 'px',
+						'line-height': this.height + 'px',
+						'font-size': this.fontSize + 'px',
 						'transition-duration': `${this.duration}s`,
-						padding: this.isScroll ? `0 ${this.gutter}rpx` : '',
+						padding: this.isScroll ? `0 ${this.gutter}px` : '',
 						flex: this.isScroll ? 'auto' : '1',
 						width: this.$u.addUnit(this.itemWidth)
 					};
@@ -277,7 +277,6 @@
 				query.exec(
 					function(res) {
 						this.tabQueryInfo = res;
-						console.log("2222222222this.tabQueryInfo",this.tabQueryInfo);
 						// 初始化滚动条和移动bar的位置
 						this.scrollByIndex();
 					}.bind(this)

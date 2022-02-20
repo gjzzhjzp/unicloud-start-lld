@@ -86,7 +86,7 @@
 			 */
 			submitForm(value) {
 				// 使用 clientDB 提交数据
-				console.log("value", value);
+				// console.log("value", value);
 				Object.assign(value, {
 					user_id: db.getCloudEnv('$cloudEnv_uid')
 				});

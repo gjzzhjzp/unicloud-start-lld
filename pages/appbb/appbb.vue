@@ -74,11 +74,11 @@
 				// debugger;
 				const db = uniCloud.database();
 				const collection = db.collection('opendb-news-appbb');
-				console.log("this.app_bbh",this.app_bbh,typeof this.app_bbh);
+				
 				var resultdata = await collection.where({
 					app_bbh: db.command.gt(parseInt(this.app_bbh))
 				}).orderBy("app_bbh", "desc").get();
-				console.log("resultdata",resultdata);
+
 				if (resultdata.result.data && resultdata.result.data.length > 0) {
 					this.zxbb = resultdata.result.data[0];
 					this.ljbb=resultdata.result.data;

@@ -210,7 +210,6 @@
 			});
 			// this.commentList = this.res.children;
 			this.comment = this.res;
-			console.log("this.commentList", this.commentList);
 		},
 		methods: {
 			// reloadcomment(){
@@ -240,8 +239,6 @@
 			},
 			// 回复
 			replycomment(item) {
-				// debugger;
-				console.log("item", item);
 				this.placeholder = "回复 @" + item.user_id[0].nickname + ":";
 				this.relaydata = {
 					comment_type: 1,

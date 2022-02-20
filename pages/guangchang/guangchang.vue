@@ -4,7 +4,7 @@
 			<view class="jz-navbar-title">广场</view>
 		</jz-navbar>
 		<view style="padding: 0px 120rpx;background: #fff;">
-			<u-tabs active-color="#7275D3" bar-width="0" :font-size="36" :list="toptabs" :is-scroll="false" :current="topcurtab"
+			<u-tabs active-color="#7275D3" bar-width="0" :font-size="18" :list="toptabs" :is-scroll="false" :current="topcurtab"
 				@change="changeTopTabs"></u-tabs>
 		</view>
 		<view v-if="topcurtab==0">
@@ -194,7 +194,6 @@
 				if(!id){
 					return false;
 				}
-				console.log("guangchang_item",data);
 				// var db=uniCloud.database();
 				// var res=await db.collection("jz-opendb-taolun").where({
 				// 	_id:id

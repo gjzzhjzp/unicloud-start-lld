@@ -206,7 +206,6 @@
 					all_reply_comment_id: this.relaydata.all_reply_comment_id || "0",
 				});
 				// 增加资源评论数
-				console.log("zydata11111111111111111",this.zydata);
 				this.inputvalue = "";
 				if (this.relaydata.comment_cj > 1) {
 					this.getComment(this.relaydata.reply_comment_id);

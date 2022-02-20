@@ -9,7 +9,7 @@
 			<view class="login_back_logo">
 				<u-image width="100%" :src="'/static/login-index/login_back.png'" mode="widthFix"></u-image>
 			</view>
-			<view class="jz-container">
+			<view class="jz-container login-back-con">
 			<uni-forms ref="form"  validate-trigger="submit" err-show-type="undertext"
 				label-width="160px" label-position="right">
 				<uni-forms-item label="微博地址" name="weiboname" v-model="weiboname" required>
@@ -132,7 +132,7 @@
 										mui.fire(pscreen, 'quit', {
 											data: "quit"
 										});
-										console.log("在这里退出App");
+										// console.log("在这里退出App");
 										// #ifdef APP-PLUS  
 										plus.runtime.quit();
 										// #endif
@@ -218,7 +218,7 @@
 	}
 
 	.auth-box .link {
-		font-size: 26rpx;
+		font-size: 13px;
 	}
 
 	.login-text-sub {

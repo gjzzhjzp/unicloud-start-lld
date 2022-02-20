@@ -91,7 +91,6 @@
 		},
 		methods: {
 			selectFile(parames) {
-				console.log("parames", parames);
 				this.avatar = parames.tempFilePaths;
 			},
 			successFile(parames) {
@@ -141,7 +140,6 @@
 				});
 			},
 			submit() {
-				console.log("submit", JSON.stringify(this.form));
 				uniCloud.callFunction({
 					name: 'jzfunction',
 					data: {
@@ -149,7 +147,6 @@
 						data: this.form
 					},
 				}).then((res) => {
-					console.log("res", JSON.stringify(res));
 					var res = res.result;
 					if (res.state == "0000") {
 						this.$refs.uToast.show({
@@ -163,7 +160,6 @@
 						});
 					}
 				}).catch((err)=>{
-					console.log("网络错误，请重试——err",err);
 					uni.showModal({
 					  content: err.message || '网络错误，请重试',
 					  showCancel: false

@@ -30,7 +30,7 @@
 			// 加载图标的大小，单位rpx
 			size: {
 				type: [String, Number],
-				default: '34'
+				default: '17'
 			},
 			// 是否显示动画
 			show: {
@@ -42,8 +42,8 @@
 			// 加载中圆圈动画的样式
 			cricleStyle() {
 				let style = {};
-				style.width = this.size + 'rpx';
-				style.height = this.size + 'rpx';
+				style.width = this.size + 'px';
+				style.height = this.size + 'px';
 				if (this.mode == 'circle') style.borderColor = `#e4e4e4 #e4e4e4 #e4e4e4 ${this.color ? this.color : '#c7c7c7'}`;
 				return style;
 			},
@@ -59,8 +59,8 @@
 		display: inline-flex;
 		/* #endif */
 		vertical-align: middle;
-		width: 28rpx;
-		height: 28rpx;
+		width: 14px;
+		height: 14px;
 		background: 0 0;
 		border-radius: 50%;
 		border: 2px solid;

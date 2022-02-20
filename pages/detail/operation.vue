@@ -1,13 +1,13 @@
 <template>
 	<view class="er-item-list-operation" :style="{'background':background}">
 		<view class="er-item-list-icon" @click.stop="tolike1()">
-			<u-icon v-show="!islike" name="thumb-up" size="50"></u-icon>
-			<u-icon v-show="islike" color="#777BCE" name="thumb-up-fill" size="50"></u-icon>
+			<u-icon v-show="!islike" name="thumb-up" size="25"></u-icon>
+			<u-icon v-show="islike" color="#777BCE" name="thumb-up-fill" size="25"></u-icon>
 			<text class="er-item-list-icon-text">{{showtext?('点赞'+(data.like_count1||'')):data.like_count1||''}}</text>
 		</view>
 		<view class="er-item-list-icon" @click.stop="tofavator1()">
-			<u-icon v-show="!isfavator" name="heart" size="50"></u-icon>
-			<u-icon v-show="isfavator" color="#777BCE" name="heart-fill" size="50"></u-icon>
+			<u-icon v-show="!isfavator" name="heart" size="25"></u-icon>
+			<u-icon v-show="isfavator" color="#777BCE" name="heart-fill" size="25"></u-icon>
 			<text class="er-item-list-icon-text">{{showtext?('收藏'+(data.like_count||'')):data.like_count||''}}</text>
 		</view>
 	</view>
@@ -164,13 +164,11 @@
 							// this.$set(this.data, "like", []);
 							// this.$set(this.data, "like_count1", --this.data.like_count1);
 						} else {
-							console.log("res", res.msg);
 							this.$set(this, "islike", true);
 						}
 						reslove();
 					}).catch((err) => {
 						this.$set(this, "islike", true);
-						console.log("网络错误，请重试——err", err);
 						uni.showModal({
 							content: err.message || '网络错误，请重试',
 							showCancel: false
@@ -340,7 +338,7 @@
 	}
 
 	.er-item-list-icon-text {
-		line-height: 50rpx;
+		line-height: 25px;
 		margin-left: 4px;
 	}
 </style>

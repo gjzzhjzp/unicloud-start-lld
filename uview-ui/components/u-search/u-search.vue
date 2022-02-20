@@ -6,9 +6,9 @@
 			class="u-content"
 			:style="{
 				backgroundColor: bgColor,
-				borderRadius: shape == 'round' ? '100rpx' : '10rpx',
+				borderRadius: shape == 'round' ? '50px' : '5px',
 				border: borderStyle,
-				height: height + 'rpx'
+				height: height + 'px'
 			}"
 		>
 			<view class="u-icon-wrap">
@@ -36,7 +36,7 @@
 				}, inputStyle]"
 			/>
 			<view class="u-close-wrap" v-if="keyword && clearabled && focused" @tap="clear">
-				<u-icon class="u-clear-icon" name="close-circle-fill" size="34" color="#c0c4cc"></u-icon>
+				<u-icon class="u-clear-icon" name="close-circle-fill" size="17" color="#c0c4cc"></u-icon>
 			</view>
 		</view>
 		<view :style="[actionStyle]" class="u-action" 
@@ -152,7 +152,7 @@ export default {
 		// 搜索框高度，单位rpx
 		height: {
 			type: [Number, String],
-			default: 64
+			default: 32
 		},
 		// input输入框的样式，可以定义文字颜色，大小等，对象形式
 		inputStyle: {
@@ -295,7 +295,7 @@ export default {
 .u-content {
 	@include vue-flex;
 	align-items: center;
-	padding: 0 18rpx;
+	padding: 0 9px;
 	flex: 1;
 }
 
@@ -306,14 +306,14 @@ export default {
 
 .u-input {
 	flex: 1;
-	font-size: 28rpx;
+	font-size: 14px;
 	line-height: 1;
-	margin: 0 10rpx;
+	margin: 0 5px;
 	color: $u-tips-color;
 }
 
 .u-close-wrap {
-	width: 40rpx;
+	width: 20px;
 	height: 100%;
 	@include vue-flex;
 	align-items: center;
@@ -326,7 +326,7 @@ export default {
 }
 
 .u-action {
-	font-size: 28rpx;
+	font-size: 14px;
 	color: $u-main-color;
 	width: 0;
 	overflow: hidden;
@@ -336,7 +336,7 @@ export default {
 }
 
 .u-action-active {
-	width: 80rpx;
-	margin-left: 10rpx;
+	width: 40px;
+	margin-left: 5px;
 }
 </style>

@@ -45,13 +45,13 @@ import gitemList from "../guangchang/item-list.vue"
 				flowList: [],
 				gflowList:[],
 				list: [],
-				tabslist: [{
-					name: '图片',
-					type: "0"
-				}, {
+				tabslist: [ {
 					name: '视频',
 					type: "1"
 				}, {
+					name: '图片',
+					type: "0"
+				},{
 					name: '音乐',
 					type: "2"
 				}, {
@@ -67,10 +67,10 @@ import gitemList from "../guangchang/item-list.vue"
 				}],
 				wrapcurrenttab:0,
 				currenttab: 0,
-				zy_gs: 0,
+				zy_gs: 1,
 				param: {
 					page: 1,
-					rows: 10
+					rows: 18
 				}
 			}
 		},
@@ -103,7 +103,7 @@ import gitemList from "../guangchang/item-list.vue"
 		methods: {
 			changeTabs(index) {
 				this.currenttab = index;
-				this.zy_gs = index;
+				this.zy_gs = this.tabslist[index].type;
 				// this.reset=true;
 				this.param.page = 1;
 				this.flowList.splice(0, this.flowList.length);
@@ -132,7 +132,7 @@ import gitemList from "../guangchang/item-list.vue"
 						action: "resource/getMyfavoriteList",
 						data: {
 							uid: userInfo._id,
-							zy_gs: this.zy_gs,
+							zy_gs: parseInt(this.zy_gs),
 							page: this.param.page,
 							rows: this.param.rows
 						}

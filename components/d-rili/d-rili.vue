@@ -141,7 +141,6 @@
 				if(this.month<10){
 					rq = "-0" + this.month + "-";
 				}
-				console.log("rq", rq);
 				db.collection('opendb-news-rili').where({
 					"rili_date": new RegExp(rq, 'gi'),
 				}).field("rili_date,rili_title").get().then((res) => {
@@ -156,7 +155,6 @@
 							// }
 						}
 					});
-					console.log("jianlainri_day", this.jianlainri_day);
 					this.getjilianri();
 				}).catch((err) => {
 					uni.showModal({
@@ -167,7 +165,6 @@
 			},
 			// 点击当前日期
 			clickDay(item) {
-				console.log("clickDay", item);
 				if (item.class) return;
 				this.clickSelected = item;
 				this.getjilianri();
@@ -210,9 +207,7 @@
 				// if (this.month < 10) {
 				// 	this.month = '0' + this.month
 				// }
-				// 今日时间为：2020-9-16
-				console.log('今日时间为：' + this.year + '-' + this.month + '-' + this.day)
-			},
+				},
 
 			async _runMonth() {
 

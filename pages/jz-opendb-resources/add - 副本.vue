@@ -186,9 +186,8 @@
 			submitForm(value) {
 				// 使用 clientDB 提交数据
 				value = this.value;
-				console.log("111111111111",value);
 				return db.collection(dbCollectionName).add(value).then((res) => {
-					console.log("2222222222",value);
+					
 					uni.showToast({
 						icon: 'none',
 						title: '新增成功'

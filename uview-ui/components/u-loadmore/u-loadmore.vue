@@ -54,7 +54,7 @@
 			// 字体大小
 			fontSize: {
 				type: String,
-				default: '28'
+				default: '14'
 			},
 			// 字体颜色
 			color: {
@@ -119,7 +119,7 @@
 			loadTextStyle() {
 				return {
 					color: this.color,
-					fontSize: this.fontSize + 'rpx',
+					fontSize: this.fontSize + 'px',
 					position: 'relative',
 					zIndex: 1,
 					backgroundColor: this.bgColor,
@@ -188,7 +188,7 @@
 	}
 	
 	.u-dot-text {
-		font-size: 28rpx;
+		font-size: 14px;
 	}
 	
 	.u-loadmore-icon-wrap {

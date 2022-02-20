@@ -38,7 +38,7 @@
 				let style = {};
 				if (this.width != "auto") style.flex = `0 0 ${this.width}`;
 				style.textAlign = this.parent.align;
-				style.fontSize = this.parent.fontSize + 'rpx';
+				style.fontSize = this.parent.fontSize + 'px';
 				style.padding = this.parent.padding;
 				style.borderBottom = `solid 1px ${this.parent.borderColor}`;
 				style.borderRight = `solid 1px ${this.parent.borderColor}`;
@@ -57,7 +57,7 @@
 		flex-direction: column;
 		flex: 1;
 		justify-content: center;
-		font-size: 28rpx;
+		font-size: 14px;
 		color: $u-content-color;
 		align-self: stretch;
 		box-sizing: border-box;

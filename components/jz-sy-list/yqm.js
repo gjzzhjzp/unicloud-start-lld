@@ -82,7 +82,6 @@ export default{
 					}).then((res1) => {
 						var res1 = res1.result;
 						if (res1.state == "0000") {
-							console.log("成功");
 							uni.navigateTo({
 								url: "/pages/detail/detail?id=" + this.curItem._id
 							});

@@ -361,7 +361,7 @@ export default {
 	align-items: center;
 	justify-content: center;
 	cursor: pointer;
-	padding: 0 40rpx;
+	padding: 0 20px;
 	z-index: 1;
 	box-sizing: border-box;
 	transition: all 0.15s;
@@ -493,11 +493,11 @@ export default {
 }
 
 .u-round-circle {
-	border-radius: 100rpx;
+	border-radius: 50px;
 }
 
 .u-round-circle::after {
-	border-radius: 100rpx;
+	border-radius: 50px;
 }
 
 .u-loading::after {
@@ -505,9 +505,9 @@ export default {
 }
 
 .u-size-default {
-	font-size: 30rpx;
-	height: 80rpx;
-	line-height: 80rpx;
+	font-size: 15px;
+	height: 40px;
+	line-height: 40px;
 }
 
 .u-size-medium {
@@ -515,10 +515,10 @@ export default {
 	display: inline-flex;		
 	/* #endif */
 	width: auto;
-	font-size: 26rpx;
-	height: 70rpx;
-	line-height: 70rpx;
-	padding: 0 80rpx;
+	font-size: 13px;
+	height: 35px;
+	line-height: 35px;
+	padding: 0 40px;
 	max-width: 100%;
 }
 
@@ -527,11 +527,11 @@ export default {
 	display: inline-flex;		
 	/* #endif */
 	width: auto;
-	font-size: 22rpx;
+	font-size: 11px;
 	padding-top: 1px;
-	height: 50rpx;
-	line-height: 50rpx;
-	padding: 0 20rpx;
+	height: 25px;
+	line-height: 25px;
+	padding: 0 10px;
 }
 
 .u-primary-plain-hover {

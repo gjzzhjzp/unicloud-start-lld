@@ -127,7 +127,6 @@
 					}
 				})
 			}
-			console.log(servicesList);
 			//如果当前页面为默认登陆界面。当前第一优先级的“微信和苹果登陆”要隐藏，因为他已经被渲染在默认登陆界面顶部
 			if (
 				this.getRoute(1) == '/pages/ucenter/login-page/index/index' && ['weixin', 'apple'].includes(this
@@ -140,7 +139,6 @@
 				let path = item.path ? item.path.split('?')[0] : '';
 				return path != this.getRoute(1)
 			})
-			console.log('servicesList', servicesList, this.servicesList);
 		},
 		mounted() {
 		},
@@ -186,7 +184,6 @@
 						console.log(e);
 					},
 					success: async e => {
-						console.log(e);
 						if (type == 'apple') {
 							let res = await this.getUserInfo({
 								provider: "apple"
@@ -261,10 +258,7 @@
 				})
 			},
 			login(params, type) { //联网验证登录
-				console.log({
-					params,
-					type
-				});
+				
 				let action = 'loginBy' + type.trim().toLowerCase().replace(type[0], type[0].toUpperCase())
 				uniCloud.callFunction({
 					name: 'uni-id-cf',

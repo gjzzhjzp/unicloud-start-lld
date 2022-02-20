@@ -1,7 +1,7 @@
 <template>
 	<view class="jz-sy-list-wrap">
 		<view class="jz-sy-list-section">
-			<u-section line-color="#7275D3" :show-line="false" :font-size="32" :title="title" :right="showright" sub-title="查看更多"
+			<u-section line-color="#7275D3" :show-line="false" :font-size="16" :title="title" :right="showright" sub-title="查看更多"
 				:arrow="false" @click="$notMoreTap(tomore,'notTap')"></u-section>
 		</view>
 		<view class="jz-sy-list">
@@ -13,7 +13,7 @@
 								<!-- <image-storage :src="imageUrl(item)" height="100px" width="100%" :customStyle="{borderRadius:'6px'}" mode="aspectFill"></image-storage> -->
 								<!-- <u-lazy-load threshold="300" height="100px" border-radius="10" img-mode="aspectFill"
 									:image="imageUrl(item)"></u-lazy-load> -->
-								<u-image width="100%" height="200rpx" border-radius="10" :src="imageUrl(item)"
+								<u-image width="100%" height="100px" border-radius="10" :src="imageUrl(item)"
 									loading-icon="/static/center/chang1.png"
 									error-icon="/static/center/error_chang.png">
 								</u-image>
@@ -250,6 +250,7 @@
 		color: $u-type-primary;
 		margin-top: 10rpx;
 		margin-left: 10rpx;
+		font-size: 14px;
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow: ellipsis;

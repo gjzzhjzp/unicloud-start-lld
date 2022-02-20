@@ -172,7 +172,6 @@
 				uni.authorize({
 					scope: 'scope.writePhotosAlbum',
 					success() {
-						console.log('kxj-previewImage:允许储存');
 						_this.downloadImg(src);
 					}
 				});
@@ -233,7 +232,6 @@
 				uni.downloadFile({
 					url: src,
 					success: function(res) {
-						console.log('kxj-previewImage:下载成功');
 						uni.hideLoading();
 						uni.saveImageToPhotosAlbum({
 							filePath: res.tempFilePath,
@@ -263,13 +261,11 @@
 			//打开
 			open(e) {
 				if (e === null || e === '') {
-					console.log('kxj-previewImage:打开参数无效');
 					return;
 				}
 
 				if (!isNaN(e)) {
 					if (e >= this.imgs.length) {
-						console.log('kxj-previewImage:打开参数无效');
 					} else {
 						this.index = e;
 					}
@@ -278,12 +274,10 @@
 					if (index === -1) {
 						this.imgs = [e];
 						this.index = 0;
-						console.log('kxj-previewImage:未在图片地址数组中找到传入的图片，已为你自动打开单张预览模式')
 					} else {
 						this.index = this.imgs.indexOf(e);
 					}
 				}
-				console.log('kxj-previewImage:当前预览图片序号' + this.index);
 				this.show = true;
 			},
 			//关闭
@@ -353,35 +347,35 @@
 		.page {
 			position: absolute;
 			width: 100%;
-			bottom: 20rpx;
+			bottom: 10px;
 			text-align: center;
 
 			.text {
 				color: #fff;
-				font-size: 26rpx;
+				font-size: 13px;
 				background-color: rgba(0, 0, 0, 0.5);
-				padding: 3rpx 16rpx;
-				border-radius: 20rpx;
+				padding: 2px 8px;
+				border-radius: 10px;
 				user-select: none;
 			}
 		}
 
 		.save {
 			position: absolute;
-			left: 10rpx;
-			width: 130rpx;
-			height: 56rpx;
-			bottom: 10rpx;
+			left: 5px;
+			width: 65px;
+			height: 32px;
+			bottom: 5px;
 			text-align: center;
-			padding: 10rpx;
+			padding: 5px;
 
 			.text {
 				background-color: rgba(0, 0, 0, 0.5);
 				color: #fff;
-				font-size: 30rpx;
-				border-radius: 20rpx;
-				border: 1rpx solid #f1f1f1;
-				padding: 6rpx 22rpx;
+				font-size: 15px;
+				border-radius: 10px;
+				border: 1px solid #f1f1f1;
+				padding: 3px 11px;
 				user-select: none;
 			}
 
@@ -392,20 +386,20 @@
 
 		.rotate {
 			position: absolute;
-			right: 10rpx;
-			width: 130rpx;
-			height: 56rpx;
-			bottom: 10rpx;
+			right: 5px;
+			width: 65px;
+			height: 28px;
+			bottom: 5px;
 			text-align: center;
-			padding: 10rpx;
+			padding: 5px;
 
 			.text {
 				background-color: rgba(0, 0, 0, 0.5);
 				color: #fff;
-				font-size: 30rpx;
-				border-radius: 20rpx;
-				border: 1rpx solid #f1f1f1;
-				padding: 6rpx 22rpx;
+				font-size: 15px;
+				border-radius: 10px;
+				border: 1px solid #f1f1f1;
+				padding: 3px 11px;
 				user-select: none;
 			}
 
@@ -418,15 +412,15 @@
 			position: absolute;
 			top: 0;
 			width: 100%;
-			padding: 5rpx 10rpx;
+			padding: 2px 5px;
 			text-align: center;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
 			background-color: rgba(0, 0, 0, 0.5);
 			color: #fff;
-			font-size: 28rpx;
-			letter-spacing: 3rpx;
+			font-size: 14px;
+			letter-spacing: 1px;
 			user-select: none;
 		}
 	}

@@ -84,7 +84,6 @@
 						},
 					},
 					success: ({result}) => {
-						console.log(result);
 						if(result.code===0){
 							uni.showToast({
 								title: this.$t('smsCode.sendSuccessTip'),

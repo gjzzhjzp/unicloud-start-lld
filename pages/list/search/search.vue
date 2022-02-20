@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
-		<u-navbar :is-back="true" back-icon-name="arrow-leftward" :back-icon-size="40">
-			<u-search border-color="#7275D3" bg-color="#fff" v-model="searchText" height="60" :placeholder="hotWorld"
+		<u-navbar :is-back="true" back-icon-name="arrow-leftward" :back-icon-size="20">
+			<u-search border-color="#7275D3" bg-color="#fff" v-model="searchText" height="30" :placeholder="hotWorld"
 				@search="confirm" @custom="confirm" :show-action="true"></u-search>
 		</u-navbar>
 
@@ -14,10 +14,10 @@
 						style="padding-right: 0;" :color="iconColor" size="18" type="trash"></uni-icons>
 					<view v-else class="flex-center flex-row" style="font-weight: 500;justify-content: space-between;">
 						<text
-							style="font-size: 22rpx;color: #666;padding-top:4rpx;padding-bottom:4rpx;padding-right:20rpx;"
+							style="font-size: 11px;color: #666;padding-top:4rpx;padding-bottom:4rpx;padding-right:10px;"
 							@click="LocalSearchListClear">全部删除</text>
 						<text
-							style="font-size: 22rpx;color: #c0402b;padding-top:4rpx;padding-bottom:4rpx;padding-left:20rpx;"
+							style="font-size: 11px;color: #c0402b;padding-top:4rpx;padding-bottom:4rpx;padding-left:10px;"
 							@click="localSearchListDel = false">完成</text>
 					</view>
 				</view>
@@ -248,7 +248,7 @@ const searchLogDbName = 'opendb-search-log'; // 搜索记录数据库
 				/**
 				 * 注意：这里用户根据自己的业务需要，选择跳转的页面即可
 				 */
-				console.log("associativeClick: ", item);
+				// console.log("associativeClick: ", item);
 				this.loadList(item.title);
 			},
 			// 搜索词
@@ -279,8 +279,8 @@ const searchLogDbName = 'opendb-search-log'; // 搜索记录数据库
 	}
 </script>
 <style lang="scss" scoped>
-	$search-bar-height:52px;
-	$word-container_header-height:72rpx;
+	$search-bar-height:26px;
+	$word-container_header-height:36px;
 
 	.status-bar {
 		background-color: #fff;
@@ -303,7 +303,7 @@ const searchLogDbName = 'opendb-search-log'; // 搜索记录数据库
 	}
 
 	@mixin words-display {
-		font-size: 26rpx;
+		font-size: 13px;
 		color: #666;
 	}
 
@@ -329,7 +329,7 @@ const searchLogDbName = 'opendb-search-log'; // 搜索记录数据库
 	}
 
 	/deep/ .uni-input-placeholder {
-		font-size: 28rpx;
+		font-size: 14px;
 	}
 
 	.search-container {
@@ -363,9 +363,9 @@ const searchLogDbName = 'opendb-search-log'; // 搜索记录数据库
 		right: 0;
 		bottom: 0;
 		background-color: #fff;
-		margin-top: 10rpx;
-		padding-left: 10rpx;
-		padding-right: 10rpx;
+		margin-top: 5px;
+		padding-left: 5px;
+		padding-right: 5px;
 	}
 
 	// #ifdef APP-PLUS
@@ -383,7 +383,7 @@ const searchLogDbName = 'opendb-search-log'; // 搜索记录数据库
 	}
 
 	.word-container {
-		padding: 20rpx;
+		padding: 10px;
 
 		@at-root {
 			#{&}_header {
@@ -397,7 +397,7 @@ const searchLogDbName = 'opendb-search-log'; // 搜索记录数据库
 				@at-root {
 					#{&}-text {
 						color: #3e3e3e;
-						font-size: 30rpx;
+						font-size: 15px;
 						font-weight: bold;
 					}
 				}
@@ -415,9 +415,9 @@ const searchLogDbName = 'opendb-search-log'; // 搜索记录数据库
 						justify-content: center;
 						align-items: center;
 						background-color: #f6f6f6;
-						padding: 10rpx 20rpx;
-						margin: 20rpx 30rpx 0 0;
-						border-radius: 30rpx;
+						padding: 5px 10px;
+						margin: 10px 15px 0 0;
+						border-radius: 15px;
 						box-sizing: border-box;
 						text-align: center;
 					}
@@ -427,9 +427,9 @@ const searchLogDbName = 'opendb-search-log'; // 搜索记录数据库
 						display: block;
 						flex: 1;
 						text-align: center;
-						font-size: 26rpx;
+						font-size: 13px;
 						color: #808080;
-						margin-top: 20rpx;
+						margin-top: 10px;
 					}
 				}
 			}

@@ -3,7 +3,7 @@
 		<view class="u-section__title" :style="{
 			fontWeight: bold ? 'bold' : 'normal',
 			color: color,
-			fontSize: fontSize + 'rpx',
+			fontSize: fontSize + 'px',
 			paddingLeft: showLine ? (fontSize * 0.7) + 'rpx' : 0
 		}" :class="{
 			'u-section--line': showLine
@@ -63,7 +63,7 @@
 			},
 			fontSize: {
 				type: [Number, String],
-				default: 28
+				default: 14
 			},
 			// 主标题是否加粗
 			bold: {
@@ -126,8 +126,8 @@
 		
 		&__title {
 			position: relative;
-			font-size: 28rpx;
-			padding-left: 20rpx;
+			font-size: 14px;
+			padding-left: 10px;
 			@include vue-flex;
 			align-items: center;
 			
@@ -142,12 +142,12 @@
 		
 		&__right-info {
 			color: $u-tips-color;
-			font-size: 26rpx;
+			font-size: 13px;
 			@include vue-flex;
 			align-items: center;
 			
 			&__icon-arrow {
-				margin-left: 6rpx;
+				margin-left: 3px;
 			}
 		}
 	}

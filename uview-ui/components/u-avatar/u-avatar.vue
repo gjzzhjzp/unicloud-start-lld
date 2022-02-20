@@ -9,7 +9,7 @@
 			:mode="imgMode"
 		></image>
 		<text class="u-line-1" v-else-if="uText" :style="{
-			fontSize: '38rpx'
+			fontSize: '19px'
 		}">{{uText}}</text>
 		<slot v-else></slot>
 		<view class="u-avatar__sex" v-if="showSex" :class="['u-avatar__sex--' + sexIcon]" :style="[uSexStyle]">
@@ -135,8 +135,8 @@
 		computed: {
 			wrapStyle() {
 				let style = {};  
-				style.height = this.size == 'large' ? '120rpx' : this.size == 'default' ?
-				'90rpx' : this.size == 'mini' ? '70rpx' : this.size + 'rpx';
+				style.height = this.size == 'large' ? '60px' : this.size == 'default' ?
+				'45px' : this.size == 'mini' ? '35px' : this.size + 'px';
 				style.width = style.height;
 				style.flex = `0 0 ${style.height}`;
 				style.backgroundColor = this.bgColor;
@@ -188,7 +188,7 @@
 		/* #endif */
 		align-items: center;
 		justify-content: center;
-		font-size: 28rpx;
+		font-size: 14px;
 		color: $u-content-color;
 		border-radius: 10px;
 		position: relative;
@@ -200,13 +200,13 @@
 		
 		&__sex {
 			position: absolute;
-			width: 32rpx;
+			width: 16px;
 			color: #ffffff;
-			height: 32rpx;
+			height: 16px;
 			@include vue-flex;
 			justify-content: center;
 			align-items: center;
-			border-radius: 100rpx;
+			border-radius: 50px;
 			top: 5%;
 			z-index: 1;
 			right: -7%;
@@ -227,13 +227,13 @@
 		
 		&__level {
 			position: absolute;
-			width: 32rpx;
+			width: 16px;
 			color: #ffffff;
-			height: 32rpx;
+			height: 16px;
 			@include vue-flex;
 			justify-content: center;
 			align-items: center;
-			border-radius: 100rpx;
+			border-radius: 50px;
 			bottom: 5%; 
 			z-index: 1;
 			right: -7%;

@@ -19,7 +19,6 @@
 				});
 				title = "页面路径错误"
 			}else{
-				console.log(url,title);
 				this.url = url;
 			}
 			if(title){

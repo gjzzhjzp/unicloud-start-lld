@@ -1,27 +1,25 @@
 <template>
-	<view class="u-swiper-wrap" :style="{
-		borderRadius: `${borderRadius}rpx`
-	}">
+	<view class="u-swiper-wrap">
 		<swiper :current="elCurrent" @change="change" @animationfinish="animationfinish" :interval="interval"
 			:circular="circular" :duration="duration" :autoplay="autoplay"
-			:previous-margin="effect3d ? effect3dPreviousMargin + 'rpx' : '0'"
-			:next-margin="effect3d ? effect3dPreviousMargin + 'rpx' : '0'" :style="{
-				height: height + 'rpx',
+			:previous-margin="effect3d ? effect3dPreviousMargin + 'px' : '0'"
+			:next-margin="effect3d ? effect3dPreviousMargin + 'px' : '0'" :style="{
+				height: height + 'px',
 				backgroundColor: bgColor
 			}">
 			<swiper-item class="u-swiper-item" v-for="(item, index) in list" :key="index">
 				<view class="u-list-image-wrap" @tap.stop.prevent="listClick(index)"
 					:class="[uCurrent != index ? 'u-list-scale' : '']" :style="{
-						borderRadius: `${borderRadius}rpx`,
+						
 						transform: effect3d && uCurrent != index ? 'scaleY(0.9)' : 'scaleY(1)',
-						margin: effect3d && uCurrent != index ? '0 20rpx' : 0,
+						margin: effect3d && uCurrent != index ? '0 10px' : 0,
 					}">
 					<u-link v-if="item.url&&item.url.indexOf('http')!=-1" :href="item.url?item.url:'javascript:void(0)'"
 						style="width: 100%;">
-						<u-image width="100%" height="100%" border-radius="10"  loading-icon="/static/center/banner_ing.png" error-icon="/static/center/banner_error.png" class="u-swiper-image" :src="item[name]" mode="aspectFill"></u-image>
+						<u-image width="100%" height="100%"   loading-icon="/static/center/banner_ing.png" error-icon="/static/center/banner_error.png" class="u-swiper-image" :src="item[name]" mode="aspectFill"></u-image>
 					</u-link>
 					<view v-else @click="clickImage(item)" style="width: 100%;height: 100%;">
-						<u-image width="100%" height="100%" border-radius="10"  loading-icon="/static/center/banner_ing.png" error-icon="/static/center/banner_error.png"  class="u-swiper-image" :src="item[name]" mode="aspectFill"></u-image>
+						<u-image width="100%" height="100%"   loading-icon="/static/center/banner_ing.png" error-icon="/static/center/banner_error.png"  class="u-swiper-image" :src="item[name]" mode="aspectFill"></u-image>
 					</view>
 
 					<view v-if="title && item.title" class="u-swiper-title u-line-1" :style="[{
@@ -33,10 +31,10 @@
 			</swiper-item>
 		</swiper>
 		<view v-show="list&&list.length>1" class="u-swiper-indicator" :style="{
-				top: indicatorPos == 'topLeft' || indicatorPos == 'topCenter' || indicatorPos == 'topRight' ? '12rpx' : 'auto',
-				bottom: indicatorPos == 'bottomLeft' || indicatorPos == 'bottomCenter' || indicatorPos == 'bottomRight' ? '12rpx' : 'auto',
+				top: indicatorPos == 'topLeft' || indicatorPos == 'topCenter' || indicatorPos == 'topRight' ? '6px' : 'auto',
+				bottom: indicatorPos == 'bottomLeft' || indicatorPos == 'bottomCenter' || indicatorPos == 'bottomRight' ? '6px' : 'auto',
 				justifyContent: justifyContent,
-				padding: `0 ${effect3d ? '74rpx' : '24rpx'}`
+				padding: `0 ${effect3d ? '36px' : '12px'}`
 			}">
 			<block v-if="mode == 'rect'">
 				<view class="u-indicator-item-rect" :class="{ 'u-indicator-item-rect-active': index == uCurrent }"
@@ -119,7 +117,7 @@
 			// list的高度，单位rpx
 			height: {
 				type: [Number, String],
-				default: 250
+				default: 125
 			},
 			// 指示器的位置，topLeft|topCenter|topRight|bottomLeft|bottomCenter|bottomRight
 			indicatorPos: {
@@ -134,7 +132,7 @@
 			// 3D模式的情况下，激活item与前后item之间的距离，单位rpx
 			effect3dPreviousMargin: {
 				type: [Number, String],
-				default: 50
+				default: 25
 			},
 			// 是否自动播放
 			autoplay: {
@@ -203,15 +201,15 @@
 			},
 			titlePaddingBottom() {
 				let tmp = 0;
-				if (this.mode == 'none') return '12rpx';
+				if (this.mode == 'none') return '6px';
 				if (['bottomLeft', 'bottomCenter', 'bottomRight'].indexOf(this.indicatorPos) >= 0 && this.mode ==
 					'number') {
-					tmp = '60rpx';
+					tmp = '30px';
 				} else if (['bottomLeft', 'bottomCenter', 'bottomRight'].indexOf(this.indicatorPos) >= 0 && this.mode !=
 					'number') {
-					tmp = '40rpx';
+					tmp = '20px';
 				} else {
-					tmp = '12rpx';
+					tmp = '6px';
 				}
 				return tmp;
 			},
@@ -271,7 +269,7 @@
 	}
 
 	.u-swiper-indicator {
-		padding: 0 24rpx;
+		padding: 0 12px;
 		position: absolute;
 		@include vue-flex;
 		width: 100%;
@@ -279,9 +277,9 @@
 	}
 
 	.u-indicator-item-rect {
-		width: 26rpx;
-		height: 8rpx;
-		margin: 0 6rpx;
+		width: 13px;
+		height: 4px;
+		margin: 0 3px;
 		transition: all 0.5s;
 		background-color: rgba(0, 0, 0, 0.3);
 	}
@@ -291,10 +289,10 @@
 	}
 
 	.u-indicator-item-dot {
-		width: 14rpx;
-		height: 14rpx;
-		margin: 0 6rpx;
-		border-radius: 20rpx;
+		width: 7px;
+		height: 7px;
+		margin: 0 3px;
+		border-radius: 10px;
 		transition: all 0.5s;
 		background-color: rgba(0, 0, 0, 0.3);
 	}
@@ -304,25 +302,25 @@
 	}
 
 	.u-indicator-item-round {
-		width: 14rpx;
-		height: 14rpx;
-		margin: 0 6rpx;
-		border-radius: 20rpx;
+		width: 6px;
+		height: 6px;
+		margin: 0 3px;
+		border-radius: 10px;
 		transition: all 0.5s;
 		background-color: rgba(0, 0, 0, 0.3);
 	}
 
 	.u-indicator-item-round-active {
-		width: 34rpx;
+		width: 16px;
 		background-color: rgba(255, 255, 255, 0.8);
 	}
 
 	.u-indicator-item-number {
-		padding: 6rpx 16rpx;
+		padding:3px 8px;
 		line-height: 1;
 		background-color: rgba(0, 0, 0, 0.3);
-		border-radius: 100rpx;
-		font-size: 26rpx;
+		border-radius: 50px;
+		font-size: 13px;
 		color: rgba(255, 255, 255, 0.8);
 	}
 
@@ -346,8 +344,8 @@
 		bottom: 0;
 		left: 0;
 		width: 100%;
-		font-size: 28rpx;
-		padding: 12rpx 24rpx;
+		font-size: 14px;
+		padding: 6px 12px;
 		color: rgba(255, 255, 255, 0.9);
 	}
 

@@ -58,7 +58,7 @@
 						"rili_date": new RegExp(rq, 'gi'),
 					}).get().then((res) => {
 						this.jianlainri = res.result.data;
-						console.log("this.jianlainri", this.jianlainri);
+						// console.log("this.jianlainri", this.jianlainri);
 					}).catch((err) => {
 						uni.showModal({
 							content: err.message || '请求服务失败',

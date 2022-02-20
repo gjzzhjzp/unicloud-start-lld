@@ -104,7 +104,8 @@
 			},
 			// 组件尺寸，对应size的值，默认值为34rpx
 			elSize() {
-				return this.size ? this.size : (this.parentData.size ? this.parentData.size : 34);
+				// debugger;
+				return this.size ? this.size : (this.parentData.size ? this.parentData.size : 17);
 			},
 			// 组件的勾选图标的尺寸，默认20
 			elIconSize() {
@@ -216,8 +217,8 @@
 			align-items: center;
 			justify-content: center;
 			box-sizing: border-box;
-			width: 42rpx;
-			height: 42rpx;
+			width: 21px;
+			height: 21px;
 			color: transparent;
 			text-align: center;
 			transition-property: color, border-color, background-color;
@@ -258,10 +259,10 @@
 		
 		&__label {
 			word-wrap: break-word;
-			margin-left: 10rpx;
-			margin-right: 24rpx;
+			margin-left: 5px;
+			margin-right: 12px;
 			color: $u-content-color;
-			font-size: 30rpx;
+			font-size: 15px;
 			
 			&--disabled {
 				color: #c8c9cc;

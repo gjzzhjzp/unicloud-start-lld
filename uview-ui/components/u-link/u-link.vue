@@ -1,7 +1,7 @@
 <template>
 	<view class="u-link" @tap.stop="openLink" :style="{
 		color: color,
-		fontSize: fontSize + 'rpx',
+		fontSize: fontSize + 'px',
 		borderBottom: underLine ? `1px solid ${lineColor ? lineColor : color}` : 'none',
 		paddingBottom: underLine ? '0rpx' : '0'
 	}">
@@ -33,7 +33,7 @@
 			// 字体大小，单位rpx
 			fontSize: {
 				type: [String, Number],
-				default: 28
+				default: 14
 			},
 			// 是否显示下划线
 			underLine: {
@@ -58,6 +58,11 @@
 		},
 		methods: {
 			openLink() {
+				// // debugger;
+				// var path=this.href;
+				// uni.navigateTo({
+				// 	url: "/pages/youxidetail/youxidetail?src=" + encodeURIComponent(path)
+				// })
 				// #ifdef APP-PLUS
 				plus.runtime.openURL(this.href)
 				// #endif

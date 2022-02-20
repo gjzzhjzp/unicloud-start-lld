@@ -127,22 +127,22 @@
 	}
 	.item {
 		display: flex;
-		padding: 20rpx;
+		padding: 10px;
 	}
 
 	image {
-		width: 120rpx;
-		flex: 0 0 120rpx;
-		height: 120rpx;
-		margin-right: 20rpx;
-		border-radius: 12rpx;
+		width: 60px;
+		flex: 0 0 60px;
+		height: 60px;
+		margin-right: 10px;
+		border-radius: 6px;
 	}
 
 	.title {
 		text-align: left;
-		font-size: 28rpx;
+		font-size: 14px;
 		color: $u-content-color;
-		margin-top: 20rpx;
+		margin-top: 10px;
 	}
 	.u-icon{
 		margin: 0 6px;

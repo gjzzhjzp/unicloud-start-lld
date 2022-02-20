@@ -116,6 +116,5 @@ function GetLunarDay(solarYear, solarMonth, solarDay) {
 	}
 }
 var calendar = showCal(); 
-console.log("calendar",calendar);
 // $("#currentDate").html("农历：" + calendar);
 			

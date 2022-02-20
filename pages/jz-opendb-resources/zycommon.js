@@ -26,7 +26,7 @@ export default{
 			}
 		},
 		cascaderConfirem(e) {
-			console.log("eee",e);
+			// console.log("eee",e);
 			var select_names = e.select_names;
 			var select_ids = e.select_ids;
 			this.$set(this.formData, "categories", select_ids.join(","));

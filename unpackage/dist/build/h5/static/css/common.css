@@ -1,11 +1,11 @@
 /* 浏览器专用 */
-/* .dplayer-full-in-icon {
-	display: none !important;
-} */
-/* APP专用 */
-.dplayer-full-icon {
+.dplayer-full-in-icon {
 	display: none !important;
 }
+/* APP专用 */
+/* .dplayer-full-icon {
+	display: none !important;
+} */
 
 uni-page {
 	background-color: #F5F5F5;
@@ -14,7 +14,15 @@ uni-page {
 uni-image {
 	background: transparent !important;
 }
-
+.login_back_logo .u-image{
+	max-width: 400px;
+	margin: auto;
+}.login-back-con{
+	max-width: 400px;
+}
+.input-box{
+	font-size: 14px !important;
+}
 .jz-container {
 	padding: 0px 10px;
 }
@@ -26,18 +34,18 @@ uni-image {
 	border-radius: 20px;
 	color: #fff;
 	background: #7275D3;
-	padding: 4rpx 12rpx;
-	width: 100rpx !important;
-	line-height: 40rpx;
+	padding: 2px 6px;
+	width: 50px !important;
+	line-height: 20px;
 }
 
 .search-container .u-search .u-action.u-action-active {
 	border: 1px solid;
-	border-radius: 40rpx;
+	border-radius: 20px;
 	color: #fff;
 	background: #7275D3;
-	padding: 10rpx 20rpx;
-	width: 120rpx;
+	padding: 5px 10px;
+	width: 60px;
 	line-height: 20px;
 }
 
@@ -46,7 +54,7 @@ uni-image {
 }
 
 .sy-u-search .u-search .u-action.u-action-active {
-	right: 94rpx !important;
+	right: 47px !important;
 
 }
 
@@ -120,7 +128,9 @@ uni-image {
 .uni-body {
 	background-color: #fff !important;
 }
-
+uni-page-body{
+	font-size: 14px !important;
+}
 /* #ifdef H5 */
 body.pages-resource-list uni-page-body {
 	background-color: #fff !important;
@@ -373,12 +383,15 @@ body.pages-resource-list uni-page-body {
 } */
 
 /* 媒体查询 */
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 700px) {
 
 	html,
 	body {
 		width: 700px;
 		margin: 0 auto;
+	}
+	iframe{
+		max-width: 700px;
 	}
 
 	/* uni-page-body{
@@ -438,11 +451,6 @@ body.pages-resource-list uni-page-body {
 	.login-back-con {
 		margin-top: 0px !important;
 	}
-
-	.jz-sy-list .jz-sy-item {
-		flex: 0 0 33.333% !important;
-		width: 33.333% !important;
-	}
 	.wrap .search-row{
 		padding: 8px 15px;
 		display: flex;
@@ -450,11 +458,27 @@ body.pages-resource-list uni-page-body {
 		    align-items: center;
 		    justify-content: center;
 	}
-	.nineSquared_2 .u-grid-item{
-		width: 33.33% !important;
-	}
 	.detail-image-item.MP4{
 		height: 350px !important;
 	}
+	/* .detailtabs{
+		margin-top:0px !important;
+	} */
+}
+@media screen and (min-width: 600px) {
+	.nineSquared_2 .u-grid-item{
+		width: 33.33% !important;
+	}
+	.jz-sy-list .jz-sy-item {
+		flex: 0 0 33.333% !important;
+		width: 33.333% !important;
+	}
+	.resource-tg .u-grid-item{
+		width: 33.333% !important;
+	}
+	.jz-sy-youxi .jz-sy-item{
+				flex: 0 0 33.333% !important;
+	}
+	
 }
 

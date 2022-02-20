@@ -3,7 +3,7 @@
 		<u-navbar :is-back="false" title="发布"></u-navbar>
 		<view class="jz-fabu-con">
 			<view style="margin-right: 4px;">
-				<u-image width="100rpx" height="100rpx" src="/static/newpage/write.png"></u-image>
+				<u-image width="50px" height="50px" src="/static/newpage/write.png"></u-image>
 			</view>
 			<view>
 				<view class="jz-fabu-title">
@@ -24,7 +24,7 @@
 			</view>
 		</view>
 		<view class="jz-fabu-tab">
-			<u-tabs ref="tabs" :bar-width="0" active-color="#777BCE" :font-size="36" :list="tablist" :current="current"
+			<u-tabs ref="tabs" :bar-width="0" active-color="#777BCE" :font-size="18" :list="tablist" :current="current"
 				@change="change"></u-tabs>
 		</view>
 		<view class="jz-fabu-tabcontent">

@@ -8,7 +8,7 @@
 	 class="u-tag" :style="[customStyle]" @tap="clickTag">
 		{{text}}
 		<view class="u-icon-wrap" @tap.stop>
-			<u-icon @click="close" size="22" v-if="closeable" :color="closeIconColor" 
+			<u-icon @click="close" size="11" v-if="closeable" :color="closeIconColor" 
 			name="close" class="u-close-icon" :style="[iconStyle]"></u-icon>
 		</view>
 	</view>
@@ -123,8 +123,8 @@
 			iconStyle() {
 				if(!this.closeable) return ;
 				let style = {};
-				if(this.size == 'mini') style.fontSize = '20rpx';
-				else style.fontSize = '22rpx';
+				if(this.size == 'mini') style.fontSize = '10px';
+				else style.fontSize = '11px';
 				if(this.mode == 'plain' || this.mode == 'light') style.color = this.type;
 				else if(this.mode == 'dark')  style.color = "#ffffff";
 				if(this.closeColor) style.color = this.closeColor;
@@ -163,7 +163,7 @@
 	.u-tag {
 		box-sizing: border-box;
 		align-items: center;
-		border-radius: 6rpx;
+		border-radius: 3px;
 		/* #ifndef APP-NVUE */
 		display: inline-block;
 		/* #endif */
@@ -171,13 +171,13 @@
 	}
 	
 	.u-size-default {
-		font-size: 22rpx;
-		padding: 12rpx 22rpx;
+		font-size: 11px;
+		padding: 6px 11px;
 	}
 	
 	.u-size-mini {
-		font-size: 20rpx;
-		padding: 6rpx 12rpx;
+		font-size: 10px;
+		padding: 3px 6px;
 	}
 
 	.u-mode-light-primary {
@@ -270,20 +270,20 @@
 	}
 
 	.u-shape-circle {
-		border-radius: 100rpx;
+		border-radius: 50px;
 	}
 	
 	.u-shape-circleRight {
-		border-radius:  0 100rpx 100rpx 0;
+		border-radius:  0 50px 50px 0;
 	}
 
 	.u-shape-circleLeft {
-		border-radius: 100rpx 0 0 100rpx;
+		border-radius: 50px 0 0 50px;
 	}
 	
 	.u-close-icon {
-		margin-left: 14rpx;
-		font-size: 22rpx;
+		margin-left: 7px;
+		font-size: 11px;
 		color: $u-type-success;
 	}
 	

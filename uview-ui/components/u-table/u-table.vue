@@ -34,12 +34,12 @@
 			// td的内边距
 			padding: {
 				type: String,
-				default: '10rpx 6rpx'
+				default: '5px 3px'
 			},
 			// 字体大小
 			fontSize: {
 				type: [String, Number],
-				default: 28
+				default: 14
 			},
 			// 字体颜色
 			color: {

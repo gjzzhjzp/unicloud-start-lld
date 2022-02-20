@@ -2,12 +2,12 @@
 	<view class="nineSquared">
 		<view @click="toggleType('grid')" v-show="listtype=='grid'" style="display: flex;justify-content: flex-end;"
 			class="nineSquared_icon" :style="{'top':top+'px'}">
-			<u-icon size="36" name="/static/grid/list.png"></u-icon>
+			<u-icon size="18" name="/static/grid/list.png"></u-icon>
 			<view style="color: #7275D3;margin-left: 4px;">列表</view>
 		</view>
 		<view @click="toggleType('list')" v-show="listtype=='list'" style="display: flex;justify-content: flex-end;"
 			class="nineSquared_icon" :style="{'top':top+'px'}">
-			<u-icon size="32" name="/static/grid/grid.png"></u-icon>
+			<u-icon size="18" name="/static/grid/grid.png"></u-icon>
 			<view style="color: #7275D3;margin-left: 4px;">宫格</view>
 		</view>
 		<template v-if="listtype=='grid'">
@@ -109,7 +109,6 @@
 				this.showmore = true;
 			},
 			preview(item) {
-				console.log("item", item);
 				this.$emit("preview", item);
 			}
 		}
@@ -118,7 +117,7 @@
 
 <style>
 	.nineSquared_icon {
-		position: fixed;
+		position: absolute;
 		right: 10px;
 		/* top: 46px; */
 		z-index: 9999;

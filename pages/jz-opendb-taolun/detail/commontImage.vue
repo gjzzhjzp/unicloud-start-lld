@@ -27,11 +27,11 @@
 				}
 			}
 		},
-		methods:{
-			imageUrl(){
-				if(this.src){
+		methods: {
+			imageUrl() {
+				if (this.src) {
 					return this.src;
-				}else{
+				} else {
 					return "/static/center/nologin.png";
 				}
 			}
@@ -45,16 +45,16 @@
 	}
 
 	.original-img {
-		    width: 88rpx;
-		    height: 88rpx;
-		    position: absolute;
-		    top: -11rpx;
-		    left: -14rpx;
+		width: 44px;
+		height: 44px;
+		position: absolute;
+		top: -5px;
+		left: -6px;
 	}
 
 	image {
-		width: 64rpx;
-		height: 64rpx;
+		width: 32px;
+		height: 32px;
 		border-radius: 50%;
 		background-color: #f2f2f2;
 	}

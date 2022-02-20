@@ -199,7 +199,7 @@
 									1000 - 1;
 								var daycount = await db.collection('uni-id-users').where('register_date > ' +
 									day1 + '&&register_date < ' + day2 + '').count()
-								console.log("daycount", daycount);
+								// console.log("daycount", daycount);
 								var _count = daycount.result.total;
 								if (_count >= this.yqrxz_number) {
 									uni.showToast({
@@ -255,7 +255,7 @@
 										uni.hideLoading();
 										return;
 									}
-									console.log("_user", _user, this.yqr_id);
+									// console.log("_user", _user, this.yqr_id);
 								} else {
 									uni.showToast({
 										title: "邀请码无效",
@@ -276,7 +276,7 @@
 							this.$refs.sevicecontent.show();
 						}
 					}).catch((errors) => {
-						console.log(errors);
+						// console.log(errors);
 					})
 					.finally(() => {
 						uni.hideLoading()

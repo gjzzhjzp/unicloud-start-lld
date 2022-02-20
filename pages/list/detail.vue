@@ -145,7 +145,7 @@
 					readNewsLog.splice(index,1,item)
 				}
 				uni.setStorageSync('readNewsLog',readNewsLog)
-				console.log(readNewsLog);
+				// console.log(readNewsLog);
 			},
 			// 喜欢
 			setFavorite() {
@@ -154,11 +154,11 @@
 				}
 				let article_id = this.id,
 					last_time = Date.now();
-					console.log({article_id,last_time});
+					// console.log({article_id,last_time});
 					readNewsLog.where(`"article_id" == "${article_id}" && "user_id"==$env.uid`)
 						.update({last_time})
 						.then(({result:{updated}}) => {
-							console.log('updated',updated);
+							// console.log('updated',updated);
 							if (!updated) {
 								readNewsLog.add({article_id}).then(e=>{
 									console.log(e);

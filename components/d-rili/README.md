@@ -96,8 +96,6 @@
 			};
 		},
 		created() {
-			console.log('created')
-			
 			this._onLoad()
 		},
 		methods:{
@@ -121,16 +119,12 @@
 			},
 			
 			async _runMonth() {
-				console.log('==============================================================')
-				
 				//	获取当前月的每一天的数据	1~31
 				await this.initApi()
 				
 				//	根据当前选择的年月，更新start_time   end_time
 				await this._timeApi()
 				
-				console.log(this.start_time)
-				console.log(this.end_time)
 				//	更新记录
 				// await this.onClickSignLog()
 				
@@ -141,11 +135,7 @@
 				this.slideDataList[1] = dataWeek
 				this.slideDataList[2] = []
 				
-				console.log(this.slideDataList)
-				
-				
-				console.log('==============================================================')
-			},
+				},
 			
 			_getTimeNowApi() {
 				//	初始化时间
@@ -203,7 +193,6 @@
 			},
 			
 			_getNowApi() {
-				console.log('当前日期：'+this.year+'-'+this.month+'-'+this.day)
 				
 				let data = {
 					Day: 1,
@@ -211,7 +200,7 @@
 					Year: this.year
 				}
 				
-				console.log(data)
+				
 				return data
 			},
 			//	获取当前月的每一天的数据

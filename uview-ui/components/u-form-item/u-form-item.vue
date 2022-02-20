@@ -7,7 +7,7 @@
 			<view class="u-form-item--left" :style="{
 				width: uLabelWidth,
 				flex: `0 0 ${uLabelWidth}`,
-				marginBottom: elLabelPosition == 'left' ? 0 : '10rpx',
+				marginBottom: elLabelPosition == 'left' ? 0 : '5px',
 			}">
 				<!-- 为了块对齐 -->
 				<view class="u-form-item--left__content" v-if="required || leftIcon || label">
@@ -351,8 +351,8 @@
 	.u-form-item {
 		@include vue-flex;
 		// align-items: flex-start;
-		padding: 20rpx 0;
-		font-size: 28rpx;
+		padding: 10px 0;
+		font-size: 14px;
 		color: $u-main-color;
 		box-sizing: border-box;
 		line-height: $u-form-item-height;
@@ -374,19 +374,19 @@
 				position: relative;
 				@include vue-flex;
 				align-items: center;
-				padding-right: 10rpx;
+				padding-right: 5px;
 				flex: 1;
 
 				&__icon {
-					margin-right: 8rpx;
+					margin-right: 4px;
 				}
 
 				&--required {
 					position: absolute;
-					left: -16rpx;
+					left: -8px;
 					vertical-align: middle;
 					color: $u-type-error;
-					padding-top: 6rpx;
+					padding-top: 3px;
 				}
 
 				&__label {
@@ -414,18 +414,18 @@
 				}
 
 				&__icon {
-					margin-left: 10rpx;
+					margin-left: 5px;
 					color: $u-light-color;
-					font-size: 30rpx;
+					font-size: 15px;
 				}
 			}
 		}
 
 		&__message {
-			font-size: 24rpx;
-			line-height: 24rpx;
+			font-size: 12px;
+			line-height: 12px;
 			color: $u-type-error;
-			margin-top: 12rpx;
+			margin-top: 6px;
 		}
 	}
 </style>

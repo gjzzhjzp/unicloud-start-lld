@@ -6,7 +6,7 @@
 		<u-sticky>
 			<view v-if="tablist.length>1||(showdanmu&&showsendDanmu)" class="detailtabs" style="margin-top: 10px;">
 				<view style="flex: 1;">
-					<u-tabs :font-size="32" active-color="#7275D3" :list="tablist" :is-scroll="false" :bar-width="100"
+					<u-tabs :font-size="16" active-color="#7275D3" :list="tablist" :is-scroll="false" :bar-width="0"
 						:current="current" @change="changeTab">
 					</u-tabs>
 				</view>
@@ -38,7 +38,7 @@
 						{{data.title}}
 					</view>
 					<view style="color: #909399;display: flex;align-items: center;" v-show="showllsc">
-						<u-icon name="eye" :size="30"></u-icon><text
+						<u-icon name="eye" :size="15"></u-icon><text
 							style="margin-left: 2px;">{{data.view_count||0}}</text>
 						<!-- <uni-dateformat class="publish_date" :date="data.publish_date" format="yyyy-MM-dd"
 							:threshold="[60000, 2592000000]" /> -->
@@ -217,7 +217,7 @@
 			async checkishj(){
 				// debugger;
 				// 检查是否存在合集
-				console.log("this.data._id",this.data._id);
+				// console.log("this.data._id",this.data._id);
 				if(this.data._id){
 					var dbcount=await db.collection("jz-opendb-resourceshj").where({
 						article_id:this.data._id
@@ -228,7 +228,6 @@
 					}else{
 						this.showhj=false;
 					}
-					console.log("dbcount",dbcount);
 				}
 			},
 			async guanzhu(item) {
@@ -436,7 +435,7 @@
 	}
 
 	.detail-image-title .title {
-		font-size: 36rpx;
+		font-size: 16px;
 		flex: 1;
 		display: flex;
 	}

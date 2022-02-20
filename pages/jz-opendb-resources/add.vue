@@ -49,7 +49,7 @@
 						<uni-file-picker file-mediatype="video" file-extname="mp4" :limit="1" return-type="array"
 							v-model="formData.resources">
 						</uni-file-picker>
-						<view class="resource-ts">支持MP4格式，超过100M的视频可联系后台上传</view>
+						<view class="resource-ts">支持MP4格式，超过100M的视频请微博私信小宇宙</view>
 					</template>
 					<!-- #ifdef H5 -->
 					<template v-else-if="formData.zy_gs==2">

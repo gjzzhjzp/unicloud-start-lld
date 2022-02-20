@@ -48,11 +48,11 @@
 				gflowList: [],
 				list: [],
 				tabslist: [{
-					name: '图片',
-					type: "0"
-				}, {
 					name: '视频',
 					type: "1"
+				}, {
+					name: '图片',
+					type: "0"
 				}, {
 					name: '音乐',
 					type: "2"
@@ -69,10 +69,10 @@
 				}],
 				wrapcurrenttab: 0,
 				currenttab: 0,
-				zy_gs: 0,
+				zy_gs: 1,
 				param: {
 					page: 1,
-					rows: 10
+					rows: 18
 				}
 			}
 		},
@@ -103,7 +103,7 @@
 		methods: {
 			changeTabs(index) {
 				this.currenttab = index;
-				this.zy_gs = index;
+				this.zy_gs = this.tabslist[index].type;
 				// this.reset=true;
 				this.param.page = 1;
 				this.flowList.splice(0, this.flowList.length);
@@ -132,7 +132,7 @@
 						action: "resource/getHistoryList",
 						data: {
 							uid: userInfo._id,
-							zy_gs: this.zy_gs,
+							zy_gs: parseInt(this.zy_gs),
 							page: this.param.page,
 							rows: this.param.rows
 						}
@@ -192,7 +192,6 @@
 					},
 				}).then((res) => {
 					var rows = res.result.rows;
-					console.log("getHistoryList",rows);
 					if (rows.length < this.param.rows) {
 						this.loadStatus = 'nomore';
 					} else {
@@ -230,7 +229,6 @@
 			AryDeleteMore(arr) {
 
 				if (!Array.isArray(arr)) {
-					console.log('type error!')
 					return
 				}
 				var array = [];

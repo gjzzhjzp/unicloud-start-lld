@@ -2,7 +2,7 @@
 	<view @tap="backToTop" class="u-back-top" :class="['u-back-top--mode--' + mode]" :style="[{
 		bottom: bottom + 'rpx',
 		right: right + 'rpx',
-		borderRadius: mode == 'circle' ? '10000rpx' : '8rpx',
+		borderRadius: mode == 'circle' ? '5000px' : '4px',
 		zIndex: uZIndex,
 		opacity: opacity
 	}, customStyle]">
@@ -71,7 +71,7 @@
 				default() {
 					return {
 						color: '#909399',
-						fontSize: '38rpx'
+						fontSize: '19px'
 					}
 				}
 			},
@@ -126,8 +126,8 @@
 	@import "../../libs/css/style.components.scss";
 	
 	.u-back-top {
-		width: 80rpx;
-		height: 80rpx;
+		width: 40px;
+		height: 40px;
 		position: fixed;
 		z-index: 9;
 		@include vue-flex;
@@ -144,7 +144,7 @@
 			align-items: center;
 			
 			&__tips {
-				font-size: 24rpx;
+				font-size: 12px;
 				transform: scale(0.8);
 				line-height: 1;
 			}

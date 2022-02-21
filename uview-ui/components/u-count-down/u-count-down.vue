@@ -7,43 +7,43 @@
 		</view>
 		<view
 			class="u-countdown-colon"
-			:style="{fontSize: separatorSize + 'rpx', color: separatorColor, paddingBottom: separator == 'colon' ? '4rpx' : 0}"
+			:style="{fontSize: separatorSize + 'px', color: separatorColor, paddingBottom: separator == 'colon' ? '2px' : 0}"
 			v-if="showDays && (hideZeroDay || (!hideZeroDay && d != '00'))"
 		>
 			{{ separator == 'colon' ? ':' : '天' }}
 		</view>
 		<view class="u-countdown-item" :style="[itemStyle]" v-if="showHours">
-			<view class="u-countdown-time" :style="{ fontSize: fontSize + 'rpx', color: color}">
+			<view class="u-countdown-time" :style="{ fontSize: fontSize + 'px', color: color}">
 				{{ h }}
 			</view>
 		</view>
 		<view
 			class="u-countdown-colon"
-			:style="{fontSize: separatorSize + 'rpx', color: separatorColor, paddingBottom: separator == 'colon' ? '4rpx' : 0}"
+			:style="{fontSize: separatorSize + 'px', color: separatorColor, paddingBottom: separator == 'colon' ? '2px' : 0}"
 			v-if="showHours"
 		>
 			{{ separator == 'colon' ? ':' : '时' }}
 		</view>
 		<view class="u-countdown-item" :style="[itemStyle]" v-if="showMinutes">
-			<view class="u-countdown-time" :style="{ fontSize: fontSize + 'rpx', color: color}">
+			<view class="u-countdown-time" :style="{ fontSize: fontSize + 'px', color: color}">
 				{{ i }}
 			</view>
 		</view>
 		<view
 			class="u-countdown-colon"
-			:style="{fontSize: separatorSize + 'rpx', color: separatorColor, paddingBottom: separator == 'colon' ? '4rpx' : 0}"
+			:style="{fontSize: separatorSize + 'px', color: separatorColor, paddingBottom: separator == 'colon' ? '2px' : 0}"
 			v-if="showMinutes"
 		>
 			{{ separator == 'colon' ? ':' : '分' }}
 		</view>
 		<view class="u-countdown-item" :style="[itemStyle]" v-if="showSeconds">
-			<view class="u-countdown-time" :style="{ fontSize: fontSize + 'rpx', color: color}">
+			<view class="u-countdown-time" :style="{ fontSize: fontSize + 'px', color: color}">
 				{{ s }}
 			</view>
 		</view>
 		<view
 			class="u-countdown-colon"
-			:style="{fontSize: separatorSize + 'rpx', color: separatorColor, paddingBottom: separator == 'colon' ? '4rpx' : 0}"
+			:style="{fontSize: separatorSize + 'px', color: separatorColor, paddingBottom: separator == 'colon' ? '2px' : 0}"
 			v-if="showSeconds && separator == 'zh'"
 		>
 			秒
@@ -97,7 +97,7 @@ export default {
 		// 分隔符的大小，单位rpx
 		separatorSize: {
 			type: [Number, String],
-			default: 30
+			default: 15
 		},
 		// 分隔符颜色
 		separatorColor: {
@@ -112,7 +112,7 @@ export default {
 		// 字体大小，单位rpx
 		fontSize: {
 			type: [Number, String],
-			default: 30
+			default: 15
 		},
 		// 背景颜色
 		bgColor: {
@@ -183,8 +183,8 @@ export default {
 		itemStyle() {
 			let style = {};
 			if(this.height) {
-				style.height = this.height + 'rpx';
-				style.width = this.height + 'rpx';
+				style.height = this.height + 'px';
+				style.width = this.height + 'px';
 			}
 			if(this.showBorder) {
 				style.borderStyle = 'solid';
@@ -199,7 +199,7 @@ export default {
 		// 倒计时数字的样式
 		letterStyle() {
 			let style = {};
-			if(this.fontSize) style.fontSize = this.fontSize +  'rpx';
+			if(this.fontSize) style.fontSize = this.fontSize +  'px';
 			if(this.color) style.color = this.color;
 			return style;
 		}
@@ -290,8 +290,8 @@ export default {
 		@include vue-flex;
 		align-items: center;
 		justify-content: center;
-		padding: 2rpx;
-		border-radius: 6rpx;
+		padding: 1px;
+		border-radius:3px;
 		white-space: nowrap;
 		transform: translateZ(0);
 	}
@@ -305,10 +305,10 @@ export default {
 	.u-countdown-colon {
 		@include vue-flex;
 		justify-content: center;
-		padding: 0 5rpx;
+		padding: 0 3px;
 		line-height: 1;
 		align-items: center;
-		padding-bottom: 4rpx;
+		padding-bottom: 2px;
 	}
 
 	.u-countdown-scale {

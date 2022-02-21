@@ -260,7 +260,7 @@ export default async function() {
 			});
 		},
 		success: (e) => {
-			console.log(e);
+			// console.log(e);
 			const {
 				token,
 				tokenExpired

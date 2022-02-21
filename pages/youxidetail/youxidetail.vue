@@ -18,11 +18,11 @@
 		},
 		created() {
 			this.src = this.$Route.query.src;
-			// if (typeof plus != "undefined") {
-			// 	this.showtop=true;
-			// }else{
-			// 	this.showtop=false;
-			// }
+			if (typeof plus != "undefined") {
+				this.showtop=true;
+			}else{
+				this.showtop=false;
+			}
 		}
 	}
 </script>

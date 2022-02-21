@@ -519,7 +519,7 @@
 	}
 
 	.comment {
-		padding: 15px;
+		padding: 10px;
 		font-size: 16px;
 		background-color: #ffffff;
 
@@ -555,6 +555,7 @@
 					display: flex;
 					flex-direction: row;
 					flex-wrap: wrap;
+					font-size: 14px;
 				}
 
 				.date {
@@ -599,7 +600,7 @@
 			margin-left: 10px;
 			padding-left: 10px;
 			border-left: solid 2px #5677fc;
-			font-size: 15px;
+			font-size: 14px;
 			font-weight: bold;
 		}
 

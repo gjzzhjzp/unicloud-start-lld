@@ -250,10 +250,12 @@
 		}
 
 		&__title {
-			padding-top: 24px;
+			padding-top: 16px;
+			padding-bottom: 10px;
 			font-weight: 500;
 			text-align: center;
 			color: $u-main-color;
+			font-size: 16px;
 		}
 
 		&__content {

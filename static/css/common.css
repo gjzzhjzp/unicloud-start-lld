@@ -383,6 +383,27 @@ body.pages-resource-list uni-page-body {
 } */
 
 /* 媒体查询 */
+@media screen and (min-width: 500px) {
+	.jz-banner uni-swiper {
+		height: 240px !important;
+	}
+}
+@media screen and (min-width: 600px) {
+	.nineSquared_2 .u-grid-item{
+		width: 33.33% !important;
+	}
+	.jz-sy-list .jz-sy-item {
+		flex: 0 0 33.333% !important;
+		width: 33.333% !important;
+	}
+	.resource-tg .u-grid-item{
+		width: 33.333% !important;
+	}
+	.jz-sy-youxi .jz-sy-item{
+				flex: 0 0 33.333% !important;
+	}
+	
+}
 @media screen and (min-width: 700px) {
 
 	html,
@@ -465,20 +486,5 @@ body.pages-resource-list uni-page-body {
 		margin-top:0px !important;
 	} */
 }
-@media screen and (min-width: 600px) {
-	.nineSquared_2 .u-grid-item{
-		width: 33.33% !important;
-	}
-	.jz-sy-list .jz-sy-item {
-		flex: 0 0 33.333% !important;
-		width: 33.333% !important;
-	}
-	.resource-tg .u-grid-item{
-		width: 33.333% !important;
-	}
-	.jz-sy-youxi .jz-sy-item{
-				flex: 0 0 33.333% !important;
-	}
-	
-}
+
 

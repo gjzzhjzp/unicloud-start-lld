@@ -2,7 +2,7 @@
 	<view class="fabusuccess-con">
 		<view class="fabusuccess-con1">
 			<view class="fabusuccess-icon">
-				<u-icon size="200" name="/static/newpage/success.png"></u-icon>
+				<u-icon size="100" name="/static/newpage/success.png"></u-icon>
 			</view>
 			<view class="fabusuccess">
 				发布成功！

@@ -174,7 +174,6 @@
 			// 监听tab的变化，重新计算tab菜单的布局信息，因为实际使用中菜单可能是通过
 			// 后台获取的（如新闻app顶部的菜单），获取返回需要一定时间，所以list变化时，重新获取布局信息
 			list(n, o) {
-				console.log("changeList")
 				// debugger;
 				// list变动时，重制内部索引，否则可能导致超出数组边界的情况
 				if(n.length !== o.length) this.currentIndex = 0;
@@ -287,9 +286,9 @@
 				// debugger;
 				// 当前活动tab的布局信息，有tab菜单的width和left(为元素左边界到父元素左边界的距离)等信息
 				let tabInfo = this.tabQueryInfo[this.currentIndex];
-				console.log("this.currentIndex",this.currentIndex);
+				// console.log("this.currentIndex",this.currentIndex);
 				if (!tabInfo) return;
-				console.log("tabInfo",tabInfo,this.parentLeft);
+				// console.log("tabInfo",tabInfo,this.parentLeft);
 				// 活动tab的宽度
 				let tabWidth = tabInfo.width;
 				// 活动item的左边到tabs组件左边的距离，用item的left减去tabs的left
@@ -302,7 +301,7 @@
 				// 计算当前活跃item到组件左边的距离
 				
 				this.scrollBarLeft = left - uni.upx2px(this.barWidth) / 2;
-				console.log("left",left,uni.upx2px(this.barWidth),this.scrollBarLeft);
+				// console.log("left",left,uni.upx2px(this.barWidth),this.scrollBarLeft);
 				// 第一次移动滑块的时候，barFirstTimeMove为true，放到延时中将其设置false
 				// 延时是因为scrollBarLeft作用于computed计算时，需要一个过程需，否则导致出错
 				if(this.barFirstTimeMove == true) {

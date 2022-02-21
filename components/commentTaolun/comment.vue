@@ -691,14 +691,14 @@
 	.comment {
 		display: flex;
 		flex-direction: row;
-		padding: 15px;
+		padding: 10px;
 
 		.left {}
 
 		.right {
 			flex: 1;
 			padding-left: 10px;
-			font-size: 15px;
+			font-size: 14px;
 
 			.top {
 				display: flex;

@@ -46,9 +46,9 @@ db.collection('opendb-news-comments').where({
 });
 
 db.collection('jz-opendb-resources').where({
-	is_gonggao: 1
+	is_recommend: 1
 }).update({
-	user_id:"61f5136e4690ae0001e6a387"
+	is_recommend: 0
 });
 db.collection('jz-opendb-resources').where({
 	title:  new RegExp("按时间线带你补课", 'gi'),

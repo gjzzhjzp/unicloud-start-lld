@@ -1,8 +1,6 @@
 import checksh from "@/common/checksh.js";
 export default {
 	initconfig() {
-		// debugger;
-		console.log("initconfig");
 		var app_bbh = getApp().globalData.app_bbh;
 		//#ifdef APP-PLUS
 		app_bbh = plus.runtime.versionCode;
@@ -54,7 +52,6 @@ export default {
 					var userdata = await usersTable.where('_id==$env.uid').field(
 						"username,weiboname,resources,weibocontent,nickname,isbdwb,original,forbiddenwords,status,avatar,avatar_file,role,register_date,token"
 						).get();
-					console.log("userdata", userdata);
 					var userinf = userdata.result.data[0];
 					uni.setStorageSync("userInfo", userinf);
 					getApp().globalData.userinf = userinf;

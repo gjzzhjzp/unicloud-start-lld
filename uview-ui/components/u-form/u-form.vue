@@ -115,7 +115,7 @@ export default {
 							errorArr.push(error);
 						}
 						// 当历遍了所有的u-form-item时，调用promise的then方法
-						console.log("count",count,this.fields.length);
+						// console.log("count",count,this.fields.length);
 						if (++count === this.fields.length) {
 							resolve(valid); // 进入promise的then方法
 							// 判断是否设置了toast的提示方式，只提示最前面的表单域的第一个错误信息

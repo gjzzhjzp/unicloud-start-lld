@@ -220,7 +220,7 @@
 		},
 		methods: {
 			clickImage(item) {
-				console.log("1111", item);
+				// console.log("1111", item);
 				if (item.url) {
 					uni.navigateTo({
 						url: item.url

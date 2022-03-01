@@ -95,6 +95,11 @@
 			"title": "是否禁言",
 			"description": "是否禁言"
 		},
+		"isshr": {
+			"bsonType": "bool",
+			"title": "是审核人员",
+			"description": "是否是审核人员"
+		},
 		"beizhu": {
 			"bsonType": "string",
 			"title": "备注",

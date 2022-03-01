@@ -8,12 +8,12 @@
 					:key="index">
 					<u-input v-model="item.answer" />
 				</u-form-item>
-				<u-form-item required label="相信国家，相信党，永远跟党走" label-position="top" :key="4">
+				<!-- <u-form-item required label="相信国家，相信党，永远跟党走" label-position="top" :key="4">
 					<u-input v-model="answer" placeholder="请完整输入以上内容" />
 				</u-form-item>
 				<u-form-item required label="人民有信仰，国家有力量，民族有希望" label-position="top" :key="5">
 					<u-input v-model="answer2" placeholder="请完整输入以上内容" />
-				</u-form-item>
+				</u-form-item> -->
 			</u-form>
 		</view>
 
@@ -75,31 +75,31 @@
 				var flag = true;
 				var dataid = [];
 				data.forEach((item, index) => {
-					if (!this.answer || !this.answer2) {
-						this.$refs.uToast.show({
-							title: "宝，请输入完整答案哦~",
-							type: 'error'
-						});
-						flag = false;
-					} else {
-						if (index != 3) {
+					// if (!this.answer || !this.answer2) {
+					// 	this.$refs.uToast.show({
+					// 		title: "宝，请输入完整答案哦~",
+					// 		type: 'error'
+					// 	});
+					// 	flag = false;
+					// } else {
+						// if (index != 5) {
 							dataid.push({
 								_id: item._id,
 								answer: item.answer
 							});
-						}
-					}
+						// }
+					// }
 				});
 				if (!flag) {
 					return;
 				} else {
-					if (this.answer != "相信国家，相信党，永远跟党走" || this.answer2 != "人民有信仰，国家有力量，民族有希望") {
-						this.$refs.uToast.show({
-							title: "答案错误",
-							type: 'error'
-						});
-						return;
-					}
+					// if (this.answer != "相信国家，相信党，永远跟党走" || this.answer2 != "人民有信仰，国家有力量，民族有希望") {
+					// 	this.$refs.uToast.show({
+					// 		title: "答案错误",
+					// 		type: 'error'
+					// 	});
+					// 	return;
+					// }
 				}
 				uni.showLoading({
 					title: '正在处理...'

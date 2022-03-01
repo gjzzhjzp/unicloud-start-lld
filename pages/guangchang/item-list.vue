@@ -37,8 +37,10 @@
 								{{f_content(item.excerpt)}}
 							</view>
 						</view>
+						<!-- @click="$notMoreTap(toDetail,'notTap',item)" -->
 						<view @click="$notMoreTap(toDetail,'notTap',item)">
-							<nine-squared :showicon="false" :list="item.resources"></nine-squared>
+							<nine-squared :showicon="false" :list="item.resources" ></nine-squared>
+							<!-- <kxj-previewImage :ref="'previewImage'+index" :imgs="initImgs(item)" @longPress="openlongan"></kxj-previewImage> -->
 						</view>
 
 						<operation v-if="showoperation" :data="item" @topl="toDetail"></operation>
@@ -58,6 +60,8 @@
 		data() {
 			return {
 				notTap: true, //一定要设置为true
+				showlongan: false,
+				currentSrc: ""
 			}
 		},
 		components: {
@@ -98,7 +102,8 @@
 		},
 		watch: {
 			list() {
-				this.list.forEach((item) => {
+				this.list.forEach((item,index) => {
+					this.$set(item, "index", index);
 					if (item.labels) {
 						var arr = [];
 						var _labels = item.labels.split("，");
@@ -113,8 +118,35 @@
 			}
 		},
 		methods: {
+			// openlongan(data) {
+			// 	this.currentSrc = data.src;
+			// 	this.showlongan = true;
+			// },
+			// initImgs(item){
+			// 	var imgs=[];
+			// 	if (item && item.resources) {
+			// 		item.resources.forEach((item) => {
+			// 			imgs.push(item.url);
+			// 		})
+			// 	}
+			// 	return imgs;
+			// },
+			// previewOpen(item) {
+			// 	// debugger;
+			// 	var that = this;
+			// 	this.$refs.previewImage.open(item.url);
+			// 	if (typeof plus != "undefined") {
+			// 		var pscreen = plus.webview.currentWebview().opener();
+			// 		mui.fire(pscreen, 'waitclose', {
+			// 			waitclose: "1"
+			// 		});
+			// 		window.addEventListener('allowclose', function(e) {
+			// 			that.closePopup();
+			// 		});
+			// 	}
+			// },
 			f_content(content) {
-				var _con = content.replace(/<p>/g, "").replace(/<\/p>/g, "\n").replace(/<br>/g, "\n");
+				var _con = content.replace(/<br>/g, "\n").replace(/<\/p>/g, "\n").replace(/<[a-z\s"-:;=]+>/g, "").replace(/<\/[a-z\s"-:;=]*>/g, "\n");
 				return _con;
 			},
 			showguanzhu(item) {

@@ -13,7 +13,8 @@ module.exports = class jzresourcehjService extends Service {
 		var collection_query = collection.aggregate().match({
 			parent_id: parent_id
 		}).sort({
-			"sort": 1
+			"sort": 1,
+			"create_date":1
 		}).skip((page - 1) * rows).limit(rows);
 		var resultdata = {};
 		resultdata = await collection_query.lookup({

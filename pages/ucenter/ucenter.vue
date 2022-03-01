@@ -205,20 +205,22 @@
 				this.isnewinfo = false;
 				var userInfo = uni.getStorageSync("userInfo");
 				var last_time = uni.getStorageSync("systeminfo_last");
-				var _obj = {
-					user_id: userInfo._id,
-					type: db.command.neq(0)
-				}
-				if (last_time) {
-					Object.assign(_obj, {
-						comment_date: db.command.gt(last_time)
-					})
-				}
-				var res = await db.collection('jz-custom-systeminfo').where(_obj).field("comment").get();
-				if (res.result.data && res.result.data.length > 0) {
-					this.$set(this,"isnewinfo",true);
-				}else{
-					this.$set(this,"isnewinfo",false);
+				if(userInfo&&userInfo._id){
+					var _obj = {
+						user_id: userInfo._id,
+						type: db.command.neq(0)
+					}
+					if (last_time) {
+						Object.assign(_obj, {
+							comment_date: db.command.gt(last_time)
+						})
+					}
+					var res = await db.collection('jz-custom-systeminfo').where(_obj).field("comment").get();
+					if (res.result.data && res.result.data.length > 0) {
+						this.$set(this,"isnewinfo",true);
+					}else{
+						this.$set(this,"isnewinfo",false);
+					}
 				}
 			},
 			goback() {

@@ -3,7 +3,7 @@
 		zIndex: uZIndex
 	}">
 		<view class="u-icon-wrap">
-			<u-icon v-if="tmpConfig.icon" class="u-icon" :name="iconName" :size="30" :color="tmpConfig.type"></u-icon>
+			<u-icon v-if="tmpConfig.icon" class="u-icon" :name="iconName" :size="15" :color="tmpConfig.type"></u-icon>
 		</view>
 		<text class="u-text">{{tmpConfig.title}}</text>
 	</view>
@@ -140,15 +140,15 @@
 		transition: opacity 0.3s;
 		text-align: center;
 		color: #fff;
-		border-radius: 8rpx;
+		border-radius: 4px;
 		background: #585858;
 		@include vue-flex;
 		align-items: center;
 		justify-content: center;
-		font-size: 28rpx;
+		font-size: 14px;
 		opacity: 0;
 		pointer-events: none;
-		padding: 18rpx 40rpx;
+		padding: 9px 20px;
 	}
 
 	.u-toast.u-show {
@@ -156,7 +156,7 @@
 	}
 
 	.u-icon {
-		margin-right: 10rpx;
+		margin-right: 5px;
 		@include vue-flex;
 		align-items: center;
 		line-height: normal;

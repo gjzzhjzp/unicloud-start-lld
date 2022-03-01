@@ -136,8 +136,10 @@
 		},
 		methods: {
 			todetail1(item){
+				// debugger;
 				if (item.path) {
-					var path=item.path;
+					var host=window.location.protocol+"//"+window.location.host;
+					var path=host+item.path;
 					uni.navigateTo({
 						url: "/pages/youxidetail/youxidetail?src=" + encodeURIComponent(path)
 					})
@@ -154,7 +156,9 @@
 			wudihref() {
 				if (this.curitem.path) {
 					// debugger;
-					var path=this.curitem.path + "?tiaotiao=1";
+					var host=window.location.protocol+"//"+window.location.host;
+					var path=host+this.curitem.path + "?tiaotiao=1";
+					// var path=this.curitem.path + "?tiaotiao=1";
 					uni.navigateTo({
 						url: "/pages/youxidetail/youxidetail?src=" + encodeURIComponent(path)
 					})
@@ -164,7 +168,9 @@
 			},
 			putonghref() {
 				if (this.curitem.path) {
-					var path=this.curitem.path + "?tiaotiao=0";
+					// var path=this.curitem.path + "?tiaotiao=0";
+					var host=window.location.protocol+"//"+window.location.host;
+					var path=host+this.curitem.path + "?tiaotiao=0";
 					uni.navigateTo({
 						url: "/pages/youxidetail/youxidetail?src=" + encodeURIComponent(path)
 					})

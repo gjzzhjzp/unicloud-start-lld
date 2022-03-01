@@ -11,7 +11,7 @@
 				<view v-for="(item, index) in data" :key="item._id" class="item u-border-bottom" @click="$notMoreTap(todetail,'notTap',item)">
 					
 					<view class="title-wrap">
-						<text class="title u-line-2">{{ item.excerpt }}</text>
+						<text class="title u-line-2" v-html="item.excerpt"></text>
 					</view>
 				</view>
 			</view>

@@ -20,6 +20,12 @@ module.exports = class checkquestionService extends Service {
 			},{
 				_id: event[2]._id,
 				status:true
+			},{
+				_id: event[3]._id,
+				status:true
+			},{
+				_id: event[4]._id,
+				status:true
 			})
 		).get();
 		var result = datalist.data;
@@ -93,7 +99,7 @@ module.exports = class checkquestionService extends Service {
 					_r.push(num1);
 					i++;
 				}
-			} while (i < 3);
+			} while (i < 5);
 			data.data.forEach((item, index) => {
 				if (_r.indexOf(index) != -1) {
 					returndata.push(item);

@@ -47,23 +47,24 @@
 			async checknewinfo() {
 				var userInfo = uni.getStorageSync("userInfo");
 				const db=uniCloud.database();
-				var res = await db.collection('jz-custom-systeminfo').where({
-					user_id:userInfo._id,
-					type:0
-				}).field("comment,comment_date").get();
-				if (res.result.data && res.result.data.length > 0) {
-					var infos = res.result.data;
-					if(infos&&infos.length>0){
-						// debugger;
-						this.isnewinfo=infos[infos.length-1].comment;
-						var time=infos[infos.length-1].comment_date;
-						if(this.isnewinfo){
-							this.content+="<br>审核意见：【"+this.isnewinfo+"】";
-							this.content+="<br>审核时间：【"+this.$u.timeFormat(time, 'yyyy-mm-dd hh:MM:ss')+"】";
+				if(userInfo&&userInfo._id){
+					var res = await db.collection('jz-custom-systeminfo').where({
+						user_id:userInfo._id,
+						type:0	
+					}).field("comment,comment_date").get();
+					if (res.result.data && res.result.data.length > 0) {
+						var infos = res.result.data;
+						if(infos&&infos.length>0){
+							// debugger;
+							this.isnewinfo=infos[infos.length-1].comment;
+							var time=infos[infos.length-1].comment_date;
+							if(this.isnewinfo){
+								this.content+="<br>审核意见：【"+this.isnewinfo+"】";
+								this.content+="<br>审核时间：【"+this.$u.timeFormat(time, 'yyyy-mm-dd hh:MM:ss')+"】";
+							}
 						}
 					}
 				}
-				// console.log("isnewinfo",this.isnewinfo);
 			},
 			cancel() {
 				this.closeModal();

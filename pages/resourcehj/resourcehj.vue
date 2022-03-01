@@ -58,6 +58,10 @@
 			uni.stopPullDownRefresh();
 		},
 		methods: {
+			loadmoreList() {
+				this.reset = false;
+				this.addRandomData();
+			},
 			async init() {
 				var dbres = await db.collection("jz-opendb-resourceshj").where({
 					hj_id: this.id
@@ -84,7 +88,7 @@
 					data: {
 						action: "jzresourcehj/getList",
 						data: {
-								parent_id: this.id,
+							parent_id: this.id,
 							page: this.param.page,
 							rows: this.param.rows
 						}
@@ -108,10 +112,11 @@
 						}
 					});
 					this.flowList = this.AryDeleteMore(this.flowList);
+					// console.log("this.flowList",this.flowList);
 					uni.hideLoading();
 				}).catch((err) => {
 					console.log("网络错误，请重试——err", err);
-					uni.showModal({
+					uni.showModal({	
 						content: err.message || '网络错误，请重试',
 						showCancel: false
 					});
@@ -130,42 +135,15 @@
 					if (array_id.indexOf(arr[i]._id) == -1) {
 						array.push(arr[i]);
 						array_id.push(arr[i]._id);
+					}else{
+						// console.log(arr[i]);
 					}
-				}
+				}	
+				// console.log(array,array_id);
 				// console.log("array",array);
 				return array;
 			}
-			//async addRandomData() {
-			// uni.showLoading({
-			// 	title: '加载中'
-			// });
-			// var rows = [];
-			// var dbres = await db.collection("jz-opendb-resourceshj,jz-opendb-resources").where({
-			// 	parent_id: this.id
-			// }).field("article_id,resourceshj_title").orderBy("sort asc").get();
-			// // debugger;
-			// if (dbres.result.data.length > 0) {
-			// 	rows = dbres.result.data;
-			// }
-			// console.log("rows",rows);
-			// rows.forEach((item) => {
-			// 	// debugger;
-			// 	var obj = item.article_id[0];
-			// 	if (obj.is_off!=1&&obj.article_status!=0) {
-			// 		this.list.push(obj);
-			// 	}
-			// });
-			// // rows.forEach((item1, index) => {
-			// // 	this.list.push(item1);
-			// // });
-			// var resultlength = this.list.length;
-			// if (resultlength == 0) {
-			// 	this.isEmpty = true;
-			// } else {
-			// 	this.isEmpty = false;
-			// }
-			// uni.hideLoading();
-			//},
+			
 		}
 	}
 </script>

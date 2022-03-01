@@ -12,6 +12,12 @@ db.collection('uni-id-users').where(db.command.or({
 }, {
 	register_date=1641571199999
 })).count()
+db.collection('jz-opendb-resourceshj').where({
+			parent_id: "cqgeo1evwsm"
+		}).orderBy("sort asc").skip(10).limit(10).get()
+db.collection('uni-id-users').where({
+	beizhu:"测试"
+}).get();
 
 db.collection("jz-opendb-taolun").where({
 	user_id:"61f5136e4690ae0001e6a387",
@@ -34,10 +40,11 @@ db.collection('uni-id-users').where('register_date > 1641484800000&&register_dat
 db.collection('opendb-news-appbb').where({
 					app_bbh: db.command.gt(124)
 				}).orderBy("app_bbh", "desc").get()
+db.collection('opendb-news-comments').get();
 
 db.collection('opendb-news-comments').where({
-		comment_id:"pl_z47hgjxslvt"
-}).get();
+		user_id:"61b214e685c5f700019e3a24"
+}).remove();
 
 db.collection('opendb-news-comments').where({
 	comment_id:"pl_z47hgjxslvt"

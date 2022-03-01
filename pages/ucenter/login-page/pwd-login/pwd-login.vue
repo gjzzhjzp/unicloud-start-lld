@@ -251,18 +251,20 @@
 				this.shcontent = '您已提交微博验证【' + data.weibocontent + '】申请，如已发微博，请等待管理员审核'
 				var userInfo = uni.getStorageSync("userInfo");
 				const db = uniCloud.database();
-				var res = await db.collection('jz-custom-systeminfo').where({
-					user_id: userInfo._id,
-					type: 0
-				}).field("comment,comment_date").get();
-				if (res.result.data && res.result.data.length > 0) {
-					var infos = res.result.data;
-					if (infos && infos.length > 0) {
-						this.isnewinfo = infos[infos.length - 1].comment;
-						var time = infos[infos.length - 1].comment_date;
-						if (this.isnewinfo) {
-							this.shcontent += "<br>审核意见：【" + this.isnewinfo + "】";
-							this.shcontent += "<br>审核时间：【" + this.$u.timeFormat(time, 'yyyy-mm-dd hh:MM:ss') + "】";
+				if(userInfo&&userInfo._id){
+					var res = await db.collection('jz-custom-systeminfo').where({
+						user_id: userInfo._id,
+						type: 0
+					}).field("comment,comment_date").get();
+					if (res.result.data && res.result.data.length > 0) {
+						var infos = res.result.data;
+						if (infos && infos.length > 0) {
+							this.isnewinfo = infos[infos.length - 1].comment;
+							var time = infos[infos.length - 1].comment_date;
+							if (this.isnewinfo) {
+								this.shcontent += "<br>审核意见：【" + this.isnewinfo + "】";
+								this.shcontent += "<br>审核时间：【" + this.$u.timeFormat(time, 'yyyy-mm-dd hh:MM:ss') + "】";
+							}
 						}
 					}
 				}

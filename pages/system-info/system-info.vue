@@ -92,29 +92,31 @@
 			async checknewinfo(type) {
 				var userInfo = uni.getStorageSync("userInfo");
 				var last_time = uni.getStorageSync("systeminfo_time_" + type);
-				var _obj = {
-					user_id: userInfo._id,
-					type: type
-				}
-				if (last_time) {
-					Object.assign(_obj, {
-						comment_date: db.command.gt(last_time)
-					})
-				}
-				var res = await db.collection('jz-custom-systeminfo').where(_obj).field("comment").get();
-				if (res.result.data && res.result.data.length > 0) {
-					// debugger;
-					this.ucenterList.forEach((item) => {
-						if (item.type == type) {
-							this.$set(item, "isnewinfo", true);
-						}
-					});
-				} else {
-					this.ucenterList.forEach((item) => {
-						if (item.type == type) {
-							this.$set(item, "isnewinfo", false);
-						}
-					});
+				if(userInfo&&userInfo._id){
+					var _obj = {
+						user_id: userInfo._id,
+						type: type
+					}
+					if (last_time) {
+						Object.assign(_obj, {
+							comment_date: db.command.gt(last_time)
+						})
+					}
+					var res = await db.collection('jz-custom-systeminfo').where(_obj).field("comment").get();
+					if (res.result.data && res.result.data.length > 0) {
+						// debugger;
+						this.ucenterList.forEach((item) => {
+							if (item.type == type) {
+								this.$set(item, "isnewinfo", true);
+							}
+						});
+					} else {
+						this.ucenterList.forEach((item) => {
+							if (item.type == type) {
+								this.$set(item, "isnewinfo", false);
+							}
+						});
+					}
 				}
 			},
 		}

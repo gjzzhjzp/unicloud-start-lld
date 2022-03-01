@@ -1,0 +1,52 @@
+{
+	"bsonType": "object",
+	"required": [],
+	"permission": {
+		"read": true,
+		"create": "auth.uid != null",
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"name": {
+			"bsonType": "string",
+			"description": "用户名"
+		},
+		"user_name": {
+			"bsonType": "string",
+			"description": "群昵称",
+			"title": "群昵称"
+		},
+		"start_date": {
+			"bsonType": "string",
+			"title": "开始时间",
+			"description": "开始时间"
+		},
+		"end_date": {
+			"bsonType": "string",
+			"title": "结束时间",
+			"description": "结束时间"
+		},
+		"three": {
+			"bsonType": "string",
+			"description": "三审负责人用户名",
+			"title": "三审负责人用户名"
+		},
+		"three_name": {
+			"bsonType": "string",
+			"description": "三审负责人",
+			"title": "三审负责人"
+		},
+		"date": {
+			"title": "创建时间",
+			"bsonType": "timestamp",
+			"description": "创建时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		}
+	}
+}

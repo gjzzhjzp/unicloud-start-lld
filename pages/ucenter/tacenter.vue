@@ -106,26 +106,28 @@
 		methods: {
 			async toggleguanzhu() {
 				var userInfo = uni.getStorageSync("userInfo");
-				if (!this.isguanzhu) { ///关注
-					await db.collection('opendb-news-guanzhu').add({
-						buser_id: this.curuserinfo._id,
-						user_id: userInfo._id
-					});
-					this.$refs.uToast.show({
-						title: '已关注',
-						type: 'success'
-					})
-					this.isguanzhu=true;
-				} else { ///取消关注
-					await db.collection('opendb-news-guanzhu').where({
-						buser_id: this.curuserinfo._id,
-						user_id: userInfo._id
-					}).remove();
-					this.$refs.uToast.show({
-						title: '已取消关注',
-						type: 'success'
-					})
-					this.isguanzhu=false;
+				if(userInfo&&userInfo._id){
+					if (!this.isguanzhu) { ///关注
+						await db.collection('opendb-news-guanzhu').add({
+							buser_id: this.curuserinfo._id,
+							user_id: userInfo._id
+						});
+						this.$refs.uToast.show({
+							title: '已关注',
+							type: 'success'
+						})
+						this.isguanzhu=true;
+					} else { ///取消关注
+						await db.collection('opendb-news-guanzhu').where({
+							buser_id: this.curuserinfo._id,
+							user_id: userInfo._id
+						}).remove();
+						this.$refs.uToast.show({
+							title: '已取消关注',
+							type: 'success'
+						})
+						this.isguanzhu=false;
+					}
 				}
 			},
 			///获取用户信息
@@ -145,15 +147,17 @@
 			// 检查是否关注
 			async checkisguanzhu() {
 				var userInfo = uni.getStorageSync("userInfo");
-				var resgz = await db.collection('opendb-news-guanzhu').where({
-					buser_id: this.curuserinfo._id,
-					user_id: userInfo._id
-				}).get();
-				// console.log("resgz", resgz);
-				if (resgz && resgz.result.data && resgz.result.data.length > 0) {
-					this.isguanzhu = true;
-				} else {
-					this.isguanzhu = false;
+				if(userInfo&&userInfo._id){
+					var resgz = await db.collection('opendb-news-guanzhu').where({
+						buser_id: this.curuserinfo._id,
+						user_id: userInfo._id
+					}).get();
+					// console.log("resgz", resgz);
+					if (resgz && resgz.result.data && resgz.result.data.length > 0) {
+						this.isguanzhu = true;
+					} else {
+						this.isguanzhu = false;
+					}
 				}
 			},
 			// 检测版本

@@ -1,6 +1,6 @@
 <template>
 	<view class="u-notice-bar-wrap" v-if="isShow" :style="{
-		borderRadius: borderRadius + 'rpx',
+		borderRadius: borderRadius + 'px',
 	}">
 		<block v-if="mode == 'horizontal' && isCircular">
 			<u-row-notice
@@ -101,7 +101,7 @@ export default {
 		// 音量喇叭的大小
 		volumeSize: {
 			type: [Number, String],
-			default: 34
+			default: 18
 		},
 		// 是否显示右侧的右箭头图标
 		moreIcon: {
@@ -141,7 +141,7 @@ export default {
 		// 字体大小，单位rpx
 		fontSize: {
 			type: [Number, String],
-			default: 28
+			default: 14
 		},
 		// 滚动一个周期的时间长，单位ms
 		duration: {
@@ -178,7 +178,7 @@ export default {
 		// 通知的边距
 		padding: {
 			type: [Number, String],
-			default: '18rpx 24rpx'
+			default: '9px 12px'
 		},
 		// list列表为空时，是否显示组件
 		noListHidden: {
@@ -222,7 +222,7 @@ export default {
 }
 
 .u-notice-bar {
-	padding: 18rpx 24rpx;
+	padding: 9px 12px;
 	overflow: hidden;
 }
 
@@ -241,11 +241,11 @@ export default {
 	flex: 1;
 	@include vue-flex;
 	overflow: hidden;
-	margin-left: 12rpx;
+	margin-left: 6px;
 }
 
 .u-right-icon {
-	margin-left: 12rpx;
+	margin-left: 6px;
 	@include vue-flex;
 	align-items: center;
 }
@@ -253,7 +253,7 @@ export default {
 .u-notice-content {
 	line-height: 1;
 	white-space: nowrap;
-	font-size: 26rpx;
+	font-size: 13px;
 	animation: u-loop-animation 10s linear infinite both;
 	text-align: right;
 	// 这一句很重要，为了能让滚动左右连接起来

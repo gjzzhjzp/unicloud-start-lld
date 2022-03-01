@@ -60,15 +60,17 @@
 			async getinfos() {
 				// 按照最新消息排序,最新的显示在前面
 				var userInfo = uni.getStorageSync("userInfo");
-				var res = await db.collection('jz-custom-systeminfo').where({
-						user_id: userInfo._id,
-						type: parseInt(this.infotype)||1
-					}).field("comment,comment_date").orderBy("comment_date desc").get();
-				if (res.result.data && res.result.data.length > 0) {
-					this.infos = res.result.data;
-					var curtime=new Date().getTime();
-					uni.setStorageSync("systeminfo_time_" + this.infotype,curtime);
-					uni.setStorageSync("systeminfo_last",curtime);
+				if(userInfo&&userInfo._id){
+					var res = await db.collection('jz-custom-systeminfo').where({
+							user_id: userInfo._id,
+							type: parseInt(this.infotype)||1
+						}).field("comment,comment_date").orderBy("comment_date desc").get();
+					if (res.result.data && res.result.data.length > 0) {
+						this.infos = res.result.data;
+						var curtime=new Date().getTime();
+						uni.setStorageSync("systeminfo_time_" + this.infotype,curtime);
+						uni.setStorageSync("systeminfo_last",curtime);
+					}
 				}
 			}
 		}

@@ -88,17 +88,17 @@ export default {
 		// 字体大小，单位rpx
 		fontSize: {
 			type: [Number, String],
-			default: 26
+			default: 13
 		},
 		// 音量喇叭的大小
 		volumeSize: {
 			type: [Number, String],
-			default: 34
+			default: 17
 		},
 		// 水平滚动时的滚动速度，即每秒滚动多少rpx，这有利于控制文字无论多少时，都能有一个恒定的速度
 		speed: {
 			type: [Number, String],
-			default: 160
+			default: 80
 		},
 		// 播放状态，play-播放，paused-暂停
 		playState: {
@@ -108,7 +108,7 @@ export default {
 		// 通知的边距
 		padding: {
 			type: [Number, String],
-			default: '18rpx 24rpx'
+			default: '9px 12px'
 		}
 	},
 	data() {
@@ -151,7 +151,7 @@ export default {
 			let style = {};
 			if (this.color) style.color = this.color;
 			else if(this.type == 'none') style.color = '#606266';
-			style.fontSize = this.fontSize + 'rpx';
+			style.fontSize = this.fontSize + 'px';
 			return style;
 		},
 		// 计算背景颜色
@@ -212,7 +212,7 @@ export default {
 @import "../../libs/css/style.components.scss";
 	
 .u-notice-bar {
-	padding: 18rpx 24rpx;
+	padding: 9px 12px;
 	overflow: hidden;
 }
 
@@ -233,11 +233,11 @@ export default {
 	flex: 1;
 	@include vue-flex;
 	overflow: hidden;
-	margin-left: 12rpx;
+	margin-left: 6px;
 }
 
 .u-right-icon {
-	margin-left: 12rpx;
+	margin-left: 6px;
 	display: inline-flex;
 	align-items: center;
 }
@@ -252,7 +252,7 @@ export default {
 }
 
 .u-notice-text {
-	font-size: 26rpx;
+	font-size: 13px;
 	word-break: keep-all;
 	white-space: nowrap
 }

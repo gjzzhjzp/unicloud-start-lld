@@ -33,7 +33,7 @@
 							<view class="all-reply" @tap="toAllReply(res)"
 								v-if="res.allchildren&&res.allchildren.length>3">
 								共{{ res.allchildren.length }}条回复
-								<u-icon class="more" name="arrow-right" :size="26"></u-icon>
+								<u-icon class="more" name="arrow-right" :size="13"></u-icon>
 							</view>
 						</view>
 						<view class="bottom">

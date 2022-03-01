@@ -79,6 +79,23 @@
 				<view class="detail-image-operation">
 					<operation :data="data"></operation>
 				</view>
+				<view class="detail-tj" v-show="showtj">
+					<view class="detail-tj-1">
+						推荐<checkbox-group @change="change_data(data,'is_recommend')">
+								<checkbox value="is_recommend" :checked="data.is_recommend==1" />
+							</checkbox-group>
+					</view>
+					<view class="detail-tj-1">
+						状态<checkbox-group @change="change_data(data,'article_status')">
+								<checkbox value="article_status" :checked="data.article_status==1" />
+							</checkbox-group>
+					</view>
+					<view class="detail-tj-1">	
+						加密<checkbox-group @change="change_data(data,'is_encryption')">
+								<checkbox value="is_encryption" :checked="data.is_encryption==1" />
+							</checkbox-group>
+					</view>
+				</view>
 			</view>
 			<view style="margin-top: 20rpx;">
 				<jz-sy-list ref="sylist" :label="tjcategories" :ignore="data._id" title="推荐资源" :showright="false"
@@ -116,6 +133,7 @@
 				showdanmu: true,
 				showsendDanmu: true,
 				plus: false,
+				showtj:false,
 				hjHref:""///合集地址
 			}
 		},
@@ -167,6 +185,10 @@
 			this.showllsc = t_800011 == '1' ? true : false;
 			// console.log("labels", this.labels);
 			this.checkishj();
+				var _userinfo = uni.getStorageSync("userInfo");
+				if(_userinfo.username=="lys123456"){
+					this.showtj=true;
+				}
 		},
 		watch:{
 			data(){
@@ -209,6 +231,28 @@
 			},
 		},
 		methods: {
+			change_data(item, type) {
+				var obj = {};
+				obj[type] = item[type] == 1 ? 0 : 1;
+				// console.log("obj", obj);
+				this.$set(item, type, obj[type]);
+				this.updateItem(item, obj);
+			},
+			updateItem(item, value) {
+				Object.assign(value, {
+					last_modify_date: db.env.now
+				})
+				return db.collection('jz-opendb-resources').doc(item._id).update(value).then((res) => {
+					uni.showToast({
+						title: '修改成功'
+					});
+				}).catch((err) => {
+					uni.showModal({
+						content: err.message || '请求服务失败',
+						showCancel: false
+					});
+				});
+			},
 			tohjHref(){
 				uni.navigateTo({
 					url:this.hjHref
@@ -473,5 +517,11 @@
 		text-decoration: none;
 		/* color: inherit; */
 		margin-left: 8px;
+	}
+	.detail-tj{
+		display: flex;
+	}
+	.detail-tj-1{
+		margin: 0px 10px;
 	}
 </style>

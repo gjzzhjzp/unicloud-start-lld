@@ -70,9 +70,9 @@
 							"thumb": "/static/center/tg.png"
 						},
 						{
-							"title": "TA的发帖",
-							"to1": '/pages/jz-opendb-taolun/talist',
-							"thumb": "/static/newpage/tiezi.png"
+							"title": "TA的合集",
+							"to1": '/pages/resourcehj/tahj',
+							"thumb": "/static/center/hj.png"
 						}
 					]
 				],

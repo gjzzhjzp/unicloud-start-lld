@@ -16,6 +16,11 @@
 			"style": {
 				"navigationBarTitleText": "资源合集"
 			}
+		},{
+			"path":"pages/resourcehj/resource_userList",
+			"style": {
+				"navigationBarTitleText": "用户资源合集"
+			}
 		},
 		{
 			"path": "pages/guanzhu/guanzhu",

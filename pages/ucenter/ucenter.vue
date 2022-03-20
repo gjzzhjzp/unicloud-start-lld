@@ -102,11 +102,15 @@
 							"to": '/pages/ucenter/userinfo/userinfo',
 							"thumb": "/static/center/user.png"
 						},
-
 						{
 							"title": "我的投稿",
 							"to": '/pages/jz-opendb-resources/list',
 							"thumb": "/static/center/tg.png"
+						},
+						{
+							"title": "我的合集",
+							"to": '/pages/resourcehj/resource_userList',
+							"thumb": "/static/center/hj.png"
 						},
 						{
 							"title": "我的发帖",

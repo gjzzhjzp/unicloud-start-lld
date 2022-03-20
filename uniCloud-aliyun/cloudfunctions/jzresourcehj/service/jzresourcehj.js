@@ -29,6 +29,5 @@ module.exports = class jzresourcehjService extends Service {
 			"total": resultdata.data.length,
 			"msg": "查询成功"
 		};
-
 	}
 }

@@ -19,14 +19,16 @@
 					<input type="text" class="input-box captcha" :inputBorder="false" v-model="captcha"
 						:placeholder="$t('pwdLogin.verifyCodePlaceholder')" />
 				</view>
+				<view style="color:red">
+					提示：用户名为注册时的英文+数字组合(不是昵称)
+					<!-- 注意：为防止忘记用户名密码，长时间不操作需要重新登录 -->
+				</view>
 				<!-- <uni-agreements @setAgree="agree = $event"></uni-agreements> -->
 				<view class="auth-box">
 					<text class="link" @click="toRetrievePwd">{{$t('pwdLogin.forgetPassword')}}</text>
 					<text class="link" v-show="showRegister" @click="toRegister">{{registerText}}</text>
 				</view>
-				<!-- <view style="color:red">
-					注意：为防止忘记用户名密码，长时间不操作需要重新登录
-				</view> -->
+				
 				<u-button class="send-btn" :disabled="!canLogin" type="primary" @click="pwdLogin">
 					{{$t('pwdLogin.login')}}
 				</u-button>

@@ -12,6 +12,11 @@ db.collection('uni-id-users').where(db.command.or({
 }, {
 	register_date=1641571199999
 })).count()
+
+db.collection("jz-custom-shtime").where({
+					 name:"junzheyuzhoush1"
+				}).get()
+
 db.collection('jz-opendb-resourceshj').where({
 			parent_id: "cqgeo1evwsm"
 		}).orderBy("sort asc").skip(10).limit(10).get()

@@ -11,6 +11,31 @@
 		"_id": {
 			"description": "ID，系统自动生成"
 		},
+		"user_id": {
+			"forceDefaultValue": {
+				"$env": "uid"
+			},
+			"description": "创建合集的用户",
+			"foreignKey": "uni-id-users._id",
+			"permission": {
+				"write": true
+			}
+		},
+		"status": {
+			"bsonType": "int",
+			"title": "合集状态",
+			"description": "合集状态：0 锁定 1 启用",
+			"defaultValue": 0,
+			"enum": [{
+					"value": 0,
+					"text": "锁定"
+				},
+				{
+					"value": 1,
+					"text": "启用"
+				}
+			]
+		},
 		"hj_id":{
 			"bsonType": "string",
 			"description": "编码",

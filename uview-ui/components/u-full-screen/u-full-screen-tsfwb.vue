@@ -3,7 +3,11 @@
 		@confirm="confirm">
 		<view class="u-update-content">
 			<rich-text :nodes="content"></rich-text>
+			<view class="u-update-message" @click="tologin()">
+				我已通过审核，直接登录
+			</view>
 		</view>
+		
 	</u-modal>
 </template>
 
@@ -43,6 +47,11 @@
 			this.checknewinfo();
 		},
 		methods: {
+			tologin(){
+				uni.reLaunch({
+					url: "/pages/ucenter/login-page/pwd-login/pwd-login"
+				});
+			},
 			// 检测时候有新的系统消息
 			async checknewinfo() {
 				var userInfo = uni.getStorageSync("userInfo");
@@ -98,9 +107,16 @@
 	}
 
 	.u-update-content {
-		font-size: 26rpx;
+		font-size: 14px;
 		color: $u-content-color;
 		line-height: 1.7;
-		padding: 30rpx;
+		padding: 15px;
+	}
+	.u-update-message{
+		text-align: right;
+		margin-top: 6px;
+		font-size: 12px;
+		color: $u-type-primary;
+		cursor: pointer;
 	}
 </style>

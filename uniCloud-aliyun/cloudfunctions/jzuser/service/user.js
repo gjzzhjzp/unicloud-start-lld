@@ -15,6 +15,7 @@ module.exports = class yqmService extends Service {
 				data.password=encResult.passwordHash;
 			}
 		}
+		data.update_date=new Date().getTime();
 		try {
 			await userdb.where({
 				_id:id
@@ -28,7 +29,7 @@ module.exports = class yqmService extends Service {
 			return {
 				"state": "9999",
 				"data": false,
-				"msg": "修改失败"
+				"msg": "修改失败"+e
 			};
 		}
 	}

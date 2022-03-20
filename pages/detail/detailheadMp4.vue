@@ -95,6 +95,11 @@
 								<checkbox value="is_encryption" :checked="data.is_encryption==1" />
 							</checkbox-group>
 					</view>
+					<view class="detail-tj-1">
+											授权<checkbox-group @change="change_data(data,'is_grant')">
+													<checkbox value="is_grant" :checked="data.is_grant==1" />
+												</checkbox-group>
+										</view>
 				</view>
 			</view>
 			<view style="margin-top: 20rpx;">
@@ -266,9 +271,11 @@
 					var dbcount=await db.collection("jz-opendb-resourceshj").where({
 						article_id:this.data._id
 					}).get();
+					console.log("dbcount.result.data",dbcount.result.data);
 					if(dbcount.result.data&&dbcount.result.data.length>0){
 						this.showhj=true;
-						this.hjHref="/pages/resourcehj/resourcehj?id="+dbcount.result.data[0].parent_id;
+						var length=dbcount.result.data.length;
+						this.hjHref="/pages/resourcehj/resourcehj?id="+dbcount.result.data[length-1].parent_id;
 					}else{
 						this.showhj=false;
 					}

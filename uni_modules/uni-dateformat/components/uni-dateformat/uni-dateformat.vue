@@ -1,5 +1,5 @@
 <template>
-	<text>{{dateShow}}</text>
+	<text class="date-time">{{dateShow}}</text>
 </template>
 
 <script>
@@ -92,5 +92,7 @@
 </script>
 
 <style>
-
+.date-time{
+	font-size: 14px;
+}
 </style>

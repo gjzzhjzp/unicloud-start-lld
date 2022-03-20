@@ -1,18 +1,16 @@
 <template>
 	<view class="jz-sy-list-wrap">
 		<view class="jz-sy-list-section">
-			<u-section line-color="#7275D3" :show-line="false" :font-size="16" :title="title" :right="showright" sub-title="查看更多"
-				:arrow="false" @click="$notMoreTap(tomore,'notTap')"></u-section>
+			<u-section line-color="#7275D3" :show-line="false" :font-size="16" :title="title" :right="showright"
+				sub-title="查看更多" :arrow="false" @click="$notMoreTap(tomore,'notTap')"></u-section>
 		</view>
 		<view class="jz-sy-list">
+			<view class="jz-sy-list-change" @click="changeData()">换一换</view>
 			<template v-if="!isEmpty">
 				<u-row gutter="16">
 					<u-col span="6" class="jz-sy-item" v-for="(item,index) in list" :key="index">
 						<view class="jz-sy-list-item" @click="$notMoreTap(toDetail,'notTap',item)">
 							<view>
-								<!-- <image-storage :src="imageUrl(item)" height="100px" width="100%" :customStyle="{borderRadius:'6px'}" mode="aspectFill"></image-storage> -->
-								<!-- <u-lazy-load threshold="300" height="100px" border-radius="10" img-mode="aspectFill"
-									:image="imageUrl(item)"></u-lazy-load> -->
 								<u-image width="100%" height="100px" border-radius="10" :src="imageUrl(item)"
 									loading-icon="/static/center/chang1.png"
 									error-icon="/static/center/error_chang.png">
@@ -46,7 +44,8 @@
 				notTap: true, //一定要设置为true
 				list: [],
 				where: "",
-				isEmpty: true
+				isEmpty: true,
+				curpage:1
 			}
 		},
 		props: {
@@ -107,6 +106,22 @@
 			this.getList();
 		},
 		methods: {
+			// 换一批数据,随机
+			changeData() {
+				this.curpage++;
+				uni.showLoading({
+					title:"加载中"
+				});
+				if(this.curpage>10){
+					this.curpage=1;
+				}
+				this.getList(this.curpage).then((list)=>{
+					if(list.length<this.rows){
+						this.curpage=1;
+					}
+					uni.hideLoading();
+				});
+			},
 			imageUrl(item) {
 				if (Array.isArray(item.avatar)) {
 					return item.avatar[0].url;
@@ -131,112 +146,94 @@
 					});
 				}
 			},
-			getList() {
+			getList(page) {
 				var app_bbh = "115";
-				if (typeof plus != "undefined") {
-					//#ifdef APP-PLUS
-					app_bbh = plus.runtime.versionCode;
-					//#endif
-				}
-				var param = {
-					type: this.type,
-					label: this.label,
-					zy_gs: [0, 1, 3],
-					page: 1,
-					rows: this.rows || 4,
-					app_bbh: app_bbh
-				}
-				if (typeof this.zy_gs != "undefined") {
-					Object.assign(param, {
-						zy_gs: this.zy_gs
-					});
-				}
-				if (this.categories) {
-					Object.assign(param, {
-						categories: this.categories
-					});
-				}
-				if (this.ignore) {
-					Object.assign(param, {
-						ignore: this.ignore
-					});
-				}
-				uniCloud.callFunction({
-					name: 'jzfunction',
-					data: {
-						action: 'resource/getList',
-						data: param
-					},
-				}).then((res) => {
-					var res = res.result;
-					if (res.state == "0000") {
-						this.list = res.rows;
-						if (this.list.length > 0) {
-							this.isEmpty = false;
-							// if (this.type == "tj") {
-							// 	this.list.unshift({
-							// 		"_id": "61aee1840d111e00012bf162",
-							// 		"article_status": 1,
-							// 		"zy_gs": 1,
-							// 		"publish_date": 1638850948344,
-							// 		"last_modify_date": 1641298665437,
-							// 		"is_grant": 0,
-							// 		"is_encryption": 0,
-							// 		"is_recommend": 0,
-							// 		"author": "俊哲宇宙APP",
-							// 		"title": "投稿教程",
-							// 		"avatar": [{
-							// 			"extname": "jpg",
-							// 			"name": "zyimage1638850857812",
-							// 			"url": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-3a72b088-8226-498e-a9cc-a695d0ed4ce7/c521d686-d0e7-4dae-8206-d6e80c4448c3.",
-							// 			"path": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-3a72b088-8226-498e-a9cc-a695d0ed4ce7/c521d686-d0e7-4dae-8206-d6e80c4448c3."
-							// 		}]
-							// 	})
-							// 	this.list.unshift({
-							// 		"_id": "61ca6e97344587000187e9b2",
-							// 		"article_status": 1,
-							// 		"zy_gs": 0,
-							// 		"publish_date": 1640656535652,
-							// 		"last_modify_date": 1641298663223,
-							// 		"is_grant": 1,
-							// 		"is_encryption": 0,
-							// 		"is_recommend": 0,
-							// 		"author": "俊哲宇宙APP",
-							// 		"title": "投稿规则（试用版）",
-							// 		"avatar": [{
-							// 			"extname": "jpg",
-							// 			"name": "zyimage1640656499956",
-							// 			"url": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-3a72b088-8226-498e-a9cc-a695d0ed4ce7/b80c8e52-08ae-4201-a8f1-fc9bc1f54e0e.",
-							// 			"path": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-3a72b088-8226-498e-a9cc-a695d0ed4ce7/b80c8e52-08ae-4201-a8f1-fc9bc1f54e0e."
-							// 		}]
-							// 	})
-							// }
-						} else {
-							this.isEmpty = true;
-						}
-					} else {
-						this.$refs.uToast.show({
-							title: res.msg,
-							type: 'error'
+				return new Promise((reslove)=>{
+					if (typeof plus != "undefined") {
+						//#ifdef APP-PLUS
+						app_bbh = plus.runtime.versionCode;
+						//#endif
+					}
+					var param = {
+						type: this.type,
+						label: this.label,
+						zy_gs: [0, 1, 3],
+						page: page||1,
+						rows: this.rows || 4,
+						app_bbh: app_bbh
+					}
+					if (typeof this.zy_gs != "undefined") {
+						Object.assign(param, {
+							zy_gs: this.zy_gs
 						});
 					}
-				}).catch((err) => {
-					console.log("网络错误，请重试——err", err);
-					uni.showModal({
-						content: err.message || '网络错误，请重试',
-						showCancel: false
+					if (this.categories) {
+						Object.assign(param, {
+							categories: this.categories
+						});
+					}
+					if (this.ignore) {
+						Object.assign(param, {
+							ignore: this.ignore
+						});
+					}
+					uniCloud.callFunction({
+						name: 'jzfunction',
+						data: {
+							action: 'resource/getList',
+							data: param
+						},
+					}).then((res) => {
+						var res = res.result;
+						if (res.state == "0000") {
+							this.list = res.rows;
+							if (this.list.length > 0) {
+								this.isEmpty = false;
+							} else {
+								this.isEmpty = true;
+							}
+						} else {
+							this.$refs.uToast.show({
+								title: res.msg,
+								type: 'error'
+							});
+						}
+						reslove(this.list);
+					}).catch((err) => {
+						console.log("网络错误，请重试——err", err);
+						uni.showModal({
+							content: err.message || '网络错误，请重试',
+							showCancel: false
+						});
 					});
-				});
+				})
+				
 			},
 		}
 	}
 </script>
 <style lang="scss">
-	.jz-sy-list-wrap{
+	.jz-sy-list {
+		position: relative;
+	}
+
+	.jz-sy-list-change {
+		width: 20px;
+		position: absolute;
+		z-index: 900;
+		background: #7275D3;
+		text-align: center;
+		color: #fff;
+		right: -10px;
+		top: 6px;
+	}
+
+	.jz-sy-list-wrap {
 		background-color: #fff;
 		padding: 10px;
 		border-bottom: 1px solid #F5F5F5;
 	}
+
 	.jz-sy-item {
 		padding: 0px 12rpx !important;
 	}

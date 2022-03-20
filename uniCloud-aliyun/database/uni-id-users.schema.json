@@ -200,10 +200,7 @@
 		},
 		"update_date": {
 			"bsonType": "timestamp",
-			"description": "更新时间",
-			"forceDefaultValue": {
-				"$env": "now"
-			}
+			"description": "更新时间"
 		},
 		"register_ip": {
 			"bsonType": "string",

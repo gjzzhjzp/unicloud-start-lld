@@ -459,7 +459,7 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
-		margin-top: 15px;
+		margin-top: 6px;
 	}
 
 	.slot-gonggao_content1 {

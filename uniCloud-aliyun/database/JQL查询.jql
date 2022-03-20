@@ -12,7 +12,10 @@ db.collection('uni-id-users').where(db.command.or({
 }, {
 	register_date=1641571199999
 })).count()
-
+db.collection("jz-opendb-resourceshj").where({
+								_id:parentid,
+								status:db.command.neq(0)
+							}).get()
 db.collection("jz-custom-shtime").where({
 					 name:"junzheyuzhoush1"
 				}).get()

@@ -1,11 +1,11 @@
 /* 浏览器专用 */
-.dplayer-full-in-icon {
-	display: none !important;
-}
-/* APP专用 */
-/* .dplayer-full-icon {
+/* .dplayer-full-in-icon {
 	display: none !important;
 } */
+/* APP专用 */
+.dplayer-full-icon {
+	display: none !important;
+}
 
 uni-page {
 	background-color: #F5F5F5;

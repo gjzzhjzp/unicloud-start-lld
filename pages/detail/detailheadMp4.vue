@@ -271,11 +271,21 @@
 					var dbcount=await db.collection("jz-opendb-resourceshj").where({
 						article_id:this.data._id
 					}).get();
-					console.log("dbcount.result.data",dbcount.result.data);
+					// console.log("dbcount.result.data",dbcount.result.data);
 					if(dbcount.result.data&&dbcount.result.data.length>0){
-						this.showhj=true;
 						var length=dbcount.result.data.length;
-						this.hjHref="/pages/resourcehj/resourcehj?id="+dbcount.result.data[length-1].parent_id;
+						var parentid=dbcount.result.data[length-1].parent_id;
+						if(parentid){
+							// debugger;
+							var _dbcount=await db.collection("jz-opendb-resourceshj").where({
+								hj_id:parentid,
+								status:db.command.neq(0)
+							}).get();
+							if(_dbcount.result&&_dbcount.result.data.length>0){
+								this.showhj=true;
+								this.hjHref="/pages/resourcehj/resourcehj?id="+parentid;
+							}
+						}
 					}else{
 						this.showhj=false;
 					}

@@ -3,10 +3,10 @@
 		@touchmove.stop.prevent>
 		<swiper class="swiper" :current="index" @change="swiperChange" :disable-touch="swiper" :circular="circular">
 			<swiper-item v-for="(img, i) in imgs" :key="'swiper-item-'+i" :id="'swiper-item-'+i">
-				<!-- <movable-area class="marea" scale-area>
+				<movable-area class="marea" scale-area>
 					<movable-view :id="'movable-view-'+i" :key="'movable-view-'+i" class="mview" direction="all"
-						:out-of-bounds="false" :inertia="true" damping="90" friction="2" scale="true" scale-min="1"
-						scale-max="4" :scale-value="scale" @scale="onScale" @change="movableChange"> -->
+						:out-of-bounds="false" :inertia="true" damping="90" friction="2" :scale="true" scale-min="1"
+						scale-max="5" :scale-value="scale"  @scale="onScale">
 						<view class="slot-gonggao_content previewImage_content">
 							<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y">
 								<image :id="'image-'+i" :key="'movable-view'+i" class="image" :src="img"
@@ -15,8 +15,8 @@
 									@touchend="handletouchend" />
 							</scroll-view>
 						</view>
-					<!-- </movable-view>
-				</movable-area> -->
+					</movable-view>
+				</movable-area>
 			</swiper-item>
 		</swiper>
 		<view class="page" v-if="imgs.length > 0">
@@ -94,7 +94,11 @@
 		methods: {
 			//比例变化
 			onScale(e) {
-
+				if(e.detail.scale <= 1){
+					this.swiper=false;
+				}else{
+					this.swiper=true;
+				}
 			},
 
 			//长按事件相关内容---------开始-------------------
@@ -155,14 +159,12 @@
 			//移动变化
 			movableChange(e) {
 				//console.log(e);
-				/* if(this.old.scale <= 1){
+				if(this.scale <= 1){
 					this.swiper=false;
-				}else if(e.detail.x===0){
-					this.swiper=false;
-				} */
+				}else{
+					this.swiper=true;
+				}
 			},
-
-
 			//保存
 			save(e) {
 				var _this = this;

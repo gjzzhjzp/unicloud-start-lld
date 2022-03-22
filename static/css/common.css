@@ -6,6 +6,10 @@
 .dplayer-full-icon {
 	display: none !important;
 }
+.dplayer-full-in-icon {
+	display: inline-block !important;
+}
+
 
 uni-page {
 	background-color: #F5F5F5;

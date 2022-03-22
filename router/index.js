@@ -44,7 +44,7 @@ router.beforeEach((to, from, next) => {
 	// 	next();
 	// 	// return false; // 普通浏览器中打开
 	// }
-});
+});  
 // 全局路由后置守卫
 router.afterEach((to, from) => {})
 

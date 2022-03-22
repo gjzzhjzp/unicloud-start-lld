@@ -52,7 +52,7 @@
 			rows: {
 				type: Number,
 				default () {
-					return 4
+					return 6
 				}
 			},
 			// 类型，热门还是最新,最新评论
@@ -159,7 +159,7 @@
 						label: this.label,
 						zy_gs: [0, 1, 3],
 						page: page||1,
-						rows: this.rows || 4,
+						rows: this.rows || 6,
 						app_bbh: app_bbh
 					}
 					if (typeof this.zy_gs != "undefined") {

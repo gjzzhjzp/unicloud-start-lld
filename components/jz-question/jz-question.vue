@@ -1,6 +1,6 @@
 <template>
-
 	<view>
+		<u-alert-tips style="margin-top: 10px;" type="warning" description="注意:对暗号通过后方可继续注册"></u-alert-tips>
 		<u-alert-tips v-if="showtips" type="warning" :description="description"></u-alert-tips>
 		<view class="jz-question">
 			<u-form ref="uForm">
@@ -16,7 +16,6 @@
 				</u-form-item> -->
 			</u-form>
 		</view>
-
 		<view class="jz-bottom">
 			<u-button type="primary" @click="submit">确定</u-button>
 		</view>

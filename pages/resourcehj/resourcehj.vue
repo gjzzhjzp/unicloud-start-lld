@@ -107,7 +107,7 @@
 					rows.forEach((item) => {
 						// debugger;
 						var obj = item.article_id[0];
-						if (obj) {
+						if (obj&&obj.article_status==1&&obj.is_off!=1) {
 							this.flowList.push(obj);
 						}
 					});

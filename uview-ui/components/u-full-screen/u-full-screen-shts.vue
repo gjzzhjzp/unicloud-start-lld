@@ -32,8 +32,12 @@
 				this.closeModal();
 			},
 			confirm() {
+				// uni.reLaunch({
+				// 	url: "/pages/ucenter/login-page/pwd-login/pwd-login"
+				// });
+				
 				uni.reLaunch({
-					url: "/pages/ucenter/login-page/pwd-login/pwd-login"
+					url: '/pages/ucenter/login-page/register/register'
 				});
 				// this.closeModal();
 			},

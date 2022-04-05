@@ -43,7 +43,6 @@
 		<u-modal v-model="showshinfo" confirm-text="重新提交" @cancel="confimsh" @confirm="reconfirmsh" cancel-text="退出"
 			:show-cancel-button="true">
 			<view v-html="shcontent" style="padding: 10px;">
-
 			</view>
 		</u-modal>
 	</view>
@@ -144,6 +143,7 @@
 								uni.hideLoading();
 								if (flag) {
 									uni.setStorageSync("istgzcsh_success", true); //是否通过登录注册审核
+									uni.setStorageSync("question_success1", true);//登录成功，默认对暗号成功
 									this.loginSuccess(result);
 								} else {
 									this.confirmnc();
@@ -299,9 +299,17 @@
 			/* 前往注册 */
 			toRegister(e) {
 				console.log(e);
-				uni.navigateTo({
-					url: '/pages/ucenter/login-page/register/register'
-				})
+				// 判断是否对暗号成功,如果成功跳转到注册页面,不成功跳转到对暗号页面
+				var question_success1 = uni.getStorageSync("question_success1");
+				if (!question_success1) {
+					uni.reLaunch({
+						url: "/pages/question/question"
+					});
+				} else {
+					uni.navigateTo({
+						url: '/pages/ucenter/login-page/register/register'
+					})
+				}
 			}
 		}
 	}

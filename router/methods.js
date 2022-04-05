@@ -18,14 +18,14 @@ export default {
 				url: "/uview-ui/components/u-full-screen/u-full-screen-yqm"
 			})
 		} else {
-			var question_success1 = uni.getStorageSync("question_success1");
-			if (!question_success1) {
-				uni.reLaunch({
-					url: "/pages/question/question"
-				});
-			} else {
-				checksh.methods.no_istgzcsh();
-			}
+			// var question_success1 = uni.getStorageSync("question_success1");
+			// if (!question_success1) {
+			// 	uni.reLaunch({
+			// 		url: "/pages/question/question"
+			// 	});
+			// } else {
+			// 	checksh.methods.no_istgzcsh();
+			// }
 		}
 	},
 	// 检查用户状态，如果禁用限制访问
@@ -73,8 +73,11 @@ export default {
 						reslove(true);
 					}
 				} else {
-					uni.hideLoading()
-					reslove(true);
+					uni.hideLoading();
+					uni.reLaunch({
+						url: "/pages/ucenter/login-page/pwd-login/pwd-login"
+					});
+					reslove(false);
 				}
 			}
 		});

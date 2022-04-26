@@ -8,12 +8,13 @@
 			</uni-forms-item>
 			<uni-forms-item required name="excerpt" label="内容">
 				<!-- formData.excerpt:{{formData.excerpt}} -->
-				<view class="add-editor">
+				<view class="add-editor" v-if="showeditor">
 					<editor id="editor" class="ql-container" placeholder="请输入内容" @ready="onEditorReady" @input="onEditorInput"></editor>
-					
+				
 				</view>
-				<!-- <uni-easyinput placeholder="请输入内容" type="textarea" :maxlength="1000" v-model="formData.excerpt"
-					trim="both"></uni-easyinput> -->
+				<view v-if="showeditor" @click="changeEditor()" style="color: red;text-align: right;">内容不能输入，点这里</view>
+				<uni-easyinput v-if="!showeditor" placeholder="请输入内容" type="textarea" :maxlength="1000" v-model="formData.excerpt"
+					trim="both"></uni-easyinput>
 			</uni-forms-item>
 			<uni-forms-item name="resources" label="图片">
 				<uni-file-picker file-mediatype="image" :limit="9" return-type="array" v-model="formData.resources">
@@ -67,6 +68,7 @@
 	export default {
 		data() {
 			return {
+				showeditor:true,
 				formData,
 				formOptions: {
 					"categories_localdata": [{
@@ -134,9 +136,19 @@
 			}
 		},
 		mounted() {
+			var config=getApp().globalData.systemconfig;
+			if(config["800035"]=="1"){
+				this.formOptions.categories_localdata.splice(3,0,{
+					"value": 4,
+					"text": "生日投稿"
+				});
+			};
 			this.initrules();
 		},
 		methods: {
+			changeEditor(){
+				this.showeditor=false;
+			},
 			onEditorReady() {
 				
 			},

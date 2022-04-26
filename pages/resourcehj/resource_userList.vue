@@ -250,7 +250,7 @@
 			},
 			// 多选处理
 			listselectedItems(hj_id) {
-				// debugger;
+				debugger;
 				var list = [];
 				var dataList = this.$refs.listudb.dataList;
 				// var sortinit = this.hjdata.length - 1 || 0;
@@ -281,7 +281,7 @@
 			},
 			async openhjgl(hj_id) {
 				if (hj_id) {
-					// debugger;
+					debugger;
 					this.showhjManage = true;
 					this.curhjid = hj_id;
 					// 获取合集数据
@@ -315,7 +315,7 @@
 			},
 			todetail(item) {
 				uni.navigateTo({
-					url: "/pages/jz-opendb-taolun/detail/detail?id=" + item._id
+					url: "/pages/resourcehj/resourcehj?id=" + item.hj_id
 				});
 			},
 			loadSuccess(data) {
@@ -335,15 +335,17 @@
 				return data;
 			},
 			async click(index, index1) {
-				// debugger;
+				// ;
 				var item = this.list[index];
-				var id = this.list[index]._id;
+				console.log("debuggeritem",item);
+				// var id = this.list[index]._id;
+				var id = this.list[index].hj_id;
 				if (index1 == 2) { ///删除
 					this.handleDelete(id);
 				} else if (index1 == 1) { ///管理
-				uni.showLoading({
-					title: '操作中'
-				});
+					uni.showLoading({
+						title: '操作中'
+					});
 					await this.openhjgl(id);
 					uni.hideLoading();
 				} else { ///编辑
@@ -416,8 +418,9 @@
 					title: '操作中'
 				});
 				this.showedit = false;
+				// debugger;
 				await db.collection("jz-opendb-resourceshj").where({
-					_id: this.curhjid
+					hj_id: this.curhjid
 				}).update({
 					resourceshj_title: this.editvalue
 				});

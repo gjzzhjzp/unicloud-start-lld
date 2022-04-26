@@ -26,7 +26,7 @@
 		"categories": {
 			"bsonType": "int",
 			"title": "分类",
-			"description": "资源类型：0 闲聊 1 嗑糖 2 分享 3 其他",
+			"description": "资源类型：0 闲聊 1 嗑糖 2 分享 4 生日投稿 3 其他",
 			"defaultValue": 0,
 			"enum": [{
 					"value": 0,
@@ -43,6 +43,10 @@
 				{
 					"value": 3,
 					"text": "其他"
+				},
+				{
+					"value": 4,
+					"text": "生日投稿"
 				}
 			]
 		},

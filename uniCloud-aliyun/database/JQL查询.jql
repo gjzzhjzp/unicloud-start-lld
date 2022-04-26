@@ -16,12 +16,11 @@ db.collection('uni-id-users').where(db.command.or({
 db.collection('uni-id-users').where().get()
 
 db.collection("jz-opendb-resourceshj").where({
-								_id:parentid,
-								status:db.command.neq(0)
+								article_id:"619ddd090752190001dec278"
 							}).get()
 db.collection("jz-custom-shtime").where({
-					 name:"junzheyuzhoush1"
-				}).get()
+					 date:db.command.lt(1647597257404)
+				}).limit(500).remove()
 
 db.collection('jz-opendb-resourceshj').where({
 			parent_id: "cqgeo1evwsm"

@@ -85,6 +85,11 @@
 			"title": "是否验证微博",
 			"description": "是否验证微博"
 		},
+		"isfcwb": {
+			"bsonType": "bool",
+			"title": "是否复查微博",
+			"description": "是否复查微博"
+		},
 		"original": {
 			"bsonType": "bool",
 			"title": "是否原创",
@@ -104,6 +109,12 @@
 			"bsonType": "string",
 			"title": "备注",
 			"description": "备注",
+			"trim": "both"
+		},
+		"beizhufc": {
+			"bsonType": "string",
+			"title": "复查备注",
+			"description": "复查备注",
 			"trim": "both"
 		},
 		"douyinname": {

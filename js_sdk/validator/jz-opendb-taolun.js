@@ -25,6 +25,10 @@ const validator = {
 					{
 						"value": 3,
 						"text": "其他"
+					},
+					{
+						"value": 4,
+						"text": "生日投稿"
 					}
 				]
 			}

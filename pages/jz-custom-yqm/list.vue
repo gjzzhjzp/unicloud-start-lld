@@ -2,6 +2,7 @@
 	<view class="container jz-container">
 		<u-navbar :is-back="true" title="资源邀请码"></u-navbar>
 		<u-alert-tips type="warning" description="请注意:此邀请码仅供加密资源使用"></u-alert-tips>
+		<u-alert-tips type="warning" description="新用户注册邀请码为用户名_51129"></u-alert-tips>
 		<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}"
 			where="user_id==$cloudEnv_uid" collection="jz-custom-yqm"
 			field="user_name_type,user_name,value,status,date">

@@ -9,14 +9,13 @@
 		</view>
 		<view v-if="topcurtab==0">
 			<view>
-				<u-tabs active-color="#7275D3" bar-width="0" :list="tabslist" :is-scroll="false" :current="currenttab"
+				<u-tabs active-color="#7275D3" bar-width="0" :list="tabslist" :is-scroll="tabsisscroll" :current="currenttab"
 					@change="changeTabs"></u-tabs>
 			</view>
 			<view class="search-row">
 				<view :class="['search-row-col',item.selected?'selected':'']" v-for="(item,index) in searchrows"
 					:key="index" >
 					<u-button size="medium" shape="circle" @click="searchType(item)">{{item.name}}</u-button>
-			
 					<!-- <u-icon size="20" name="arrow-down-fill"></u-icon> -->
 				</view>
 			</view>
@@ -54,6 +53,7 @@
 		mixins: [gonggao],
 		data() {
 			return {
+				tabsisscroll:false,
 				zdflowList:[],//置顶资源
 				tagname: "", ////tag标签
 				showTag: false,
@@ -80,7 +80,7 @@
 				}, {
 					name: '分享',
 					type: "2"
-				}, {
+				},  {
 					name: '其他',
 					type: "3"
 				}],
@@ -143,6 +143,17 @@
 			uni.stopPullDownRefresh();
 		},
 		created() {
+			///是否启用生日应援
+			// debugger;
+			var config=getApp().globalData.systemconfig;
+			if(config["800035"]=="1"){
+				this.tabslist.splice(5,0,{
+					name: '生日投稿',
+					type: "4"
+				});
+				this.tabsisscroll=true;
+			};
+			
 			var e = this.$Route.query;
 			if (e.flmc && e.flbm) {
 				this.showTag = true;

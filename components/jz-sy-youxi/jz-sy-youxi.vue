@@ -6,7 +6,7 @@
 		</view>
 		<view class="jz-sy-youxi">
 			<u-row gutter="16">
-				<u-col span="6" class="jz-sy-item" v-for="(item,index) in list" :key="index">
+				<u-col span="4" class="jz-sy-item" v-for="(item,index) in list" :key="index">
 					<view class="jz-sy-youxi-item">
 						<view>
 							<!-- <u-link :href="item.path">
@@ -44,15 +44,57 @@
 			<u-toast ref="uToast" />
 		</view>
 		<view class="jz-sy-youxi-section">
+			<u-section line-color="#7275D3" :show-line="false" :font-size="16" title="合成大西瓜(来源:微博@开开心心凤凰社·1640)" :right="showright" sub-title="查看更多>>"
+				:arrow="false" @click="$notMoreTap(tomore,'notTap')"></u-section>
+		</view>
+		<view class="jz-sy-youxi">
+			<u-row gutter="16">
+				<u-col span="4" class="jz-sy-item" v-for="(item,index) in list3" :key="index">
+					<view class="jz-sy-youxi-item">
+						<view>
+							<view @click="todetail2(item)">
+								<u-image width="100px" height="100px" border-radius="20" :src="imageUrl(item)"
+									loading-icon="/static/center/zheng.png" error-icon="/static/center/error_zheng.png">
+								</u-image>
+							</view>
+						</view>
+						<view class="jz-sy-youxi-text">{{item.name}}</view>
+					</view>
+				</u-col>
+			</u-row>
+			<u-toast ref="uToast" />
+		</view>
+		<view class="jz-sy-youxi-section">
 			<u-section line-color="#7275D3" :show-line="false" :font-size="16" title="龚张小游戏" :right="showright" sub-title="查看更多>>"
 				:arrow="false" @click="$notMoreTap(tomore,'notTap')"></u-section>
 		</view>
 		<view class="jz-sy-youxi">
 			<u-row gutter="16">
-				<u-col span="6" class="jz-sy-item" v-for="(item,index) in list1" :key="index">
+				<u-col span="4" class="jz-sy-item" v-for="(item,index) in list1" :key="index">
 					<view class="jz-sy-youxi-item">
 						<view>
 							<view @click="todetail1(item)">
+								<u-image width="100px" height="100px" border-radius="20" :src="imageUrl(item)"
+									loading-icon="/static/center/zheng.png" error-icon="/static/center/error_zheng.png">
+								</u-image>
+							</view>
+						</view>
+						<view class="jz-sy-youxi-text">{{item.name}}</view>
+					</view>
+				</u-col>
+			</u-row>
+			<u-toast ref="uToast" />
+		</view>
+		<view class="jz-sy-youxi-section">
+			<u-section line-color="#7275D3" :show-line="false" :font-size="16" title="橘子小游戏(来源:微博@一条狗狗wwww)" :right="showright" sub-title="查看更多>>"
+				:arrow="false" @click="$notMoreTap(tomore,'notTap')"></u-section>
+		</view>
+		<view class="jz-sy-youxi">
+			<u-row gutter="16">
+				<u-col span="4" class="jz-sy-item" v-for="(item,index) in list2" :key="index">
+					<view class="jz-sy-youxi-item">
+						<view>
+							<view @click="todetail2(item)">
 								<u-image width="100px" height="100px" border-radius="20" :src="imageUrl(item)"
 									loading-icon="/static/center/zheng.png" error-icon="/static/center/error_zheng.png">
 								</u-image>
@@ -74,6 +116,8 @@
 				notTap: true, //一定要设置为true
 				list: [],
 				list1:[],
+				list2:[],
+				list3:[],
 				where: "",
 				isEmpty: true,
 				curitem: {}
@@ -145,6 +189,14 @@
 					})
 				}
 			},
+			todetail2(item){
+				if (item.path) {
+					var path=item.path;
+					uni.navigateTo({
+						url: "/pages/youxidetail/youxidetail?src=" + encodeURIComponent(path)
+					})
+				}
+			},
 			todetail(item) {
 				// debugger;
 				this.showmodal = true;
@@ -178,7 +230,7 @@
 				// return this.curitem.path+"?tiaotiao=0";
 			},
 			imageUrl(item) {
-				if (Array.isArray(item.icon)) {
+				if (Array.isArray(item.icon)&&item.icon[0]) {
 					return item.icon[0].url;
 				} else {
 					return item.icon.url;
@@ -188,7 +240,7 @@
 				var db = uniCloud.database();
 				var categories = await db.collection("opendb-news-categories").get({
 					getTree: {
-						startWith: "flbm=='300000'||flbm=='500000'" ////分类顶级编码
+						startWith: "flbm=='300000'||flbm=='500000'||flbm=='600000'||flbm=='700000'" ////分类顶级编码
 					}
 				});
 				console.log("categories.result",categories.result);
@@ -196,6 +248,12 @@
 					this.list = categories.result.data[0].children;
 					if(categories.result.data[1]){
 						this.list1 = categories.result.data[1].children;
+					}
+					if(categories.result.data[2]){
+						this.list2 = categories.result.data[2].children;
+					}
+					if(categories.result.data[3]){
+						this.list3 = categories.result.data[3].children;
 					}
 				}
 			},

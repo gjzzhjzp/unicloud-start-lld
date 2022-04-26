@@ -276,7 +276,7 @@
 						var length=dbcount.result.data.length;
 						var parentid=dbcount.result.data[length-1].parent_id;
 						if(parentid){
-							// debugger;
+							// console.log("parentid",parentid);
 							var _dbcount=await db.collection("jz-opendb-resourceshj").where({
 								hj_id:parentid,
 								status:db.command.neq(0)

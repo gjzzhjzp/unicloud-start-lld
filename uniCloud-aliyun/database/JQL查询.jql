@@ -35,6 +35,10 @@ db.collection("jz-opendb-taolun").where({
 	is_off:db.command.neq(1)
 }).get()
 
+db.collection("jz-opendb-taolun").where({
+	categories:4
+}).count()
+
 db.collection('jz-opendb-taolun').where(db.command.or([{
 	"article_status": 1,
 	"is_off": db.command.neq(1),
@@ -45,7 +49,18 @@ db.collection('jz-opendb-taolun').where(db.command.or([{
 	user_id:'6173fc369ee65f00018fd5e6'
 }])).get()
 
-db.collection('uni-id-users').where('register_date > 1641484800000&&register_date < 1641571199999').count()
+db.collection('uni-id-users').where({
+	username:"orangejz051129"
+}).get()
+
+db.collection('uni-id-users').where({
+	username:"orangejz051129"
+}).update({
+	"dcloud_appid":[
+            "__UNI__0583E60"
+        ]
+})
+
 
 db.collection('opendb-news-appbb').where({
 					app_bbh: db.command.gt(124)

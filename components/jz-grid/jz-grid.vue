@@ -31,6 +31,7 @@
 	</div>
 </template>
 <script>
+	import dealimage from "@/common/dealimage.js"
 	const db = uniCloud.database();
 	export default {
 		data() {
@@ -45,6 +46,7 @@
 		created() {
 			this.getList();
 		},
+		mixins:[dealimage],
 		methods: {
 			change(e) {
 				this.current = e.detail.current;
@@ -79,10 +81,11 @@
 				});
 				if (categories.result && categories.result.data.length > 0) {
 					// debugger;
-					this.gridList = categories.result.data[0].children;
-					
+					var gridList=categories.result.data[0].children;
+					this.gridList = this.dealImgResource(gridList)
 					this.one_list=this.gridList.slice(0,5);
 					this.two_list=this.gridList.slice(5);
+					console.log("one_list",this.one_list);
 				}
 			}
 		}

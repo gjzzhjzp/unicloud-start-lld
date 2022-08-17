@@ -39,6 +39,7 @@
 </template>
 <script>
 	import gonggao from "@/common/gonggao.js"
+	import dealimage from "@/common/dealimage.js"
 	export default {
 		data() {
 			return {
@@ -56,7 +57,7 @@
 				sortList:[]///分类数据
 			}
 		},
-		mixins: [gonggao],
+		mixins: [gonggao,dealimage],
 		onReady() {
 			this.getMenuItemTop()
 		},
@@ -94,9 +95,10 @@
 					}
 				});
 				if(categories.result&&categories.result.data.length>0){
-					this.sortList=categories.result.data[0].children;
+					var sortList=categories.result.data[0].children;
+					this.sortList=this.dealImgResource(sortList);
 				}
-				// console.log("sortList",this.sortList);
+				console.log("sortList",this.sortList);
 			},
 			// 点击左边的栏目切换
 			async swichMenu(index) {

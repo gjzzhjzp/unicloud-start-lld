@@ -26,6 +26,7 @@
 	</view>
 </template>
 <script>
+	import dealimage from "@/common/dealimage.js"
 	export default {
 		data() {
 			return {
@@ -46,6 +47,7 @@
 				list: []
 			}
 		},
+		mixins:[dealimage],
 		onPullDownRefresh() {
 			this.$refs.udb.loadData({
 				clear: true
@@ -78,6 +80,7 @@
 				});
 			},
 			loadSuccess(data) {
+				data= this.dealImgResource(data);
 				data.forEach((item) => {
 					// var url="";
 					// if(item.avatar){
@@ -91,6 +94,7 @@
 					this.$set(item, "show", false);
 				});
 				this.list = data;
+				console.log("data123",data);
 				return data;
 			},
 			click(index, index1) {

@@ -126,7 +126,11 @@ module.exports = class resourceService extends Service {
 			as: 'userinfo',
 		}).end();
 
-
+		resultdata.data.forEach(async (item1)=>{
+			if(item1.article_id&&item1.article_id.length>0){
+				item1.article_id=await this.dealImgResource(item1.article_id);
+			}
+		});
 		return {
 			"state": "0000",
 			"rows": resultdata.data,
@@ -172,7 +176,11 @@ module.exports = class resourceService extends Service {
 			as: 'userinfo'
 		}).end();
 
-
+		resultdata.data.forEach(async (item1)=>{
+			if(item1.article_id&&item1.article_id.length>0){
+				item1.article_id=await this.dealImgResource(item1.article_id);
+			}
+		});
 		return {
 			"state": "0000",
 			"rows": resultdata.data,
@@ -444,9 +452,11 @@ module.exports = class resourceService extends Service {
 			}).end();
 			var app_bbh = data.app_bbh;
 			if (app_bbh >= 113) {
+				var data=await this.dealImgResource(resultdata.data);
+				
 				return {
 					"state": "0000",
-					"rows": resultdata.data,
+					"rows": data,
 					"total": resultdata.data.length,
 					"msg": "查询成功"
 				};
@@ -540,9 +550,10 @@ module.exports = class resourceService extends Service {
 				}).update({
 					view_count: resultdata.data[0].view_count
 				});
+				var data=await this.dealImgResource(resultdata.data);
 				return {
 					"state": "0000",
-					"rows": resultdata.data,
+					"rows": data,
 					"total": resultdata.data.length,
 					"msg": "查询成功"
 				};

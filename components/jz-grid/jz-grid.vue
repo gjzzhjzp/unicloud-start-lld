@@ -46,27 +46,27 @@
 		created() {
 			this.getList();
 		},
-		mixins:[dealimage],
+		mixins: [dealimage],
 		methods: {
 			change(e) {
 				this.current = e.detail.current;
 			},
 			imageUrl(item) {
-				if(item.icon){
-					if (Array.isArray(item.icon)&&item.icon[0]) {
+				if (item.icon) {
+					if (Array.isArray(item.icon) && item.icon[0]) {
 						return item.icon[0].url;
 					} else {
-						return item.icon.url||"";
+						return item.icon.url || "";
 					}
-				}else{
+				} else {
 					return "";
 				}
-				
+
 			},
 			tomore(item) {
-				if(item.path){
+				if (item.path) {
 					uni.navigateTo({
-						url:item.path
+						url: item.path
 					});
 					// uni.navigateTo({
 					// 	url: '/pages/resource/list?title=' + item.name
@@ -81,11 +81,11 @@
 				});
 				if (categories.result && categories.result.data.length > 0) {
 					// debugger;
-					var gridList=categories.result.data[0].children;
+					var gridList = categories.result.data[0].children;
 					this.gridList = this.dealImgResource(gridList)
-					this.one_list=this.gridList.slice(0,5);
-					this.two_list=this.gridList.slice(5);
-					console.log("one_list",this.one_list);
+					this.one_list = this.gridList.slice(0, 5);
+					this.two_list = this.gridList.slice(5);
+					// console.log("one_list", this.one_list);
 				}
 			}
 		}
@@ -97,10 +97,12 @@
 		margin-top: 4px;
 		font-size: 14px;
 	}
+
 	.jz-grid {
 		padding: 0px 4px;
 		background-color: #fff;
 	}
+
 	// .grid-text {
 	// 		font-size: 28rpx;
 	// 		margin-top: 4rpx;

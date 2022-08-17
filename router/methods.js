@@ -1,4 +1,5 @@
 import checksh from "@/common/checksh.js";
+import dealimage from "@/common/dealimage.js"
 export default {
 	initconfig() {
 		var app_bbh = getApp().globalData.app_bbh;
@@ -42,6 +43,7 @@ export default {
 					reslove(true);
 				}
 			} else {
+				// debugger;
 				uni.showLoading({
 					title: "加载中"
 				})
@@ -52,6 +54,8 @@ export default {
 					var userdata = await usersTable.where('_id==$env.uid').field(
 						"username,weiboname,resources,weibocontent,nickname,isbdwb,original,forbiddenwords,status,avatar,avatar_file,role,register_date,token"
 						).get();
+					// debugger;
+					userdata.result.data=dealimage.methods.dealImgResource(userdata.result.data);
 					var userinf = userdata.result.data[0];
 					uni.setStorageSync("userInfo", userinf);
 					getApp().globalData.userinf = userinf;

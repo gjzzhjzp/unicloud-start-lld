@@ -63,7 +63,7 @@
 					var res = res.result;
 					if (res.state == "0000") {
 						this.curdata = res.rows[0];
-						console.log("this.curdata",this.curdata);
+						// console.log("this.curdata",this.curdata);
 					} else {
 						console.log("res", res.msg);
 					}

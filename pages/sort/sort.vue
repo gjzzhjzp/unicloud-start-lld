@@ -98,7 +98,7 @@
 					var sortList=categories.result.data[0].children;
 					this.sortList=this.dealImgResource(sortList);
 				}
-				console.log("sortList",this.sortList);
+				// console.log("sortList",this.sortList);
 			},
 			// 点击左边的栏目切换
 			async swichMenu(index) {

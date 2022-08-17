@@ -21,6 +21,7 @@
 	</view>
 </template>
 <script>
+	import dealimage from "@/common/dealimage.js"
 	const db=uniCloud.database();
 	export default {
 		data() {
@@ -38,6 +39,7 @@
 				curuserinfo: {}, ////当前用户
 			}
 		},
+		mixins:[dealimage],
 		created(){
 			// this.getUserinfo();
 			// debugger;
@@ -98,6 +100,7 @@
 				});
 			},
 			loadSuccess(data) {
+				data= this.dealImgResource(data);
 				data.forEach((item) => {
 					var url="";
 					if(item.avatar){

@@ -23,6 +23,7 @@
 	</view>
 </template>
 <script>
+	import dealimage from "@/common/dealimage.js"
 	export default {
 		data() {
 			return {
@@ -30,6 +31,7 @@
 				rq:""
 			}
 		},
+		mixins:[dealimage],
 		created(){
 			this.rq=this.$Route.query.rq;
 			this.getjilianri();
@@ -57,6 +59,7 @@
 					db.collection('opendb-news-rili').where({
 						"rili_date": new RegExp(rq, 'gi'),
 					}).get().then((res) => {
+						res.result.data= this.dealImgResource(res.result.data);
 						this.jianlainri = res.result.data;
 						// console.log("this.jianlainri", this.jianlainri);
 					}).catch((err) => {

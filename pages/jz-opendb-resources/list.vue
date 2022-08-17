@@ -33,6 +33,7 @@
 	</view>
 </template>
 <script>
+	import dealimage from "@/common/dealimage.js"
 	const db=uniCloud.database();
 	export default {
 		data() {
@@ -61,6 +62,7 @@
 				list: []
 			}
 		},
+		mixins:[dealimage],
 		onPullDownRefresh() {
 			this.$refs.udb.loadData({
 				clear: true
@@ -109,6 +111,8 @@
 				});
 			},
 			loadSuccess(data) {
+				data= this.dealImgResource(data);
+				// console.log("data",data);
 				data.forEach((item) => {
 					var url="";
 					if(item.avatar){

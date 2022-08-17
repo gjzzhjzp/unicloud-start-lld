@@ -34,6 +34,7 @@
 	</view>
 </template>
 <script>
+	import dealimage from "@/common/dealimage.js"
 	import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update';
 	import callCheckVersion from '@/uni_modules/uni-upgrade-center-app/utils/call-check-version';
 	import UniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js';
@@ -89,6 +90,7 @@
 				isguanzhu: false
 			}
 		},
+		mixins:[dealimage],
 		onLoad() {
 
 		},
@@ -140,6 +142,7 @@
 				}).field(
 					"username,weiboname,resources,weibocontent,nickname,isbdwb,original,forbiddenwords,status,avatar,avatar_file,role,register_date,token"
 				).get();
+				userdata.result.data= this.dealImgResource(userdata.result.data);
 				var userinf = userdata.result.data[0];
 				this.curuserinfo = userinf;
 				this.checkisguanzhu();

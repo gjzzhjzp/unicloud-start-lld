@@ -18,8 +18,8 @@ router.beforeEach((to, from, next) => {
 	var windowWidth = uni.getSystemInfoSync().windowWidth;
 	var screenWidth = uni.getSystemInfoSync().screenWidth;
 	// debugger;
-	if (ua.match(/MicroMessenger/i) == 'micromessenger' || typeof plus != "undefined" || to.path.indexOf(
-			"/browser/browser") != -1 || screenWidth > 1200) {
+	// if (ua.match(/MicroMessenger/i) == 'micromessenger' || typeof plus != "undefined" || to.path.indexOf(
+	// 		"/browser/browser") != -1 || screenWidth > 1200) {
 		if (to.path.indexOf("/browser/browser") != -1) {
 			next();
 		} else {
@@ -39,13 +39,13 @@ router.beforeEach((to, from, next) => {
 				}
 			});
 		}
-	} else {
-		uni.navigateTo({
-			url: "/pages/browser/browser"
-		});
-		next();
-		// return false; // 普通浏览器中打开
-	}
+	// } else {
+	// 	uni.navigateTo({
+	// 		url: "/pages/browser/browser"
+	// 	});
+	// 	next();
+	// 	// return false; // 普通浏览器中打开
+	// }
 });  
 // 全局路由后置守卫
 router.afterEach((to, from) => {})

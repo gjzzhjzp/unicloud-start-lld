@@ -15,11 +15,11 @@ module.exports = class bannerService extends Service {
 			var count = res_count.data[0].count;
 			var nowcount=0;
 			var res_list=[];
-			var f_c=Math.ceil(count/100);
+			var f_c=Math.ceil(count/500);
 			for(var i=0;i<f_c;i++){
 				var list = await this.db.collection("jz-opendb-danmu").where({
 					resource_id: event.id
-				}).skip(100*i).limit(100).get();
+				}).skip(500*i).limit(500).get();
 				res_list=res_list.concat(list.data)
 			}
 			return {

@@ -1,16 +1,16 @@
 /* 浏览器专用 */
-.dplayer-full-in-icon {
+/* .dplayer-full-in-icon {
 	display: none !important;
-}
+} */
 /* APP专用 */
-/* .dplayer-full-icon {
+.dplayer-full-icon {
 	display: none !important;
 }
 .dplayer-full-in-icon {
 	display: inline-block !important;
 	position: relative !important;
 	top: 0px !important;
-} */
+}
 
 
 uni-page {

@@ -56,7 +56,7 @@
 		},
 		methods: {
 			saveImage(index) {
-				console.log(index, this.currentSrc);
+				// console.log(index, this.currentSrc);
 				if (typeof plus != "undefined") {
 					var pscreen = plus.webview.currentWebview().opener();
 					mui.fire(pscreen, 'saveImage', {
@@ -65,13 +65,13 @@
 				}
 			},
 			openlongan(data) {
-				console.log("data", data);
+				// console.log("data", data);
 				this.currentSrc = data.src;
 				this.showlongan = true;
 			},
 			changenumber(plNumber) {
 				this.plNumber = plNumber;
-				console.log("plNumber", this.plNumber);
+				// console.log("plNumber", this.plNumber);
 			},
 			initImage() {
 				this.imgs.splice(0, this.imgs.length);

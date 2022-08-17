@@ -29,6 +29,7 @@
 	</view>
 </template>
 <script>
+	import dealimage from "@/common/dealimage.js"
 	const db = uniCloud.database();
 	const usersTable = db.collection('uni-id-users')
 	export default {
@@ -39,6 +40,7 @@
 				curuserinfo: {}, ////当前用户
 			}
 		},
+		mixins:[dealimage],
 		created() {
 			this.getUserinfo();
 		},
@@ -60,6 +62,7 @@
 				}).field(
 					"username,weiboname,resources,weibocontent,nickname,isbdwb,original,forbiddenwords,status,avatar,avatar_file,role,register_date,token"
 				).get();
+				userdata.result.data= this.dealImgResource(userdata.result.data);
 				var userinf = userdata.result.data[0];
 				this.curuserinfo = userinf;
 			},

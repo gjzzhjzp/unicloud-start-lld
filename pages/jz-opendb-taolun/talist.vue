@@ -111,7 +111,7 @@
 
 	.title {
 		text-align: left;
-		font-size: 36rpx;
+		font-size: 18px;
 		color: $u-content-color;
 	}
 	.u-icon{

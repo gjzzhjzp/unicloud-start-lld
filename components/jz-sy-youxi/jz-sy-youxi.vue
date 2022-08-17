@@ -109,6 +109,7 @@
 	</view>
 </template>
 <script>
+	import dealimage from "@/common/dealimage.js"
 	export default {
 		data() {
 			return {
@@ -123,6 +124,7 @@
 				curitem: {}
 			}
 		},
+		mixins:[dealimage],
 		props: {
 			rows: {
 				type: Number,
@@ -243,8 +245,9 @@
 						startWith: "flbm=='300000'||flbm=='500000'||flbm=='600000'||flbm=='700000'" ////分类顶级编码
 					}
 				});
-				console.log("categories.result",categories.result);
+				// console.log("categories.result",categories.result);
 				if (categories.result && categories.result.data.length > 0) {
+					categories.result.data= this.dealImgResource(categories.result.data);
 					this.list = categories.result.data[0].children;
 					if(categories.result.data[1]){
 						this.list1 = categories.result.data[1].children;

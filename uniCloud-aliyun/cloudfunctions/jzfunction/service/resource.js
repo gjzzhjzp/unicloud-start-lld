@@ -216,6 +216,11 @@ module.exports = class resourceService extends Service {
 				as: 'article_id',
 			}).end();
 		}
+		resultdata.data.forEach(async (item1)=>{
+			if(item1.article_id&&item1.article_id.length>0){
+				item1.article_id=await this.dealImgResource(item1.article_id);
+			}
+		});
 		return {
 			"state": "0000",
 			"rows": resultdata.data,
@@ -352,9 +357,10 @@ module.exports = class resourceService extends Service {
 			}
 			var app_bbh = data.app_bbh;
 			if (app_bbh >= 113) {
+				var data=await this.dealImgResource(resultdata.data);
 				return {
 					"state": "0000",
-					"rows": resultdata.data,
+					"rows": data,
 					"total": resultdata.data.length,
 					"msg": "查询成功"
 				};
@@ -374,6 +380,24 @@ module.exports = class resourceService extends Service {
 				"msg": "查询失败"
 			};
 		}
+	}
+	// 处理图片视频加载不出来的问题，暂时替换域名法
+	async dealImgResource(data){
+			data.forEach((item)=>{
+				for(var key in item){
+					if(Array.isArray(item[key])&&item[key].length>0&&(item[key][0].pathitem[key][0].url)){
+						item[key].forEach((item1)=>{
+							if(item1.path){
+								item1.path=item1.path.replace("vkceyugu.cdn.bspapp.com","vkceyugu-backup.cdn.bspapp.com");
+							}
+							if(item1.url){
+								item1.url=item1.url.replace("vkceyugu.cdn.bspapp.com","vkceyugu-backup.cdn.bspapp.com");
+							}
+						})
+					}
+				}
+			});
+			return data;
 	}
 	// 通过查询用户获取资源列表
 	async getListByuser() {

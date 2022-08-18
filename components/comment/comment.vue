@@ -94,6 +94,7 @@
 	import reply from "./reply.vue"
 	import commontImage from "./commontImage.vue"
 	import operator from "./operator.vue"
+	import dealimage from "@/common/dealimage.js"
 	export default {
 		data() {
 			return {
@@ -117,7 +118,7 @@
 				pl_count: 0 ////评论数
 			};
 		},
-
+		mixins:[dealimage],
 		components: {
 			reply,
 			operator,
@@ -544,6 +545,7 @@
 			},
 			_dealcomment() {
 				var that = this;
+				this.commentArray=that.dealImgResource(this.commentArray);
 				that.commentList = that.getTree(this.commentArray);
 				that.commentList.forEach((item2) => {
 					if (item2.children) {

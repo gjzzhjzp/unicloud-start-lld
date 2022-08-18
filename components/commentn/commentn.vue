@@ -1,5 +1,5 @@
 <template>
-	<view class="comment-container commentn" >
+	<view class="comment-container commentn">
 		<view class="comment-container-top">
 			<view>{{topleft}}</view>
 			<view class="comment-container-lb" @click.stop="toggleType()">
@@ -8,7 +8,8 @@
 			</view>
 		</view>
 		<u-empty v-if="commentList.length==0" mode="data"></u-empty>
-		<view @click.stop="replyResource()" :class="['comment-container1','slot-gonggao_content',showsendpl?'':'nosendpl']">
+		<view @click.stop="replyResource()"
+			:class="['comment-container1','slot-gonggao_content',showsendpl?'':'nosendpl']">
 			<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y">
 				<view class="comment" v-for="(res, index) in commentList" :key="res.id">
 					<view class="left">
@@ -89,6 +90,7 @@
 	import reply from "./reply.vue"
 	import commontImage from "./commontImage.vue"
 	import operator from "./operator.vue"
+	import dealimage from "@/common/dealimage.js"
 	export default {
 		data() {
 			return {
@@ -108,7 +110,7 @@
 				plNumber: 0 ///评论数
 			};
 		},
-
+		mixins: [dealimage],
 		components: {
 			reply,
 			operator,
@@ -310,6 +312,7 @@
 								this.$set(item2, "isLike", false);
 							}
 						});
+						comments.result.data=that.dealImgResource(comments.result.data);
 						that.commentList = that.getTree(comments.result.data);
 						that.commentList.forEach((item2) => {
 							if (item2.children) {
@@ -370,9 +373,10 @@
 					map[item._id] = item;
 				});
 				data.forEach(item => {
-					var reply_comment_id=item.reply_comment_id||(item.reply_comment_id[0] && item.reply_comment_id[0]._id);
+					var reply_comment_id = item.reply_comment_id || (item.reply_comment_id[0] && item
+						.reply_comment_id[0]._id);
 					if (reply_comment_id) {
-					// if (item.reply_comment_id[0] && item.reply_comment_id[0]._id) {
+						// if (item.reply_comment_id[0] && item.reply_comment_id[0]._id) {
 						let parent = map[reply_comment_id];
 						if (parent) {
 							(parent.children || (parent.children = [])).push(item);
@@ -390,9 +394,10 @@
 </script>
 
 <style lang="scss" scoped>
-	.reply-container{
+	.reply-container {
 		height: 90vh;
 	}
+
 	.slot-gonggao_content {
 		overflow: auto;
 	}
@@ -400,11 +405,11 @@
 	.comment-container-top {
 		flex-direction: row;
 		justify-content: space-between;
-		
+
 	}
 
 	.comment-container-lb {
-		
+
 		flex-direction: row;
 	}
 
@@ -423,14 +428,14 @@
 
 	/* #endif */
 	.bottom-right {
-		
+
 		flex-direction: row;
 
 		.itemb {
 			margin: 0 10rpx;
 
 			.like {
-				
+
 				flex-direction: row;
 			}
 		}
@@ -444,7 +449,7 @@
 	}
 
 	.comment-container2 {
-		
+
 		flex-direction: row;
 		position: fixed;
 		bottom: 0px;
@@ -456,7 +461,7 @@
 	}
 
 	.comment {
-		
+
 		flex-direction: row;
 
 		.left {}
@@ -466,7 +471,7 @@
 			font-size: 30rpx;
 
 			.top {
-				
+
 				flex-direction: row;
 				justify-content: space-between;
 				align-items: center;
@@ -506,7 +511,7 @@
 				border-radius: 12rpx;
 
 				.item {
-					
+
 					flex-direction: row;
 					// padding: 20rpx;
 					border-bottom: solid 2rpx $u-border-color;
@@ -518,7 +523,7 @@
 
 				.all-reply {
 					// padding: 20rpx;
-					
+
 					flex-direction: row;
 					color: #5677fc;
 					align-items: center;
@@ -531,11 +536,12 @@
 
 			.bottom {
 				margin-top: 20rpx;
-				
+
 				flex-direction: row;
 				font-size: 28rpx;
 				color: #9a9a9a;
 				justify-content: space-between;
+
 				.reply {
 					color: #5677fc;
 					margin-left: 10rpx;

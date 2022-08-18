@@ -95,6 +95,7 @@
 	import reply from "./reply.vue"
 	import commontImage from "./commontImage.vue"
 	import operator from "./operator.vue"
+	import dealimage from "@/common/dealimage.js"
 	export default {
 		data() {
 			return {
@@ -124,6 +125,7 @@
 			operator,
 			commontImage
 		},
+		mixins:[dealimage],
 		created() {
 			var config = getApp().globalData.systemconfig;
 			var t_800017 = config["800017"]; //、显示评论
@@ -534,10 +536,9 @@
 				}
 			},
 			_dealcomment() {
-				// debugger;
 				var that = this;
+				that.commentArray=this.dealImgResource(that.commentArray);
 				that.commentList = that.getTree(this.commentArray);
-				// debugger;
 				that.commentList.forEach((item2) => {
 					if (item2.children) {
 						// if (!item2.allchildren) {

@@ -38,6 +38,7 @@
 </template>
 
 <script>
+	import dealimage from "@/common/dealimage.js"
 	const db = uniCloud.database();
 	export default {
 		data() {
@@ -54,6 +55,7 @@
 				}
 			}
 		},
+		mixins:[dealimage],
 		watch: {
 			data: {
 				deep: true,
@@ -124,6 +126,7 @@
 					// }).field("user_id{username,nickname,avatar_file,original},create_date").orderBy("create_date desc")
 					// .get();
 					if (res.result && res.result.data) {
+						res.result.data=this.dealImgResource(res.result.data);
 						this.list = res.result.data;
 					}
 				}

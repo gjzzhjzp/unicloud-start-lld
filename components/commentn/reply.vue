@@ -131,6 +131,7 @@
 </template>
 
 <script>
+	import dealimage from "@/common/dealimage.js"
 	import {
 		mapGetters,
 		mapMutations
@@ -158,6 +159,7 @@
 			commontImage,
 			operator
 		},
+		mixins:[dealimage],
 		created() {
 			this.getReply();
 		},
@@ -230,6 +232,7 @@
 				this.$refs.operator.open();
 			},
 			_dealChildren(ary) {
+				ary=this.dealImgResource(ary);
 				ary.forEach((item) => {
 					this.commentList.push(item);
 					if (item.children && item.children.length > 0) {

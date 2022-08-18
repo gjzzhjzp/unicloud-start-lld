@@ -139,6 +139,7 @@
 	const uid = db.getCloudEnv('$cloudEnv_uid');
 	import commontImage from "./commontImage.vue"
 	import operator from "./operator.vue"
+	import dealimage from "@/common/dealimage.js"
 	export default {
 		data() {
 			return {
@@ -158,6 +159,7 @@
 			commontImage,
 			operator
 		},
+		mixins:[dealimage],
 		created() {
 			this.getReply();
 		},
@@ -286,6 +288,7 @@
 				this.$refs.operator.open();
 			},
 			_dealChildren(ary) {
+				ary=this.dealImgResource(ary);
 				ary.forEach((item) => {
 					this.commentList.push(item);
 					if (item.children && item.children.length > 0) {

@@ -35,6 +35,7 @@
 </template>
 
 <script>
+	import dealimage from "@/common/dealimage.js"
 	const db = uniCloud.database();
 	export default {
 		data() {
@@ -43,6 +44,7 @@
 				list: []
 			}
 		},
+		mixins:[dealimage],
 		props: {
 			data: {
 				type: Object,
@@ -115,6 +117,7 @@
 					const _user = db.collection('uni-id-users').field('_id,username,nickname,avatar_file,original').getTemp();
 					var res = await db.collection(_taolun,_user).get();
 					if (res.result && res.result.data) {
+						res.result.data=this.dealImgResource(res.result.data);
 						this.list = res.result.data;
 					}
 				}

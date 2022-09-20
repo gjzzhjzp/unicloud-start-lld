@@ -106,6 +106,50 @@
 			</u-row>
 			<u-toast ref="uToast" />
 		</view>
+		
+		<view class="jz-sy-youxi-section">
+			<u-section line-color="#7275D3" :show-line="false" :font-size="16" title="微博:@无名无姓丨不梦不醒" :right="showright" sub-title="查看更多>>"
+				:arrow="false" @click="$notMoreTap(tomore,'notTap')"></u-section>
+		</view>
+		<view class="jz-sy-youxi">
+			<u-row gutter="16">
+				<u-col span="4" class="jz-sy-item" v-for="(item,index) in list4" :key="index">
+					<view class="jz-sy-youxi-item">
+						<view>
+							<view @click="todetail2(item)">
+								<u-image width="100px" height="100px" border-radius="20" :src="imageUrl(item)"
+									loading-icon="/static/center/zheng.png" error-icon="/static/center/error_zheng.png">
+								</u-image>
+							</view>
+						</view>
+						<view class="jz-sy-youxi-text">{{item.name}}</view>
+					</view>
+				</u-col>
+			</u-row>
+			<u-toast ref="uToast" />
+		</view>
+		
+		<view class="jz-sy-youxi-section">
+			<u-section line-color="#7275D3" :show-line="false" :font-size="16" title="微博:@柚夏咕咕" :right="showright" sub-title="查看更多>>"
+				:arrow="false" @click="$notMoreTap(tomore,'notTap')"></u-section>
+		</view>
+		<view class="jz-sy-youxi">
+			<u-row gutter="16">
+				<u-col span="4" class="jz-sy-item" v-for="(item,index) in list5" :key="index">
+					<view class="jz-sy-youxi-item">
+						<view>
+							<view @click="todetail2(item)">
+								<u-image width="100px" height="100px" border-radius="20" :src="imageUrl(item)"
+									loading-icon="/static/center/zheng.png" error-icon="/static/center/error_zheng.png">
+								</u-image>
+							</view>
+						</view>
+						<view class="jz-sy-youxi-text">{{item.name}}</view>
+					</view>
+				</u-col>
+			</u-row>
+			<u-toast ref="uToast" />
+		</view>
 	</view>
 </template>
 <script>
@@ -119,6 +163,8 @@
 				list1:[],
 				list2:[],
 				list3:[],
+				list4:[],
+				list5:[],
 				where: "",
 				isEmpty: true,
 				curitem: {}
@@ -242,7 +288,7 @@
 				var db = uniCloud.database();
 				var categories = await db.collection("opendb-news-categories").get({
 					getTree: {
-						startWith: "flbm=='300000'||flbm=='500000'||flbm=='600000'||flbm=='700000'" ////分类顶级编码
+						startWith: "flbm=='300000'||flbm=='500000'||flbm=='600000'||flbm=='700000'||flbm=='800000'||flbm=='900000'" ////分类顶级编码
 					}
 				});
 				// console.log("categories.result",categories.result);
@@ -257,6 +303,12 @@
 					}
 					if(categories.result.data[3]){
 						this.list3 = categories.result.data[3].children;
+					}
+					if(categories.result.data[4]){
+						this.list4 = categories.result.data[4].children;
+					}
+					if(categories.result.data[5]){
+						this.list5 = categories.result.data[5].children;
 					}
 				}
 			},
